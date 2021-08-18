@@ -1,0 +1,12 @@
+{
+  "name": "Approbado",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "version": "1.0.0",
+  "scripts": {
+    "start:api": "yarn workspace @approbado/api run dev",
+    "start:admin": "yarn workspace @approbado/admin run start"
+  }
+}
