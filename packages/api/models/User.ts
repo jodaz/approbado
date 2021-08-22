@@ -1,5 +1,5 @@
 import { Model } from 'objection'
-import knex from '../config/model'
+import { DB_CONN } from '../config'
 
 class User extends Model {
     static get tableName () {
@@ -7,4 +7,4 @@ class User extends Model {
     }
 }
 
-export default User.bindKnex(knex)
+export default User.bindKnex(DB_CONN)

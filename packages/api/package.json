@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon app.ts",
-    "start": "ts-node ./app.ts",
+    "dev": "nodemon server.ts",
+    "start": "ts-node ./server.ts",
     "build": "npx tsc"
   },
   "dependencies": {
