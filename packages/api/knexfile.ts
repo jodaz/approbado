@@ -1,4 +1,6 @@
 // Update with your config settings.
+import { DB } from './config'
+
 interface KnexConfig {
   [key: string] : object;
 }
@@ -7,9 +9,9 @@ const knexConfig: KnexConfig = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'approbado_db',
-      user:     'postgres',
-      password: 'jodaz'
+      database: DB.name,
+      user:     DB.username,
+      password: DB.password
     },
     pool: {
       min: 2,
@@ -23,9 +25,9 @@ const knexConfig: KnexConfig = {
   staging: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+      database: DB.name,
+      user:     DB.username,
+      password: DB.password
     },
     pool: {
       min: 2,
@@ -39,9 +41,9 @@ const knexConfig: KnexConfig = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+      database: DB.name,
+      user:     DB.username,
+      password: DB.password
     },
     pool: {
       min: 2,
