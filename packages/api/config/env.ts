@@ -22,6 +22,6 @@ export const TWILIO = {
   api_key: process.env.TWILIO_API_KEY,
   api_secret: process.env.TWILIO_API_SECRET,
   sid: process.env.TWILIO_ACCOUNT_SID
-};
+}
 
 export const SECRET = process.env.PASSPORT_SECRET
