@@ -6,6 +6,10 @@ export async function up(knex: Knex): Promise<void> {
         table.increments('id').primary();
         table.string('names').nullable();
         table.string('surnames').nullable();
+        table.string('username').nullable();
+        table.string('summary').nullable();
+        table.string('linkedin').nullable();
+        table.string('twitter').nullable();
         table.timestamps();
         table.integer('user_id').unsigned();
         table.foreign('user_id').references('users.id').onDelete('cascade');
