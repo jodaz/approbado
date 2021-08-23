@@ -1,5 +1,6 @@
 // Update with your config settings.
-import { DB } from './config'
+import { DB } from './env'
+import path from 'path';
 
 interface KnexConfig {
   [key: string] : object;
@@ -18,7 +19,8 @@ const knexConfig: KnexConfig = {
       max: 10
     },
     migrations: {
-      tableName: 'migrations'
+      tableName: 'migrations',
+      directory: path.resolve(__dirname, '../migrations')
     }
   },
 
