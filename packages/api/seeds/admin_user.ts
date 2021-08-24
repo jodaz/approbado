@@ -1,8 +1,11 @@
 //@ts-nocheck
 import Knex from 'knex'
 import { USER } from '../config'
+import bcrypt from 'bcrypt'
 
 export async function seed(knex: Knex): Promise<void> {
+  const bcryptPassword = await bcrypt.hash(USER.password, 10);
+
   // Deletes ALL existing entries
   return knex('users').del()
     .then(function () {
@@ -11,7 +14,7 @@ export async function seed(knex: Knex): Promise<void> {
         {
           names: USER.name,
           email: USER.email,
-          password: USER.password,
+          password: bcryptPassword,
           rol: 'Administrador',
         },
       ]);
