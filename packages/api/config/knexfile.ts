@@ -21,6 +21,9 @@ const knexConfig: KnexConfig = {
     migrations: {
       tableName: 'migrations',
       directory: path.resolve(__dirname, '../migrations')
+    },
+    seeds: {
+      directory: path.resolve(__dirname, '../seeds')
     }
   },
 
