@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
+import path from 'path'
 
-dotenv.config({ path: '../.env' })
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 export const APP_ENV = process.env.APP_ENV || 'development'
 
@@ -20,10 +21,10 @@ export const DB = {
   password: process.env.DB_PASSWORD
 }
 
-export const TWILIO = {
-  api_key: process.env.TWILIO_API_KEY,
-  api_secret: process.env.TWILIO_API_SECRET,
-  sid: process.env.TWILIO_ACCOUNT_SID
+export const TWILIO_CREDS = {
+  auth_token: <string>process.env.TWILIO_AUTH_TOKEN,
+  service_id: <string>process.env.TWILIO_SERVICE_ID,
+  sid: <string>process.env.TWILIO_ACCOUNT_SID
 }
 
 export const SECRET = process.env.PASSPORT_SECRET
