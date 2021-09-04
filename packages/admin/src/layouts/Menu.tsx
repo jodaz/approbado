@@ -15,10 +15,10 @@ import users from '../users';
 const useStyles = makeStyles(theme => ({
   drawerPaper: {
     height: '900px',
+    backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.up('sm')]: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
     }
   },
   sectionName: {
@@ -28,9 +28,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '14px',
     fontWeigth: '700',
     letterSpacing: '0.2px'
-  },
-  menuLink: {
-    color: '#FFF5F6 !important'
   }
 }));
 
@@ -43,23 +40,23 @@ const Resources: React.FC<any> = ({
   useSelector((state: AppState) => state.theme);
 
   return (
-        <MenuItemLink
-          className={classes.menuLink}
-          to={users.name}
-          primaryText={users.options.label}
-          leftIcon={<users.icon />}
-          onClick={onMenuClick}
-          sidebarIsOpen={open}
-          dense={dense}
-        />
+    <MenuItemLink
+      className={classes.menuLink}
+      to={users.name}
+      primaryText={users.options.label}
+      leftIcon={<users.icon />}
+      onClick={onMenuClick}
+      sidebarIsOpen={open}
+      dense={dense}
+    />
   )
 }
 
 const Menu: React.FC<MenuProps> = ({ onMenuClick, dense = false }) => {
     const classes = useStyles();
-  const isXSmall = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('xs')
-  );
+    const isXSmall = useMediaQuery((theme: Theme) =>
+      theme.breakpoints.down('xs')
+    );
 
   return (
     <Box className={classes.drawerPaper}>

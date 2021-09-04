@@ -1,5 +1,5 @@
 const typography = {
-  fontFamily: '"Montserrat", sans-serif',
+  fontFamily: '"Roboto", sans-serif',
   fontSize: 14,
   fontStyle: "normal",
   fontWeightLight: 400,
@@ -24,23 +24,23 @@ const removeButtonStyles = {
 
 const palette = {
   primary: {
-    main: '#024B78',  // Verde oscuro
-    light: '#FFF5F6', // Blanco
+    main: '#07021A',  // Negro primario
+    light: '#FFFFFF', // Blanco
     dark: '#011C2C',  // Negro
   },
   secondary: {
-    main: '#0296B0',   // Verde
+    main: '#FFE835',   // Amarillo segundario
     light: '#E8E8E8',
     dark: '#283436', // Gray
   },
   error: {
-    main: '#E1303A',  // Rojo
+    main: '#E02340',  // Rojo
   },
   background: {
-    default: '#fff5f6'
+    default: '#FFFFFF'
   },
   info: {
-    main: '#0296B0'
+    main: '#206FCA' // Azul
   }
 };
 
@@ -77,18 +77,12 @@ const theme = {
     },
     RaMenuItemLink: {
       root: {
-        fontWeight: '700',
+        fontWeight: '400',
         fontSize: '14px',
       },
       active: {
-        color: '#FFF5F6 !important',
-        backgroundColor: 'rgba(225,48,58,0.5) !important',
+        color: 'yellow',
       },
-    },
-    MuiListItemIcon: {
-      root: {
-        color: '#FFF5F6 !important'
-      }
     },
     RaLabeled: {
       value: {
@@ -160,7 +154,14 @@ const theme = {
     },
     MuiInputBase: {
       input: {
-        background: '#fff'
+        borderRadius: 4,
+        backgroundColor: palette.primary.light,
+        padding: '10px 12px !important',
+        fontSize: 16,
+        border: '1px solid #ced4da',
+        '&:focus': {
+          borderColor: palette.primary.main
+        }
       }
     },
     MuiSnackbarContent: {
@@ -194,17 +195,6 @@ const theme = {
     MuiTablePagination: {
       select: {
         backgroundColor: `${palette.secondary.light} !important`
-      }
-    },
-    RaSimpleFormIterator: {
-      index: {
-        display: 'none'
-      },
-      form: {
-        width: '100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-        boxSizing: 'border-box'
       }
     },
     MuiTabs: {
@@ -243,7 +233,7 @@ const theme = {
     previews: {
       display: 'flex',
       justifyContent: 'center'
-    },
+    }
   },
   props: {
     MuiButtonBase: {
