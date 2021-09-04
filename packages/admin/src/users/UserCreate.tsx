@@ -1,4 +1,6 @@
+import * as React from 'react'
 import {
+    useMutation,
     TextInput,
     SelectInput,
     CreateProps,
@@ -102,12 +104,14 @@ const UserCreateForm = (props: any) => (
                         />
                     </Grid>
 
-                    <SaveButton
-                        handleSubmitWithRedirect={
-                            handleSubmitWithRedirect
-                        }
-                        saving={saving}
-                    />
+                    <Grid item xs={12}>
+                        <SaveButton
+                            handleSubmitWithRedirect={
+                                handleSubmitWithRedirect
+                            }
+                            saving={saving}
+                        />
+                    </Grid>
                 </Grid>
             </Box>
         )}
@@ -116,7 +120,21 @@ const UserCreateForm = (props: any) => (
 
 const UserCreate = (props: CreateProps) => {
     const createControllerProps = useCreateController(props);
-    const { save } = createControllerProps;
+    const [mutate] = useMutation();
+
+    const save = React.useCallback(async (values) => {
+        try {
+            await mutate({
+                type: 'create',
+                resource: 'users',
+                payload: { data: values }
+            }, { returnPromise: true })
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [mutate])
 
     return (
         <CreateContextProvider value={createControllerProps}>

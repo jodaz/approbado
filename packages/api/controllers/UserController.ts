@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import User from '../models/User'
 import bcrypt from 'bcrypt'
 import { ReqListQuery } from '../types'
+import { validationResult, ValidationError } from 'express-validator'
 
 const generateRandomPassword = () => {
     var length = 6,
@@ -27,7 +28,17 @@ export const index = async (req: Request<any, any, ReqListQuery, any>, res: Resp
     })
 }
 
+const errorFormatter = ({ msg }: ValidationError) => msg;
+
 export const store = async (req: Request, res: Response) => {
+    const errors = validationResult(req).formatWith(errorFormatter)
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({
+            errors: errors.mapped()
+        })
+    }
+
     const { email, random_pass, password, name, access } = req.body;
 
     let realPassword = random_pass ? generateRandomPassword() : password;
