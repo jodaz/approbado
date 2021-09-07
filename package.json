@@ -7,7 +7,7 @@
   "version": "1.0.0",
   "scripts": {
     "start:api": "yarn workspace @approbado/api run dev",
-    "start:admin": "yarn workspace @approbado/admin run start",
+    "start:ui": "yarn workspace @approbado/ui run start",
     "migrate": "yarn workspace @approbado/api run db:migrate",
     "seed": "yarn workspace @approbado/api run seed:run",
     "rollback": "yarn workspace @approbado/api run db:rollback"
