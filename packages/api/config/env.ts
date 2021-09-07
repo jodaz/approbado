@@ -27,4 +27,4 @@ export const TWILIO_CREDS = {
   sid: <string>process.env.TWILIO_ACCOUNT_SID
 }
 
-export const SECRET = process.env.PASSPORT_SECRET
+export const SECRET: string = process.env.PASSPORT_SECRET || 'SECRET_OR_KEY'
