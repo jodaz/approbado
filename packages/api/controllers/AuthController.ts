@@ -1,7 +1,37 @@
 import { Request, Response } from 'express'
 import { sendCode, verifyCode } from '../config';
+import jwt from 'jsonwebtoken'
+import { SECRET } from '../config'
 import bcrypt from 'bcrypt'
 import User from '../models/User'
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    const user = await User.query().findOne({
+        email: email
+    });
+
+    const match = await bcrypt.compare(password, user.password)
+
+    if (match) {
+        const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
+
+        return res.json({
+            success: true,
+            user: user,
+            token: token
+        })
+    }
+}
+
+export const logout = async (req: Request, res: Response) => {
+    await req.logout();
+
+    return res.status(201).json({
+        'success': true
+    })
+}
 
 export const sendSMSCode = async (req: Request, res: Response) => {
     const { phoneNumber } = req.body;

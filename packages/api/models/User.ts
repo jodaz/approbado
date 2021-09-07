@@ -2,6 +2,7 @@ import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
 class User extends Model {
+    id!: number;
     names!: string;
     password!: string;
     email!: string;

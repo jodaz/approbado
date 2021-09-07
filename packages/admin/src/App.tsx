@@ -1,17 +1,20 @@
 import { Admin, Resource } from 'react-admin'
 import users from './users'
-import apiProvider from 'ra-laravel-client'
+import { dataProvider, authProvider } from './providers'
 import Layout from './layouts'
+import Login from './layouts/Login'
 import { createBrowserHistory as createHistory } from 'history';
 
-const history = createHistory()
-const dataProvider = apiProvider('http://localhost:4000/api')
+// Other providers
+export const history = createHistory()
 
 const App = () => (
 	<Admin
 		history={history}
 		layout={Layout}
+		authProvider={authProvider}
 		dataProvider={dataProvider}
+		loginPage={Login}
 	>
 		<Resource {...users} />
 	</Admin>
