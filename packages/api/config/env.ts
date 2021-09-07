@@ -22,9 +22,9 @@ export const DB = {
 }
 
 export const TWILIO_CREDS = {
-  auth_token: <string>process.env.TWILIO_AUTH_TOKEN,
-  service_id: <string>process.env.TWILIO_SERVICE_ID,
-  sid: <string>process.env.TWILIO_ACCOUNT_SID
+  auth_token: <string>process.env.TWILIO_AUTH_TOKEN || '',
+  service_id: <string>process.env.TWILIO_SERVICE_ID || '',
+  sid: <string>process.env.TWILIO_ACCOUNT_SID || ''
 }
 
 export const SECRET: string = process.env.PASSPORT_SECRET || 'SECRET_OR_KEY'
