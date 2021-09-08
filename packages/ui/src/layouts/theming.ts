@@ -1,31 +1,33 @@
-const typography = {
-  fontFamily: '"Roboto", sans-serif',
-  fontSize: 14,
-  fontStyle: "normal",
-  fontWeightLight: 400,
-  fontWeightRegular: 500,
-  fontWeightMedium: 600,
-  fontWeightBold: 700,
-};
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-const typographyBase = {
-  fontFamily: typography.fontFamily,
-  fontSize: typography.fontSize,
-  fontStyle: typography.fontStyle,
-};
+// const typography = {
+//   fontFamily: '"Roboto", sans-serif',
+//   fontSize: 14,
+//   fontStyle: "normal",
+//   fontWeightLight: 400,
+//   fontWeightRegular: 500,
+//   fontWeightMedium: 600,
+//   fontWeightBold: 700,
+// };
 
-const removeButtonStyles = {
-  float: 'none',
-  display: 'flex',
-  justifyContent: 'center',
-  marginLeft: '2rem',
-  marginRight: '1rem',
-};
+// const typographyBase = {
+//   fontFamily: typography.fontFamily,
+//   fontSize: typography.fontSize,
+//   fontStyle: typography.fontStyle,
+// };
+
+// const removeButtonStyles = {
+//   float: 'none',
+//   display: 'flex',
+//   justifyContent: 'center',
+//   marginLeft: '2rem',
+//   marginRight: '1rem',
+// };
 
 const palette = {
   primary: {
     main: '#07021A',  // Negro primario
-    light: '#FFFFFF', // Blanco
+    light: '#B7B7B7', // Plomo cuaternario
     dark: '#011C2C',  // Negro
   },
   secondary: {
@@ -45,202 +47,108 @@ const palette = {
 };
 
 const theme = {
-  palette: { ...palette },
-  typography: {
-    ...typographyBase
-  },
+  palette: palette,
   shape: {
     borderRadius: 10,
   },
   overrides: {
-    MuiDialog: {
-      paper: {
-        borderRadius: 0
-      }
-    },
-    RaReferenceField: {
-      link: {
-        color: `${palette.primary.main} !important`,
-        fontWeight: '700 !important',
-        letterSpacing: '0.5px'
-      }
-    },
-    RaSidebar: {
-      drawerPaper: {
-        backgroundColor: '#024B78 !important'
-      }
-    },
-    MuiTypography: {
-      root: {
-        color: palette.primary.dark
-      }
+    RaLayout: {
+        content: {
+            marginTop: '4em'
+        },
+        appFrame: {
+            marginTop: '0 !important'
+        }
     },
     RaMenuItemLink: {
+        root: {
+            color: palette.primary.light
+        },
+        active: {
+            borderLeft: `5px solid ${palette.secondary.main}`,
+            backgroundColor: fade(palette.secondary.main, 0.16),
+            color: palette.secondary.main,
+            borderRadius: '6px'
+        },
+        icon: {
+            color: palette.primary.light
+        }
+    },
+    MuiDrawer: {
       root: {
-        fontWeight: '400',
-        fontSize: '14px',
-      },
-      active: {
-        color: 'yellow',
-      },
-    },
-    RaLabeled: {
-      value: {
-        backgroundColor: palette.primary.light,
-        borderRadius: '5px',
-        borderColor: palette.secondary.main,
-        borderStyle: 'solid',
-        borderWidth: '3px'
-      }
-    },
-    RaToolbar: {
-      toolbar: {
-        display: 'flex',
-        flexDirection: 'row',
-        backgroundColor: 'transparent',
-        justifyContent: "flex-end"
-      }
-    },
-    RaSaveButton: {
-      button: {
-        borderRadius: '0',
-        textTransform: 'capitalize'
+        backgroundColor: palette.primary.main
       }
     },
     MuiPaper: {
-      elevation1: {
-        boxShadow: 'none',
-      },
-      root: {
-        border: '1px solid #e0e0e3',
-        backgroundClip: 'padding-box',
-        borderRadius: '0 !important'
-      },
+        elevation1: {
+            boxShadow: 'none',
+        },
+        root: {
+            border: '1px solid #e0e0e3',
+            backgroundClip: 'padding-box',
+        },
     },
     MuiButton: {
-      root: {
-        borderRadius: 0
-      },
-      outlined: {
-        borderWidth: '1px !important'
-      },
-      contained: {
-        backgroundColor: '#fff',
-        color: '#4f3cc9',
-        boxShadow: 'none',
-      },
-    },
-    MuiAppBar: {
-      colorPrimary: {
-        color: palette.primary.dark,
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        border: '0'
-      }
-    },
-    MuiLinearProgress: {
-      colorPrimary: {
-        backgroundColor: '#f5f5f5',
-      },
-      barColorPrimary: {
-        backgroundColor: '#d7d7d7',
-      },
-    },
-    MuiFilledInput: {
-      root: {
-        borderTopLeftRadius: '0',
-        borderTopRightRadius: '0'
-      },
+        contained: {
+            backgroundColor: '#fff',
+            color: '#4f3cc9',
+            boxShadow: 'none',
+        },
     },
     MuiInputBase: {
-      input: {
-        borderRadius: 4,
-        backgroundColor: palette.primary.light,
-        padding: '10px 12px !important',
-        fontSize: 16,
-        border: '1px solid #ced4da',
-        '&:focus': {
-          borderColor: palette.primary.main
+        input: {
+          borderRadius: 4,
+          backgroundColor: palette.primary.light,
+          padding: '10px 12px !important',
+          fontSize: 16,
+          border: '1px solid #ced4da',
+          '&:focus': {
+            borderColor: palette.primary.main
+          }
         }
-      }
+    },
+    MuiAppBar: {
+        colorSecondary: {
+            color: '#808080',
+            backgroundColor: '#fff',
+        },
+    },
+    MuiLinearProgress: {
+        colorPrimary: {
+            backgroundColor: '#f5f5f5',
+        },
+        barColorPrimary: {
+            backgroundColor: '#d7d7d7',
+        },
+    },
+    MuiFilledInput: {
+        root: {
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            '&$disabled': {
+                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            },
+        },
+    },
+    RaToolbar: {
+        toolbar: {
+            display: 'flex',
+            flexDirection: 'row',
+            backgroundColor: 'transparent',
+            justifyContent: "flex-end"
+        }
     },
     MuiSnackbarContent: {
-      root: {
-        border: 'none',
-      },
+        root: {
+            border: 'none',
+        },
     },
-    RaLayout: {
-      appFrame: {
-        marginTop: '0 !important',
-      },
-      content: {
-        marginTop: '48px'
-      }
-    },
-    RaAutocompleteSuggestionList: {
-      suggestionsPaper: {
-        marginTop: '0 !important'
-      }
-    },
-    PrivateTabIndicator: {
-      colorPrimary: {
-        backgroundColor: palette.error.main
-      }
-    },
-    RaList: {
-      content: {
-        backgroundColor: `${palette.secondary.light} !important`
-      }
-    },
-    MuiTablePagination: {
-      select: {
-        backgroundColor: `${palette.secondary.light} !important`
-      }
-    },
-    MuiTabs: {
-      root: {
-        backgroundColor: palette.primary.main,
-        color: palette.primary.light
-      }
-    },
-    RaDatagrid: {
-      headerCell: {
-        borderRadius: '0 !important',
-        backgroundColor: palette.secondary.light,
-        fontWeight: 700
-      }
-    },
-    RaSkipToContentButton: {
-      skipToContentButton: {
-        display: 'none !important'
-      }
-    },
-    MuiToolbar: {
-      root: {
-        backgroundColor: 'inherit'
-      }
-    },
-    RaImageInput: {
-      removeButton: removeButtonStyles
-    },
-    RaFileInput: {
-      dropZone: {
-        padding: '0 2rem',
-        background: 'inherit !important'
-      },
-      removeButton: removeButtonStyles
-    },
-    previews: {
-      display: 'flex',
-      justifyContent: 'center'
-    }
   },
   props: {
     MuiButtonBase: {
-      // disable ripple for perf reasons
-      disableRipple: true,
+        // disable ripple for perf reasons
+        disableRipple: true,
     },
   },
-};
+}
 
 export default theme;
