@@ -12,6 +12,7 @@ import { AppState } from '../types';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
+    color: theme.palette.primary.main,
     marginLeft: '0.5em',
     marginRight: '0.5em',
   },

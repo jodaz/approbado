@@ -1,70 +1,44 @@
 import * as React from 'react';
-import ToggleSidebarButton from './ToggleSidebarButton'
 import { useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LabelIcon from '@material-ui/icons/Label';
 import { useMediaQuery, Theme, Box } from '@material-ui/core';
 import {
-  MenuItemLink,
-  MenuProps,
+    DashboardMenuItem,
+    MenuItemLink,
+    MenuProps,
 } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
-import { AppState } from '../types';
-// Modules
 import users from '../users';
+import { AppState } from '../types';
 
-const useStyles = makeStyles(theme => ({
-  drawerPaper: {
-    height: '900px',
-    backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-      flexDirection: 'column',
-    }
-  },
-  sectionName: {
-    textAlign: 'left',
-    padding: '1.2em',
-    color: theme.palette.primary.light,
-    fontSize: '14px',
-    fontWeigth: '700',
-    letterSpacing: '0.2px'
-  }
-}));
-
-const Resources: React.FC<any> = ({
-  classes,
-  dense,
-  onMenuClick,
-}) => {
-  const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
-  useSelector((state: AppState) => state.theme);
-
-  return (
-    <MenuItemLink
-      className={classes.menuLink}
-      to={users.name}
-      primaryText={users.options.label}
-      leftIcon={<users.icon />}
-      onClick={onMenuClick}
-      sidebarIsOpen={open}
-      dense={dense}
-    />
-  )
-}
-
-const Menu: React.FC<MenuProps> = ({ onMenuClick, dense = false }) => {
-    const classes = useStyles();
+const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
     const isXSmall = useMediaQuery((theme: Theme) =>
-      theme.breakpoints.down('xs')
+        theme.breakpoints.down('xs')
     );
+    const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
 
-  return (
-    <Box className={classes.drawerPaper}>
-    {' '}
-      { isXSmall && <ToggleSidebarButton /> }
-      <Resources classes={classes} />
-    </Box>
-  );
+    return (
+        <Box mt={1}>
+            {' '}
+            <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+            <MenuItemLink
+                to={users.name}
+                primaryText={users.options.label}
+                leftIcon={<users.icon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
+            <MenuItemLink
+                to="/configurations"
+                primaryText={'Configuraciones'}
+                leftIcon={<SettingsIcon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
+        </Box>
+    );
 };
 
 export default Menu;
