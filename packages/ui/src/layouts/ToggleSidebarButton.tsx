@@ -2,7 +2,9 @@ import * as React from 'react';
 import {
   Tooltip,
   IconButton,
-  makeStyles
+  makeStyles,
+  Theme,
+  useMediaQuery
 } from '@material-ui/core';
 import { toggleSidebar } from 'react-admin';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,52 +13,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../types';
 
 const useStyles = makeStyles(theme => ({
-  menuButton: {
-    color: theme.palette.primary.main,
-    marginLeft: '0.5em',
-    marginRight: '0.5em',
-  },
-  menuButtonIconClosed: {
-    transition: theme.transitions.create(['transform'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    transform: 'rotate(0deg)',
-  },
-  menuButtonIconOpen: {
-    transition: theme.transitions.create(['transform'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    transform: 'rotate(180deg)',
-  },
+    menuButton: {
+        color: (props: any) => 
+          !props.isXSmall ? theme.palette.primary.main
+          : theme.palette.secondary.main,
+        marginLeft: '0.5em',
+        marginRight: '0.5em',
+    }
 }));
 
 const ToggleSidebarButton: React.FC = () => {
-  const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
-  const dispatch = useDispatch();
-  const classes = useStyles();
+    const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
+    const dispatch = useDispatch();
+    const isXSmall = useMediaQuery<Theme>(theme =>
+        theme.breakpoints.down('xs')
+    );
+    const classes = useStyles({
+        isXSmall: isXSmall
+    });
 
-  return (
-    <Tooltip
-      title={'Abrir/Cerrar menu'}
-      enterDelay={500}
-    >
-      <IconButton
-        color="inherit"
-        onClick={() => dispatch(toggleSidebar())}
-        className={classNames(classes.menuButton)}
-      >
-        <MenuIcon
-          classes={{
-            root: open
-              ? classes.menuButtonIconOpen
-              : classes.menuButtonIconClosed,
-          }}
-        />
-      </IconButton>
-    </Tooltip>
-  );
+    return (
+        <Tooltip
+            title={open ? 'Cerrar menú' : 'Abrir menú'}
+            enterDelay={500}
+        >
+            <IconButton
+                color="inherit"
+                onClick={() => dispatch(toggleSidebar())}
+                className={classNames(classes.menuButton)}
+            >
+                <MenuIcon />
+            </IconButton>
+        </Tooltip>
+    );
 };
 
 export default ToggleSidebarButton;
