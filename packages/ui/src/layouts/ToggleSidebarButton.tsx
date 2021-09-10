@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {
-  Tooltip,
-  IconButton,
-  makeStyles,
-  Theme,
-  useMediaQuery
+    Tooltip,
+    IconButton,
+    makeStyles,
+    Theme,
+    useMediaQuery
 } from '@material-ui/core';
 import { toggleSidebar } from 'react-admin';
 import MenuIcon from '@material-ui/icons/Menu';

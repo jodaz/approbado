@@ -81,8 +81,8 @@ const CategoryCreate = (props: CreateProps) => {
 }
 
 CategoryCreate.defaultProps = {
-    basePath: '/levels',
-    resource: 'levels'
+    basePath: '/categories',
+    resource: 'categories'
 }
 
 export default CategoryCreate

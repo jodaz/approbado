@@ -7,6 +7,8 @@ import Divider from '@material-ui/core/Divider'
 import makeStyles from '@material-ui/styles/makeStyles'
 // Components
 import LevelsList from './LevelsList'
+import CategoriesList from './CategoryList'
+import TriviaSettings from './TriviaSettings'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -34,10 +36,11 @@ const Module: React.FC<{currentTab: string}> = ({ currentTab }) => {
     if (currentTab === 'niveles') {
         return <LevelsList />
     } else if (currentTab === 'trivia') {
-        return <Typography component='h1' variant='h5'>trivia</Typography>
-    } else {
-        return <Typography component='h1' variant='h5'>Categorías</Typography>
+        return <TriviaSettings />
+    } else if (currentTab === 'categorías') {
+        return <CategoriesList />
     }
+    return null;
 }
 
 const Configurations = () => {
