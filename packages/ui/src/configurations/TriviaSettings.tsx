@@ -1,43 +1,39 @@
 import * as React from 'react'
 import {
     TextInput,
-    CreateProps,
+    SelectInput,
+    EditProps,
     FormWithRedirect,
     SaveButton,
-    useCreateController,
+    useEditController,
     useMutation,
-    CreateContextProvider
+    EditContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 
 interface FormValues {
-    name?: string;
+    grant_certification?: number;
+    time_limit?: number;
 }
 
 const validate = (values: FormValues) => {
     const errors: FormValues = {};
   
-    if (!values.name) {
-      errors.name = "Ingrese un nombre para el nuevo nivel.";
-    }
-  
     return errors;
 };
 
-const LevelCreateForm = (props: any) => (
+const TriviaSettingsForm = (props: any) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
             <Box maxWidth="90em" padding='1em'>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="name" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
+                        <InputLabel>Tiempo límite de trivia</InputLabel>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={6}>
+                        <InputLabel>¿Otorgar certificado de finalización?</InputLabel>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -55,15 +51,15 @@ const LevelCreateForm = (props: any) => (
 );
 
 
-const LevelCreate = (props: CreateProps) => {
-    const createControllerProps = useCreateController(props);
+const TriviaSettings = (props: EditProps) => {
+    const editControllerProps = useEditController(props);
     const [mutate] = useMutation();
 
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'create',
-                resource: 'levels',
+                type: 'update',
+                resource: 'trivia-settings',
                 payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
@@ -74,15 +70,15 @@ const LevelCreate = (props: CreateProps) => {
     }, [mutate])
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <LevelCreateForm save={save} validate={validate} />
-        </CreateContextProvider>
+        <EditContextProvider value={editControllerProps}>
+            <TriviaSettingsForm save={save} validate={validate} />
+        </EditContextProvider>
     )
 }
 
-LevelCreate.defaultProps = {
-    basePath: '/levels',
-    resource: 'levels'
+TriviaSettings.defaultProps = {
+    basePath: '/categories',
+    resource: 'categories'
 }
 
-export default LevelCreate
+export default TriviaSettings

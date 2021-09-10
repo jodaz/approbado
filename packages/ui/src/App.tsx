@@ -13,8 +13,9 @@ const App = () => (
 		dataProvider={dataProvider}
 	>
 		<Resource {...users} />
-		<Resource name='levels' />
-		<Resource name='categories' />
+		<Resource name="levels" />
+		<Resource name="trivia-settings" />
+		<Resource name="categories" />
 	</Admin>
 )
 
