@@ -11,9 +11,6 @@
     "db:rollback": "knex migrate:rollback --knexfile config/knexfile"
   },
   "dependencies": {
-    "@types/nodemailer": "^6.4.4",
-    "@types/passport-facebook": "^2.1.11",
-    "@types/passport-google-oauth": "^1.0.42",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -35,11 +32,12 @@
     "twilio": "^3.67.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.13",
-    "@types/passport": "^1.0.7",
-    "@types/passport-jwt": "^3.0.6",
-    "ts-node": "^10.2.1"
+    "rimraf": "^3.0.2"
+  },
+  "babel": {
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+      ["@babel/transform-runtime"]
+    ]
   }
 }
