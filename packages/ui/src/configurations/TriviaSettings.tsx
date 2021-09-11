@@ -55,6 +55,7 @@ const TriviaSettings = (props: EditProps) => {
     const editControllerProps = useEditController(props);
     const [mutate] = useMutation();
 
+    /**
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
@@ -68,17 +69,21 @@ const TriviaSettings = (props: EditProps) => {
             }
         }
     }, [mutate])
+     **/
+
+    const { record, save } = editControllerProps;
 
     return (
         <EditContextProvider value={editControllerProps}>
-            <TriviaSettingsForm save={save} validate={validate} />
+            <TriviaSettingsForm save={save} record={record} validate={validate} />
         </EditContextProvider>
     )
 }
 
 TriviaSettings.defaultProps = {
-    basePath: '/categories',
-    resource: 'categories'
+    basePath: '/trivia-settings',
+    resource: 'trivia-settings',
+    id: 1
 }
 
 export default TriviaSettings
