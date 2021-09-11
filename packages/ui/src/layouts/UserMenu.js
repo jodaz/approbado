@@ -1,5 +1,4 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
 import { useGetIdentity } from 'react-admin'
 import {
   Tooltip,
@@ -10,7 +9,6 @@ import {
   Typography,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import ArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const UserMenu: React.FC<any> = props => {
+const UserMenu= props => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const { loaded, identity } = useGetIdentity()
   const classes = useStyles(props);
@@ -43,7 +41,7 @@ const UserMenu: React.FC<any> = props => {
   const { children, icon, logout } = props
   if (!logout && !children) return null
   const open = Boolean(anchorEl)
-  const handleMenu = (event: any) => setAnchorEl(event.currentTarget)
+  const handleMenu = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
 
   return (
@@ -57,17 +55,17 @@ const UserMenu: React.FC<any> = props => {
           size={'small'}
           className={classes.usernameButton}
         >
-          {loaded && identity!.avatar ? (
+          {loaded && identity.avatar ? (
             <>
               <Avatar
                 className={classes.avatar}
-                src={`${process.env.REACT_APP_API_DOMAIN}/`+identity!.avatar}
-                alt={identity!.full_name}
+                src={`${process.env.REACT_APP_API_DOMAIN}/`+identity.avatar}
+                alt={identity.full_name}
               />
               <div className={classes.usernameContainer}>
-                <Typography variant={'subtitle1'}>{identity!.full_name}</Typography>
+                <Typography variant={'subtitle1'}>{identity.full_name}</Typography>
                 <Typography variant='subtitle2'>
-                  {identity!.roles[0].name}
+                  {identity.roles[0].name}
                 </Typography>
               </div>
               <ArrowDown />
@@ -102,17 +100,6 @@ const UserMenu: React.FC<any> = props => {
       </Popover>
     </div>
   )
-}
-
-UserMenu.propTypes = {
-  children: PropTypes.node,
-  label: PropTypes.string.isRequired,
-  logout: PropTypes.element,
-}
-
-UserMenu.defaultProps = {
-  label: 'menu.settings',
-  icon: <AccountCircle />,
 }
 
 export default UserMenu

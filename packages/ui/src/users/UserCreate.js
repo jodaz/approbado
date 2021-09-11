@@ -3,7 +3,6 @@ import {
     useMutation,
     TextInput,
     SelectInput,
-    CreateProps,
     FormWithRedirect,
     BooleanInput,
     useCreateController,
@@ -19,15 +18,8 @@ const ACCESS_TYPES = [
     { id: 'moderador', name: 'Moderador' }
 ]
 
-interface FormValues {
-  name?: string;
-  email?: string;
-  password?: string;
-  random_pass?: boolean;
-}
-
-const validate = (values: FormValues) => {
-  const errors: FormValues = {};
+const validate = (values) => {
+  const errors = {};
 
   if (!values.name) {
     errors.name = "Ingrese el nombre.";
@@ -43,7 +35,7 @@ const validate = (values: FormValues) => {
 };
 
 
-const PasswordInput = (props: any) => {
+const PasswordInput = (props) => {
     const { values } = useFormState();
     
     if (!values.random_pass) {
@@ -63,7 +55,7 @@ const PasswordInput = (props: any) => {
     return null;
 }
 
-const UserCreateForm = (props: any) => (
+const UserCreateForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
@@ -118,7 +110,7 @@ const UserCreateForm = (props: any) => (
     />
 );
 
-const UserCreate = (props: CreateProps) => {
+const UserCreate = (props) => {
     const createControllerProps = useCreateController(props);
     const [mutate] = useMutation();
 

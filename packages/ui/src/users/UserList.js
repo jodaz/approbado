@@ -1,11 +1,10 @@
 import { 
     List,
     Datagrid,
-    TextField,
-    ListProps
+    TextField
 } from 'react-admin'
 
-const UserList = (props: ListProps) => (
+const UserList = (props) => (
     <List {...props}>
         <Datagrid>
             <TextField source="names" />

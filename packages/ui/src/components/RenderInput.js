@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 
 const renderInput = ({
-  meta: { touched, error } = { touched: false, error: undefined },
+  meta: { touched, error } = { touched, error },
   input: { ...inputProps },
   ...props
 }) => (

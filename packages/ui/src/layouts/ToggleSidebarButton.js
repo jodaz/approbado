@@ -10,11 +10,10 @@ import { toggleSidebar } from 'react-admin';
 import MenuIcon from '@material-ui/icons/Menu';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { AppState } from '../types';
 
 const useStyles = makeStyles(theme => ({
     menuButton: {
-        color: (props: any) => 
+        color: (props) => 
           !props.isXSmall ? theme.palette.primary.main
           : theme.palette.secondary.main,
         marginLeft: '0.5em',
@@ -22,10 +21,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ToggleSidebarButton: React.FC = () => {
-    const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
+const ToggleSidebarButton = () => {
+    const open = useSelector(state => state.admin.ui.sidebarOpen);
     const dispatch = useDispatch();
-    const isXSmall = useMediaQuery<Theme>(theme =>
+    const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
     const classes = useStyles({
