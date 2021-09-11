@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { SECRET } from '../config'
 import bcrypt from 'bcrypt'
 import User from '../models/User'
+import Profile from '../models/Profile'
 
 export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -60,13 +61,19 @@ export const verifySMSCode = async (req: Request, res: Response) => {
 
         const encryptedPassword = await bcrypt.hash(password, 10);
 
-        await User.query().insert({
+        const user = await User.query().insert({
             names: names,
             password: encryptedPassword,
             rol: 'USER',
             email: email,
             phone: phoneNumber
         })
+
+        await Profile.query().insert({
+            user_id: user.id
+        })
+
+        // Send an email notifying to the user its signup
 
         return res.json({
             message: 'Código aceptado',
