@@ -1,6 +1,5 @@
 {
-  "ignore": [".git", "node_modules", "seeds", "migrations", "models", "dist"],
-  "watch": ["./"],
-  "exec": "npm run start",
-  "ext": "ts"
+  "ignore": [".git", "node_modules", "./src/seeds", "./src/migrations", "dist"],
+  "watch": ["./src"],
+  "exec": "npm run start"
 }
