@@ -12,3 +12,15 @@ export const emailExists: CustomValidator = async value => {
 
     return true
 }
+
+export const phoneExists: CustomValidator = async value => {
+    const user = await User.query().findOne({
+        phone: value
+    });
+
+    if (user) {
+        throw new Error("Este teléfono ha sido registrado.")
+    }
+
+    return true
+}
