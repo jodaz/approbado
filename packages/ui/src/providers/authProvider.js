@@ -1,4 +1,3 @@
-import { AuthProvider } from 'react-admin';
 import { dataProvider } from './dataProvider';
 
 const CONFIG_NAMES = {
@@ -7,7 +6,7 @@ const CONFIG_NAMES = {
   PERMISSIONS: `${process.env.REACT_APP_PERMISSIONS_NAME}`,
 }
 
-export const authProvider: AuthProvider = {
+export const authProvider = {
   login: async (data) => {
     const response = await dataProvider.post('auth/login', data);
 

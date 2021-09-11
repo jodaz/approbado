@@ -1,39 +1,38 @@
 import * as React from 'react'
 import {
     TextInput,
-    SelectInput,
-    EditProps,
     FormWithRedirect,
     SaveButton,
-    useEditController,
+    useCreateController,
     useMutation,
-    EditContextProvider
+    CreateContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 
-interface FormValues {
-    grant_certification?: number;
-    time_limit?: number;
-}
-
-const validate = (values: FormValues) => {
-    const errors: FormValues = {};
+const validate = (values) => {
+    const errors = {};
+  
+    if (!values.name) {
+      errors.name = "Ingrese un nombre para la nueva categoría.";
+    }
   
     return errors;
 };
 
-const TriviaSettingsForm = (props: any) => (
+const CategoryCreateForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
             <Box maxWidth="90em" padding='1em'>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Tiempo límite de trivia</InputLabel>
-                    </Grid>
-
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>¿Otorgar certificado de finalización?</InputLabel>
+                        <InputLabel>Nombre</InputLabel>
+                        <TextInput 
+                            label={false}
+                            source="name" 
+                            placeholder="Nombre"
+                            fullWidth
+                        />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -51,16 +50,15 @@ const TriviaSettingsForm = (props: any) => (
 );
 
 
-const TriviaSettings = (props: EditProps) => {
-    const editControllerProps = useEditController(props);
+const CategoryCreate = (props) => {
+    const createControllerProps = useCreateController(props);
     const [mutate] = useMutation();
 
-    /**
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'update',
-                resource: 'trivia-settings',
+                type: 'create',
+                resource: 'categories',
                 payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
@@ -69,21 +67,17 @@ const TriviaSettings = (props: EditProps) => {
             }
         }
     }, [mutate])
-     **/
-
-    const { record, save } = editControllerProps;
 
     return (
-        <EditContextProvider value={editControllerProps}>
-            <TriviaSettingsForm save={save} record={record} validate={validate} />
-        </EditContextProvider>
+        <CreateContextProvider value={createControllerProps}>
+            <CategoryCreateForm save={save} validate={validate} />
+        </CreateContextProvider>
     )
 }
 
-TriviaSettings.defaultProps = {
-    basePath: '/trivia-settings',
-    resource: 'trivia-settings',
-    id: 1
+CategoryCreate.defaultProps = {
+    basePath: '/categories',
+    resource: 'categories'
 }
 
-export default TriviaSettings
+export default CategoryCreate

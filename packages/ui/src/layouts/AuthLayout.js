@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withTypes } from 'react-final-form';
+import { Form } from 'react-final-form';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { Notification, useAuthState, usePermissions, useRedirect } from 'react-admin';
 import Theming from './theming';
@@ -72,9 +72,7 @@ export const useChildrenClasses = makeStyles(theme => ({
   }
 }));
 
-const { Form } = withTypes<any>();
-
-const AuthenticationView: React.FC<AuthenticationViewProps> = ({ validate, handleSubmit, children }) => {
+const AuthenticationView = ({ validate, handleSubmit, children }) => {
   const rootClasses = useStyles();
   const redirect = useRedirect();
   const { loading: loadingAuth, authenticated } = useAuthState();
@@ -110,15 +108,7 @@ const AuthenticationView: React.FC<AuthenticationViewProps> = ({ validate, handl
   );
 };
 
-interface AuthenticationViewProps {
-  handleSubmit: any;
-  validate: any;
-  authProvider: any;
-  previousRoute: any;
-  children: any
-};
-
-export const AuthenticationViewWithTheme = (props: any) => (
+export const AuthenticationViewWithTheme = (props) => (
   <ThemeProvider theme={createMuiTheme(Theming)}>
     <AuthenticationView {...props} />
   </ThemeProvider>

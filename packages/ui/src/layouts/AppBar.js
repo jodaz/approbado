@@ -2,21 +2,19 @@ import {
     makeStyles,
     Toolbar,
     useMediaQuery,
-    Theme,
     AppBar as MuiAppBar
 } from '@material-ui/core';
 import UserMenu from './UserMenu';
 // Icons
 import ToggleSidebarButton from './ToggleSidebarButton';
-import { AppState } from '../types';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
         root: {
-            backgroundColor: (props: any) => 
+            backgroundColor: (props) => 
                 props.isXSmall ? theme.palette.primary.main
                 : theme.palette.background.default,
-            width: (props: any) => 
+            width: (props) => 
                 !props.isOpenSidebar && (!props.isXSmall) // Large screens
                     ? `calc(100% - 55px)` 
                 : (props.isXSmall) // Small screen
@@ -31,7 +29,7 @@ const useStyles = makeStyles(theme => ({
             justifyContent: 'space-between',
             paddingRight: 24,
             backgroundColor: 'transparent',
-            flexDirection: (props: any) => 
+            flexDirection: (props) => 
                 props.isXSmall 
                     ? 'row-reverse'
                     : 'row',
@@ -47,11 +45,11 @@ const useStyles = makeStyles(theme => ({
 );
   
 
-const AppBar = (props: any) => {
-    const isXSmall = useMediaQuery<Theme>(theme =>
+const AppBar = (props) => {
+    const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
-    const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
+    const open = useSelector(state => state.admin.ui.sidebarOpen);
     const classes = useStyles({
         isOpenSidebar: open,
         isXSmall: isXSmall

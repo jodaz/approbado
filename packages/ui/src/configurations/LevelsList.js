@@ -11,39 +11,41 @@ import {
 } from 'react-admin'
 import Button from '@material-ui/core/Button'
 
-const CategoriesFilter: React.FC = props => (
+const LevelsFilter = props => (
     <Filter {...props}>
-        <TextInput label="Buscar" source='name' alwaiesOn />
+        <TextInput label="Buscar" source='name' alwaysOn />
     </Filter>
 );
 
-const CategoriesDatagrid: React.FC = () => (
+const LevelsDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
     </Datagrid>
 );
 
-const CategoryList = (props: ListProps) => {
+const LevelList = (props) => {
     const redirect = useRedirect();
+
     return (
         <ReferenceManyField
             addLabel={false}
-            reference='categories'
+            reference='levels'
             target='id'
             sort={{ field: 'created_at', order: 'DESC' }}
             perPage={10}
         >
             <>
                 <TopToolbar>
-                    <Button onClick={() => redirect('/configurations/categories/create')}>
-                        Crear
+                    <LevelsFilter />
+                    <Button onClick={() => redirect('/configurations/levels/create')}>
+                        Agregar nivel
                     </Button>
                 </TopToolbar>
-                <CategoriesDatagrid />
+                <LevelsDatagrid />
                 <Pagination />
             </>
         </ReferenceManyField>
     );
 }
 
-export default CategoryList
+export default LevelList
