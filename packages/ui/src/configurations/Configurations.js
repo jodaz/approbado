@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 
 const tags = ['categorías', 'niveles', 'trivia'];
 
-const Module: React.FC<{currentTab: string}> = ({ currentTab }) => {
+const Module = ({ currentTab }) => {
     if (currentTab === 'niveles') {
         return <LevelsList />
     } else if (currentTab === 'trivia') {
@@ -44,10 +44,10 @@ const Module: React.FC<{currentTab: string}> = ({ currentTab }) => {
 }
 
 const Configurations = () => {
-    const [currentTab, setCurrentTab] = React.useState<string>('categorías');
+    const [currentTab, setCurrentTab] = React.useState('categorías');
     const classes = useStyles();
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    const handleChange = (event, newValue) => {
         setCurrentTab(newValue);
     };
 

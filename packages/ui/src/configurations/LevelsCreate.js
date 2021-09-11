@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     TextInput,
-    CreateProps,
     FormWithRedirect,
     SaveButton,
     useCreateController,
@@ -10,21 +9,17 @@ import {
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 
-interface FormValues {
-    name?: string;
-}
-
-const validate = (values: FormValues) => {
-    const errors: FormValues = {};
+const validate = (values) => {
+    const errors = {};
   
     if (!values.name) {
-      errors.name = "Ingrese un nombre para la nueva categoría.";
+      errors.name = "Ingrese un nombre para el nuevo nivel.";
     }
   
     return errors;
 };
 
-const CategoryCreateForm = (props: any) => (
+const LevelCreateForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
@@ -55,7 +50,7 @@ const CategoryCreateForm = (props: any) => (
 );
 
 
-const CategoryCreate = (props: CreateProps) => {
+const LevelCreate = (props) => {
     const createControllerProps = useCreateController(props);
     const [mutate] = useMutation();
 
@@ -63,7 +58,7 @@ const CategoryCreate = (props: CreateProps) => {
         try {
             await mutate({
                 type: 'create',
-                resource: 'categories',
+                resource: 'levels',
                 payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
@@ -75,14 +70,14 @@ const CategoryCreate = (props: CreateProps) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <CategoryCreateForm save={save} validate={validate} />
+            <LevelCreateForm save={save} validate={validate} />
         </CreateContextProvider>
     )
 }
 
-CategoryCreate.defaultProps = {
-    basePath: '/categories',
-    resource: 'categories'
+LevelCreate.defaultProps = {
+    basePath: '/levels',
+    resource: 'levels'
 }
 
-export default CategoryCreate
+export default LevelCreate

@@ -14,13 +14,8 @@ import { Link } from 'react-router-dom';
 import renderInput from '../components/RenderInput';
 import { AuthenticationViewWithTheme, useChildrenClasses } from './AuthLayout';
 
-interface FormValues {
-  email?: string;
-  password?: string;
-}
-
-const validate = (values: FormValues) => {
-  const errors: FormValues = {};
+const validate = (values) => {
+  const errors = {};
   if (!values.email) {
     errors.email = "Ingrese su correo electrónico";
   }
@@ -31,19 +26,19 @@ const validate = (values: FormValues) => {
 };
 
 const Login = () => {
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState(false);
   const classes = useChildrenClasses();
   const notify = useNotify();
   const login = useLogin();
-  const location = useLocation<{ nextPathname: string } | null>();
+  const location = useLocation();
   const { loading: loadingAuth, authenticated } = useAuthState();
   const redirect = useRedirect();
 
-  const handleSubmit = (auth: FormValues) => {
+  const handleSubmit = (auth) => {
     setLoading(true);
     login(auth, location.state ? location.state.nextPathname : '/')
       .catch(
-      (error: Error) => {
+      (error) => {
         setLoading(false);
         notify('Crendenciales inválidas', 'warning');
       }
@@ -129,7 +124,7 @@ Login.propTypes = {
   previousRoute: PropTypes.string,
 };
 
-const LoginWithTheme = (props: any) => (
+const LoginWithTheme = (props) => (
   <ThemeProvider theme={createMuiTheme(Theming)}>
     <Login {...props} />
   </ThemeProvider>

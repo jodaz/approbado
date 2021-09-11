@@ -1,21 +1,19 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LabelIcon from '@material-ui/icons/Label';
-import { useMediaQuery, Theme, Box } from '@material-ui/core';
+import { useMediaQuery, Box } from '@material-ui/core';
 import {
     DashboardMenuItem,
     MenuItemLink,
     MenuProps,
 } from 'react-admin';
 import users from '../users';
-import { AppState } from '../types';
 
-const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
-    const isXSmall = useMediaQuery((theme: Theme) =>
+const Menu = ({ onMenuClick, logout, dense = false }) => {
+    const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
-    const open = useSelector((state: AppState) => state.admin.ui.sidebarOpen);
+    const open = useSelector(state => state.admin.ui.sidebarOpen);
 
     return (
         <Box mt={1}>
