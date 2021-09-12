@@ -1,8 +1,7 @@
-import express, { Application, Request, Response } from 'express'
+import express from 'express'
 import helmet from 'helmet'
-import { APP_PORT, cors, authMiddleware } from './config'
+import { APP_PORT, cors } from './config'
 import routes from './routes'
-import passport from 'passport'
 
 // Set up server
 const app = express()
