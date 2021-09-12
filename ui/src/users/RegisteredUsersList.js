@@ -19,7 +19,7 @@ const UserList = (props) => (
         target='id'
         sort={{ field: 'created_at', order: 'DESC' }}
         perPage={10}
-        filter={{ access: 'CLIENTE' }}
+        filter={{ is_registered: true }}
     >
         <>
             <UsersDatagrid />
