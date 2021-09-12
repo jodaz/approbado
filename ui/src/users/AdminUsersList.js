@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button'
 
 const UsersDatagrid = () => (
     <Datagrid optimized>
-        <TextField source="access" label="Acceso" />
+        <TextField source="rol" label="Acceso" />
         <TextField source="names" label='Nombre' />
         <TextField source="email" label='Correo electrónico' />
     </Datagrid>
@@ -25,7 +25,7 @@ const UserList = (props) => {
             target='id'
             sort={{ field: 'created_at', order: 'DESC' }}
             perPage={10}
-            filter={{ access: 'MODERADOR' }}
+            filter={{ is_registered: false }}
         >
             <>
                 <TopToolbar>

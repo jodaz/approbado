@@ -1,4 +1,3 @@
-// Update with your config settings.
 import { DB } from './env'
 import path from 'path';
 
