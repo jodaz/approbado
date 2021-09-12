@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { validateRequest, getRandomPass } from '../utils'
 
 export const index = async (req, res) => {
-    const { page, perPage } = req.query
+    const { page, perPage, filter } = req.query
 
     const users = await User.query()
         .page(page, perPage)
