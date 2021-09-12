@@ -42,7 +42,7 @@ const palette = {
     default: '#FFFFFF'
   },
   info: {
-    main: '#206FCA' // Azul
+    main: '#2280ED' // Azul primario
   }
 };
 
@@ -54,7 +54,8 @@ const theme = {
   overrides: {
     RaLayout: {
         content: {
-            marginTop: '4em'
+            marginTop: '4em',
+            padding: '0 2em !important'
         },
         appFrame: {
             marginTop: '0 !important'
@@ -142,6 +143,16 @@ const theme = {
             border: 'none',
         },
     },
+    RaSidebar: {
+      root: {
+        height: '100vh'
+      }
+    },
+    PrivateTabIndicator: {
+      colorPrimary: {
+        backgroundColor: palette.info.main
+      }
+    }
   },
   props: {
     MuiButtonBase: {
