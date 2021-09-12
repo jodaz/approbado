@@ -1,13 +1,13 @@
-import Category from '../models/Category'
+import Level from '../models/Level'
 import { validateRequest } from '../utils'
 
 export const index = async (req, res) => {
     const { page, perPage } = req.query
 
-    const categories = await Category.query()
+    const levels = await Level.query()
         .page(page, perPage)
 
-    const { results: data, total } = categories;
+    const { results: data, total } = levels;
     
     return res.json({
         data,
@@ -21,7 +21,7 @@ export const store = async (req, res) => {
     if (!reqErrors) {
         const { name } = req.body;
     
-        const model = await Category.query().insert({
+        const model = await Level.query().insert({
             name: name,
         })
     
@@ -32,18 +32,14 @@ export const store = async (req, res) => {
 export const update = async (req, res) => {
     const { id } = req.params
 
-    const { name } = req.body;
-
-    const model = await Category.query().updateAndFetchById(id, {
-        name: name,
-    })
+    const model = await Level.query().updateAndFetchById(id, req.body)
 
     return res.status(201).json(model)
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Category.query().findById(id).delete();
+    const model = await Level.query().findById(id).delete().returning('*');
     
     return res.json(model);
 }
