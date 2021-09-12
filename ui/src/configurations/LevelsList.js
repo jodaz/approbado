@@ -1,7 +1,6 @@
 import { 
     Datagrid,
     TextField,
-    ListProps,
     ReferenceManyField,
     Pagination,
     Filter,

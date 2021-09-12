@@ -5,8 +5,13 @@ import { validateRequest, getRandomPass } from '../utils'
 export const index = async (req, res) => {
     const { page, perPage, filter } = req.query
 
-    const users = await User.query()
-        .page(page, perPage)
+    const query = User.query()
+
+    if (filter.is_registered) {
+        query.where('is_registered', filter.is_registered)
+    }
+
+    const users = await query.page(page, perPage)
 
     const { results: data, total } = users;
     
@@ -29,6 +34,7 @@ export const store = async (req, res) => {
             names: name,
             email: email,
             password: encryptedPassword,
+            is_registered: false,
             rol: access
         })
     
