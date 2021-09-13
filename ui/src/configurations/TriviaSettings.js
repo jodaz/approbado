@@ -1,8 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
-    SelectInput,
-    EditProps,
     FormWithRedirect,
     SaveButton,
     useEditController,
@@ -46,7 +43,7 @@ const TriviaSettingsForm = (props) => (
 );
 
 
-const TriviaSettings = (props: EditProps) => {
+const TriviaSettings = (props) => {
     const editControllerProps = useEditController(props);
     const [mutate] = useMutation();
 

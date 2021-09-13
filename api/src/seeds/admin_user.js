@@ -15,6 +15,7 @@ export async function seed(knex) {
           names: USER.name,
           email: USER.email,
           password: bcryptPassword,
+          is_registered: false,
           rol: 'Administrador',
         },
       ]);
