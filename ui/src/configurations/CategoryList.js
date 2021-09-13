@@ -9,6 +9,7 @@ import {
     TextInput
 } from 'react-admin'
 import Button from '@material-ui/core/Button'
+import EditButton from '../components/EditButton'
 
 const CategoriesFilter = props => (
     <Filter {...props}>
@@ -19,6 +20,7 @@ const CategoriesFilter = props => (
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
+        <EditButton />
     </Datagrid>
 );
 
