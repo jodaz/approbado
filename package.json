@@ -9,8 +9,8 @@
     "start:all": "npm-run-all start:api start:ui",
     "start:api": "npm run watch:dev --prefix api",
     "start:ui": "npm run start --prefix ui",
-    "migrate": "npm run @approbado/api run db:migrate",
-    "seed": "npm run @approbado/api run seed:run",
-    "rollback": "npm run @approbado/api run db:rollback"
+    "migrate": "npm run db:migrate --prefix api",
+    "seed": "npm run seed:run --prefix api",
+    "rollback": "npm run db:rollbac --prefix apik"
   }
 }

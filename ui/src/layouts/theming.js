@@ -99,14 +99,21 @@ const theme = {
     MuiInputBase: {
         input: {
           borderRadius: 4,
-          backgroundColor: palette.primary.light,
+          backgroundColor: palette.background.default,
           padding: '10px 12px !important',
           fontSize: 16,
           border: '1px solid #ced4da',
+          borderRadius: '5px',
+          transition: "none",
           '&:focus': {
             borderColor: palette.primary.main
           }
         }
+    },
+    MuiInputLabel: {
+      animated: {
+        transition: 'none'
+      }
     },
     MuiAppBar: {
         colorSecondary: {
@@ -125,6 +132,7 @@ const theme = {
     MuiFilledInput: {
         root: {
             backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            transition: "none",
             '&$disabled': {
                 backgroundColor: 'rgba(0, 0, 0, 0.04)',
             },
