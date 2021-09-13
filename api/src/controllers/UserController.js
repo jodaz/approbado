@@ -21,25 +21,47 @@ export const index = async (req, res) => {
     })
 }
 
+export const show = async (req, res) => {
+    const { id } = req.params
+
+    const model = await User.query().findById(id)
+
+    return res.status(201).json(model)
+}
+
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
     
     if (!reqErrors) {
-        const { email, random_pass, password, name, access } = req.body;
+        const { random_pass, password, ...rest } = req.body;
     
-        let realPassword = random_pass ? getRandomPass() : password;
-        const encryptedPassword = await bcrypt.hash(realPassword, 10)
+        let newPassword = random_pass ? getRandomPass() : password;
+        const encryptedPassword = await bcrypt.hash(newPassword, 10)
     
         const model = await User.query().insert({
-            names: name,
-            email: email,
+            ...rest,
             password: encryptedPassword,
-            is_registered: false,
-            rol: access
+            is_registered: false
         })
     
         return res.status(201).json(model)
     }
+}
+
+export const update = async (req, res) => {
+    const { id } = req.params
+
+    const { random_pass, password, ...rest } = req.body;
+    
+    let newPassword = random_pass ? getRandomPass() : password;
+    const encryptedPassword = await bcrypt.hash(newPassword, 10)
+
+    const model = await User.query().updateAndFetchById(id, {
+        ...rest,
+        password: encryptedPassword
+    })
+
+    return res.status(201).json(model)
 }
 
 export const destroy = async (req, res) => {
