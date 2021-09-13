@@ -5,8 +5,8 @@ import {
     SelectInput,
     FormWithRedirect,
     BooleanInput,
-    useCreateController,
-    CreateContextProvider,
+    useEditController,
+    EditContextProvider,
     SaveButton,
     useRedirect
 } from 'react-admin'
@@ -23,7 +23,7 @@ const validate = (values) => {
   const errors = {};
 
   if (!values.names) {
-    errors.names = "Ingrese el nombre.";
+    errors.name = "Ingrese el nombre.";
   }
   if (!values.email) {
     errors.email = "Ingrese un correo electronico.";
@@ -56,7 +56,7 @@ const PasswordInput = (props) => {
     return null;
 }
 
-const UserCreateForm = (props) => (
+const UserEditForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
@@ -111,17 +111,19 @@ const UserCreateForm = (props) => (
     />
 );
 
-const UserCreate = (props) => {
-    const createControllerProps = useCreateController(props);
+
+const UserEdit = (props) => {
+    const editControllerProps = useEditController(props);
     const [mutate, { data }] = useMutation();
+    const { record } = editControllerProps;
     const redirect = useRedirect()
 
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'create',
+                type: 'update',
                 resource: 'users',
-                payload: { data: values }
+                payload: { id: record.id, data: values }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {
@@ -134,13 +136,13 @@ const UserCreate = (props) => {
         if (data) {
             return () => redirect('/users')
         }
-    }, [data])
+    }, [data, redirect])
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <UserCreateForm save={save} validate={validate} />
-        </CreateContextProvider>
+        <EditContextProvider value={editControllerProps}>
+            <UserEditForm save={save} record={record} validate={validate} />
+        </EditContextProvider>
     )
 }
 
-export default UserCreate
+export default UserEdit

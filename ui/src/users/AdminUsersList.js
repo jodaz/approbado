@@ -4,15 +4,27 @@ import {
     TextField,
     Pagination,
     useRedirect,
-    TopToolbar
+    TopToolbar,
+    EditButton as RaEditButton,
+    DeleteButton as RaDeleteButton
 } from 'react-admin'
 import Button from '@material-ui/core/Button'
 
-const UsersDatagrid = () => (
+const EditButton = ({ record }) => (
+    <RaEditButton basePath="/users" label="" record={record} />
+);
+
+const DeleteButton = ({ record }) => (
+    <RaDeleteButton basePath="/users" label="" record={record} />
+);
+
+const UsersDatagrid = props => (
     <Datagrid optimized>
         <TextField source="rol" label="Acceso" />
         <TextField source="names" label='Nombre' />
         <TextField source="email" label='Correo electrónico' />
+        <EditButton />
+        <DeleteButton />
     </Datagrid>
 )
 
@@ -33,7 +45,7 @@ const UserList = (props) => {
                         Crear
                     </Button>
                 </TopToolbar>
-                <UsersDatagrid />
+                <UsersDatagrid {...props} />
                 <Pagination />
             </>
         </ReferenceManyField>
