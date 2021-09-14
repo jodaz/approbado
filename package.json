@@ -11,6 +11,6 @@
     "start:ui": "npm run start --prefix ui",
     "migrate": "npm run db:migrate --prefix api",
     "seed": "npm run seed:run --prefix api",
-    "rollback": "npm run db:rollbac --prefix apik"
+    "rollback": "npm run db:rollback --prefix api"
   }
 }

@@ -1,9 +1,10 @@
 import { Router } from "express"
-import { destroy, index, store, update } from '../controllers/CategoryController'
+import { destroy, index, store, update, show } from '../controllers/CategoryController'
 
 const categoriesRouter = Router()
 
 categoriesRouter.get('/', index)
+categoriesRouter.get('/:id', show)
 categoriesRouter.post('/', store)
 categoriesRouter.put('/:id', update)
 categoriesRouter.delete('/:id', destroy)

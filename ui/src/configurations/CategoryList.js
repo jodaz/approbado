@@ -6,10 +6,10 @@ import {
     Filter,
     useRedirect,
     TopToolbar,
-    TextInput
+    TextInput,
+    EditButton
 } from 'react-admin'
 import Button from '@material-ui/core/Button'
-import EditButton from '../components/EditButton'
 
 const CategoriesFilter = props => (
     <Filter {...props}>
@@ -20,7 +20,7 @@ const CategoriesFilter = props => (
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
-        <EditButton />
+        <EditButton basePath='configurations/categories' />
     </Datagrid>
 );
 
@@ -29,7 +29,7 @@ const CategoryList = (props) => {
     return (
         <ReferenceManyField
             addLabel={false}
-            reference='categories'
+            reference='configurations/categories'
             target='id'
             sort={{ field: 'created_at', order: 'DESC' }}
             perPage={10}
