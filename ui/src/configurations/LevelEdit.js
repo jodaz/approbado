@@ -1,16 +1,18 @@
 import * as React from 'react'
 import {
+    useMutation,
     TextInput,
     FormWithRedirect,
+    useEditController,
+    EditContextProvider,
     SaveButton,
-    useCreateController,
-    useMutation,
-    CreateContextProvider
+    useRedirect
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
-import { validateCategory } from './configurationsValidations';
+import { validateLevels } from './configurationsValidations';
+import { useParams } from 'react-router-dom'
 
-const CategoryCreateForm = (props) => (
+const LevelEditForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
@@ -40,17 +42,23 @@ const CategoryCreateForm = (props) => (
     />
 );
 
-const CategoryCreate = (props) => {
-    const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
-    console.log(props)
+
+const LevelEdit = (props) => {
+    const { id } = useParams();
+    const editControllerProps = useEditController({
+        ...props,
+        id: id
+    });
+    const [mutate, { data }] = useMutation();
+    const { record } = editControllerProps;
+    const redirect = useRedirect()
 
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'create',
+                type: 'update',
                 resource: props.resource,
-                payload: { data: values }
+                payload: { id: record.id, data: values }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {
@@ -59,16 +67,22 @@ const CategoryCreate = (props) => {
         }
     }, [mutate])
 
+    React.useEffect(() => {
+        if (data) {
+            return () => redirect('/configurations')
+        }
+    }, [data, redirect])
+
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <CategoryCreateForm save={save} validate={validateCategory} />
-        </CreateContextProvider>
+        <EditContextProvider value={editControllerProps}>
+            <LevelEditForm save={save} record={record} validate={validateLevels} />
+        </EditContextProvider>
     )
 }
 
-CategoryCreate.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
+LevelEdit.defaultProps = {
+    basePath: '/configurations/levels',
+    resource: 'configurations/levels'
 }
 
-export default CategoryCreate
+export default LevelEdit
