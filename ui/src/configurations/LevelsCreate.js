@@ -8,16 +8,7 @@ import {
     CreateContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
-
-const validate = (values) => {
-    const errors = {};
-  
-    if (!values.name) {
-      errors.name = "Ingrese un nombre para el nuevo nivel.";
-    }
-  
-    return errors;
-};
+import { validateLevels } from './configurationsValidations';
 
 const LevelCreateForm = (props) => (
     <FormWithRedirect
@@ -49,7 +40,6 @@ const LevelCreateForm = (props) => (
     />
 );
 
-
 const LevelCreate = (props) => {
     const createControllerProps = useCreateController(props);
     const [mutate] = useMutation();
@@ -58,7 +48,7 @@ const LevelCreate = (props) => {
         try {
             await mutate({
                 type: 'create',
-                resource: 'levels',
+                resource: props.resource,
                 payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
@@ -70,14 +60,14 @@ const LevelCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <LevelCreateForm save={save} validate={validate} />
+            <LevelCreateForm save={save} validate={validateLevels} />
         </CreateContextProvider>
     )
 }
 
 LevelCreate.defaultProps = {
-    basePath: '/levels',
-    resource: 'levels'
+    basePath: '/configurations/levels',
+    resource: 'configurations/levels'
 }
 
 export default LevelCreate

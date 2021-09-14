@@ -6,7 +6,8 @@ import {
     Filter,
     useRedirect,
     TopToolbar,
-    TextInput
+    TextInput,
+    EditButton
 } from 'react-admin'
 import Button from '@material-ui/core/Button'
 
@@ -19,6 +20,7 @@ const LevelsFilter = props => (
 const LevelsDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
+        <EditButton basePath='configurations/levels' />
     </Datagrid>
 );
 
@@ -28,7 +30,7 @@ const LevelList = (props) => {
     return (
         <ReferenceManyField
             addLabel={false}
-            reference='levels'
+            reference='configurations/levels'
             target='id'
             sort={{ field: 'created_at', order: 'DESC' }}
             perPage={10}

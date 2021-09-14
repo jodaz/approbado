@@ -29,6 +29,14 @@ export const store = async (req, res) => {
     }
 }
 
+export const show = async (req, res) => {
+    const { id } = req.params
+
+    const model = await Category.query().findById(id)
+
+    return res.status(201).json(model)
+}
+
 export const update = async (req, res) => {
     const { id } = req.params
 
