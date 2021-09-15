@@ -4,9 +4,11 @@ import { dataProvider, authProvider, browserHistory } from './providers'
 import Layout from './layouts'
 import Login from './layouts/Login'
 import customRoutes from './routes'
+import Dashboard from './dashboard'
 
 const App = () => (
 	<Admin
+		dashboard={Dashboard}
 		customRoutes={customRoutes}
 		history={browserHistory}
 		layout={Layout}
