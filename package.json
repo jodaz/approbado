@@ -6,7 +6,7 @@
   ],
   "version": "1.0.0",
   "scripts": {
-    "start:all": "npm-run-all start:api start:ui",
+    "dev": "concurrently \"npm run start:api\" \"npm run start:ui\"",
     "start:api": "npm run watch:dev --prefix api",
     "start:ui": "npm run start --prefix ui",
     "migrate": "npm run db:migrate --prefix api",
