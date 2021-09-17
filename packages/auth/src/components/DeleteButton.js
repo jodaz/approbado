@@ -1,1 +1,0 @@
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';

@@ -16,6 +16,8 @@ const App = () => (
 		authProvider={authProvider}
 	>
 		<Resource {...users} />
+		<Resource name="profile" />
+		<Resource name="update-password" />
 		<Resource name="configurations/levels" />
 		<Resource name="trivia-settings" />
 		<Resource name="configurations/categories" />

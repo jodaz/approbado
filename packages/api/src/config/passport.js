@@ -8,15 +8,19 @@ import passport from "passport";
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: SECRET
+    secretOrKey: SECRET,
+    passReqToCallback: true
 };
 
 /**
  * Sign in using Email and Password.
  */
-passport.use(new JwtStrategy(options, async (jwtToken, done) => {
+passport.use(new JwtStrategy(options, async (req, jwtToken, done) => {
     const user = await User.query().findById(jwtToken.id);
+
     if (user) {
+        req.user = user;
+
         return done(undefined, user, jwtToken)
     } else {
         return done(undefined, false)
