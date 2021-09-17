@@ -11,6 +11,8 @@ export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ?
   process.env.ALLOWED_ORIGINS.split(',') 
   : 'http://localhost:3000'
 
+export const SESSION_EXPIRE = process.env.SESSION_EXPIRE || 86400
+
 export const USER = {
   name: process.env.NAME,
   email: process.env.EMAIL,

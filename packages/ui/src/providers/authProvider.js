@@ -8,59 +8,52 @@ const CONFIG_NAMES = {
 
 export const authProvider = {
   login: async (data) => {
-    const response = await dataProvider.post('auth/login', data);
+    await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data);
 
-    if (response.status < 200 || response.status >= 300) {
-      throw new Error(response.statusText);
-    } else {
-      if (response.token) {
-        await localStorage.setItem(CONFIG_NAMES.IDENTIFICATION, response.user);
-        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, response.token);
-        await localStorage.setItem(CONFIG_NAMES.PERMISSIONS, response.permissions);
-      }
-
-      return Promise.resolve(response.data);
-    }
+    return Promise.resolve();
   },
   logout: async () => {
-    await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-    await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
-    await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
+    // await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+    // await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
+    // await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
 
     return Promise.resolve();
   },
   checkError: async (error) => {
-    const { response } = error;
+    // const { response } = error;
 
-    if (response.status === 401 || response.status === 403) {
-      await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-      await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
-      await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
-      return Promise.reject({ message: false });
-    }
+    // if (response.status === 401 || response.status === 403) {
+    //   await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+    //   await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
+    //   await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
+    //   return Promise.reject({ message: false });
+    // }
 
     return Promise.resolve();
   },
-  checkAuth: async () => await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN)
-    ? Promise.resolve()
-    : Promise.reject({ redirectTo: '/' }),
+  checkAuth: async () => Promise.resolve(),
+  // await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN)
+  //   ? Promise.resolve()
+  //   : Promise.reject({ redirectTo: '/' }),
   getPermissions: async () => {
-    const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
+    // const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
 
-    return permissions ? Promise.resolve(permissions) : Promise.resolve('guest');
+    // return permissions ? Promise.resolve(permissions) : Promise.resolve('guest');
+    return Promise.resolve()
   },
   getIdentity: async () => {
-    const token = await localStorage.getItem(CONFIG_NAMES.IDENTIFICATION);
+    // const token = await localStorage.getItem(CONFIG_NAMES.IDENTIFICATION);
 
-    if (token) {
-      const { id, full_name, picture, ...rest } = JSON.parse(token);
+    // if (token) {
+    //   const { id, full_name, picture, ...rest } = JSON.parse(token);
 
-      return ({
-        id: id,
-        full_name: full_name,
-        avatar: picture,
-        ...rest
-      });
-    }
+    //   return ({
+    //     id: id,
+    //     full_name: full_name,
+    //     avatar: picture,
+    //     ...rest
+    //   });
+    // }
+    return Promise.resolve()
   }
 };

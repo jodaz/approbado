@@ -10,12 +10,12 @@ import { isAuthorizedMiddleware } from '../config'
 
 const routes = Router();
 
-routes.use('/api/configurations/levels', levelsRoutes)
-routes.use('/api/trivia-settings', triviaSettingsRoutes)
-routes.use('/api/configurations/categories', categoriesRoutes)
+routes.use('/api/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
+routes.use('/api/trivia-settings', isAuthorizedMiddleware, triviaSettingsRoutes)
+routes.use('/api/configurations/categories', isAuthorizedMiddleware, categoriesRoutes)
 routes.use('/api/profile', isAuthorizedMiddleware, profileRoutes)
-routes.use('/api/users', usersRoutes)
-routes.use('/api/trivias', triviasRoutes)
+routes.use('/api/users', isAuthorizedMiddleware, usersRoutes)
+routes.use('/api/trivias', isAuthorizedMiddleware, triviasRoutes)
 routes.use('/api/auth', authRouter)
 
 // Catch all routes

@@ -29,7 +29,7 @@ export const isAuthorizedMiddleware = async (req, res, next) => {
             return next(err); 
         }
         if (!user) { 
-            return res.json({ error: 'not authenticated' }); 
+            return res.status(401).json({ error: 'not authenticated' }); 
         }
         next()
     })(req, res, next);

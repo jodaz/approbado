@@ -1,6 +1,6 @@
 import { sendCode, verifyCode } from '../config';
 import jwt from 'jsonwebtoken'
-import { SECRET } from '../config'
+import { SECRET, SESSION_EXPIRE } from '../config'
 import bcrypt from 'bcrypt'
 import User from '../models/User'
 import Profile from '../models/Profile'
@@ -23,7 +23,7 @@ export const login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password)
 
     if (match) {
-        const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
+        const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: SESSION_EXPIRE });
 
         return res.json({
             success: true,
