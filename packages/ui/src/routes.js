@@ -4,6 +4,8 @@ import LevelsCreate from './configurations/LevelsCreate'
 import CategoryCreate from './configurations/CategoryCreate'
 import CategoryEdit from './configurations/CategoryEdit'
 import LevelEdit from './configurations/LevelEdit'
+import Authenticate from './layouts/Authenticate'
+import { RouteWithoutLayout } from 'ra-core';
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -22,6 +24,10 @@ export default [
     <Route 
         path="/configurations/levels/:id" 
         render={() => <LevelEdit />} 
+    />,
+    <RouteWithoutLayout
+        path='/auth/:auth'
+        render={() => <Authenticate />} 
     />,
 ];
 
