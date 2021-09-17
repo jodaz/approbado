@@ -7,7 +7,9 @@ export const APP_ENV = process.env.APP_ENV || 'development'
 
 export const APP_PORT = process.env.APP_PORT || 4000
 
-export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || 'http://localhost:3000'
+export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ?
+  process.env.ALLOWED_ORIGINS.split(',') 
+  : 'http://localhost:3000'
 
 export const USER = {
   name: process.env.NAME,

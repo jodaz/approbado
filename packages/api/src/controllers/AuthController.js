@@ -12,6 +12,14 @@ export const login = async (req, res) => {
         email: email
     });
 
+    if (!user) {
+        res.status(422).json({
+            'errors': {
+                "email": "Usuario no encontrado"
+            }
+        })
+    }
+
     const match = await bcrypt.compare(password, user.password)
 
     if (match) {

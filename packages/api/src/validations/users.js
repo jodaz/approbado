@@ -1,4 +1,3 @@
-import { CustomValidator } from 'express-validator';
 import User from '../models/User'
 
 export const emailExists = async value => {
