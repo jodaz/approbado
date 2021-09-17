@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
         color: (props) => 
           !props.isXSmall ? theme.palette.primary.main
           : theme.palette.secondary.main,
-        marginLeft: '0.5em',
-        marginRight: '0.5em',
+        marginLeft: '1.1em',
+        marginRight: '1.1em',
     }
 }));
 

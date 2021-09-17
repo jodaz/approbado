@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import Profile from '../models/Profile'
 import { validateRequest } from '../utils'
 
@@ -17,4 +16,3 @@ export const update = async (req, res) => {
 
     return res.status(201).json(model)
 }
-

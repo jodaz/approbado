@@ -5,6 +5,7 @@ import CategoryCreate from './configurations/CategoryCreate'
 import CategoryEdit from './configurations/CategoryEdit'
 import LevelEdit from './configurations/LevelEdit'
 import Authenticate from './layouts/Authenticate'
+import Profile from './profile'
 import { RouteWithoutLayout } from 'ra-core';
 
 export default [
@@ -28,6 +29,10 @@ export default [
     <RouteWithoutLayout
         path='/auth/:auth'
         render={() => <Authenticate />} 
+    />,
+    <Route 
+        path="/profile" 
+        render={() => <Profile />} 
     />,
 ];
 
