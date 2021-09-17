@@ -6,10 +6,11 @@
   ],
   "version": "1.0.0",
   "scripts": {
-    "start:api": "yarn workspace @approbado/api run dev",
-    "start:ui": "yarn workspace @approbado/ui run start",
-    "migrate": "yarn workspace @approbado/api run db:migrate",
-    "seed": "yarn workspace @approbado/api run seed:run",
-    "rollback": "yarn workspace @approbado/api run db:rollback"
+    "dev": "concurrently \"npm run start:api\" \"npm run start:ui\"",
+    "start:api": "npm run watch:dev --prefix api",
+    "start:ui": "npm run start --prefix ui",
+    "migrate": "npm run db:migrate --prefix api",
+    "seed": "npm run seed:run --prefix api",
+    "rollback": "npm run db:rollback --prefix api"
   }
 }
