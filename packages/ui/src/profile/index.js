@@ -1,12 +1,12 @@
 import UpdatePassword from './UpdatePassword'
-// import EditProfile from './EditProfile'
+import EditProfile from './EditProfile'
 import TabbedList from '../components/TabbedList'
 
 const tags = ['general', 'seguridad'];
 
 const RenderList = ({ currentTab }) => {
     if (currentTab === 'general') {
-        return <></>
+        return <EditProfile />
     } else if (currentTab === 'seguridad') {
         return <UpdatePassword />
     }
@@ -17,7 +17,7 @@ const Profile = () => {
     return (
         <TabbedList
             tags={tags}
-            defaultTab='general'
+            defaultTag={'general'}
             name='Perfil'
         >
             <RenderList />
