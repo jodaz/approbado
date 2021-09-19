@@ -3,7 +3,7 @@
 export async function up(knex) {
     return knex.schema.createTable('trivias', table => {
         table.increments('id').primary();
-        table.string('title');
+        table.string('name');
         table.string('cover');
         table.boolean('is_free').defaultsTo(true)
         table.integer('level_id').unsigned();

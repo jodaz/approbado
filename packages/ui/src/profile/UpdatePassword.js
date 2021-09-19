@@ -33,7 +33,7 @@ const UpdatePasswordForm = (props) => (
     <FormWithRedirect
         {...props}
         render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
+            <Box maxWidth="45em">
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <InputLabel>Contraseña actual</InputLabel>
@@ -58,6 +58,7 @@ const UpdatePasswordForm = (props) => (
                         <TextInput
                             label={false} 
                             source='new_password_confirm' 
+                            placeholder="Repita la nueva contraseña"
                             fullWidth
                         />
                     </Grid>
@@ -67,6 +68,8 @@ const UpdatePasswordForm = (props) => (
                                 handleSubmitWithRedirect
                             }
                             saving={saving}
+                            label='Guardar'
+                            icon={<></>}
                         />
                     </Grid>
                 </Grid>

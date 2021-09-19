@@ -8,6 +8,7 @@ import {
     MenuProps,
 } from 'react-admin';
 import users from '../users';
+import trivias from '../trivias'
 
 const Menu = ({ onMenuClick, logout, dense = false }) => {
     const isXSmall = useMediaQuery(theme =>
@@ -19,6 +20,14 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
         <Box mt={1}>
             {' '}
             <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+            <MenuItemLink
+                to={trivias.name}
+                primaryText={trivias.options.label}
+                leftIcon={<trivias.icon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
             <MenuItemLink
                 to={users.name}
                 primaryText={users.options.label}

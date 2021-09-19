@@ -1,29 +1,5 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-// const typography = {
-//   fontFamily: '"Roboto", sans-serif',
-//   fontSize: 14,
-//   fontStyle: "normal",
-//   fontWeightLight: 400,
-//   fontWeightRegular: 500,
-//   fontWeightMedium: 600,
-//   fontWeightBold: 700,
-// };
-
-// const typographyBase = {
-//   fontFamily: typography.fontFamily,
-//   fontSize: typography.fontSize,
-//   fontStyle: typography.fontStyle,
-// };
-
-// const removeButtonStyles = {
-//   float: 'none',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   marginLeft: '2rem',
-//   marginRight: '1rem',
-// };
-
 const palette = {
   primary: {
     main: '#07021A',  // Negro primario
@@ -131,9 +107,8 @@ const theme = {
       },
       MuiFilledInput: {
           root: {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                transition: "none",
-                borderRadius: '5px',
+                transition: "none !important",
+                borderRadius: '5px !important',
                 '&$disabled': {
                     backgroundColor: 'rgba(0, 0, 0, 0.04)',
                 }
@@ -156,7 +131,9 @@ const theme = {
           button: {
               backgroundColor: palette.secondary.main,
               color: palette.primary.main,
-              borderRadius: '6px'
+              borderRadius: '6px',
+              textTransform: 'capitalize',
+              padding: '1em 1.5em'
           }
       },
       RaToolbar: {
