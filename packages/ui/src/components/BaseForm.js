@@ -6,9 +6,7 @@ import PropTypes from 'prop-types'
 
 const BaseForm = ({ formName, children, saveButtonLabel, ...rest }) => (
     <Box component='div'>
-        {formName !== '' && (
-            <Typography component='h1' variant='h5'>{formName}</Typography>
-        )}
+        <Typography component='h1' variant='h5'>{formName}</Typography>
         <Box component='div' paddingTop='2rem'>
             <FormWithRedirect
                 {...rest}

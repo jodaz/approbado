@@ -7,9 +7,21 @@ import LevelEdit from './configurations/LevelEdit'
 import Authenticate from './layouts/Authenticate'
 import Profile from './profile'
 import { RouteWithoutLayout } from 'ra-core';
+import Memberships from './memberships/Memberships';
+import PlanCreate from './memberships/PlanCreate';
+import PlanEdit from './memberships/PlanEdit';
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
+    <Route exact path="/memberships" render={() => <Memberships />} />,
+    <Route 
+        path="/memberships/plans/create" 
+        render={() => <PlanCreate />} 
+    />,
+    <Route 
+        path="/memberships/plans/:id" 
+        render={() => <PlanEdit />} 
+    />,
     <Route 
         path="/configurations/levels/create" 
         render={() => <LevelsCreate />} 
