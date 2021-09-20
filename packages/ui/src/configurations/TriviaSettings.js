@@ -1,12 +1,12 @@
 import * as React from 'react'
 import {
     FormWithRedirect,
-    SaveButton,
     useEditController,
     useMutation,
     EditContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
+import SaveButton from '@approbado/components/SaveButton'
 
 const validate = (values) => {
     const errors = {};
@@ -30,10 +30,9 @@ const TriviaSettingsForm = (props) => (
 
                     <Grid item xs={12}>
                         <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
+                            handleSubmit={handleSubmitWithRedirect}
                             saving={saving}
+                            label='Actualizar'
                         />
                     </Grid>
                 </Grid>

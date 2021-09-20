@@ -37,6 +37,23 @@ const theme = {
               marginTop: '0 !important'
           }
       },
+      RaTopToolbar: {
+          root: {
+              alignItems: 'center',
+              justifyContent: 'space-between'
+          },
+      },
+      RaButton: {
+          button: {
+            borderRadius: '6px',
+            padding: '0.5em 1em',
+            textTransform: 'none',
+            fontSize: '1em',
+            "&[aria-label=Create]": {
+                backgroundColor: palette.secondary.main,
+            }
+          }
+      },
       RaMenuItemLink: {
           root: {
               color: palette.primary.light
@@ -132,8 +149,9 @@ const theme = {
               backgroundColor: palette.secondary.main,
               color: palette.primary.main,
               borderRadius: '6px',
-              textTransform: 'capitalize',
-              padding: '1em 1.5em'
+              textTransform: 'none',
+              fontSize: '1em',
+              padding: '0.5em 2em'
           }
       },
       RaToolbar: {

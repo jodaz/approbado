@@ -5,12 +5,12 @@ import {
     FormWithRedirect,
     useEditController,
     EditContextProvider,
-    SaveButton,
     useRedirect
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 import { validateCategory } from './configurationsValidations';
 import { useParams } from 'react-router-dom'
+import SaveButton from '@approbado/components/SaveButton'
 
 const CategoryEditForm = (props) => (
     <FormWithRedirect
@@ -30,10 +30,9 @@ const CategoryEditForm = (props) => (
 
                     <Grid item xs={12}>
                         <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
+                            handleSubmit={handleSubmitWithRedirect}
                             saving={saving}
+                            label='Actualizar'
                         />
                     </Grid>
                 </Grid>
