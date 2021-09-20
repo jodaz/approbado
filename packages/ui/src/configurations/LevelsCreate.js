@@ -1,44 +1,13 @@
 import * as React from 'react'
 import {
     TextInput,
-    FormWithRedirect,
-    SaveButton,
     useCreateController,
     useMutation,
     CreateContextProvider
 } from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
-import { validateLevels } from './configurationsValidations';
-
-const LevelCreateForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="name" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
+import { validateLevel } from './configurationsValidations';
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 
 const LevelCreate = (props) => {
     const createControllerProps = useCreateController(props);
@@ -60,7 +29,17 @@ const LevelCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <LevelCreateForm save={save} validate={validateLevels} />
+            <BaseForm save={save} validate={validateLevel}>
+                <InputContainer
+                    labelName='Nombre'
+                >
+                    <TextInput 
+                        source="name" 
+                        placeholder="Nombre"
+                        fullWidth
+                    />
+                </InputContainer>
+            </BaseForm>
         </CreateContextProvider>
     )
 }

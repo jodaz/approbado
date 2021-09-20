@@ -1,24 +1,20 @@
 import User from '../models/User'
 import bcrypt from 'bcrypt'
-import { validateRequest, getRandomPass } from '../utils'
+import { validateRequest, paginatedQueryResponse, getRandomPass } from '../utils'
 
 export const index = async (req, res) => {
-    const { page, perPage, filter } = req.query
+    const { filter } = req.query
 
     const query = User.query()
 
+    if (filter.names) {
+        query.where('names', filter.names)
+    }
     if (filter.is_registered) {
         query.where('is_registered', filter.is_registered)
     }
-
-    const users = await query.page(page, perPage)
-
-    const { results: data, total } = users;
     
-    return res.json({
-        data,
-        total
-    })
+    return paginatedQueryResponse(query, req, res)
 }
 
 export const show = async (req, res) => {
