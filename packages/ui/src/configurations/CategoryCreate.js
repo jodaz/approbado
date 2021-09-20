@@ -2,13 +2,13 @@ import * as React from 'react'
 import {
     TextInput,
     FormWithRedirect,
-    SaveButton,
     useCreateController,
     useMutation,
     CreateContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 import { validateCategory } from './configurationsValidations';
+import SaveButton from '@approbado/components/SaveButton'
 
 const CategoryCreateForm = (props) => (
     <FormWithRedirect
@@ -28,9 +28,7 @@ const CategoryCreateForm = (props) => (
 
                     <Grid item xs={12}>
                         <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
+                            handleSubmit={handleSubmitWithRedirect}
                             saving={saving}
                         />
                     </Grid>

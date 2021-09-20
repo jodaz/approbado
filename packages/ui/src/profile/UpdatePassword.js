@@ -3,9 +3,9 @@ import {
     useDataProvider,
     TextInput,
     FormWithRedirect,
-    SaveButton
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
+import SaveButton from '@approbado/components/SaveButton'
 
 const validate = values => {
     const errors = {};
@@ -64,12 +64,8 @@ const UpdatePasswordForm = (props) => (
                     </Grid>
                     <Grid item xs={12}>
                         <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
+                            handleSubmit={handleSubmitWithRedirect}
                             saving={saving}
-                            label='Guardar'
-                            icon={<></>}
                         />
                     </Grid>
                 </Grid>

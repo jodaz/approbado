@@ -2,10 +2,10 @@ import * as React from 'react'
 import {
     useDataProvider,
     TextInput,
-    FormWithRedirect,
-    SaveButton
+    FormWithRedirect
 } from 'react-admin'
 import { Grid, InputLabel } from '@material-ui/core'
+import SaveButton from '@approbado/components/SaveButton'
 
 const validate = values => {
     const errors = {};
@@ -47,12 +47,8 @@ const UpdateProfileForm = (props) => (
                     </Grid>
                     <Grid item xs={12}>
                         <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
+                            handleSubmit={handleSubmitWithRedirect}
                             saving={saving}
-                            label='Guardar cambios'
-                            icon={<></>}
                         />
                     </Grid>
                 </Grid>

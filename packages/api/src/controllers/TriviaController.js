@@ -23,9 +23,6 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { is_free, ...rest } = req.body;
-        console.log(req.body)
-        const access = (is_free === 'Gratis') ? 1 : 0;
         const model = await Trivia.query().insert(req.body)
     
         return res.status(201).json(model)
