@@ -4,7 +4,9 @@ import {
     useCreateController,
     useMutation,
     CreateContextProvider,
-    NumberInput
+    NumberInput,
+    ReferenceArrayInput,
+    SelectArrayInput
 } from 'react-admin'
 import { validatePlan } from './plansValidations';
 import BaseForm from '../components/BaseForm'
@@ -38,8 +40,8 @@ const PlanCreate = (props) => {
                 <InputContainer
                     labelName='Nombre'
                 >
-                    <TextInput 
-                        source="name" 
+                    <TextInput
+                        source="name"
                         placeholder="Nombre"
                         fullWidth
                     />
@@ -47,11 +49,22 @@ const PlanCreate = (props) => {
                 <InputContainer
                     labelName='Monto'
                 >
-                    <NumberInput 
-                        source="amount" 
+                    <NumberInput
+                        source="amount"
                         placeholder="0.00"
                         fullWidth
                     />
+                </InputContainer>
+                <InputContainer
+                    labelName='Trivias'
+                >
+                    <ReferenceArrayInput
+                        source="trivia_ids"
+                        reference="trivias"
+                        fullWidth
+                    >
+                        <SelectArrayInput />
+                    </ReferenceArrayInput>
                 </InputContainer>
             </BaseForm>
         </CreateContextProvider>
