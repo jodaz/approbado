@@ -7,13 +7,16 @@ export const index = async (req, res) => {
     const query = Plan.query()
 
     if (filter) {
-        query.where('name', filter.name)
+        if (filter.name) {
+            query.where('name', filter.name)
+        }
     }
     
     return paginatedQueryResponse(query, req, res)
 }
 
 export const store = async (req, res) => {
+    console.log(req.body)
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {

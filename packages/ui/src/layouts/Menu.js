@@ -37,6 +37,14 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
                 dense={dense}
             />
             <MenuItemLink
+                to="/memberships"
+                primaryText={'Planes y membresías'}
+                leftIcon={<SettingsIcon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
+            <MenuItemLink
                 to="/configurations"
                 primaryText={'Configuraciones'}
                 leftIcon={<SettingsIcon />}

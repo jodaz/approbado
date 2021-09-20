@@ -7,7 +7,9 @@ export const index = async (req, res) => {
     const query = Level.query()
 
     if (filter) {
-        query.where('name', filter.name)
+        if (filter.name) {
+            query.where('name', filter.name)
+        }
     }
     
     return paginatedQueryResponse(query, req, res)

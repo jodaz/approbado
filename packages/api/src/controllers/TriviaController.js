@@ -2,10 +2,13 @@ import Trivia from '../models/Trivia'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
+    const { filter } = req.query
     const query = Trivia.query()
 
     if (filter) {
-        query.where('title', filter.title)
+        if (filter.title) {
+            query.where('title', filter.title)
+        }
     }
     
     return paginatedQueryResponse(query, req, res)

@@ -24,6 +24,8 @@ const App = () => (
 		<Resource name="configurations/levels" />
 		<Resource name="trivia-settings" />
 		<Resource name="configurations/categories" />
+		<Resource name="memberships/plans" />
+		<Resource name="memberships/payments" />
 	</Admin>
 )
 
