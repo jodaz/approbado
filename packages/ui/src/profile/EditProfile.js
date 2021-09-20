@@ -1,11 +1,10 @@
 import * as React from 'react'
 import {
     useDataProvider,
-    TextInput,
-    FormWithRedirect
+    TextInput
 } from 'react-admin'
-import { Grid, InputLabel } from '@material-ui/core'
-import SaveButton from '@approbado/components/SaveButton'
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 
 const validate = values => {
     const errors = {};
@@ -18,44 +17,7 @@ const validate = values => {
     }
 
     return errors;
-};
-
-const UpdateProfileForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Grid container spacing={1}>
-                <Grid item xs='12' md='4'>
-
-                </Grid>
-                <Grid item xs='12' md='8'>
-                    <Grid item xs={12}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='names' 
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel>Correo electrónico</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='email' 
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmit={handleSubmitWithRedirect}
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Grid>
-        )}
-    />
-);
+}
 
 const UpdateProfile = props => {
     const dataProvider = useDataProvider()
@@ -67,7 +29,26 @@ const UpdateProfile = props => {
     }, [dataProvider])
 
     return (
-        <UpdateProfileForm save={save} validate={validate} />
+        <BaseForm
+            save={save}
+            validate={validate}
+            saveButtonLabel='Actualizar'
+        >
+            <InputContainer labelName='Nombre'>
+                <TextInput
+                    label={false} 
+                    source='names' 
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Correo electrónico'>
+                <TextInput
+                    label={false} 
+                    source='email' 
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

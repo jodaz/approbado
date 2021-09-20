@@ -81,6 +81,9 @@ const theme = {
               border: '1px solid #e0e0e3',
               backgroundClip: 'padding-box',
           },
+          rounded: {
+              borderRadius: '3px !important'
+          }
       },
       MuiButton: {
           contained: {
@@ -121,6 +124,11 @@ const theme = {
           barColorPrimary: {
               backgroundColor: '#d7d7d7',
           },
+      },
+      MuiList: {
+        root: {
+            padding: '0 !important'
+        }
       },
       MuiFilledInput: {
           root: {

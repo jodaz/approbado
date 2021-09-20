@@ -3,14 +3,13 @@ import {
     useMutation,
     TextInput,
     SelectInput,
-    FormWithRedirect,
     useCreateController,
     CreateContextProvider,
-    SaveButton,
     useRedirect,
     ReferenceInput
 } from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 
 const ACCESS_TYPES = [
     { id: '0', name: 'Gratis' },
@@ -35,67 +34,6 @@ const validate = (values) => {
 
     return errors;
 };
-
-const TriviaCreateForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="name" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nivel</InputLabel>
-                        <ReferenceInput
-                            source='level_id'
-                            reference='configurations/levels'
-                            label=''
-                            fullWidth
-                        >
-                            <SelectInput source="name" />
-                        </ReferenceInput>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Acceso</InputLabel>
-                        <SelectInput
-                            label={false}
-                            source="is_free" 
-                            choices={ACCESS_TYPES}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Categoría</InputLabel>
-                        <ReferenceInput
-                            source='category_id'
-                            reference='configurations/categories'
-                            label=''
-                            fullWidth
-                        >
-                            <SelectInput source="name" />
-                        </ReferenceInput>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
 
 const TriviaCreate = (props) => {
     const createControllerProps = useCreateController(props);
@@ -124,7 +62,44 @@ const TriviaCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <TriviaCreateForm save={save} validate={validate} />
+            <BaseForm
+                save={save}
+                validate={validate} 
+                formName='Crear trivia'
+            >
+                <InputContainer labelName='Nombre'>
+                    <TextInput
+                        source="name" 
+                        placeholder="Nombre"
+                        fullWidth
+                    />
+                </InputContainer>
+                <InputContainer labelName='Nivel'>
+                    <ReferenceInput
+                        source='level_id'
+                        reference='configurations/levels'
+                        fullWidth
+                    >
+                        <SelectInput source="name" />
+                    </ReferenceInput>
+                </InputContainer>
+                <InputContainer labelName='Acceso'>
+                    <SelectInput
+                        source="is_free" 
+                        choices={ACCESS_TYPES}
+                        fullWidth
+                    />
+                </InputContainer>
+                <InputContainer labelName='Categoría'>
+                    <ReferenceInput
+                        source='category_id'
+                        reference='configurations/categories'
+                        fullWidth
+                    >
+                        <SelectInput source="name" />
+                    </ReferenceInput>
+                </InputContainer>
+            </BaseForm>
         </CreateContextProvider>
     )
 }
