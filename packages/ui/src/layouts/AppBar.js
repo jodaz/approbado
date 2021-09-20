@@ -1,13 +1,17 @@
+import * as React from 'react'
 import {
     makeStyles,
     Toolbar,
     useMediaQuery,
+    Box,
     AppBar as MuiAppBar
 } from '@material-ui/core';
-import UserMenu from './UserMenu';
 // Icons
 import ToggleSidebarButton from './ToggleSidebarButton';
 import { useSelector } from 'react-redux';
+import UserMenu from './UserMenu'
+import { MenuItemLink } from 'react-admin'
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 const useStyles = makeStyles(theme => ({
         root: {
@@ -43,9 +47,24 @@ const useStyles = makeStyles(theme => ({
     }),
     { name: 'RaAppBar' }
 );
-  
 
-const AppBar = (props) => {
+const CustomUserMenu = React.forwardRef((props, ref) => (
+    <UserMenu {...props}>
+        <Box>
+            <MenuItemLink
+                ref={ref}
+                to="/profile"
+                primaryText='Perfil'
+                title='Configuraciones de perfil'
+                leftIcon={<AccountBoxIcon />}
+                onClick={props.onClick}
+                sidebarIsOpen
+            />
+        </Box>
+    </UserMenu>
+));
+
+const AppBar = ({ logout, ...rest }) => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
@@ -56,7 +75,7 @@ const AppBar = (props) => {
     });
   
     return (
-        <MuiAppBar className={classes.root} position='absolute'>
+        <MuiAppBar className={classes.root} position='absolute' {...rest}>
             <Toolbar
                 disableGutters
                 variant={isXSmall ? 'regular' : 'dense'}
@@ -64,11 +83,11 @@ const AppBar = (props) => {
             >
                 <ToggleSidebarButton />
 
-                <UserMenu />
+                <CustomUserMenu logout={logout} />
             </Toolbar>
         </MuiAppBar>
     );
 };
 
-  export default AppBar;
+export default AppBar;
   

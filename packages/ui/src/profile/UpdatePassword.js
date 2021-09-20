@@ -1,11 +1,10 @@
 import * as React from 'react'
 import {
     useDataProvider,
-    TextInput,
-    FormWithRedirect,
+    TextInput
 } from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
-import SaveButton from '@approbado/components/SaveButton'
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 
 const validate = values => {
     const errors = {};
@@ -29,51 +28,6 @@ const validate = values => {
     return errors;
 };
 
-const UpdatePasswordForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="45em">
-                <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                        <InputLabel>Contraseña actual</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='curr_password' 
-                            placeholder="Contraseña actual"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel>Nueva contraseña</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='new_password' 
-                            placeholder="Nueva contraseña"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel>Confirmación de contraseña</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='new_password_confirm' 
-                            placeholder="Repita la nueva contraseña"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmit={handleSubmitWithRedirect}
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
-
 const UpdatePassword = props => {
     const dataProvider = useDataProvider()
 
@@ -84,7 +38,33 @@ const UpdatePassword = props => {
     }, [dataProvider])
 
     return (
-        <UpdatePasswordForm save={save} validate={validate} />
+        <BaseForm
+            save={save}
+            validate={validate}
+            saveButtonLabel='Actualizar'
+        >
+            <InputContainer labelName='Contraseña actual'>
+                <TextInput
+                    source='curr_password' 
+                    placeholder="Contraseña actual"
+                    fullWidth
+            />
+        </InputContainer>
+            <InputContainer labelName='Contraseña actual'>
+                <TextInput
+                    source='new_password' 
+                    placeholder="Nueva contraseña"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Contraseña actual'>
+                <TextInput
+                    source='new_password_confirm' 
+                    placeholder="Repita la nueva contraseña"
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 
