@@ -14,8 +14,9 @@ InputContainer.propTypes = {
 };
 
 InputContainer.defaultProps = {
-    label: false,
-    labelName: 'Input'
+    label: "",
+    labelName: 'Input',
+    children: <React.Fragment />
 }
 
 export default InputContainer

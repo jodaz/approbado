@@ -25,8 +25,8 @@ routes.use('/api/auth', authRouter)
 // Catch all other routes
 routes.use('*', (req, res) => {
     res.status(404).json({
-        'error': 'route not found' 
-    }) 
+        'error': 'route not found'
+    })
 })
 
 export default routes;

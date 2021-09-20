@@ -1,6 +1,6 @@
 import TriviaList from './TriviaList'
 import TriviaCreate from './TriviaCreate'
-import GroupIcon from '@material-ui/icons/Group'
+import GavelIcon from '@material-ui/icons/Gavel';
 // import TriviaEdit from './TriviaEdit'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     list: TriviaList,
     create: TriviaCreate,
     // edit: TriviaEdit,
-    icon: GroupIcon,
+    icon: GavelIcon,
     options: {
         label: 'Trivias'
     },

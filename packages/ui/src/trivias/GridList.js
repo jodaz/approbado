@@ -1,7 +1,7 @@
 import * as React from 'react';
+import Grid from '@material-ui/core/Grid';
 import MuiGridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import {
@@ -10,6 +10,7 @@ import {
     useListContext,
 } from 'react-admin';
 import { Link } from 'react-router-dom';
+import TriviaCard from './TriviaCard'
 
 const useStyles = makeStyles(theme => ({
     gridList: {
@@ -63,48 +64,18 @@ const LoadingGridList = (props) => {
 };
 
 const LoadedGridList = (props) => {
-    const { width } = props;
-    const { ids, data, basePath } = useListContext();
-    const classes = useStyles();
+    const { ids, data } = useListContext();
 
     if (!ids || !data) return null;
 
     return (
-        <MuiGridList
-            cellHeight={180}
-            cols={getColsForWidth(width)}
-            className={classes.gridList}
-        >
+        <Grid container>
             {ids.map((id) => (
-                <GridListTile
-                    // @ts-ignore
-                    component={Link}
-                    key={id}
-                    to={linkToRecord(basePath, data[id].id)}
-                >
-                    <img src={data[id].thumbnail} alt="" />
-                    <GridListTileBar
-                        className={classes.tileBar}
-                        title={data[id].reference}
-                        subtitle={
-                            <span>
-                                {data[id].width}x{data[id].height},{' '}
-                                <NumberField
-                                    className={classes.price}
-                                    source="price"
-                                    record={data[id]}
-                                    color="inherit"
-                                    options={{
-                                        style: 'currency',
-                                        currency: 'USD',
-                                    }}
-                                />
-                            </span>
-                        }
-                    />
-                </GridListTile>
+                <Grid item xs={12} sm={6} md={3}>
+                    <TriviaCard data={data[id]} id={id} />
+                </Grid>
             ))}
-        </MuiGridList>
+        </Grid>
     );
 };
 

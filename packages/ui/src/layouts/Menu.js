@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useMediaQuery, Box } from '@material-ui/core';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import {
     DashboardMenuItem,
     MenuItemLink,
-    MenuProps,
 } from 'react-admin';
 import users from '../users';
 import trivias from '../trivias'
@@ -39,7 +39,7 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
             <MenuItemLink
                 to="/memberships"
                 primaryText={'Planes y membresías'}
-                leftIcon={<SettingsIcon />}
+                leftIcon={<MonetizationOnIcon />}
                 onClick={onMenuClick}
                 sidebarIsOpen={open}
                 dense={dense}
