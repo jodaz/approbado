@@ -1,10 +1,10 @@
-import Level from '../models/Level'
+import Plan from '../models/Plan'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
 
-    const query = Level.query()
+    const query = Plan.query()
 
     if (filter) {
         query.where('name', filter.name)
@@ -15,37 +15,33 @@ export const index = async (req, res) => {
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-    
+
     if (!reqErrors) {
-        const { name } = req.body;
-    
-        const model = await Level.query().insert({
-            name: name,
-        })
+        const model = await Plan.query().insert(req.body)
     
         return res.status(201).json(model)
     }
 }
 
-export const show = async (req, res) => {
+export const update = async (req, res) => {
     const { id } = req.params
 
-    const model = await Level.query().findById(id)
+    const model = await Plan.query().updateAndFetchById(id, req.body)
 
     return res.status(201).json(model)
 }
 
-export const update = async (req, res) => {
+export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await Level.query().updateAndFetchById(id, req.body)
+    const model = await Plan.query().findById(id)
 
     return res.status(201).json(model)
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Level.query().findById(id).delete().returning('*');
+    const model = await Plan.query().findById(id).delete().first();
     
     return res.json(model);
 }

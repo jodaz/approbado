@@ -8,7 +8,7 @@ export const validateCategory = (values) => {
   return errors;
 };
 
-export const validateLevels = (values) => {
+export const validateLevel = (values) => {
   const errors = {};
 
   if (!values.name) {

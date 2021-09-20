@@ -1,22 +1,14 @@
 import Trivia from '../models/Trivia'
-import { validateRequest } from '../utils'
+import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
-    const { page, perPage, filter } = req.query
-
     const query = Trivia.query()
 
     if (filter) {
         query.where('title', filter.title)
     }
     
-    const users = await query.page(page, perPage)
-    const { total, results: data } = users;
-    
-    return res.json({
-        data,
-        total
-    })
+    return paginatedQueryResponse(query, req, res)
 }
 
 export const store = async (req, res) => {

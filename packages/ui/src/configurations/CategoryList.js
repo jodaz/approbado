@@ -1,21 +1,15 @@
 import { 
     Datagrid,
     TextField,
-    ReferenceManyField,
+    EditButton,
+    CreateButton,
+    FilterContext,
+    ListBase,
     Pagination,
-    Filter,
-    useRedirect,
+    FilterLiveSearch,
     TopToolbar,
-    TextInput,
-    EditButton
 } from 'react-admin'
-import Button from '@material-ui/core/Button'
-
-const CategoriesFilter = props => (
-    <Filter {...props}>
-        <TextInput label="Buscar" source='name' alwaiesOn />
-    </Filter>
-);
+import Box from '@material-ui/core/Box'
 
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
@@ -24,27 +18,40 @@ const CategoriesDatagrid = () => (
     </Datagrid>
 );
 
-const CategoryList = (props) => {
-    const redirect = useRedirect();
-    return (
-        <ReferenceManyField
-            addLabel={false}
-            reference='configurations/categories'
-            target='id'
-            sort={{ field: 'created_at', order: 'DESC' }}
-            perPage={10}
-        >
-            <>
-                <TopToolbar>
-                    <Button onClick={() => redirect('/configurations/categories/create')}>
-                        Crear
-                    </Button>
-                </TopToolbar>
+const ListActions = () => (
+    <TopToolbar>
+        <FilterLiveSearch source="name" />
+        <CreateButton basePath="/configurations/categories" />
+    </TopToolbar>
+);
+
+const CategoryList = (props) => (
+    <ListBase
+        perPage={20}
+        sort={{ field: 'reference', order: 'ASC' }}
+        {...props}
+    >
+        <CategoryListView />
+    </ListBase>
+);
+
+const CategoryListView = () => (
+    <>
+        <FilterContext.Provider>
+            <ListActions />
+        </FilterContext.Provider>
+        <Box display="flex">
+            <Box width={'100%'}>
                 <CategoriesDatagrid />
-                <Pagination />
-            </>
-        </ReferenceManyField>
-    );
+                <Pagination rowsPerPageOptions={[5, 10, 25]} />
+            </Box>
+        </Box>
+    </>
+);
+
+CategoryList.defaultProps = {
+    basePath: 'configurations/categories',
+    resource: 'configurations/categories'
 }
 
 export default CategoryList

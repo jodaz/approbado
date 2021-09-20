@@ -1,18 +1,16 @@
 import Category from '../models/Category'
-import { validateRequest } from '../utils'
+import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
-    const { page, perPage } = req.query
+    const { filter } = req.query
 
-    const categories = await Category.query()
-        .page(page, perPage)
+    const query = Category.query()
 
-    const { results: data, total } = categories;
+    if (filter) {
+        query.where('name', filter.name)
+    }
     
-    return res.json({
-        data,
-        total
-    })
+    return paginatedQueryResponse(query, req, res)
 }
 
 export const store = async (req, res) => {

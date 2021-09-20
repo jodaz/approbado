@@ -2,45 +2,14 @@ import * as React from 'react'
 import {
     useMutation,
     TextInput,
-    FormWithRedirect,
     useEditController,
     EditContextProvider,
     useRedirect
 } from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
 import { validateCategory } from './configurationsValidations';
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 import { useParams } from 'react-router-dom'
-import SaveButton from '@approbado/components/SaveButton'
-
-const CategoryEditForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="name" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmit={handleSubmitWithRedirect}
-                            saving={saving}
-                            label='Actualizar'
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
-
 
 const CategoryEdit = (props) => {
     const { id } = useParams();
@@ -74,7 +43,20 @@ const CategoryEdit = (props) => {
 
     return (
         <EditContextProvider value={editControllerProps}>
-            <CategoryEditForm save={save} record={record} validate={validateCategory} />
+            <BaseForm
+                save={save}
+                validate={validateCategory} 
+                record={record}
+                saveButtonLabel='Actualizar'
+            >
+                <InputContainer labelName='Nombre'>
+                    <TextInput 
+                        source="name" 
+                        placeholder="Nombre"
+                        fullWidth
+                    />
+                </InputContainer>
+            </BaseForm>
         </EditContextProvider>
     )
 }

@@ -2,46 +2,14 @@ import * as React from 'react'
 import {
     useMutation,
     TextInput,
-    FormWithRedirect,
     useEditController,
     EditContextProvider,
-    SaveButton,
     useRedirect
 } from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
-import { validateLevels } from './configurationsValidations';
+import { validateLevel } from './configurationsValidations';
+import BaseForm from '../components/BaseForm'
+import InputContainer from '@approbado/components/InputContainer'
 import { useParams } from 'react-router-dom'
-
-const LevelEditForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="name" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
-
 
 const LevelEdit = (props) => {
     const { id } = useParams();
@@ -75,7 +43,20 @@ const LevelEdit = (props) => {
 
     return (
         <EditContextProvider value={editControllerProps}>
-            <LevelEditForm save={save} record={record} validate={validateLevels} />
+            <BaseForm
+                save={save}
+                validate={validateLevel} 
+                record={record}
+                saveButtonLabel='Actualizar'
+            >
+                <InputContainer labelName='Nombre'>
+                    <TextInput 
+                        source="name" 
+                        placeholder="Nombre"
+                        fullWidth
+                    />
+                </InputContainer>
+            </BaseForm>
         </EditContextProvider>
     )
 }

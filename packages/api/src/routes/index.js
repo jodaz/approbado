@@ -7,10 +7,12 @@ import triviaSettingsRoutes from './trivia-settings.routes';
 import profileRoutes from './profile.routes';
 import updatePasswordRouter from './update-password.routes';
 import triviasRoutes from './trivias.routes';
+import plansRoutes from './plans.routes';
 import { isAuthorizedMiddleware } from '../config'
 
 const routes = Router();
 
+routes.use('/api/memberships/plans', isAuthorizedMiddleware, plansRoutes)
 routes.use('/api/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
 routes.use('/api/trivia-settings', isAuthorizedMiddleware, triviaSettingsRoutes)
 routes.use('/api/configurations/categories', isAuthorizedMiddleware, categoriesRoutes)
