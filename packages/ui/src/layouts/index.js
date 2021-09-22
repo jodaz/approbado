@@ -1,11 +1,11 @@
-import { Layout, LayoutProps, Sidebar } from 'react-admin';
-import Theming from './theming';
+import { Layout, Sidebar } from 'react-admin';
+import { theme } from '@approbado/core';
 import AppBar from './AppBar';
 import Menu from './Menu';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const CustomSidebar = (props) => <Sidebar {...props} size={200} />;
-  
+
 export default (props) => {
   return (
     <Layout
@@ -13,7 +13,7 @@ export default (props) => {
       appBar={AppBar}
       sidebar={CustomSidebar}
       menu={Menu}
-      theme={createMuiTheme(Theming)}
+      theme={createMuiTheme(theme)}
     />
   );
 };

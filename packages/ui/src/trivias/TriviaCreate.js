@@ -9,7 +9,7 @@ import {
     ReferenceInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/core/components/InputContainer'
 
 const ACCESS_TYPES = [
     { id: '0', name: 'Gratis' },
@@ -64,12 +64,12 @@ const TriviaCreate = (props) => {
         <CreateContextProvider value={createControllerProps}>
             <BaseForm
                 save={save}
-                validate={validate} 
+                validate={validate}
                 formName='Crear trivia'
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput
-                        source="name" 
+                        source="name"
                         placeholder="Nombre"
                         fullWidth
                     />
@@ -85,7 +85,7 @@ const TriviaCreate = (props) => {
                 </InputContainer>
                 <InputContainer labelName='Acceso'>
                     <SelectInput
-                        source="is_free" 
+                        source="is_free"
                         choices={ACCESS_TYPES}
                         fullWidth
                     />

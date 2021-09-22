@@ -4,7 +4,7 @@ import {
     TextInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/core/components/InputContainer'
 
 const validate = values => {
     const errors = {};
@@ -45,21 +45,21 @@ const UpdatePassword = props => {
         >
             <InputContainer labelName='Contraseña actual'>
                 <TextInput
-                    source='curr_password' 
+                    source='curr_password'
                     placeholder="Contraseña actual"
                     fullWidth
             />
         </InputContainer>
             <InputContainer labelName='Contraseña actual'>
                 <TextInput
-                    source='new_password' 
+                    source='new_password'
                     placeholder="Nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Contraseña actual'>
                 <TextInput
-                    source='new_password_confirm' 
+                    source='new_password_confirm'
                     placeholder="Repita la nueva contraseña"
                     fullWidth
                 />
