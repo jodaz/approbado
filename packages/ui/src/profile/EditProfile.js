@@ -4,7 +4,7 @@ import {
     TextInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/core/components/InputContainer'
 
 const validate = values => {
     const errors = {};
@@ -36,15 +36,15 @@ const UpdateProfile = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    label={false} 
-                    source='names' 
+                    label={false}
+                    source='names'
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Correo electrónico'>
                 <TextInput
-                    label={false} 
-                    source='email' 
+                    label={false}
+                    source='email'
                     fullWidth
                 />
             </InputContainer>
