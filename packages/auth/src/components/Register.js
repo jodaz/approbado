@@ -4,6 +4,7 @@ import {
     Button,
     Card,
     CardActions,
+    Grid,
     CircularProgress
 } from '@material-ui/core';
 import axios from 'axios'
@@ -19,6 +20,14 @@ const validate = (values) => {
         errors.email = 'Ingrese su correo electrónico';
     }
 
+    if (!values.names) {
+        errors.names = 'Ingrese su nombre';
+    }
+
+    if (!values.phone) {
+        errors.phone = 'Ingrese su teléfono';
+    }
+
     if (!values.password) {
         errors.password = 'Ingrese su contraseña';
     }
@@ -26,14 +35,14 @@ const validate = (values) => {
     return errors;
 };
 
-const Login = () => {
+const Register = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = useStyles();
 
-    const handleSubmit = React.useCallback(auth => {
+    const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
-        axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, auth)
+        axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
             .then(res => {
                 const { token } = res.data;
 
@@ -53,18 +62,17 @@ const Login = () => {
     return (
         <AuthLayout validate={validate} handleSubmit={handleSubmit}>
             <Card className={classes.card}>
-                <div className={classes.form}>
-                    <InputContainer labelName='Correo electrónico' md={12}>
+                <Grid container className={classes.form}>
+                    <InputContainer labelName='Correo electrónico'>
                         <Field
                             autoFocus
                             name="email"
                             // @ts-ignore
                             component={renderInput}
-                            label={'Usuario'}
                             disabled={loading}
                         />
                     </InputContainer>
-                    <InputContainer labelName='Contraseña' md={12}>
+                    <InputContainer labelName='Contraseña'>
                         <Field
                             name="password"
                             // @ts-ignore
@@ -74,7 +82,25 @@ const Login = () => {
                             disabled={loading}
                         />
                     </InputContainer>
-                </div>
+                    <InputContainer labelName='Correo electrónico'>
+                        <Field
+                            autoFocus
+                            name="email"
+                            // @ts-ignore
+                            component={renderInput}
+                            disabled={loading}
+                        />
+                    </InputContainer>
+                    <InputContainer labelName='Teléfono'>
+                        <Field
+                            autoFocus
+                            name="email"
+                            // @ts-ignore
+                            component={renderInput}
+                            disabled={loading}
+                        />
+                    </InputContainer>
+                </Grid>
                 <CardActions className={classes.actions}>
                     <Button
                         variant="contained"
@@ -97,4 +123,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
