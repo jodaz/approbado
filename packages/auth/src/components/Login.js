@@ -6,13 +6,15 @@ import {
     Button,
     Card,
     CardActions,
-    CircularProgress,
-    TextField,
+    CircularProgress
 } from '@material-ui/core';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import LockIcon from '@material-ui/icons/Lock';
 import { theme } from '@approbado/core';
+import axios from 'axios'
+import renderInput from '../utils/renderInput'
+import InputContainer from '@approbado/core/components/InputContainer'
 
 const useStyles = makeStyles(theme => ({
     main: {
@@ -38,7 +40,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        padding: '0 1em 1em 1em',
+        padding: '1em',
+        display: 'flex'
     },
     input: {
         marginTop: '1em',
@@ -48,54 +51,40 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const renderInput = ({
-    meta: { touched, error } = { touched: false, error: undefined },
-    input: { ...inputProps },
-    ...props
-}) => (
-    <TextField
-        error={!!(touched && error)}
-        helperText={touched && error}
-        {...inputProps}
-        {...props}
-        fullWidth
-    />
-);
-
 const Login = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = useStyles();
 
-    const handleSubmit = React.useCallback(
-      (auth) => {
+    const handleSubmit = React.useCallback(auth => {
         setLoading(true)
-        console.log(auth)
-        // login(auth, '/').catch(
-        //   (error) => {
-        //     setLoading(false)
-        //     notify(
-        //       error.response.status === 401
-        //         ? 'Su contraseña o login no coinciden'
-        //         : 'Ha ocurrido un error durante su autenticación',
-        //       'warning'
-        //     )
-        //     if (error.response.data.errors) {
-        //         return error.response.data.errors;
-        //     }
-        //   }
-        // )
-      },
-      []
-    )
+
+        axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, auth)
+            .then(res => {
+                const { token } = res.data;
+
+                window.location.href = `${process.env.REACT_APP_LOCATION}/auth/${token}`;
+
+                setLoading(false);
+            }).catch(err => {
+                setLoading(false);
+
+                if (err.response.data.errors) {
+                    return err.response.data.errors;
+                }
+            });
+    }, [])
 
     const validate = (values) => {
         const errors = {};
-        if (!values.login) {
-            errors.login = 'Ingrese su nombre de usuario';
+
+        if (!values.email) {
+            errors.email = 'Ingrese su correo electrónico';
         }
+
         if (!values.password) {
             errors.password = 'Ingrese su contraseña';
         }
+
         return errors;
     };
 
@@ -107,23 +96,18 @@ const Login = () => {
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.main}>
                         <Card className={classes.card}>
-                            <div className={classes.avatar}>
-                                <Avatar className={classes.icon}>
-                                    <LockIcon />
-                                </Avatar>
-                            </div>
                             <div className={classes.form}>
-                                <div className={classes.input}>
+                                <InputContainer labelName='Correo electrónico'>
                                     <Field
                                         autoFocus
-                                        name="login"
+                                        name="email"
                                         // @ts-ignore
                                         component={renderInput}
                                         label={'Usuario'}
                                         disabled={loading}
                                     />
-                                </div>
-                                <div className={classes.input}>
+                                </InputContainer>
+                                <InputContainer labelName='Contraseña'>
                                     <Field
                                         name="password"
                                         // @ts-ignore
@@ -132,7 +116,7 @@ const Login = () => {
                                         type="password"
                                         disabled={loading}
                                     />
-                                </div>
+                                </InputContainer>
                             </div>
                             <CardActions className={classes.actions}>
                                 <Button
