@@ -9,7 +9,7 @@ import {
 } from 'react-admin'
 import { validatePlan } from './plansValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/core/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
 const PlanEdit = (props) => {
@@ -46,15 +46,15 @@ const PlanEdit = (props) => {
         <EditContextProvider value={editControllerProps}>
             <BaseForm
                 save={save}
-                validate={validatePlan} 
+                validate={validatePlan}
                 record={record}
                 saveButtonLabel='Actualizar'
             >
                 <InputContainer
                     labelName='Nombre'
                 >
-                    <TextInput 
-                        source="name" 
+                    <TextInput
+                        source="name"
                         placeholder="Nombre"
                         fullWidth
                     />
@@ -62,8 +62,8 @@ const PlanEdit = (props) => {
                 <InputContainer
                     labelName='Monto'
                 >
-                    <NumberInput 
-                        source="amount" 
+                    <NumberInput
+                        source="amount"
                         placeholder="0.00"
                         fullWidth
                     />

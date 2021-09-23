@@ -6,11 +6,11 @@ import {
     EditContextProvider
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
-import SaveButton from '@approbado/components/SaveButton'
+import SaveButton from '@approbado/core/components/SaveButton'
 
 const validate = (values) => {
     const errors = {};
-  
+
     return errors;
 };
 

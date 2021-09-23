@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
-import Theming from '../layouts/theming';
+import { theme } from '@approbado/core';
 import { useLogin } from 'react-admin';
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +44,7 @@ Login.propTypes = {
 };
 
 const LoginWithTheme = (props) => (
-  <ThemeProvider theme={createMuiTheme(Theming)}>
+  <ThemeProvider theme={createMuiTheme(theme)}>
     <Login {...props} />
   </ThemeProvider>
 );
