@@ -7,7 +7,7 @@ import {
 } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/core/components/InputContainer'
 
 const CategoryCreate = (props) => {
     const createControllerProps = useCreateController(props);
@@ -33,8 +33,8 @@ const CategoryCreate = (props) => {
                 <InputContainer
                     labelName='Nombre'
                 >
-                    <TextInput 
-                        source="name" 
+                    <TextInput
+                        source="name"
                         placeholder="Nombre"
                         fullWidth
                     />
