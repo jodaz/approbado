@@ -29,7 +29,7 @@ const LevelCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateLevel}>
+            <BaseForm save={save} validate={validateLevel} formName='Nuevo nivel'>
                 <InputContainer
                     labelName='Nombre'
                 >

@@ -11,20 +11,20 @@ export const index = async (req, res) => {
             query.where('name', filter.name)
         }
     }
-    
+
     return paginatedQueryResponse(query, req, res)
 }
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-    
+
     if (!reqErrors) {
         const { name } = req.body;
-    
+
         const model = await Level.query().insert({
             name: name,
         })
-    
+
         return res.status(201).json(model)
     }
 }
@@ -38,16 +38,20 @@ export const show = async (req, res) => {
 }
 
 export const update = async (req, res) => {
-    const { id } = req.params
+    const reqErrors = await validateRequest(req, res);
 
-    const model = await Level.query().updateAndFetchById(id, req.body)
+    if (!reqErrors) {
+        const { id } = req.params
 
-    return res.status(201).json(model)
+        const model = await Level.query().updateAndFetchById(id, req.body)
+
+        return res.status(201).json(model)
+    }
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const model = await Level.query().findById(id).delete().returning('*');
-    
+
     return res.json(model);
 }

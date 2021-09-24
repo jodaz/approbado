@@ -6,12 +6,14 @@ import {
     Pagination,
     FilterLiveSearch,
     TopToolbar,
-    NumberField
+    NumberField,
+    DateField
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
 
 const PaymentsDatagrid = () => (
     <Datagrid optimized>
+        <DateField label='Fecha' source="created_at" />
         <TextField label='Método' source="payment_method" />
         <NumberField label="Precio" source="amount" />
     </Datagrid>

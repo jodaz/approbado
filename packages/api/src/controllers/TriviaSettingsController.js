@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import TriviaSettings from '../models/TriviaSettings'
 import { validateRequest } from '../utils'
 
@@ -9,15 +8,18 @@ export const show = async (req, res) => {
 }
 
 export const update = async (req, res) => {
-    const { id } = req.params
+    const reqErrors = await validateRequest(req, res);
 
-    const { grant_certification, time_limit } = req.body;
+    if (!reqErrors) {
+        const { id } = req.params
 
-    const model = await TriviaSettings.query().updateAndFetchById(id, {
-        time_limit: time_limit,
-        grant_certification: grant_certification
-    })
+        const { grant_certification, time_limit } = req.body;
 
-    return res.status(201).json(model)
+        const model = await TriviaSettings.query().updateAndFetchById(id, {
+            time_limit: time_limit,
+            grant_certification: grant_certification
+        })
+
+        return res.status(201).json(model)
+    }
 }
-
