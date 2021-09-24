@@ -29,7 +29,7 @@ const CategoryCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateCategory}>
+            <BaseForm save={save} validate={validateCategory} formName='Nueva categoría'>
                 <InputContainer
                     labelName='Nombre'
                 >
