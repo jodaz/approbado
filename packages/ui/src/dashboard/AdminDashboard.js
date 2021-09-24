@@ -11,7 +11,7 @@ const initialState = {
         linkText: 'Ver usuarios',
         link: '/users'
     },
-    'members': {
+    'memberships': {
         title: 'Membresías activas',
         loading: true,
         total: 0,
@@ -55,6 +55,7 @@ const AdminDashboard = () => {
             'trivias',
             {
                 pagination: { page: 1, perPage: 100 },
+                filter: { active: true },
             }
         );
 
@@ -68,12 +69,31 @@ const AdminDashboard = () => {
         }));
     }, [dataProvider]);
 
+    const fetchMemberships = React.useCallback(async () => {
+        const { total } = await dataProvider.getList(
+            'memberships',
+            {
+                pagination: { page: 1, perPage: 100 },
+            }
+        );
+
+        setState(state => ({
+            ...state,
+            memberships: {
+                ...state.memberships,
+                loading: false,
+                total: total
+            }
+        }));
+    }, [dataProvider]);
+
     React.useEffect(() => {
         fetchUsers();
+        fetchMemberships();
         fetchTrivias();
     }, []);
 
-    const { trivias, users, members } = state;
+    const { trivias, users, memberships } = state;
 
     return (
         <Grid container>
@@ -88,7 +108,7 @@ const AdminDashboard = () => {
                         <CardButton {...users} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <CardButton {...members} />
+                        <CardButton {...memberships} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <CardButton {...trivias} />

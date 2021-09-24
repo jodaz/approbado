@@ -1,30 +1,25 @@
 import {
     Datagrid,
     TextField,
-    EditButton,
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
     FilterLiveSearch,
     TopToolbar,
-    NumberField,
-    DeleteButton
+    NumberField
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
 
-const PlansDatagrid = () => (
+const PaymentsDatagrid = () => (
     <Datagrid optimized>
-        <TextField label='Nombre' source="name" />
+        <TextField label='Método' source="payment_method" />
         <NumberField label="Precio" source="amount" />
-        <EditButton basePath='memberships/plans' />
     </Datagrid>
 );
 
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" />
-        <CreateButton basePath="/memberships/plans" />
     </TopToolbar>
 );
 
@@ -45,7 +40,7 @@ const PlansListView = () => (
         </FilterContext.Provider>
         <Box display="flex">
             <Box width={'100%'}>
-                <PlansDatagrid />
+                <PaymentsDatagrid />
                 <Pagination rowsPerPageOptions={[5, 10, 25]} />
             </Box>
         </Box>
@@ -53,8 +48,8 @@ const PlansListView = () => (
 );
 
 PlansList.defaultProps = {
-    basePath: 'memberships/plans',
-    resource: 'memberships/plans'
+    basePath: 'memberships/payments',
+    resource: 'memberships/payments'
 }
 
 export default PlansList
