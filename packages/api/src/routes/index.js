@@ -8,10 +8,14 @@ import profileRoutes from './profile.routes';
 import updatePasswordRouter from './update-password.routes';
 import triviasRoutes from './trivias.routes';
 import plansRoutes from './plans.routes';
+import paymentsRoutes from './payments.routes';
+import memberships from './memberships.routes';
 import { isAuthorizedMiddleware } from '../config'
 
 const routes = Router();
 
+routes.use('/api/memberships', isAuthorizedMiddleware, memberships)
+routes.use('/api/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 routes.use('/api/memberships/plans', isAuthorizedMiddleware, plansRoutes)
 routes.use('/api/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
 routes.use('/api/trivia-settings', isAuthorizedMiddleware, triviaSettingsRoutes)
