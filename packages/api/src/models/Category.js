@@ -1,12 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
-class Category extends Model {
-    // name!: string;
+Model.knex(DB_CONN)
 
+export class Category extends Model {
     static get tableName () {
         return 'categories'
     }
-}
 
-export default Category.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        memberships: {
+            relation: Model.HasManyRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'categories.id',
+                to: 'trivias.category_id'
+            }
+        }
+    })
+}

@@ -2,7 +2,7 @@ import { sendCode, verifyCode } from '../config';
 import jwt from 'jsonwebtoken'
 import { SECRET, SESSION_EXPIRE } from '../config'
 import bcrypt from 'bcrypt'
-import User from '../models/User'
+import { User } from '../models/User'
 import Profile from '../models/Profile'
 
 export const login = async (req, res) => {

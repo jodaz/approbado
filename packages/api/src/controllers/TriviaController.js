@@ -1,4 +1,4 @@
-import Trivia from '../models/Trivia'
+import { Trivia } from '../models/Trivia'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -6,11 +6,11 @@ export const index = async (req, res) => {
     const query = Trivia.query()
 
     if (filter) {
-        if (filter.title) {
-            query.where('title', filter.title)
+        if (filter.name) {
+            query.where('name', filter.name)
         }
     }
-    
+
     return paginatedQueryResponse(query, req, res)
 }
 
@@ -19,7 +19,7 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         const model = await Trivia.query().insert(req.body)
-    
+
         return res.status(201).json(model)
     }
 }
@@ -43,6 +43,6 @@ export const show = async (req, res) => {
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const model = await Trivia.query().findById(id).delete().first();
-    
+
     return res.json(model);
 }

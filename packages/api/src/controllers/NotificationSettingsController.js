@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import NotificationSettings from '../models/NotificationSettings'
 import { validateRequest } from '../utils'
 

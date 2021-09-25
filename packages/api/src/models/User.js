@@ -1,31 +1,37 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
-import Profile from './Profile'
 
-class User extends Model {
-    // id!: number;
-    // names!: string;
-    // password!: string;
-    // email!: string;
-    // rol!: string;
-    // phone!: string;
+Model.knex(DB_CONN)
 
-    // profile?: typeof Profile;
-    
+export class User extends Model {
     static get tableName () {
         return 'users'
     }
 
     static relationMappings = () => ({
-        pets: {
-            relation: Model.HasOneRelation,
-            modelClass: Profile,
+        memberships: {
+            relation: Model.HasManyRelation,
+            modelClass: `${__dirname}/Membership`,
             join: {
                 from: 'users.id',
-                to: 'profiles.user_id',
-            },
+                to: 'memberships.user_id'
+            }
         },
+        payments: {
+            relation: Model.HasManyRelation,
+            modelClass: `${__dirname}/Payment`,
+            join: {
+                from: 'users.id',
+                to: 'payments.user_id'
+            }
+        },
+        profile: {
+            relation: Model.HasOneRelation,
+            modelClass: `${__dirname}/Profile`,
+            join: {
+                from: 'users.id',
+                to: 'profiles.user_id'
+            }
+        }
     })
 }
-
-export default User.bindKnex(DB_CONN)

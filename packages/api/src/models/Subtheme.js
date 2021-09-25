@@ -1,10 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
-class Subtheme extends Model {
+Model.knex(DB_CONN)
+
+export class Subtheme extends Model {
     static get tableName () {
         return 'subthemes'
     }
-}
 
-export default Subtheme.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        trivia: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'subthemes.trivia_id',
+                to: 'trivias.id'
+            }
+        }
+    })
+}

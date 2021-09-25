@@ -1,10 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
-class Plan extends Model {
+Model.knex(DB_CONN)
+
+export class Plan extends Model {
     static get tableName () {
         return 'plans'
     }
-}
 
-export default Plan.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        memberships: {
+            relation: Model.HasManyRelation,
+            modelClass: `${__dirname}/Membership`,
+            join: {
+                from: 'plans.id',
+                to: 'memberships.plan_id'
+            }
+        }
+    })
+}
