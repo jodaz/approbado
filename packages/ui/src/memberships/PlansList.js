@@ -12,14 +12,7 @@ import {
     DeleteButton
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
-
-const PlansDatagrid = () => (
-    <Datagrid optimized>
-        <TextField label='Nombre' source="name" />
-        <NumberField label="Precio" source="amount" />
-        <EditButton basePath='memberships/plans' />
-    </Datagrid>
-);
+import GridList from './GridList'
 
 const ListActions = () => (
     <TopToolbar>
@@ -45,8 +38,8 @@ const PlansListView = () => (
         </FilterContext.Provider>
         <Box display="flex">
             <Box width={'100%'}>
-                <PlansDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 25]} />
+                <GridList />
+                <Pagination rowsPerPageOptions={[5, 10, 20]} />
             </Box>
         </Box>
     </>

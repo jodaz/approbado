@@ -70,13 +70,12 @@ const theme = {
         },
         MuiDrawer: {
             root: {
-            backgroundColor: palette.primary.main
+                backgroundColor: palette.primary.main
             }
         },
         MuiMenu: {
             paper: {
                 borderRadius: '6px !important',
-                top: '232px !important'
             }
         },
         MuiPaper: {

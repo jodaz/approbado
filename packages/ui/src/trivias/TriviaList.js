@@ -8,7 +8,6 @@ import {
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin';
-
 import GridList from './GridList';
 
 const ListActions = () => (
@@ -39,7 +38,7 @@ const TriviaListView = () => (
         <Box display="flex">
             <Box width={'100%'}>
                 <GridList />
-                <Pagination rowsPerPageOptions={[10, 20, 40]} />
+                <Pagination rowsPerPageOptions={[5, 10, 20]} />
             </Box>
         </Box>
     </>
