@@ -73,6 +73,12 @@ const theme = {
             backgroundColor: palette.primary.main
             }
         },
+        MuiMenu: {
+            paper: {
+                borderRadius: '6px !important',
+                top: '232px !important'
+            }
+        },
         MuiPaper: {
             elevation1: {
                 boxShadow: 'none',

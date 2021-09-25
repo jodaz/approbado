@@ -1,23 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
-import User from './User'
 
-class Profile extends Model {
-    // id!: number;
-    // public_profile!: boolean;
-    // display_name!: boolean;
-    // names!: string;
-    // surnames!: string;
-    // summary!: string;
-    // linkedin!: string;
-    // twitter!: string;
-    // user_id!: number;
+Model.knex(DB_CONN)
 
-    // user?: typeof User;
-
+export class Profile extends Model {
     static get tableName () {
         return 'profiles'
     }
-}
 
-export default Profile.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        owner: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/User`,
+            join: {
+                from: 'profiles.user_id',
+                to: 'users.id'
+            }
+        }
+    })
+}

@@ -1,4 +1,4 @@
-import Plan from '../models/Plan'
+import { Plan } from '../models/Plan'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -11,7 +11,7 @@ export const index = async (req, res) => {
             query.where('name', filter.name)
         }
     }
-    
+
     return paginatedQueryResponse(query, req, res)
 }
 
@@ -21,7 +21,7 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         const model = await Plan.query().insert(req.body)
-    
+
         return res.status(201).json(model)
     }
 }
@@ -45,6 +45,6 @@ export const show = async (req, res) => {
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const model = await Plan.query().findById(id).delete().first();
-    
+
     return res.json(model);
 }
