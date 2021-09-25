@@ -5,7 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import { useListContext } from 'react-admin';
-import TriviaCard from './TriviaCard'
+import MembershipCard from './MembershipCard'
 
 const useStyles = makeStyles(theme => ({
     gridList: {
@@ -67,7 +67,7 @@ const LoadedGridList = (props) => {
         <Grid container>
             {ids.map((id) => (
                 <Grid item xs={12} sm={6} md={4}>
-                    <TriviaCard data={data[id]} id={id} />
+                    <MembershipCard data={data[id]} id={id} />
                 </Grid>
             ))}
         </Grid>

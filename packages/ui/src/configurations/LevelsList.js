@@ -1,7 +1,6 @@
-import { 
+import {
     Datagrid,
     TextField,
-    EditButton,
     CreateButton,
     FilterContext,
     ListBase,
@@ -10,11 +9,12 @@ import {
     TopToolbar,
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
+import DatagridOptions from '../components/DatagridOptions';
 
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
-        <EditButton basePath='configurations/levels' />
+        <DatagridOptions basePath='configurations/levels' />
     </Datagrid>
 );
 
