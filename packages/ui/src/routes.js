@@ -14,37 +14,37 @@ import PlanEdit from './memberships/PlanEdit';
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
     <Route exact path="/memberships" render={() => <Memberships />} />,
-    <Route 
-        path="/memberships/plans/create" 
-        render={() => <PlanCreate />} 
+    <Route
+        path="/memberships/plans/create"
+        render={() => <PlanCreate />}
     />,
-    <Route 
-        path="/memberships/plans/:id" 
-        render={() => <PlanEdit />} 
+    <Route
+        path="/memberships/plans/:id"
+        render={() => <PlanEdit />}
     />,
-    <Route 
-        path="/configurations/levels/create" 
-        render={() => <LevelsCreate />} 
+    <Route
+        path="/configurations/levels/create"
+        render={() => <LevelsCreate />}
     />,
-    <Route 
-        path="/configurations/categories/create" 
-        render={() => <CategoryCreate />} 
+    <Route
+        path="/configurations/categories/create"
+        render={() => <CategoryCreate />}
     />,
-    <Route 
-        path="/configurations/categories/:id" 
-        render={() => <CategoryEdit />} 
+    <Route
+        path="/configurations/categories/:id"
+        render={() => <CategoryEdit />}
     />,
-    <Route 
-        path="/configurations/levels/:id" 
-        render={() => <LevelEdit />} 
+    <Route
+        path="/configurations/levels/:id"
+        render={() => <LevelEdit />}
     />,
     <RouteWithoutLayout
         path='/auth/:auth'
-        render={() => <Authenticate />} 
+        render={() => <Authenticate />}
     />,
-    <Route 
-        path="/profile" 
-        render={() => <Profile />} 
+    <Route
+        path="/profile"
+        render={() => <Profile />}
     />,
 ];
 

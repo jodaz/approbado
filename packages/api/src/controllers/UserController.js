@@ -1,5 +1,6 @@
 import { User } from '../models/User'
 import bcrypt from 'bcrypt'
+import { MailTransporter } from '../config'
 import { validateRequest, paginatedQueryResponse, getRandomPass } from '../utils'
 
 export const index = async (req, res) => {
@@ -57,6 +58,12 @@ export const update = async (req, res) => {
     const model = await User.query().updateAndFetchById(id, {
         ...rest,
         password: encryptedPassword
+    })
+
+    MailTransporter.sendMail({
+        to: model.email,
+        subject: 'Aviso: contraseña actualizada',
+        text: `Su nueva contraseña es ${newPassword}`
     })
 
     return res.status(201).json(model)

@@ -1,5 +1,4 @@
 //@ts-nocheck
-import Knex from 'knex'
 import { USER } from '../config'
 import bcrypt from 'bcrypt'
 
@@ -8,16 +7,16 @@ export async function seed(knex) {
 
   // Deletes ALL existing entries
   return knex('users').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('users').insert([
-        {
-          names: USER.name,
-          email: USER.email,
-          password: bcryptPassword,
-          is_registered: false,
-          rol: 'Administrador',
-        },
-      ]);
-    });
+        .then(function () {
+            // Inserts seed entries
+            return knex('users').insert([
+                {
+                names: USER.name,
+                email: USER.email,
+                password: bcryptPassword,
+                is_registered: false,
+                rol: 'Administrador',
+                },
+            ]);
+        });
 };

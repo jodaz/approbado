@@ -1,8 +1,8 @@
-import { 
-    Strategy as JwtStrategy, 
-    ExtractJwt 
+import {
+    Strategy as JwtStrategy,
+    ExtractJwt
 } from 'passport-jwt'
-import User from '../models/User'
+import { User } from '../models/User'
 import { SECRET } from './env'
 import passport from "passport";
 
@@ -30,15 +30,13 @@ passport.use(new JwtStrategy(options, async (req, jwtToken, done) => {
 export const isAuthorizedMiddleware = async (req, res, next) => {
     await passport.authenticate('jwt', (err, user, info) => {
         if (err) {
-            return next(err); 
+            return next(err);
         }
-        if (!user) { 
-            return res.status(401).json({ error: 'not authenticated' }); 
+        if (!user) {
+            return res.status(401).json({ error: 'not authenticated' });
         }
         next()
     })(req, res, next);
 }
 
-
 export const authMiddleware = passport.initialize();
-
