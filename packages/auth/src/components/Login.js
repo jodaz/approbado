@@ -11,6 +11,7 @@ import renderInput from '../utils/renderInput'
 import InputContainer from '@approbado/core/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
+import AuthHeaderForm from './AuthHeaderForm';
 
 const validate = (values) => {
     const errors = {};
@@ -51,9 +52,10 @@ const Login = () => {
     }, [])
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit}>
+        <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
             <Card className={classes.card}>
                 <div className={classes.form}>
+                    <AuthHeaderForm title='Iniciar sesión' />
                     <InputContainer labelName='Correo electrónico' md={12}>
                         <Field
                             autoFocus

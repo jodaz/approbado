@@ -182,10 +182,7 @@ const theme = {
         },
         RaSidebar: {
             root: {
-                height: '100vh',
-                '': {
-
-                }
+                height: '100vh'
             }
         },
         PrivateTabIndicator: {

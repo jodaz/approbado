@@ -3,38 +3,47 @@ import jwt from 'jsonwebtoken'
 import { SECRET, SESSION_EXPIRE } from '../config'
 import bcrypt from 'bcrypt'
 import { User, Profile } from '../models'
+import { validateRequest } from '../utils'
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const reqErrors = await validateRequest(req, res);
 
-    const user = await User.query().findOne({
-        email: email
-    });
+    if (!reqErrors) {
+        const { email, password } = req.body;
 
-    if (!user) {
-        res.status(422).json({
-            'errors': {
-                "email": "Usuario no encontrado"
+        const user = await User.query().findOne({
+            email: email
+        });
+
+        if (!user) {
+            res.status(422).json({
+                'errors': {
+                    "email": "Us2222uario no encontrado"
+                }
+            })
+        } else {
+            const match = await bcrypt.compare(password, user.password)
+
+            if (match) {
+                const token = await jwt.sign(
+                    { id: user.id },
+                    SECRET,
+                    { expiresIn: SESSION_EXPIRE }
+                );
+
+                return res.json({
+                    success: true,
+                    user: user,
+                    token: token
+                })
+            } else {
+                res.status(422).json({
+                    'errors': {
+                        "password": "Contraseña incorrecta"
+                    }
+                })
             }
-        })
-    }
-
-    const match = await bcrypt.compare(password, user.password)
-
-    if (match) {
-        const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: SESSION_EXPIRE });
-
-        return res.json({
-            success: true,
-            user: user,
-            token: token
-        })
-    } else {
-        res.status(422).json({
-            'errors': {
-                "password": "Contraseña incorrecta"
-            }
-        })
+        }
     }
 }
 
