@@ -2,8 +2,7 @@ import { sendCode, verifyCode } from '../config';
 import jwt from 'jsonwebtoken'
 import { SECRET, SESSION_EXPIRE } from '../config'
 import bcrypt from 'bcrypt'
-import { User } from '../models/User'
-import Profile from '../models/Profile'
+import { User, Profile } from '../models'
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -29,6 +28,12 @@ export const login = async (req, res) => {
             success: true,
             user: user,
             token: token
+        })
+    } else {
+        res.status(422).json({
+            'errors': {
+                "password": "Contraseña incorrecta"
+            }
         })
     }
 }

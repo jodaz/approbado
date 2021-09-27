@@ -16,6 +16,18 @@ export class Plan extends Model {
                 from: 'plans.id',
                 to: 'memberships.plan_id'
             }
+        },
+        trivias: {
+            relation: Model.ManyToManyRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'plans.id',
+                through: {
+                    from: 'trivias_plans.plan_id',
+                    to: 'trivias_plans.trivia_id'
+                },
+                to: 'trivias.id'
+            }
         }
     })
 }

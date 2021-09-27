@@ -1,4 +1,4 @@
-import { Category } from '../models/Category'
+import { Category } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

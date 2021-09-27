@@ -1,4 +1,4 @@
-import NotificationSettings from '../models/NotificationSettings'
+import NotificationSettings from '../models'
 import { validateRequest } from '../utils'
 
 export const show = async (req, res) => {

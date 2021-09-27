@@ -1,19 +1,17 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
-import User from './User';
 
-class PasswordReset extends Model {
-    // token!: string;
-    // user_id!: number;
-    
+Model.knex(DB_CONN)
+
+export class PasswordReset extends Model {
     static get tableName () {
         return 'password_resets'
     }
 
     static relationMappings = () => ({
         user: {
-            relation: Model.HasManyRelation,
-            modelClass: User,
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/User`,
             join: {
                 from: 'password_resets.user_id',
                 to: 'users.id'
@@ -21,5 +19,3 @@ class PasswordReset extends Model {
         }
     })
 }
-
-export default PasswordReset.bindKnex(DB_CONN)
