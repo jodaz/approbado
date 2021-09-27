@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     form: {
         padding: '2em',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        height: '300px'
     },
     input: {
         marginTop: '1em',
@@ -25,6 +26,21 @@ const useStyles = makeStyles(theme => ({
     actions: {
         padding: '0 1em 1em 1em',
     },
+    fbButton: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderRadius: '3px',
+        fontSize: '1em',
+        justifyContent: 'space-between',
+        padding: '0.5em 0.9em',
+        backgroundColor: '#1977F3',
+        color: '#fff',
+        border: 'none',
+        '& :nth-child(1)': {
+            marginRight: '0.5em'
+        }
+    }
 }));
 
 export default useStyles;

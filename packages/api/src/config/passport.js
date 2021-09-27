@@ -37,10 +37,38 @@ passport.use(new JwtStrategy(options, async (req, jwtToken, done) => {
 passport.use(new FBStrategy({
     clientID: FB_CREDS.ID,
     clientSecret: FB_CREDS.SECRET,
-    callbackURL: '/api/auth/facebook/callback'
-}, (accessToken, refreshToken, profile, done) => {
-    console.log(accessToken, refreshToken, profile);
-    done(null, {})
+    callbackURL: '/api/auth/facebook/callback',
+    profileFields: ['displayName', 'email']
+}, async (accessToken, refreshToken, profile, done) => {
+    const user = await User.query()
+        .withGraphJoined('authProviders')
+        .findOne({
+            'email': profile._json.email,
+            'provider_key': profile.id,
+            'provider_type': 'facebook',
+        })
+
+    if (!user) {
+        const { _json: data } = profile;
+
+        const user = await User.query().insert({
+            names: data.name,
+            email: data.email,
+            password: '',
+            rol: 'Cliente',
+            is_registered: true
+        })
+
+        await user.$relatedQuery('authProviders')
+            .insert({
+                provider_type: profile.provider,
+                provider_key: profile.id
+            })
+
+        done(null, user)
+    }
+    // Si hay usuario pero sin perfil
+    done(null, user)
 }))
 
 export const isAuthorizedMiddleware = async (req, res, next) => {

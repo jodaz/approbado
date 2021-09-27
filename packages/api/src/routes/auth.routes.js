@@ -1,8 +1,8 @@
 import { Router } from "express"
-import { body } from 'express-validator'
-import { phoneExists, emailExists } from '../validations/users'
+import { body, checkSchema } from 'express-validator'
+import { phoneExists, emailExists, validateLoginSchema } from '../validations'
 import { sendSMSCode, logout, login, verifySMSCode } from '../controllers/AuthController'
-import { isAuthorizedMiddleware, authMiddleware } from '../config'
+import { isAuthorizedMiddleware, authorizeFacebookMiddleware } from '../config'
 
 const authRouter = Router()
 
@@ -16,7 +16,7 @@ authRouter.post(
     body('email').custom(emailExists),
     verifySMSCode
 )
-authRouter.post('/login', login)
+authRouter.post('/login', checkSchema(validateLoginSchema), login)
 authRouter.get('/logout', isAuthorizedMiddleware, logout)
 authRouter.get('/facebook', isAuthorizedMiddleware, (req, res) => {
     res.status(201).json({
