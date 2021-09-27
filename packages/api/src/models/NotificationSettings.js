@@ -1,16 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
-class NotificationSettings extends Model {
-    // id!: number;
-    // general_notifications!: boolean;
-    // account_updates!: boolean;
-    // chat!: boolean;
-    // on_mobile!: boolean;
+Model.knex(DB_CONN)
 
+export class NotificationSettings extends Model {
     static get tableName () {
         return 'notification_settings'
     }
-}
 
-export default NotificationSettings.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        user: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/User`,
+            join: {
+                from: 'notification_settings.user_id',
+                to: 'users.id'
+            }
+        }
+    })
+}

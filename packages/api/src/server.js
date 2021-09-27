@@ -1,6 +1,6 @@
 import express from 'express'
 import helmet from 'helmet'
-import { APP_PORT, cors } from './config'
+import { APP_PORT, APP_ENV, cors } from './config'
 import routes from './routes'
 import path from 'path'
 
@@ -12,6 +12,13 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 // Static routes
 app.use('/static', express.static(path.resolve(__dirname, '../public')));
+
+// Auth iframe
+app.use('/auth', express.static(path.join(__dirname, '../../auth/build')));
+app.get('/auth/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../auth/build', 'index.html'))
+})
+
 // API routes
 app.use(routes);
 

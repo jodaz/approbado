@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { User } from '../models/User'
+import { User } from '../models'
 
 export const update = async (req, res) => {
     const { id } = req.user

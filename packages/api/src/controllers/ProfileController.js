@@ -1,4 +1,4 @@
-import { Profile } from '../models/Profile'
+import { Profile } from '../models'
 import { validateRequest } from '../utils'
 
 export const show = async (req, res) => {

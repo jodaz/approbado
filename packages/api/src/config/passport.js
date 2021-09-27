@@ -3,8 +3,9 @@ import {
     ExtractJwt
 } from 'passport-jwt'
 import { User } from '../models/User'
-import { SECRET } from './env'
+import { SECRET, FB_CREDS } from './env'
 import passport from "passport";
+import { Strategy as FBStrategy } from 'passport-facebook';
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -27,8 +28,23 @@ passport.use(new JwtStrategy(options, async (req, jwtToken, done) => {
     }
 }));
 
+/**
+ * Sign in using Facebook
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+passport.use(new FBStrategy({
+    clientID: FB_CREDS.ID,
+    clientSecret: FB_CREDS.SECRET,
+    callbackURL: '/api/auth/facebook/callback'
+}, (accessToken, refreshToken, profile, done) => {
+    console.log(accessToken, refreshToken, profile);
+    done(null, {})
+}))
+
 export const isAuthorizedMiddleware = async (req, res, next) => {
-    await passport.authenticate('jwt', (err, user, info) => {
+    await passport.authenticate(['jwt', 'facebook'], (err, user, info) => {
         if (err) {
             return next(err);
         }

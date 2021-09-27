@@ -1,4 +1,4 @@
-import { Membership } from '../models/Membership'
+import { Membership } from '../models'
 import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

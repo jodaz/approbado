@@ -1,13 +1,21 @@
 import { Model } from 'objection'
 import { DB_CONN } from '../config'
 
-class AuthenticationProvider extends Model {
-    // provider_key!: string;
-    // provider_type!: string;
-    
+Model.knex(DB_CONN)
+
+export class AuthenticationProvider extends Model {
     static get tableName () {
         return 'authentication_providers'
     }
-}
 
-export default AuthenticationProvider.bindKnex(DB_CONN)
+    static relationMappings = () => ({
+        user: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/User`,
+            join: {
+                from: 'authentication_providers.user_id',
+                to: 'users.id'
+            }
+        }
+    })
+}

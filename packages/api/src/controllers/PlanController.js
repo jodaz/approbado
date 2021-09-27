@@ -1,4 +1,4 @@
-import { Plan } from '../models/Plan'
+import { Plan } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -16,11 +16,13 @@ export const index = async (req, res) => {
 }
 
 export const store = async (req, res) => {
-    console.log(req.body)
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await Plan.query().insert(req.body)
+        const { trivia_ids, ...plan } = req.body;
+
+        const model = await Plan.query().insert(plan)
+        await model.$relatedQuery('trivias').relate(trivia_ids)
 
         return res.status(201).json(model)
     }

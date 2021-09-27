@@ -1,4 +1,4 @@
-import TriviaSettings from '../models/TriviaSettings'
+import { TriviaSettings } from '../models'
 import { validateRequest } from '../utils'
 
 export const show = async (req, res) => {

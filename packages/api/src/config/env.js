@@ -27,6 +27,11 @@ export const MAIL = {
     MAIL_HOST: process.env.MAIL_HOST
 }
 
+export const FB_CREDS = {
+    ID: process.env.FB_APP_ID,
+    SECRET: process.env.FB_APP_SECRET
+}
+
 export const DB = {
     name: process.env.DB_NAME,
     username: process.env.DB_USERNAME,

@@ -13,12 +13,20 @@ export class Payment extends Model {
             relation: Model.HasOneRelation,
             modelClass: `${__dirname}/Membership`,
             join: {
-                from: 'memberships.payment_id',
-                to: 'payment.id'
+                from: 'payments.id',
+                to: 'memberships.payment_id'
+            }
+        },
+        plan: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${__dirname}/Plan`,
+            join: {
+                from: 'payments.plan_id',
+                to: 'plans.id'
             }
         },
         user: {
-            relation: Model.HasOneRelation,
+            relation: Model.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'payments.user_id',

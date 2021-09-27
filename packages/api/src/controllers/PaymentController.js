@@ -1,4 +1,4 @@
-import { Payment } from '../models/Payment'
+import { Payment } from '../models'
 import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

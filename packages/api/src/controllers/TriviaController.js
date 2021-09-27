@@ -1,4 +1,4 @@
-import { Trivia } from '../models/Trivia'
+import { Trivia } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

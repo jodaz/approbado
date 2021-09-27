@@ -1,4 +1,4 @@
-import { Level } from '../models/Level'
+import { Level } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

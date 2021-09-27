@@ -43,6 +43,14 @@ export const store = async (req, res) => {
             is_registered: false
         })
 
+        if (random_pass) {
+            await MailTransporter.sendMail({
+                to: model.email,
+                subject: '¡Bienvendo a Approbado!',
+                text: `Su contraseña de acceso es ${newPassword}`
+            })
+        }
+
         return res.status(201).json(model)
     }
 }
@@ -60,11 +68,13 @@ export const update = async (req, res) => {
         password: encryptedPassword
     })
 
-    MailTransporter.sendMail({
-        to: model.email,
-        subject: 'Aviso: contraseña actualizada',
-        text: `Su nueva contraseña es ${newPassword}`
-    })
+    if (random_pass) {
+        await MailTransporter.sendMail({
+            to: model.email,
+            subject: 'Aviso: contraseña actualizada',
+            text: `Su nueva contraseña es ${newPassword}`
+        })
+    }
 
     return res.status(201).json(model)
 }

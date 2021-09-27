@@ -9,6 +9,7 @@
     "dev:ui": "concurrently \"npm run start:api\" \"npm run start:ui\"",
     "dev:auth": "concurrently \"npm run start:api\" \"npm run start:auth\"",
     "build:ui": "yarn workspace @approbado/ui run build",
+    "build:auth": "yarn workspace @approbado/auth run build",
     "start:api": "yarn workspace @approbado/api run watch:dev",
     "start:auth": "yarn workspace @approbado/auth run start",
     "start:ui": "yarn workspace @approbado/ui run start",
