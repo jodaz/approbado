@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class Subtheme extends Model {
+export class Subtheme extends BaseClass {
     static get tableName () {
         return 'subthemes'
     }
 
     static relationMappings = () => ({
         trivia: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Trivia`,
             join: {
                 from: 'subthemes.trivia_id',

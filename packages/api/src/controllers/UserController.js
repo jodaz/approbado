@@ -45,7 +45,7 @@ export const store = async (req, res) => {
 
         if (random_pass) {
             await MailTransporter.sendMail({
-                to: model.email,
+                to: BaseClass.email,
                 subject: '¡Bienvendo a Approbado!',
                 text: `Su contraseña de acceso es ${newPassword}`
             })
@@ -70,7 +70,7 @@ export const update = async (req, res) => {
 
     if (random_pass) {
         await MailTransporter.sendMail({
-            to: model.email,
+            to: BaseClass.email,
             subject: 'Aviso: contraseña actualizada',
             text: `Su nueva contraseña es ${newPassword}`
         })

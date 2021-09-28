@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class Trivia extends Model {
+export class Trivia extends BaseClass {
     static get tableName () {
         return 'trivias'
     }
 
     static relationMappings = () => ({
         subthemes: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Subtheme`,
             join: {
                 from: 'trivias.id',
@@ -18,7 +15,7 @@ export class Trivia extends Model {
             }
         },
         level: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Level`,
             join: {
                 from: 'trivias.level_id',
@@ -26,7 +23,7 @@ export class Trivia extends Model {
             }
         },
         category: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Category`,
             join: {
                 from: 'trivias.category_id',

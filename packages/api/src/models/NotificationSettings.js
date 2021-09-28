@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class NotificationSettings extends Model {
+export class NotificationSettings extends BaseClass {
     static get tableName () {
         return 'notification_settings'
     }
 
     static relationMappings = () => ({
         user: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'notification_settings.user_id',

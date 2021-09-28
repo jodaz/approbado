@@ -22,6 +22,7 @@ const CategoryEdit = (props) => {
     const redirect = useRedirect()
 
     const save = React.useCallback(async (values) => {
+        console.log(values)
         try {
             await mutate({
                 type: 'update',

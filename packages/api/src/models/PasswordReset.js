@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class PasswordReset extends Model {
+export class PasswordReset extends BaseClass {
     static get tableName () {
         return 'password_resets'
     }
 
     static relationMappings = () => ({
         user: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'password_resets.user_id',
