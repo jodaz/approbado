@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import { User, Profile } from '../models'
 import { validateRequest } from '../utils'
 
-export const login = async (req, res) => {
+export const resetPassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
@@ -47,38 +47,7 @@ export const login = async (req, res) => {
     }
 }
 
-export const logout = async (req, res) => {
-    await req.logout();
-
-    return res.status(201).json({
-        'success': true
-    })
-}
-
-export const sendSMSCode = async (req, res) => {
-    const reqErrors = await validateRequest(req, res);
-
-    if (!reqErrors) {
-        const { phone } = req.body;
-
-        try {
-            await sendCode(phone)
-
-            return res.json({
-                message: 'Hemos enviado un código de verificación.',
-                phone: phone
-            })
-        } catch (err) {
-            console.log(err)
-
-            return res.status(500).json({
-                message: 'Ha ocurrido un error en nuestro servidor'
-            })
-        }
-    }
-}
-
-export const verifySMSCode = async (req, res) => {
+export const updatePassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
