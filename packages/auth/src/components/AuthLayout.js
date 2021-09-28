@@ -4,7 +4,6 @@ import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '@approbado/core';
 import { Typography } from '@material-ui/core'
-import FBLoginButton from './FBLoginButton';
 
 const useStyles = makeStyles(theme => ({
     main: {

@@ -72,7 +72,7 @@ passport.use(new FBStrategy({
 }))
 
 export const isAuthorizedMiddleware = async (req, res, next) => {
-    await passport.authenticate(['jwt', 'facebook'], (err, user, info) => {
+    await passport.authenticate(['jwt', 'facebook'], { session: false }, (err, user, info) => {
         if (err) {
             return next(err);
         }

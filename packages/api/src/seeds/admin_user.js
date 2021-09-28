@@ -1,22 +1,20 @@
 //@ts-nocheck
 import { USER } from '../config'
+import { User } from '../models'
 import bcrypt from 'bcrypt'
 
 export async function seed(knex) {
-  const bcryptPassword = await bcrypt.hash(USER.password, 10);
+  const encryptedPassword = await bcrypt.hash(USER.password, 10);
 
   // Deletes ALL existing entries
   return knex('users').del()
-        .then(function () {
+        .then(async function () {
             // Inserts seed entries
-            return knex('users').insert([
-                {
-                names: USER.name,
-                email: USER.email,
-                password: bcryptPassword,
-                is_registered: false,
+            await User.query().insert({
+                ...USER,
+                password: encryptedPassword,
                 rol: 'Administrador',
-                },
-            ]);
+                is_registered: false
+            })
         });
 };

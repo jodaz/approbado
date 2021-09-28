@@ -14,7 +14,7 @@ export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ?
 export const SESSION_EXPIRE = process.env.SESSION_EXPIRE || 86400
 
 export const USER = {
-    name: process.env.NAME,
+    names: process.env.NAME,
     email: process.env.EMAIL,
     password: process.env.PASSWORD
 }
@@ -28,8 +28,8 @@ export const MAIL = {
 }
 
 export const FB_CREDS = {
-    ID: process.env.FB_APP_ID,
-    SECRET: process.env.FB_APP_SECRET
+    ID: process.env.FB_APP_ID || '',
+    SECRET: process.env.FB_APP_SECRET || ''
 }
 
 export const DB = {

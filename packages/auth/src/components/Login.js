@@ -12,6 +12,7 @@ import InputContainer from '@approbado/core/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
 import AuthHeaderForm from './AuthHeaderForm';
+import TextField from '@material-ui/core/TextField';
 
 const validate = (values) => {
     const errors = {};
@@ -31,10 +32,10 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = useStyles();
 
-    const handleSubmit = React.useCallback(auth => {
+    const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
-        axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, auth)
+        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
             .then(res => {
                 const { token } = res.data;
 
@@ -58,11 +59,10 @@ const Login = () => {
                     <AuthHeaderForm title='Iniciar sesión' />
                     <InputContainer labelName='Correo electrónico' md={12}>
                         <Field
-                            autoFocus
-                            name="email"
-                            // @ts-ignore
                             component={renderInput}
-                            label={'Usuario'}
+                            name="email"
+                            label="Email"
+                            type="email"
                             disabled={loading}
                         />
                     </InputContainer>
