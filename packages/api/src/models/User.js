@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class User extends Model {
+export class User extends BaseClass {
     static get tableName () {
         return 'users'
     }
 
     static relationMappings = () => ({
         memberships: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Membership`,
             join: {
                 from: 'users.id',
@@ -18,7 +15,7 @@ export class User extends Model {
             }
         },
         payments: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Payment`,
             join: {
                 from: 'users.id',
@@ -26,7 +23,7 @@ export class User extends Model {
             }
         },
         profile: {
-            relation: Model.HasOneRelation,
+            relation: BaseClass.HasOneRelation,
             modelClass: `${__dirname}/Profile`,
             join: {
                 from: 'users.id',
@@ -34,7 +31,7 @@ export class User extends Model {
             }
         },
         authProviders: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/AuthenticationProvider`,
             join: {
                 from: 'users.id',
@@ -42,7 +39,7 @@ export class User extends Model {
             }
         },
         blacklisted: {
-            relation: Model.HasOneRelation,
+            relation: BaseClass.HasOneRelation,
             modelClass: `${__dirname}/BlacklistedUser`,
             join: {
                 from: 'users.id',
@@ -50,7 +47,7 @@ export class User extends Model {
             }
         },
         notifications: {
-            relation: Model.HasOneRelation,
+            relation: BaseClass.HasOneRelation,
             modelClass: `${__dirname}/NotificationSettings`,
             join: {
                 from: 'users.id',
@@ -58,7 +55,7 @@ export class User extends Model {
             }
         },
         password_resets: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/PasswordReset`,
             join: {
                 from: 'users.id',

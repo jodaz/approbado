@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class AuthenticationProvider extends Model {
+export class AuthenticationProvider extends BaseClass {
     static get tableName () {
         return 'authentication_providers'
     }
 
     static relationMappings = () => ({
         user: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'authentication_providers.user_id',

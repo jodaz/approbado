@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class Plan extends Model {
+export class Plan extends BaseClass {
     static get tableName () {
         return 'plans'
     }
 
     static relationMappings = () => ({
         memberships: {
-            relation: Model.HasManyRelation,
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Membership`,
             join: {
                 from: 'plans.id',
@@ -18,7 +15,7 @@ export class Plan extends Model {
             }
         },
         trivias: {
-            relation: Model.ManyToManyRelation,
+            relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/Trivia`,
             join: {
                 from: 'plans.id',

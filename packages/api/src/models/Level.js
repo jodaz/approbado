@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class Level extends Model {
+export class Level extends BaseClass {
     static get tableName () {
         return 'levels'
     }
 
     static relationMappings = () => ({
-        memberships: {
-            relation: Model.HasManyRelation,
+        trivias: {
+            relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Trivia`,
             join: {
                 from: 'levels.id',

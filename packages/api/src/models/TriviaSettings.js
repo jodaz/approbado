@@ -1,9 +1,6 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class TriviaSettings extends Model {
+export class TriviaSettings extends BaseClass {
     static get tableName () {
         return 'trivia_settings'
     }

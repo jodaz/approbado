@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class BlacklistedUser extends Model {
+export class BlacklistedUser extends BaseClass {
     static get tableName () {
         return 'blacklisted_users'
     }
 
     static relationMappings = () => ({
         user: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'blacklisted_users.user_id',

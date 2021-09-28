@@ -1,16 +1,13 @@
-import { Model } from 'objection'
-import { DB_CONN } from '../config'
+import { BaseClass } from '../utils'
 
-Model.knex(DB_CONN)
-
-export class Profile extends Model {
+export class Profile extends BaseClass {
     static get tableName () {
         return 'profiles'
     }
 
     static relationMappings = () => ({
         owner: {
-            relation: Model.BelongsToOneRelation,
+            relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
                 from: 'profiles.user_id',
