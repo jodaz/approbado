@@ -4,15 +4,17 @@ import {
     Button,
     Card,
     CardActions,
-    CircularProgress
+    Typography,
+    Box
 } from '@material-ui/core';
 import axios from 'axios'
 import renderInput from '../utils/renderInput'
-import InputContainer from '@approbado/core/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
 import AuthHeaderForm from './AuthHeaderForm';
-import TextField from '@material-ui/core/TextField';
+import { theme } from '@approbado/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 const validate = (values) => {
     const errors = {};
@@ -57,46 +59,55 @@ const Login = () => {
             <Card className={classes.card}>
                 <div className={classes.form}>
                     <AuthHeaderForm title='Iniciar sesión' />
-                    <InputContainer labelName='Correo electrónico' md={12}>
-                        <Field
-                            component={renderInput}
-                            name="email"
-                            label="Email"
-                            type="email"
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Contraseña' md={12}>
-                        <Field
-                            name="password"
-                            // @ts-ignore
-                            component={renderInput}
-                            label={'Contraseña'}
-                            type="password"
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                </div>
-                <CardActions className={classes.actions}>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        color="primary"
+                    <Field
+                        component={renderInput}
+                        name="email"
+                        type="email"
+                        placeholder='Usuario'
                         disabled={loading}
-                        fullWidth
-                    >
-                        {loading && (
-                            <CircularProgress
-                                size={25}
-                                thickness={2}
-                            />
-                        )}
-                        {'Acceder'}
-                    </Button>
-                </CardActions>
+                        className={classes.input}
+                    />
+                    <Field
+                        name="password"
+                        // @ts-ignore
+                        component={renderInput}
+                        placeholder='Contraseña'
+                        type="password"
+                        disabled={loading}
+                        className={classes.input}
+                    />
+                    <Box component="div" display='flex' justifyContent="space-between" marginTop="1rem">
+                        Recordar contraseña
+                        <Link to="/register"> ¿Olvidaste tu contraseña? </Link>
+                    </Box>
+                    <CardActions className={classes.actions}>
+                        <Button
+                            variant='contained'
+                            color='secondary'
+                            type="submit"
+                            className={classes.saveButton}
+                            disabled={loading}
+                            fullWidth
+                        >
+                            {'Iniciar sesión'}
+                        </Button>
+                        <Box component="div" marginTop="2rem">
+                            <Typography variant="subtitle1" component="p">
+                                ¿Aún no tienes una cuenta?
+                                <Link to="/register"> Crear una cuenta </Link>
+                            </Typography>
+                        </Box>
+                    </CardActions>
+                </div>
             </Card>
         </AuthLayout >
     );
 };
 
-export default Login;
+const LoginWithTheme = props => (
+    <ThemeProvider theme={createMuiTheme(theme)}>
+        <Login {...props} />
+    </ThemeProvider>
+);
+
+export default LoginWithTheme;

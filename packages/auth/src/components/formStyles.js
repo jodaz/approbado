@@ -1,11 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        minWidth: '90%',
+        alignItems: 'center',
+        minWidth: '100%',
         minHeight: '100%',
         [theme.breakpoints.up('sm')]: {
             minWidth: '50%'
@@ -16,15 +17,17 @@ const useStyles = makeStyles(theme => ({
     },
     form: {
         padding: '2em',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '300px'
+        maxWidth: '500px'
     },
     input: {
         marginTop: '1em',
     },
     actions: {
-        padding: '0 1em 1em 1em',
+        marginTop: '2em',
+        marginBottom: '2em',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column'
     },
     fbButton: {
         display: 'flex',
@@ -39,6 +42,15 @@ const useStyles = makeStyles(theme => ({
         border: 'none',
         '& :nth-child(1)': {
             marginRight: '0.5em'
+        }
+    },
+    saveButton: {
+        padding: '0.5rem 2rem',
+        textTransform: 'none',
+        fontSize: '16px',
+        borderRadius: '6px',
+        '&:hover': {
+            backgroundColor: fade(theme.palette.secondary.main, 0.95)
         }
     }
 }));

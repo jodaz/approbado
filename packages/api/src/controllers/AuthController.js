@@ -15,34 +15,22 @@ export const login = async (req, res) => {
             email: email
         });
 
-        if (!user) {
-            res.status(422).json({
-                'errors': {
-                    "email": "Us2222uario no encontrado"
-                }
+        const match = await bcrypt.compare(password, user.password)
+
+        if (match) {
+            const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: SESSION_EXPIRE });
+
+            return res.json({
+                success: true,
+                user: user,
+                token: token
             })
         } else {
-            const match = await bcrypt.compare(password, user.password)
-
-            if (match) {
-                const token = await jwt.sign(
-                    { id: user.id },
-                    SECRET,
-                    { expiresIn: SESSION_EXPIRE }
-                );
-
-                return res.json({
-                    success: true,
-                    user: user,
-                    token: token
-                })
-            } else {
-                res.status(422).json({
-                    'errors': {
-                        "password": "Contraseña incorrecta"
-                    }
-                })
-            }
+            res.status(422).json({
+                'errors': {
+                    "password": "Contraseña incorrecta"
+                }
+            })
         }
     }
 }

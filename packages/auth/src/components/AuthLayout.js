@@ -3,7 +3,7 @@ import { Form } from 'react-final-form';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '@approbado/core';
-import { Typography } from '@material-ui/core'
+import { Typography, Box } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
     main: {
@@ -11,9 +11,27 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row',
         minHeight: '100vh',
         justifyContent: 'center',
+        zIndex: '1000',
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-end'
         }
+    },
+    outer: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        zIndex: '-1',
+        color: '#fff',
+        background: theme.palette.primary.main,
+    },
+    title: {
+        position: 'fixed',
+        bottom: '2rem',
+        left: '2rem',
+        padding: '2rem',
+        width: '30%'
     }
 }));
 
@@ -26,19 +44,22 @@ const AuthLayout = ({ validate, handleSubmit, children }) => {
             validate={validate}
             render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit} noValidate>
-                    <div>
-                        <Typography variant='h5' component='h5'>
-                            La mejor manera de aprender y compartir conocimiento sobre derecho,
-                            esta en Approbado.
-                        </Typography>
-                    </div>
-                    <div className={classes.main}>
+                    <Box component='div' className={classes.outer}>
+                        <Box component='div' className={classes.title}>
+                            <img src="/isotipo.png" alt="approbado_isotipo" />
+                            <Typography variant='h5' component='h5'>
+                                La mejor manera de aprender y compartir conocimiento sobre derecho,
+                                esta en <strong>Approbado</strong>.
+                            </Typography>
+                        </Box>
+                    </Box>
+                    <Box component='div' className={classes.main}>
                         {
                             React.Children.map(children, (child) =>
                                 React.cloneElement(child)
                             )
                         }
-                    </div>
+                    </Box>
                 </form>
             )}
         />
