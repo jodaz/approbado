@@ -35,13 +35,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AuthLayout = ({ validate, handleSubmit, children }) => {
+const AuthLayout = ({ validate, handleSubmit, children, ...rest }) => {
     const classes = useStyles();
 
     return (
         <Form
             onSubmit={handleSubmit}
             validate={validate}
+            {...rest}
             render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit} noValidate>
                     <Box component='div' className={classes.outer}>
