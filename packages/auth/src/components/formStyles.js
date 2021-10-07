@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     saveButton: {
-        padding: '0.5rem 2rem',
+        padding: '0.7rem 2rem',
         textTransform: 'none',
         fontSize: '16px',
         borderRadius: '6px',

@@ -4,14 +4,18 @@ import {
     Button,
     Card,
     CardActions,
-    Grid,
-    CircularProgress
+    Typography,
+    Box
 } from '@material-ui/core';
 import axios from 'axios'
 import renderInput from '../utils/renderInput'
-import InputContainer from '@approbado/core/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
+import { useFormState } from 'react-final-form'
+import { Link } from 'react-router-dom'
+import { theme } from '@approbado/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import AuthHeaderForm from './AuthHeaderForm';
 
 const validate = (values) => {
     const errors = {};
@@ -35,20 +39,35 @@ const validate = (values) => {
     return errors;
 };
 
+const VerificationCodeInput = props => {
+    const { values } = useFormState();
+
+    if (values.setCode) {
+        return (
+            <Field
+                component={renderInput}
+                name="code"
+                placeholder='Ingrese el código de verificación'
+                max='6'
+                {...props}
+            />
+        )
+    }
+
+    return null;
+}
+
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
+    const [sendWithCode, setSendWithCode] = React.useState(false);
     const classes = useStyles();
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
-        axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
+        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/send`, values)
             .then(res => {
-                const { token } = res.data;
-
-                window.location.href =
-                    `${process.env.REACT_APP_LOCATION}/auth/${token}`;
-
+                setSendWithCode(true);
                 setLoading(false);
             }).catch(err => {
                 setLoading(false);
@@ -57,70 +76,76 @@ const Register = () => {
                     return err.response.data.errors;
                 }
             });
-    }, [])
+    }, []);
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit}>
+        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={{ setCode: true }}>
             <Card className={classes.card}>
-                <Grid container className={classes.form}>
-                    <InputContainer labelName='Correo electrónico'>
-                        <Field
-                            autoFocus
-                            name="email"
-                            // @ts-ignore
-                            component={renderInput}
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Contraseña'>
-                        <Field
-                            name="password"
-                            // @ts-ignore
-                            component={renderInput}
-                            label={'Contraseña'}
-                            type="password"
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Correo electrónico'>
-                        <Field
-                            autoFocus
-                            name="email"
-                            // @ts-ignore
-                            component={renderInput}
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Teléfono'>
-                        <Field
-                            autoFocus
-                            name="email"
-                            // @ts-ignore
-                            component={renderInput}
-                            disabled={loading}
-                        />
-                    </InputContainer>
-                </Grid>
-                <CardActions className={classes.actions}>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        color="primary"
+                <div className={classes.form}>
+                    <AuthHeaderForm title='Crear cuenta' />
+                    <Field
+                        component={renderInput}
+                        name="names"
+                        type="email"
+                        placeholder='Ingresa un nombre'
                         disabled={loading}
-                        fullWidth
-                    >
-                        {loading && (
-                            <CircularProgress
-                                size={25}
-                                thickness={2}
-                            />
-                        )}
-                        {'Acceder'}
-                    </Button>
-                </CardActions>
+                        className={classes.input}
+                    />
+                    <Field
+                        name="email"
+                        // @ts-ignore
+                        component={renderInput}
+                        placeholder='Ingresa un correo electrónico'
+                        disabled={loading}
+                        className={classes.input}
+                    />
+                    <Field
+                        name="password"
+                        // @ts-ignore
+                        component={renderInput}
+                        placeholder='Ingresa una contraseña'
+                        type="password"
+                        disabled={loading}
+                        className={classes.input}
+                    />
+                    <Field
+                        name="password"
+                        // @ts-ignore
+                        component={renderInput}
+                        placeholder='Contraseña'
+                        type="password"
+                        disabled={loading}
+                        className={classes.input}
+                    />
+                    <VerificationCodeInput className={classes.input} disabled={loading} />
+                    <CardActions className={classes.actions}>
+                        <Button
+                            variant='contained'
+                            color='secondary'
+                            type="submit"
+                            className={classes.saveButton}
+                            disabled={loading}
+                            fullWidth
+                        >
+                            {'Crear una cuenta'}
+                        </Button>
+                        <Box component="div" marginTop="2rem">
+                            <Typography variant="subtitle1" component="p">
+                                ¿Ya tienes una cuenta?
+                                <Link to="/register"> Ingresa aquí </Link>
+                            </Typography>
+                        </Box>
+                    </CardActions>
+                </div>
             </Card>
         </AuthLayout >
     );
 };
 
-export default Register;
+const RegisterWithTheme = props => (
+    <ThemeProvider theme={createMuiTheme(theme)}>
+        <Register {...props} />
+    </ThemeProvider>
+);
+
+export default RegisterWithTheme;
