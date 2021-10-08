@@ -15,6 +15,9 @@ import AuthHeaderForm from './AuthHeaderForm';
 import { theme } from '@approbado/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
+import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
 
 const validate = (values) => {
     const errors = {};
@@ -62,10 +65,17 @@ const Login = () => {
                     <Field
                         component={renderInput}
                         name="email"
-                        type="email"
-                        placeholder='Usuario'
+                        type="text"
+                        placeholder='Correo electrónico'
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccountCircle />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <Field
                         name="password"
@@ -75,9 +85,15 @@ const Login = () => {
                         type="password"
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <VpnKeyIcon />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
-                    <Box component="div" display='flex' justifyContent="space-between" marginTop="1rem">
-                        Recordar contraseña
+                    <Box component="div" display='flex' justifyContent="flex-end" marginTop="1rem">
                         <Link to="/register"> ¿Olvidaste tu contraseña? </Link>
                     </Box>
                     <CardActions className={classes.actions}>

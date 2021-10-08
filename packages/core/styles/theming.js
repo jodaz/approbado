@@ -98,12 +98,12 @@ const theme = {
             },
         },
         MuiInputBase: {
-            input: {
+            root: {
+                border: '1px solid #ced4da',
                 borderRadius: 4,
                 backgroundColor: palette.background.default,
                 padding: '10px 12px !important',
                 fontSize: 16,
-                border: '1px solid #ced4da',
                 borderRadius: '5px',
                 transition: "none",
                 '&:focus': {
@@ -193,6 +193,11 @@ const theme = {
         MuiFormLabel: {
             root: {
                 color: palette.primary.main
+            }
+        },
+        MuiInputAdornment: {
+            root: {
+                color: '#ced4da'
             }
         }
     },

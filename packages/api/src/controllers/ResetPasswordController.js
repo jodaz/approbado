@@ -1,15 +1,14 @@
-import { sendCode, verifyCode } from '../config';
 import jwt from 'jsonwebtoken'
 import { SECRET, SESSION_EXPIRE, MailTransporter } from '../config'
 import bcrypt from 'bcrypt'
-import { User, Profile } from '../models'
+import { User, PasswordReset } from '../models'
 import { validateRequest } from '../utils'
 
 export const resetPassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { email, password } = req.body;
+        const { email } = req.body;
 
         const user = await User.query().findOne({
             email: email
@@ -18,31 +17,24 @@ export const resetPassword = async (req, res) => {
         if (!user) {
             res.status(422).json({
                 'errors': {
-                    "email": "Us2222uario no encontrado"
+                    "email": "Usuario no encontrado"
                 }
             })
         } else {
-            const match = await bcrypt.compare(password, user.password)
+            const token = await jwt.sign(
+                { id: user.id },
+                SECRET,
+                { expiresIn: SESSION_EXPIRE }
+            );
 
-            if (match) {
-                const token = await jwt.sign(
-                    { id: user.id },
-                    SECRET,
-                    { expiresIn: SESSION_EXPIRE }
-                );
+            await PasswordReset.insert({
+                token: token,
+                user_id: user.id
+            })
 
-                return res.json({
-                    success: true,
-                    user: user,
-                    token: token
-                })
-            } else {
-                res.status(422).json({
-                    'errors': {
-                        "password": "Contraseña incorrecta"
-                    }
-                })
-            }
+            return res.json({
+                success: true
+            })
         }
     }
 }
@@ -51,37 +43,22 @@ export const updatePassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        try {
-            const { email, password, phone, code, names } = req.body;
+        const model = await PasswordReset.quey().findOne({ token: req.query.token });
 
-            await verifyCode(phone, code)
-
+        if (!model) {
+            return res.status(404).json({
+                'success': false,
+                'error': 'tokennotfound'
+            });
+        } else {
+            const { password } = req.body;
             const encryptedPassword = await bcrypt.hash(password, 10);
 
-            const user = await User.query().insert({
-                names: names,
-                password: encryptedPassword,
-                rol: 'USER',
-                email: email,
-                phone: phone
-            })
-
-            await Profile.query().insert({
-                user_id: user.id
-            })
+            // const user = await User.query().insert({ password: encryptedPassword })
 
             await MailTransporter.sendMail({
                 to: user.email,
-                subject: '¡Bienvendo a Approbado!'
-            })
-
-            return res.json({
-                message: 'Código aceptado',
-                phone: phone
-            })
-        } catch (err) {
-            return res.status(500).json({
-                message: 'Ha ocurrido un error en nuestro servidor'
+                subject: '¡Su contraseña ha sido actualizada!'
             })
         }
     }
