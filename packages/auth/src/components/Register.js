@@ -16,6 +16,11 @@ import { Link } from 'react-router-dom'
 import { theme } from '@approbado/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import AuthHeaderForm from './AuthHeaderForm';
+import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import LocalPhoneOutlinedIcon from '@material-ui/icons/LocalPhoneOutlined';
 
 const validate = (values) => {
     const errors = {};
@@ -90,6 +95,13 @@ const Register = () => {
                         placeholder='Ingresa un nombre'
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccountCircle />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <Field
                         name="email"
@@ -98,6 +110,13 @@ const Register = () => {
                         placeholder='Ingresa un correo electrónico'
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <Field
                         name="password"
@@ -107,15 +126,29 @@ const Register = () => {
                         type="password"
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <VpnKeyIcon />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <Field
-                        name="password"
+                        name="phone"
                         // @ts-ignore
                         component={renderInput}
-                        placeholder='Contraseña'
-                        type="password"
+                        placeholder='Teléfono'
+                        type="text"
                         disabled={loading}
                         className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <LocalPhoneOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <VerificationCodeInput className={classes.input} disabled={loading} />
                     <CardActions className={classes.actions}>

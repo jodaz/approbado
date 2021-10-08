@@ -41,13 +41,13 @@ export default ({ title }) => {
                 {title}
             </Typography>
             <Grid container className={classes.social}>
-                <FBLoginButton className={classes.fbButton} />
+                {/* <FBLoginButton className={classes.fbButton} />
                 <FBLoginButton className={classes.fbButton} />
                 <Grid item xs='12'>
                 <span></span>
                 <span>O</span>
                 <span></span>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Grid>
     )
