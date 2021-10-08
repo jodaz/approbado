@@ -7,6 +7,7 @@ import {
     Typography,
     Box
 } from '@material-ui/core';
+import Checkbox from '@approbado/core/components/Checkbox'
 import axios from 'axios'
 import renderInput from '../utils/renderInput'
 import AuthLayout from './AuthLayout'
@@ -40,7 +41,10 @@ const validate = (values) => {
     if (!values.password) {
         errors.password = 'Ingrese su contraseña';
     }
-
+    if (values.conditions && !values.conditions.length) {
+        errors.conditions = 'Debe aceptar los términos y condiciones.'
+    }
+    console.log(errors)
     return errors;
 };
 
@@ -84,7 +88,7 @@ const Register = () => {
     }, []);
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={{ setCode: true }}>
+        <AuthLayout validate={validate} handleSubmit={handleSubmit}>
             <Card className={classes.card}>
                 <div className={classes.form}>
                     <AuthHeaderForm title='Crear cuenta' />
@@ -150,7 +154,22 @@ const Register = () => {
                             ),
                         }}
                     />
-                    <VerificationCodeInput className={classes.input} disabled={loading} />
+                    <label>
+                      <Field
+                        name="conditions"
+                        component={Checkbox}
+                        type="checkbox"
+                        value="conditions"
+                      />{' '}
+                      He leído y acepto los {' '}
+                        <a
+                            href="http://approbado.alaxatech.com/terminos-y-condiciones/"
+                            target="_blank"
+                        >
+                            términos y condiciones.
+                        </a>
+                    </label>
+                    {/* <VerificationCodeInput className={classes.input} disabled={loading} /> */}
                     <CardActions className={classes.actions}>
                         <Button
                             variant='contained'
