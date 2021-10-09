@@ -47,7 +47,7 @@ const AuthLayout = ({ validate, handleSubmit, children, ...rest }) => {
                 <form onSubmit={handleSubmit} noValidate>
                     <Box component='div' className={classes.outer}>
                         <Box component='div' className={classes.title}>
-                            <img src="/isotipo.png" alt="approbado_isotipo" />
+                            <img src={process.env.PUBLIC_URL + "/isotipo.png"} alt="approbado_isotipo" />
                             <Typography variant='h5' component='h5'>
                                 La mejor manera de aprender y compartir conocimiento sobre derecho,
                                 esta en <strong>Approbado</strong>.

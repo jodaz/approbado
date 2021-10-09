@@ -5,6 +5,4 @@ const options = {
     origin: ALLOWED_ORIGINS
 };
 
-const cors = Cors(options)
-  
-export { cors }
+export const cors = Cors(options)
