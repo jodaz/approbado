@@ -14,7 +14,7 @@ const App = () => (
         <Route path='/register'>
             <Register />
         </Route>
-        <Redirect to="/login" />
+        <Route exact path='/' render={() => (<Redirect to="/login" />)} />
     </Router>
 )
 

@@ -7,7 +7,7 @@ import {
     Typography,
     Box
 } from '@material-ui/core';
-import Checkbox from '@approbado/core/components/Checkbox'
+// import Checkbox from '@material-ui/core/Checkbox'
 import axios from 'axios'
 import renderInput from '../utils/renderInput'
 import AuthLayout from './AuthLayout'
@@ -22,6 +22,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import LocalPhoneOutlinedIcon from '@material-ui/icons/LocalPhoneOutlined';
+import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import Checkbox from '@approbado/core/components/Checkbox'
 
 const validate = (values) => {
     const errors = {};
@@ -41,30 +43,12 @@ const validate = (values) => {
     if (!values.password) {
         errors.password = 'Ingrese su contraseña';
     }
-    if (values.conditions && !values.conditions.length) {
+    if (!values.conditions || !values.conditions.length) {
         errors.conditions = 'Debe aceptar los términos y condiciones.'
     }
-    console.log(errors)
+
     return errors;
 };
-
-const VerificationCodeInput = props => {
-    const { values } = useFormState();
-
-    if (values.setCode) {
-        return (
-            <Field
-                component={renderInput}
-                name="code"
-                placeholder='Ingrese el código de verificación'
-                max='6'
-                {...props}
-            />
-        )
-    }
-
-    return null;
-}
 
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
@@ -73,10 +57,13 @@ const Register = () => {
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
+        let url = !sendWithCode ?
+            `${process.env.REACT_APP_API_DOMAIN}/auth/send`
+            : `${process.env.REACT_APP_API_DOMAIN}/auth/register`;
 
-        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/send`, values)
+        return axios.post(url, values)
             .then(res => {
-                setSendWithCode(true);
+                setSendWithCode(!sendWithCode);
                 setLoading(false);
             }).catch(err => {
                 setLoading(false);
@@ -85,7 +72,7 @@ const Register = () => {
                     return err.response.data.errors;
                 }
             });
-    }, []);
+    }, [sendWithCode]);
 
     return (
         <AuthLayout validate={validate} handleSubmit={handleSubmit}>
@@ -95,7 +82,7 @@ const Register = () => {
                     <Field
                         component={renderInput}
                         name="names"
-                        type="email"
+                        type="text"
                         placeholder='Ingresa un nombre'
                         disabled={loading}
                         className={classes.input}
@@ -154,22 +141,40 @@ const Register = () => {
                             ),
                         }}
                     />
-                    <label>
-                      <Field
+                    <Field
                         name="conditions"
-                        component={Checkbox}
                         type="checkbox"
                         value="conditions"
-                      />{' '}
-                      He leído y acepto los {' '}
-                        <a
-                            href="http://approbado.alaxatech.com/terminos-y-condiciones/"
-                            target="_blank"
-                        >
-                            términos y condiciones.
-                        </a>
-                    </label>
-                    {/* <VerificationCodeInput className={classes.input} disabled={loading} /> */}
+                        component={Checkbox}
+                    >
+                        <label>
+                            {' '}
+                            He leído y acepto los {' '}
+                            <a
+                                href="http://approbado.alaxatech.com/terminos-y-condiciones/"
+                                target="_blank"
+                            >
+                                términos y condiciones.
+                            </a>
+                        </label>
+                    </Field>
+                    {sendWithCode && (
+                        <Field
+                            component={renderInput}
+                            name="code"
+                            type="text"
+                            placeholder='Ingresa el código de confirmación'
+                            disabled={loading}
+                            className={classes.input}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <ConfirmationNumberIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    )}
                     <CardActions className={classes.actions}>
                         <Button
                             variant='contained'
@@ -184,7 +189,7 @@ const Register = () => {
                         <Box component="div" marginTop="2rem">
                             <Typography variant="subtitle1" component="p">
                                 ¿Ya tienes una cuenta?
-                                <Link to="/register"> Ingresa aquí </Link>
+                                <Link to="/login"> Ingresa aquí </Link>
                             </Typography>
                         </Box>
                     </CardActions>
