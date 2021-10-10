@@ -5,6 +5,8 @@ const knexConfig = {
   development: {
         client: 'postgresql',
         connection: {
+            port: DB.port,
+            host: DB.host,
             database: DB.name,
             user:     DB.username,
             password: DB.password
