@@ -5,6 +5,8 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 export const APP_ENV = process.env.APP_ENV || 'development'
 
+export const APP_DOMAIN = process.env.APP_DOMAIN || 'http://127.0.0.1';
+
 export const APP_PORT = process.env.APP_PORT || 4000
 
 export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ?

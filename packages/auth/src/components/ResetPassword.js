@@ -17,7 +17,6 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
 
 const validate = (values) => {
     const errors = {};
@@ -26,26 +25,19 @@ const validate = (values) => {
         errors.email = 'Ingrese su correo electrónico';
     }
 
-    if (!values.password) {
-        errors.password = 'Ingrese su contraseña';
-    }
-
     return errors;
 };
 
-const Login = () => {
+const ResetPassword = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = useStyles();
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
-        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
+        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/reset-password`, values)
             .then(res => {
                 const { token } = res.data;
-
-                window.location.href =
-                    `${process.env.REACT_APP_LOCATION}/auth/${token}`;
 
                 setLoading(false);
             }).catch(err => {
@@ -58,10 +50,10 @@ const Login = () => {
     }, [])
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
+        <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Recuperar contraseña'>
             <Card className={classes.card}>
                 <div className={classes.form}>
-                    <AuthHeaderForm title='Iniciar sesión' />
+                    <AuthHeaderForm title='Recuperar contraseña' />
                     <Field
                         component={renderInput}
                         name="email"
@@ -77,25 +69,6 @@ const Login = () => {
                             ),
                         }}
                     />
-                    <Field
-                        name="password"
-                        // @ts-ignore
-                        component={renderInput}
-                        placeholder='Contraseña'
-                        type="password"
-                        disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <VpnKeyIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Box component="div" display='flex' justifyContent="flex-end" marginTop="1rem">
-                        <Link to="/reset-password"> ¿Olvidaste tu contraseña? </Link>
-                    </Box>
                     <CardActions className={classes.actions}>
                         <Button
                             variant='contained'
@@ -105,7 +78,7 @@ const Login = () => {
                             disabled={loading}
                             fullWidth
                         >
-                            {'Iniciar sesión'}
+                            {'Verificar'}
                         </Button>
                         <Box component="div" marginTop="2rem">
                             <Typography variant="subtitle1" component="p">
@@ -120,10 +93,10 @@ const Login = () => {
     );
 };
 
-const LoginWithTheme = props => (
+const ResetPasswordWithTheme = props => (
     <ThemeProvider theme={createMuiTheme(theme)}>
-        <Login {...props} />
+        <ResetPassword {...props} />
     </ThemeProvider>
 );
 
-export default LoginWithTheme;
+export default ResetPasswordWithTheme;

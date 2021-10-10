@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { SECRET, SESSION_EXPIRE, MailTransporter } from '../config'
+import { SECRET, SESSION_EXPIRE, APP_DOMAIN, MailTransporter } from '../config'
 import bcrypt from 'bcrypt'
 import { User, PasswordReset } from '../models'
 import { validateRequest } from '../utils'
@@ -14,28 +14,32 @@ export const resetPassword = async (req, res) => {
             email: email
         });
 
-        if (!user) {
-            res.status(422).json({
-                'errors': {
-                    "email": "Usuario no encontrado"
-                }
-            })
-        } else {
-            const token = await jwt.sign(
-                { id: user.id },
-                SECRET,
-                { expiresIn: SESSION_EXPIRE }
-            );
+        const token = await jwt.sign(
+            { id: user.id },
+            SECRET,
+            { expiresIn: SESSION_EXPIRE }
+        );
 
-            await PasswordReset.insert({
-                token: token,
-                user_id: user.id
-            })
+        await PasswordReset.query().insert({
+            token: token,
+            user_id: user.id
+        })
 
-            return res.json({
-                success: true
-            })
-        }
+        const data = {
+            name: user.names,
+            url: `${APP_DOMAIN}/reset-password/${token}`
+        };
+
+        await MailTransporter.sendMail({
+            to: user.email,
+            subject: 'Reestablecer contraseña',
+            template: 'resetPassword',
+            context: data
+        })
+
+        return res.json({
+            success: true
+        })
     }
 }
 

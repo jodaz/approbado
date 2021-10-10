@@ -10,6 +10,7 @@ import triviasRoutes from './trivias.routes';
 import plansRoutes from './plans.routes';
 import paymentsRoutes from './payments.routes';
 import memberships from './memberships.routes';
+import resetPasswordRouter from './reset-password.routes';
 import { isAuthorizedMiddleware } from '../config'
 
 const routes = Router();
@@ -25,6 +26,7 @@ routes.use('/api/profile', isAuthorizedMiddleware, profileRoutes)
 routes.use('/api/users', isAuthorizedMiddleware, usersRoutes)
 routes.use('/api/trivias', isAuthorizedMiddleware, triviasRoutes)
 routes.use('/api/auth', authRouter)
+routes.use('/api/reset-password', resetPasswordRouter)
 
 // Catch all other routes
 routes.use('*', (req, res) => {
