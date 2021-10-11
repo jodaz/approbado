@@ -2,16 +2,13 @@ import * as React from 'react'
 // Components
 import LevelsList from './LevelsList'
 import CategoriesList from './CategoryList'
-import TriviaSettings from './TriviaSettings'
 import TabbedList from '../components/TabbedList'
 
-const tags = ['categorías', 'niveles', 'trivia'];
+const tags = ['categorías', 'niveles'];
 
 const RenderList = ({ currentTab }) => {
     if (currentTab === 'niveles') {
         return <LevelsList />
-    } else if (currentTab === 'trivia') {
-        return <TriviaSettings />
     } else if (currentTab === 'categorías') {
         return <CategoriesList />
     }

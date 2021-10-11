@@ -27,7 +27,7 @@ export const resetPassword = async (req, res) => {
 
         const data = {
             name: user.names,
-            url: `${APP_DOMAIN}/reset-password/${token}`
+            url: `${APP_DOMAIN}/auth/reset-password/${token}`
         };
 
         await MailTransporter.sendMail({
