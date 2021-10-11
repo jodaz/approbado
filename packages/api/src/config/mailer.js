@@ -1,15 +1,15 @@
 import nodemailer from 'nodemailer'
 import hbs from "nodemailer-express-handlebars";
 import { MAIL } from './env'
+import path from 'path'
 
 const options = {
     viewEngine: {
-        partialsDir: __dirname + "/views/partials",
-        layoutsDir: __dirname + "/views/layouts",
-        extname: ".hbs"
+        layoutsDir: path.resolve('./src/resources/mail/layouts'),
+        extname: ".html"
     },
-    extName: ".hbs",
-    viewPath: "views"
+    extName: ".html",
+    viewPath: path.resolve('./src/resources/mail')
 };
 
 const MailTransporter = nodemailer.createTransport({

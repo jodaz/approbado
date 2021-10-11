@@ -83,7 +83,8 @@ const ResetPassword = () => {
                         <Box component="div" marginTop="2rem">
                             <Typography variant="subtitle1" component="p">
                                 ¿Aún no tienes una cuenta?
-                                <Link to="/register"> Crear una cuenta </Link>
+                                {' '}
+                                <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
                             </Typography>
                         </Box>
                     </CardActions>

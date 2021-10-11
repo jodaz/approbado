@@ -12,6 +12,13 @@ const useStyles = makeStyles(theme => ({
             minWidth: '50%'
         }
     },
+    link: {
+        textDecoration: 'underline',
+        color: theme.palette.primary.main,
+        '&visited': {
+            color: theme.palette.primary.main,
+        }
+    },
     icon: {
         backgroundColor: theme.palette.secondary.main,
     },

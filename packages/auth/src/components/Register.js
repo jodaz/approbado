@@ -153,8 +153,9 @@ const Register = () => {
                             <a
                                 href="http://approbado.alaxatech.com/terminos-y-condiciones/"
                                 target="_blank"
+                                className={classes.link}
                             >
-                                términos y condiciones.
+                                <strong>términos y condiciones</strong>
                             </a>
                         </label>
                     </Field>
@@ -189,7 +190,10 @@ const Register = () => {
                         <Box component="div" marginTop="2rem">
                             <Typography variant="subtitle1" component="p">
                                 ¿Ya tienes una cuenta?
-                                <Link to="/login"> Ingresa aquí </Link>
+                                {' '}
+                                <Link to="/login" className={classes.link}>
+                                    <strong>Ingresa aquí</strong>
+                                </Link>
                             </Typography>
                         </Box>
                     </CardActions>
