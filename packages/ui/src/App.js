@@ -22,7 +22,6 @@ const App = () => (
 		<Resource name="profile" />
 		<Resource name="update-password" />
 		<Resource name="configurations/levels" />
-		<Resource name="trivia-settings" />
 		<Resource name="configurations/categories" />
 		<Resource name="memberships/plans" />
 		<Resource name="memberships/payments" />

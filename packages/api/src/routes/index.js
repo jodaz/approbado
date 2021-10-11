@@ -3,7 +3,6 @@ import usersRoutes from './user.routes';
 import authRouter from './auth.routes'
 import categoriesRoutes from './categories.routes';
 import levelsRoutes from './levels.routes';
-import triviaSettingsRoutes from './trivia-settings.routes';
 import profileRoutes from './profile.routes';
 import updatePasswordRouter from './update-password.routes';
 import triviasRoutes from './trivias.routes';
@@ -19,7 +18,6 @@ routes.use('/api/memberships', isAuthorizedMiddleware, memberships)
 routes.use('/api/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 routes.use('/api/memberships/plans', isAuthorizedMiddleware, plansRoutes)
 routes.use('/api/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
-routes.use('/api/trivia-settings', isAuthorizedMiddleware, triviaSettingsRoutes)
 routes.use('/api/configurations/categories', isAuthorizedMiddleware, categoriesRoutes)
 routes.use('/api/update-password', isAuthorizedMiddleware, updatePasswordRouter)
 routes.use('/api/profile', isAuthorizedMiddleware, profileRoutes)
