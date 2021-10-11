@@ -94,7 +94,7 @@ const Login = () => {
                         }}
                     />
                     <Box component="div" display='flex' justifyContent="flex-end" marginTop="1rem">
-                        <Link to="/reset-password"> ¿Olvidaste tu contraseña? </Link>
+                        <Link to="/reset-password" className={classes.link}> ¿Olvidaste tu contraseña? </Link>
                     </Box>
                     <CardActions className={classes.actions}>
                         <Button
@@ -110,7 +110,8 @@ const Login = () => {
                         <Box component="div" marginTop="2rem">
                             <Typography variant="subtitle1" component="p">
                                 ¿Aún no tienes una cuenta?
-                                <Link to="/register"> Crear una cuenta </Link>
+                                {' '}
+                                <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
                             </Typography>
                         </Box>
                     </CardActions>
