@@ -40,10 +40,10 @@ export class User extends BaseClass {
         },
         blacklisted: {
             relation: BaseClass.HasOneRelation,
-            modelClass: `${__dirname}/BlacklistedUser`,
+            modelClass: `${__dirname}/Blacklisted`,
             join: {
                 from: 'users.id',
-                to: 'blacklisted_users.user_id'
+                to: 'blacklisted.user_id'
             }
         },
         notifications: {
@@ -61,6 +61,14 @@ export class User extends BaseClass {
                 from: 'users.id',
                 to: 'password_resets.user_id'
             }
-        }
+        },
+        messages: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Message`,
+            join: {
+                from: 'users.id',
+                to: 'messages.user_id'
+            }
+        },
     })
 }
