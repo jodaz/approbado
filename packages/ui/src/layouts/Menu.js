@@ -15,7 +15,7 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
         theme.breakpoints.down('xs')
     );
     const open = useSelector(state => state.admin.ui.sidebarOpen);
-
+    console.log(open)
     return (
         <Box mt={1}>
             {' '}

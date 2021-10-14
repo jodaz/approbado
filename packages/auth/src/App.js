@@ -1,6 +1,7 @@
 import Login from './components/Login'
 import Register from './components/Register'
 import ResetPassword from './components/ResetPassword'
+import UpdatePassword from './components/UpdatePassword'
 import {
     Route,
     Redirect,
@@ -17,6 +18,9 @@ const App = () => (
         </Route>
         <Route path='/reset-password'>
             <ResetPassword />
+        </Route>
+        <Route path='/update-password/:token'>
+            <UpdatePassword />
         </Route>
         <Route exact path='/' render={() => (<Redirect to="/login" />)} />
     </Router>
