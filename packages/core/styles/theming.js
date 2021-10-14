@@ -1,25 +1,25 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const palette = {
-  primary: {
-    main: '#07021A',  // Negro primario
-    light: '#B7B7B7', // Plomo cuaternario
-    dark: '#011C2C',  // Negro
-  },
-  secondary: {
-    main: '#FFE835',   // Amarillo segundario
-    light: '#E8E8E8',
-    dark: '#283436', // Gray
-  },
-  error: {
-    main: '#E02340',  // Rojo
-  },
-  background: {
-    default: '#FFFFFF'
-  },
-  info: {
-    main: '#2280ED' // Azul primario
-  }
+    primary: {
+        main: '#07021A',  // Negro primario
+        light: '#B7B7B7', // Plomo cuaternario
+        dark: '#011C2C',  // Negro
+    },
+    secondary: {
+        main: '#FFE835',   // Amarillo segundario
+        light: '#E8E8E8',
+        dark: '#283436', // Gray
+    },
+    error: {
+        main: '#E02340',  // Rojo
+    },
+    background: {
+        default: '#FFFFFF'
+    },
+    info: {
+        main: '#2280ED' // Azul primario
+    }
 };
 
 const theme = {
