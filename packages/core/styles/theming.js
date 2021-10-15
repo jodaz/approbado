@@ -24,6 +24,9 @@ const palette = {
 
 const theme = {
     palette: palette,
+    typography: {
+        fontFamily: ['"Noto Sans Display"', 'sans-serif'].join(',')
+    },
     shape: {
         borderRadius: 10,
     },
@@ -199,12 +202,17 @@ const theme = {
             root: {
                 color: '#ced4da'
             }
+        },
+        MuiButtonBase: {
+            root: {
+                textTransform: 'none'
+            }
         }
     },
     props: {
         MuiButtonBase: {
             // disable ripple for perf reasons
-            disableRipple: true,
+            disableRipple: true
         },
     },
 }

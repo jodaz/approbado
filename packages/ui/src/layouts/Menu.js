@@ -15,11 +15,19 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
         theme.breakpoints.down('xs')
     );
     const open = useSelector(state => state.admin.ui.sidebarOpen);
-    console.log(open)
+
     return (
         <Box mt={1}>
             {' '}
-            <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+            <MenuItemLink
+                to="/"
+                primaryText={open ? 'Inicio' : <></>}
+                leftIcon={<DashboardIcon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+                exact
+            />
             <MenuItemLink
                 to={trivias.name}
                 primaryText={trivias.options.label}

@@ -3,9 +3,10 @@ body {
     font-family: 'Noto Sans Display', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
+    background: #FFFFFF
+}
 
-  code {
+code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
+        monospace;
+}

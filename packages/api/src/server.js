@@ -22,6 +22,10 @@ app.use('/auth', express.static(path.join(__dirname, '../../auth/build')));
 app.get('/auth/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../auth/build', 'index.html'))
 })
+app.use('/plans', express.static(path.join(__dirname, '../../plans/build')));
+app.get('/plans/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../plans/build', 'index.html'))
+})
 
 // API routes
 app.use(routes);
