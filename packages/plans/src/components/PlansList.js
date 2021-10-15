@@ -68,7 +68,7 @@ const PlansList = () => {
                 {'Adquiere el mejor plan para seguir disfrutando y divirtiendote con '}
                 <strong>{'Approbado'}</strong>
             </Typography>
-            <Box component='div'>
+            <Box component='div' style={{ marginTop: '1em' }}>
                 <Card className={classes.card}>
                     <CardContent className={classes.content}>
                         <Typography variant="subtitle1" className={classes.planName}>Free</Typography>

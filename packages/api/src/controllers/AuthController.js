@@ -89,16 +89,23 @@ export const verifySMSCode = async (req, res) => {
                 user_id: user.id
             })
 
+            const data = {
+                name: user.names
+            };
+
             await MailTransporter.sendMail({
                 to: user.email,
-                subject: '¡Bienvendo a Approbado!'
+                subject: '¡Bienvenido a Approbado!',
+                template: 'welcome',
+                context: data
             })
 
-            return res.json({
+            return res.status(201).json({
                 message: 'Código aceptado',
                 phone: phone
             })
         } catch (err) {
+            console.log(err)
             return res.status(500).json({
                 message: 'Ha ocurrido un error en nuestro servidor'
             })
