@@ -1,6 +1,6 @@
 import express from 'express'
 import { APP_PORT, cors, helmet, APP_ENV } from './config'
-import routes from './routes'
+import { apiRoutes, webRoutes } from './routes'
 import path from 'path'
 
 // Set up server
@@ -18,17 +18,10 @@ if (APP_ENV === 'testing') {
         res.sendFile(path.join(__dirname, '../public', 'index.html'))
     })
 }
-app.use('/auth', express.static(path.join(__dirname, '../../auth/build')));
-app.get('/auth/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../auth/build', 'index.html'))
-})
-app.use('/plans', express.static(path.join(__dirname, '../../plans/build')));
-app.get('/plans/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../plans/build', 'index.html'))
-})
 
-// API routes
-app.use(routes);
+// Routes
+app.use(apiRoutes);
+app.use(webRoutes);
 
 app.listen(APP_PORT, () => {
     console.log(`Application started on port ${APP_PORT}!`);
