@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { resetPassword, updatePassword, verifyToken } from '../controllers/ResetPasswordController'
-import { validateResetPassword, validateNewPassword, validateVerifyToken } from '../validations'
+import { resetPassword, updatePassword, verifyToken } from '../../controllers/ResetPasswordController'
+import { validateResetPassword, validateNewPassword, validateVerifyToken } from '../../validations'
 import { checkSchema } from 'express-validator'
 
 const resetPasswordRouter = Router()

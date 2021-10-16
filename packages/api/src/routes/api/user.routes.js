@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { checkSchema } from 'express-validator'
-import { destroy, show, index, store, update } from '../controllers/UserController'
-import { validateUserSchema } from '../validations'
+import { destroy, show, index, store, update } from '../../controllers/UserController'
+import { validateUserSchema } from '../../validations'
 
 const usersRouter = Router()
 

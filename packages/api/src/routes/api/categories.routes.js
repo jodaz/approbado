@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { destroy, index, store, update, show } from '../controllers/CategoryController'
-import { createCategorySchema } from '../validations'
+import { destroy, index, store, update, show } from '../../controllers/CategoryController'
+import { createCategorySchema } from '../../validations'
 import { checkSchema } from 'express-validator';
 
 const categoriesRouter = Router()
