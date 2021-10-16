@@ -22,10 +22,21 @@ const palette = {
     }
 };
 
+const buttonStyles = {
+    background: "linear-gradient(135.16deg, #E6EA00 -22.35%, #FDE000 113.73%)",
+    boxShadow: "4px 4px 40px rgba(0, 0, 0, 0.08)",
+    borderRadius: "8px",
+    textTransform: 'none',
+    boxShadow: "4px 4px 40px 0px #00000014",
+    fontSize: '15px',
+    padding: '0.4rem 2rem !important',
+    fontWeight: 'bold'
+}
+
 const theme = {
     palette: palette,
     typography: {
-        fontFamily: ['"Noto Sans Display"', 'sans-serif'].join(',')
+        fontFamily: ['"Noto Sans Display"', 'sans-serif'].join(','),
     },
     shape: {
         borderRadius: 10,
@@ -204,16 +215,39 @@ const theme = {
             }
         },
         MuiButtonBase: {
+            root: buttonStyles
+        },
+        MuiDialogContent: {
             root: {
-                textTransform: 'none'
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '3rem 2rem !important',
+                justifyContent: 'space-around',
+                alignItems: 'center'
             }
+        },
+        MuiDialog: {
+            paper: {
+                borderRadius: '6px !important'
+            }
+        },
+        MuiTypography: {
+            root: {
+                '&::selection': {
+                    backgroundColor: palette.secondary.main,
+                    color: palette.primary.main
+                }
+            }
+        },
+        MuiButton: {
+            root: buttonStyles,
         }
     },
     props: {
         MuiButtonBase: {
             // disable ripple for perf reasons
             disableRipple: true
-        },
+        }
     },
 }
 
