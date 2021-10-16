@@ -9,7 +9,8 @@ module.exports = function (config, env) {
       babelInclude([
         /* transpile (converting to es5) code in src/ and shared component library */
         path.resolve('src'),
-        path.resolve('../core')
+        path.resolve('../styles'),
+        path.resolve('../components')
       ])
     )(config, env)
   );

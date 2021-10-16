@@ -14,7 +14,7 @@ import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
 import { useFormState } from 'react-final-form'
 import { Link } from 'react-router-dom'
-import { theme } from '@approbado/components';
+import { theme } from '@approbado/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import AuthHeaderForm from './AuthHeaderForm';
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';

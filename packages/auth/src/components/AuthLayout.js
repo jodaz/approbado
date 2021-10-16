@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Form } from 'react-final-form';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { theme } from '@approbado/components';
+import { theme } from '@approbado/styles';
 import { Typography, Box } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

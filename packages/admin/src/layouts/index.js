@@ -1,5 +1,5 @@
 import { Layout, Sidebar } from 'react-admin';
-import { theme } from '@approbado/components';
+import { theme } from '@approbado/styles';
 import AppBar from './AppBar';
 import Menu from './Menu';
 import { createMuiTheme } from '@material-ui/core/styles';

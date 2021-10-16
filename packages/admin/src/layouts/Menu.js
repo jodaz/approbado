@@ -22,7 +22,7 @@ const Menu = ({ onMenuClick, logout, dense = false }) => {
             <MenuItemLink
                 to="/"
                 primaryText={open ? 'Inicio' : <></>}
-                leftIcon={<DashboardIcon />}
+                leftIcon={<SettingsIcon />}
                 onClick={onMenuClick}
                 sidebarIsOpen={open}
                 dense={dense}
