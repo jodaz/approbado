@@ -9,7 +9,7 @@ import {
     Card,
     CardContent
 } from '@material-ui/core'
-import { theme } from '@approbado/components';
+import { theme } from '@approbado/styles';
 import Dialog from './Dialog'
 
 const cardStyles = {

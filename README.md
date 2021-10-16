@@ -4,14 +4,15 @@
 
 ## Arquitectura actual
 
-- `dashboard`: UI del panel de administradores
+- `admin`: UI del panel de administradores
 - `auth`: Componentes relacionados a la autenticación
 - `db`: Scaffolding para la base de datos
 - `plans`: Carousel de compras
 - `components`: Librería de componentes compartidos
+- `styles`: Librería de estilos compartidos
+- `webapp`: UI de la aplicación web para usuarios
 
 ### Librerías por desarrollar
-- `app`: UI de la aplicación web para usuarios
 - `http`: Servicios de la API (Controladores, validadores, enrutado...). Punto de entrada para las peticiones.
     - Actual: API `controllers`, `models`, `resources`
 - `server`: Enrutado, configuración del servidor
