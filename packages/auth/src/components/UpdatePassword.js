@@ -12,7 +12,7 @@ import renderInput from '../utils/renderInput'
 import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
 import AuthHeaderForm from './AuthHeaderForm';
-import { theme } from '@approbado/core';
+import { theme } from '@approbado/components';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';

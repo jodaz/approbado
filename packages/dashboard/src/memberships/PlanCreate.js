@@ -10,7 +10,7 @@ import {
 } from 'react-admin'
 import { validatePlan } from './plansValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/core/components/InputContainer'
+import InputContainer from '@approbado/components/InputContainer'
 
 const PlanCreate = (props) => {
     const createControllerProps = useCreateController(props);

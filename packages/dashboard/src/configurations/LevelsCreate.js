@@ -5,11 +5,11 @@ import {
     useMutation,
     CreateContextProvider
 } from 'react-admin'
-import { validateCategory } from './configurationsValidations';
+import { validateLevel } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/core/components/InputContainer'
+import InputContainer from '@approbado/components/InputContainer'
 
-const CategoryCreate = (props) => {
+const LevelCreate = (props) => {
     const createControllerProps = useCreateController(props);
     const [mutate] = useMutation();
 
@@ -29,7 +29,7 @@ const CategoryCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateCategory} formName='Nueva categoría'>
+            <BaseForm save={save} validate={validateLevel} formName='Nuevo nivel'>
                 <InputContainer
                     labelName='Nombre'
                 >
@@ -44,9 +44,9 @@ const CategoryCreate = (props) => {
     )
 }
 
-CategoryCreate.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
+LevelCreate.defaultProps = {
+    basePath: '/configurations/levels',
+    resource: 'configurations/levels'
 }
 
-export default CategoryCreate
+export default LevelCreate
