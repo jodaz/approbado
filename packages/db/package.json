@@ -1,0 +1,11 @@
+{
+  "name": "@approbado/db",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "Database files",
+  "scripts": {
+    "db:migrate": "knex migrate:latest --knexfile config/knexfile --esm",
+    "seed:run": "knex seed:run --knexfile config/knexfile --esm",
+    "db:rollback": "knex migrate:rollback --knexfile config/knexfile --esm"
+  }
+}

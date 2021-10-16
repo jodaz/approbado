@@ -6,12 +6,12 @@ import {
     EditContextProvider,
     useRedirect
 } from 'react-admin'
-import { validateCategory } from './configurationsValidations';
+import { validateLevel } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/core/components/InputContainer'
+import InputContainer from '@approbado/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
-const CategoryEdit = (props) => {
+const LevelEdit = (props) => {
     const { id } = useParams();
     const editControllerProps = useEditController({
         ...props,
@@ -22,7 +22,6 @@ const CategoryEdit = (props) => {
     const redirect = useRedirect()
 
     const save = React.useCallback(async (values) => {
-        console.log(values)
         try {
             await mutate({
                 type: 'update',
@@ -46,7 +45,7 @@ const CategoryEdit = (props) => {
         <EditContextProvider value={editControllerProps}>
             <BaseForm
                 save={save}
-                validate={validateCategory}
+                validate={validateLevel}
                 record={record}
                 saveButtonLabel='Actualizar'
             >
@@ -62,9 +61,9 @@ const CategoryEdit = (props) => {
     )
 }
 
-CategoryEdit.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
+LevelEdit.defaultProps = {
+    basePath: '/configurations/levels',
+    resource: 'configurations/levels'
 }
 
-export default CategoryEdit
+export default LevelEdit

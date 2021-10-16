@@ -14,7 +14,7 @@ import AuthLayout from './AuthLayout'
 import useStyles from './formStyles'
 import { useFormState } from 'react-final-form'
 import { Link } from 'react-router-dom'
-import { theme } from '@approbado/core';
+import { theme } from '@approbado/components';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import AuthHeaderForm from './AuthHeaderForm';
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
@@ -23,7 +23,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import LocalPhoneOutlinedIcon from '@material-ui/icons/LocalPhoneOutlined';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import Checkbox from '@approbado/core/components/Checkbox'
+import Checkbox from '@approbado/components/Checkbox'
 
 const validate = (values) => {
     const errors = {};

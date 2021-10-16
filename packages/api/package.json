@@ -9,10 +9,7 @@
     "server": "node ./dist/server.js",
     "clean": "rimraf dist",
     "build": "npm-run-all clean transpile",
-    "transpile": "babel ./src --out-dir dist --copy-files",
-    "db:migrate": "knex migrate:latest --knexfile src/config/knexfile --esm",
-    "seed:run": "knex seed:run --knexfile src/config/knexfile --esm",
-    "db:rollback": "knex migrate:rollback --knexfile src/config/knexfile --esm"
+    "transpile": "babel ./src --out-dir dist --copy-files"
   },
   "dependencies": {
     "@babel/cli": "^7.15.4",
