@@ -18,6 +18,8 @@
     "start:admin": "yarn workspace @approbado/admin run start",
     "migrate": "yarn workspace @approbado/db run db:migrate",
     "seed": "yarn workspace @approbado/db run seed:run",
-    "rollback": "yarn workspace @approbado/db run db:rollback"
+    "rollback": "yarn workspace @approbado/db run db:rollback",
+    "build:all": "concurrently \"npm run build:app\" \"npm run build:admin\" \"npm run build:frames\" && utils/predeploy.sh",
+    "deploy": "npm run build:all && utils/deploy.sh"
   }
 }
