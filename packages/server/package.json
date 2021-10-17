@@ -1,12 +1,12 @@
 {
-  "name": "@approbado/api",
+  "name": "@approbado/server",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "dev": "npm-run-all build server",
     "watch:dev": "nodemon",
-    "start": "node ./dist/server.js",
-    "server": "node ./dist/server.js",
+    "start": "node ./dist/index.js",
+    "server": "node ./dist/index.js",
     "clean": "rimraf dist",
     "build": "npm-run-all clean transpile",
     "transpile": "babel ./src --out-dir dist --copy-files"

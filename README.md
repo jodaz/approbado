@@ -5,17 +5,11 @@
 ## Arquitectura actual
 
 - `admin`: UI del panel de administradores
-- `auth`: Componentes relacionados a la autenticación
 - `db`: Scaffolding para la base de datos
-- `plans`: Carousel de compras
-- `components`: Librería de componentes compartidos
-- `styles`: Librería de estilos compartidos
-- `webapp`: UI de la aplicación web para usuarios
+- `frames`: Componentes destinados a ser servidos dentro de iframes: carousel de compras, login, registro...
+- `app`: UI de la aplicación web para usuarios
+- `lib`: Librerías y utilidades para el front y back. Aquí alojo componentes, temas, etc..
 
 ### Librerías por desarrollar
-- `http`: Servicios de la API (Controladores, validadores, enrutado...). Punto de entrada para las peticiones.
-    - Actual: API `controllers`, `models`, `resources`
-- `server`: Enrutado, configuración del servidor
-    - Actual: API `routes`, `server.js`
-- `lib`: Librerías y utilidades del server
-    - Actual: API `utils`, `config`, `validations`
+- `server`: Enrutado y servicios de la api
+    - Actual: API `routes`, , `validations`, `server.js`
