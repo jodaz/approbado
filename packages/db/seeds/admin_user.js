@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { USER } from '../config'
-import { User } from '../models'
+import { USER } from '@approbado/server/dist/config'
+import { User } from '@approbado/server/dist/models'
 import bcrypt from 'bcrypt'
 
 export async function seed(knex) {

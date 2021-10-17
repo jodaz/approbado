@@ -4,7 +4,7 @@ import LevelsCreate from './configurations/LevelsCreate'
 import CategoryCreate from './configurations/CategoryCreate'
 import CategoryEdit from './configurations/CategoryEdit'
 import LevelEdit from './configurations/LevelEdit'
-import Authenticate from './layouts/Authenticate'
+import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Profile from './profile'
 import { RouteWithoutLayout } from 'ra-core';
 import Memberships from './memberships/Memberships';

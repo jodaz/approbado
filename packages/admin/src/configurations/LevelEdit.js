@@ -8,7 +8,7 @@ import {
 } from 'react-admin'
 import { validateLevel } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
 const LevelEdit = (props) => {

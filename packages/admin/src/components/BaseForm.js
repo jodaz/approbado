@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { FormWithRedirect } from 'react-admin'
-import SaveButton from '@approbado/components/SaveButton'
+import SaveButton from '@approbado/lib/components/SaveButton'
 import PropTypes from 'prop-types'
 
 const BaseForm = ({ formName, children, saveButtonLabel, ...rest }) => (

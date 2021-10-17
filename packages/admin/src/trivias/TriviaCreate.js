@@ -9,7 +9,7 @@ import {
     ReferenceInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/lib/components/InputContainer'
 
 const ACCESS_TYPES = [
     { id: '0', name: 'Gratis' },

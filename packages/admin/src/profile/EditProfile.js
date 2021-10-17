@@ -4,7 +4,7 @@ import {
     TextInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/lib/components/InputContainer'
 
 const validate = values => {
     const errors = {};

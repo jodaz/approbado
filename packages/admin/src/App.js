@@ -1,5 +1,5 @@
 import { Admin, Resource } from 'react-admin'
-import { dataProvider, authProvider, browserHistory } from './providers'
+import { dataProvider, authProvider, browserHistory } from '@approbado/lib/providers'
 import Layout from './layouts'
 import customRoutes from './routes'
 import Dashboard from './dashboard'
@@ -15,7 +15,7 @@ const App = () => (
 		layout={Layout}
 		dataProvider={dataProvider}
 		loginPage={false}
-		authProvider={authProvider}
+		authProvider={authProvider('app')}
 	>
 		<Resource {...users} />
 		<Resource {...trivias} />

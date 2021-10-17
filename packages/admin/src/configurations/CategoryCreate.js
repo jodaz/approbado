@@ -7,7 +7,7 @@ import {
 } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
-import InputContainer from '@approbado/components/InputContainer'
+import InputContainer from '@approbado/lib/components/InputContainer'
 
 const CategoryCreate = (props) => {
     const createControllerProps = useCreateController(props);

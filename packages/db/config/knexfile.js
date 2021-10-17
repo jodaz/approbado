@@ -1,4 +1,4 @@
-import { DB } from '@approbado/api/src/config/env'
+import { DB } from '@approbado/server/dist/config/env'
 import path from 'path';
 
 const knexConfig = {
