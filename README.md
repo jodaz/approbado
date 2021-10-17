@@ -4,6 +4,17 @@
 
 ## Arquitectura actual
 
+```
+-- docs
+-- packages
+------ admin
+------ app
+------ db
+------ frames
+------ lib
+-- utils
+```
+
 - `admin`: UI del panel de administradores
 - `db`: Scaffolding para la base de datos
 - `frames`: Componentes destinados a ser servidos dentro de iframes: carousel de compras, login, registro...
@@ -11,5 +22,6 @@
 - `lib`: Librerías y utilidades para el front y back. Aquí alojo componentes, temas, etc..
 
 ### Librerías por desarrollar
-- `server`: Enrutado y servicios de la api
-    - Actual: API `routes`, , `validations`, `server.js`
+- `api`: Enrutado y servicios de la api
+    - Actual: API `routes`, , `validations`, `index.js`
+- `lib/configs`: Configs del server
