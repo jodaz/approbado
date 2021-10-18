@@ -1,6 +1,4 @@
-import PlansList from './components/PlansList'
-import Login from './components/Login'
-import Register from './components/Register'
+import * as React from 'react'
 import ResetPassword from './components/ResetPassword'
 import UpdatePassword from './components/UpdatePassword'
 import {
@@ -9,16 +7,25 @@ import {
     Switch,
     BrowserRouter as Router
 } from 'react-router-dom'
+import LazyLoader from '@approbado/lib/components/LazyLoader'
+
+const Login = React.lazy(() => import('./components/Login'))
+const Register = React.lazy(() => import('./components/Register'))
+const PlansList = React.lazy(() => import('./components/PlansList'))
 
 const App = () => {
     return (
         <Router>
             <Switch>
                 <Route exact path='/login'>
-                    <Login />
+                    <LazyLoader >
+                        <Login />
+                    </LazyLoader>
                 </Route>
                 <Route path='/register'>
-                    <Register />
+                    <LazyLoader >
+                        <Register />
+                    </LazyLoader>
                 </Route>
                 <Route path='/reset-password'>
                     <ResetPassword />
@@ -29,7 +36,9 @@ const App = () => {
                 <Route exact path='/' render={() => (<Redirect to="/login" />)} />
             </Switch>
             <Switch>
-                <Route path='/plans' render={() => <PlansList />} />
+                <LazyLoader >
+                    <Route path='/plans' render={() => <PlansList />} />
+                </LazyLoader>
             </Switch>
         </Router>
     )

@@ -127,7 +127,7 @@ const theme = {
         },
         MuiInputLabel: {
             animated: {
-            transition: 'none'
+                transition: 'none'
             }
         },
         MuiAppBar: {
@@ -213,9 +213,6 @@ const theme = {
             root: {
                 color: '#ced4da'
             }
-        },
-        MuiButtonBase: {
-            root: buttonStyles
         },
         MuiDialogContent: {
             root: {

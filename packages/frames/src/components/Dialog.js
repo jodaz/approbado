@@ -1,10 +1,10 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/';
+import { makeStyles, styled } from '@material-ui/core/';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Backdrop from '@material-ui/core/Backdrop';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const CustomizedBackdrop = styled(Backdrop)({
+    background: 'transparent'
+});
+
 export default function CustomizedDialogs({ open, handleClose }) {
     const classes = useStyles();
 
@@ -39,6 +43,7 @@ export default function CustomizedDialogs({ open, handleClose }) {
             aria-labelledby="customized-dialog-title"
             open={open}
             className={classes.root}
+            BackdropComponent={CustomizedBackdrop}
         >
             <DialogContent>
                 <Typography gutterBottom>
@@ -46,7 +51,7 @@ export default function CustomizedDialogs({ open, handleClose }) {
                 </Typography>
                 <Typography gutterBottom>
                     Mientras puedes leer nuestro{' '}
-                        <a href="https://approbado.alaxatech.com/blog/" className={classes.link}>
+                        <a href="https://approbado.villakid.com/blog/" className={classes.link}>
                             blog
                             </a>.
                 </Typography>
