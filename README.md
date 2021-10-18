@@ -2,6 +2,10 @@
 
 ## Requerimientos
 
+- `postgres ^12`
+- `node.js ^14`
+- `sshpass` para utilizar el script de deployment
+
 ## Arquitectura actual
 
 ```
