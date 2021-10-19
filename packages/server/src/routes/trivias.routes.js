@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { destroy, index, show, store, update } from '../../controllers/TriviaController'
-import { createTriviaSchema } from '../../validations'
+import { destroy, index, show, store, update } from '../controllers/TriviaController'
+import { createTriviaSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const triviasRouter = Router()
