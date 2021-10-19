@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { destroy, index, show, store, update } from '../../controllers/PlanController'
-import { createPlanSchema } from '../../validations'
+import { destroy, index, show, store, update } from '../controllers/PlanController'
+import { createPlanSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const plans = Router()

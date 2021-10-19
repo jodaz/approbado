@@ -30,7 +30,7 @@ const App = () => {
                 <Route path='/reset-password'>
                     <ResetPassword />
                 </Route>
-                <Route path='/update-password/:token'>
+                <Route path='/update-password'>
                     <UpdatePassword />
                 </Route>
                 <Route exact path='/' render={() => (<Redirect to="/login" />)} />

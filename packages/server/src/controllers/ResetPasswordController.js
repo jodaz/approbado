@@ -26,7 +26,7 @@ export const resetPassword = async (req, res) => {
 
         const data = {
             name: user.names,
-            url: `${APP_DOMAIN}/auth/update-password/?token=${token}`
+            url: `${APP_DOMAIN}/update-password/?token=${token}`
         };
 
         try {
@@ -63,19 +63,37 @@ export const updatePassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await PasswordReset.quey().findOne({ token: req.query.token });
+        const model = await PasswordReset.query().findOne({ token: req.query.token });
 
         const { password } = req.body;
         const encryptedPassword = await bcrypt.hash(password, 10);
 
-        // // Obtener usuario de model y actualizar contraseña
-        // const user = await User.query().insert({ password: encryptedPassword })
+        // Obtener usuario de model y actualizar contraseña
+        const user = await model.$relatedQuery('user')
+        await user.$query().patch({ password: encryptedPassword })
 
-        await MailTransporter.sendMail({
-            to: user.email,
-            subject: '¡Su contraseña ha sido actualizada!'
+        const data = {
+            name: user.names
+        };
+
+        try {
+            await MailTransporter.sendMail({
+                to: user.email,
+                subject: '¡Su contraseña ha sido actualizada!',
+                template: 'updatePassword',
+                context: data
+            })
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({
+                message: 'lossconnection.'
+            })
+        }
+
+        await model.$query().delete();
+
+        return res.status(201).json({
+            success: true
         })
-
-        await model.delete();
     }
 }

@@ -73,6 +73,23 @@ const useStyles = makeStyles(theme => ({
     additionalInfo: {
         fontSize: '12px',
         fontWeight: '300'
+    },
+    button: {
+        background: "linear-gradient(135.16deg, #E6EA00 -22.35%, #FDE000 113.73%)",
+        boxShadow: "4px 4px 40px rgba(0, 0, 0, 0.08)",
+        borderRadius: "8px",
+        textTransform: 'none',
+        boxShadow: "4px 4px 40px 0px #00000014",
+        padding: '0.3rem 2rem',
+        marginTop: '2rem',
+        fontWeight: 'bold'
+    },
+    link: {
+        textDecoration: 'underline',
+        color: theme.palette.primary.main,
+        '&visited': {
+            color: theme.palette.primary.main,
+        }
     }
 }))
 
@@ -126,7 +143,21 @@ const PlansList = () => {
                     </CardContent>
                 </Card>
             ))}
-            <Dialog open={open} handleClose={handleClose} classes={classes} />
+
+            <Dialog open={open} handleClose={handleClose} classes={classes}>
+                <Typography gutterBottom>
+                    ¡Lo siento! Nuestra app estará disponible muy pronto.
+                </Typography>
+                <Typography gutterBottom>
+                    Mientras puedes leer nuestro{' '}
+                        <a href="https://approbado.villakid.com/blog/" className={classes.link}>
+                            blog
+                            </a>.
+                </Typography>
+                <Button onClick={handleClose}>
+                    Vale, entendido
+                </Button>
+            </Dialog>
         </Box>
     )
 }

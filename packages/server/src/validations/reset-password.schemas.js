@@ -21,14 +21,15 @@ export const validateResetPassword = {
 
 export const validateVerifyToken = {
     token: {
+        in: ['query'],
         custom: {
             options: async (value) => {
-                PasswordReset.findOne({
+                const token = await PasswordReset.query().findOne({
                     token: value
                 });
 
-                if (!user) {
-                    throw new Error("El link utilizado ha dejado de ser válido.");
+                if (!token) {
+                    throw new Error("El vínculo utilizado ha dejado de ser válido.");
                 }
             }
         }
@@ -46,5 +47,5 @@ export const validateNewPassword = {
             errorMessage: 'Repita su contraseña'
         }
     },
-    // Verificar que el token en el query sea valido
+    ...validateVerifyToken
 }

@@ -17,6 +17,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Dialog from './Dialog'
 
 const validate = (values) => {
     const errors = {};
@@ -30,7 +31,12 @@ const validate = (values) => {
 
 const ResetPassword = () => {
     const [loading, setLoading] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
     const classes = useStyles();
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
@@ -40,6 +46,7 @@ const ResetPassword = () => {
                 const { token } = res.data;
 
                 setLoading(false);
+                setOpen(true);
             }).catch(err => {
                 setLoading(false);
 
@@ -90,6 +97,14 @@ const ResetPassword = () => {
                     </CardActions>
                 </div>
             </Card>
+            <Dialog open={open} handleClose={handleClose} classes={classes}>
+                <Typography gutterBottom>
+                    ¡Revise su correo electrónico! Le enviamos un código de recuperación.
+                </Typography>
+                <Button onClick={handleClose}>
+                    Vale, entendido
+                </Button>
+            </Dialog>
         </AuthLayout >
     );
 };

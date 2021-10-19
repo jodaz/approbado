@@ -1,8 +1,8 @@
 import { Router } from "express"
 import { checkSchema } from 'express-validator'
-import { validateSendSMSCode, validateLoginSchema, validateRegisterSchema } from '../../validations'
-import { sendSMSCode, logout, login, verifySMSCode } from '../../controllers/AuthController'
-import { isAuthorizedMiddleware } from '../../config'
+import { validateSendSMSCode, validateLoginSchema, validateRegisterSchema } from '../validations'
+import { sendSMSCode, logout, login, verifySMSCode } from '../controllers/AuthController'
+import { isAuthorizedMiddleware } from '../config'
 
 const authRouter = Router()
 
