@@ -25,6 +25,16 @@ const useStyles = makeStyles(theme => ({
         zIndex: '-1',
         color: '#fff',
         background: theme.palette.primary.main,
+        '&::after': {
+            content: "''",
+            background: `url(${process.env.PUBLIC_URL}/A.svg)`,
+            backgroundRepeat: 'no-repeat',
+            position: 'absolute',
+            width: '500.41px',
+            height: '500px',
+            left: '0px',
+            top: '0px'
+        }
     },
     title: {
         position: 'fixed',
