@@ -7,7 +7,7 @@ import { useLogin } from 'react-admin';
 import queryString from 'query-string'
 import Spinner from '../components/Spinner';
 
-const Login = () => {
+const Authenticate = () => {
     const { search } = useLocation()
     const values = queryString.parse(search)
     const login = useLogin()
@@ -22,14 +22,14 @@ const Login = () => {
     return <Spinner />;
 };
 
-Login.propTypes = {
+Authenticate.propTypes = {
     authProvider: PropTypes.func,
 };
 
-const LoginWithTheme = (props) => (
+const AuthenticateWithTheme = (props) => (
     <ThemeProvider theme={createMuiTheme(theme)}>
-        <Login {...props} />
+        <Authenticate {...props} />
     </ThemeProvider>
 );
 
-export default LoginWithTheme;
+export default AuthenticateWithTheme;

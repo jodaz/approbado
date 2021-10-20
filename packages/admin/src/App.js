@@ -6,6 +6,7 @@ import Dashboard from './dashboard'
 // Resources
 import users from './users'
 import trivias from './trivias'
+import Login from './layouts/Login'
 
 const App = () => (
 	<Admin
@@ -14,8 +15,8 @@ const App = () => (
 		history={browserHistory}
 		layout={Layout}
 		dataProvider={dataProvider}
-		loginPage={false}
-		authProvider={authProvider('app')}
+		loginPage={Login}
+		authProvider={authProvider('admin')}
 	>
 		<Resource {...users} />
 		<Resource {...trivias} />

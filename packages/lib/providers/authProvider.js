@@ -8,11 +8,9 @@ export const authProvider = (packageName) => ({
         return Promise.resolve();
     },
     logout: async () => {
-        if (packageName == 'app') {
-            await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-            await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
-            await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
+        await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
 
+        if (packageName == 'app') {
             return Promise.resolve(window.location.assign(`${CONFIG_NAMES.REDIRECT_TO}`));
         } else {
             return Promise.resolve();
@@ -32,11 +30,11 @@ export const authProvider = (packageName) => ({
     },
     checkAuth: async () => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
-
+        console.log(token)
         if (!token) {
             return (packageName == 'app')
                 ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
-                : Promise.resolve({ redirectTo: '/login' })
+                : Promise.reject({ redirectTo: '/login' })
         } else {
             console.log(jwtDecode(token))
         }

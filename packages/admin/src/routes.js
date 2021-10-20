@@ -4,12 +4,12 @@ import LevelsCreate from './configurations/LevelsCreate'
 import CategoryCreate from './configurations/CategoryCreate'
 import CategoryEdit from './configurations/CategoryEdit'
 import LevelEdit from './configurations/LevelEdit'
-import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Profile from './profile'
 import { RouteWithoutLayout } from 'ra-core';
 import Memberships from './memberships/Memberships';
 import PlanCreate from './memberships/PlanCreate';
 import PlanEdit from './memberships/PlanEdit';
+import ResetPassword from './layouts/ResetPassword';
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -38,13 +38,13 @@ export default [
         path="/configurations/levels/:id"
         render={() => <LevelEdit />}
     />,
-    <RouteWithoutLayout
-        path='/auth/:auth'
-        render={() => <Authenticate />}
-    />,
     <Route
         path="/profile"
         render={() => <Profile />}
     />,
+    <RouteWithoutLayout
+        path="/reset-password"
+        render={() => <ResetPassword />}
+    />
 ];
 

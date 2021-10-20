@@ -113,16 +113,21 @@ const theme = {
         },
         MuiInputBase: {
             root: {
-                border: '1px solid #ced4da',
+                border: `1px solid ${palette.primary.main}`,
                 borderRadius: 4,
                 backgroundColor: palette.background.default,
-                padding: '10px 12px !important',
+                padding: '0 !important',
                 fontSize: 16,
                 borderRadius: '5px',
                 transition: "none",
+                marginBottom: '0.3rem',
                 '&:focus': {
                     borderColor: palette.primary.main
                 }
+            },
+            input: {
+                backgroundColor: fade('#fff', 0.8),
+                padding: '0.7rem !important'
             }
         },
         MuiInputLabel: {

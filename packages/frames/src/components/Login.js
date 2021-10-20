@@ -8,9 +8,9 @@ import {
     Box
 } from '@material-ui/core';
 import axios from 'axios'
-import renderInput from '../utils/renderInput'
+import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
-import useStyles from './formStyles'
+import useStyles from '@approbado/lib/styles/formStyles'
 import AuthHeaderForm from './AuthHeaderForm';
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
