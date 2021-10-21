@@ -77,19 +77,19 @@ export const updatePassword = async (req, res) => {
             name: user.names
         };
 
-        // try {
-        //     await MailTransporter.sendMail({
-        //         to: user.email,
-        //         subject: '¡Su contraseña ha sido actualizada!',
-        //         template: 'updatePassword',
-        //         context: data
-        //     })
-        // } catch (err) {
-        //     console.log(err)
-        //     return res.status(500).json({
-        //         message: 'lossconnection.'
-        //     })
-        // }
+        try {
+            await MailTransporter.sendMail({
+                to: user.email,
+                subject: '¡Su contraseña ha sido actualizada!',
+                template: 'updatePassword',
+                context: data
+            })
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({
+                message: 'lossconnection.'
+            })
+        }
 
         await model.$query().delete();
 

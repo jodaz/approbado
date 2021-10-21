@@ -203,6 +203,10 @@ const theme = {
         RaSidebar: {
             root: {
                 height: '100vh'
+            },
+            fixed: {
+                width: 'inherit',
+                height: 'inherit'
             }
         },
         PrivateTabIndicator: {

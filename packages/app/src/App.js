@@ -1,6 +1,6 @@
 import { Admin } from 'react-admin'
 import { dataProvider, authProvider, browserHistory } from '@approbado/lib/providers'
-import Layout from '@approbado/lib/layouts'
+import Layout from './layouts'
 import customRoutes from './routes'
 import Dashboard from './dashboard'
 
