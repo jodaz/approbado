@@ -30,8 +30,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: '1em',
     },
     actions: {
-        marginTop: '2em',
-        marginBottom: '2em',
+        marginTop: '1em',
+        marginBottom: '1em',
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column'

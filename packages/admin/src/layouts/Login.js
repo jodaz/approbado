@@ -5,7 +5,7 @@ import {
     Typography,
     makeStyles
 } from '@material-ui/core';
-import Button from '../components/Button'
+import Button from '@approbado/lib/components/Button'
 import axios from 'axios'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import AuthLayout from './AuthLayout'
@@ -59,6 +59,10 @@ const Login = () => {
                 setLoading(false);
             }).catch(err => {
                 setLoading(false);
+
+                if (err.response.status == 500) {
+                    history.push('/error');
+                }
 
                 if (err.response.data.errors) {
                     return err.response.data.errors;

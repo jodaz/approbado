@@ -113,7 +113,7 @@ const theme = {
         },
         MuiInputBase: {
             root: {
-                border: `1px solid ${palette.primary.main}`,
+                border: `1px solid ${palette.primary.light}`,
                 borderRadius: 4,
                 backgroundColor: palette.background.default,
                 padding: '0 !important',
@@ -121,6 +121,7 @@ const theme = {
                 borderRadius: '5px',
                 transition: "none",
                 marginBottom: '0.3rem',
+                boxShadow: 'none',
                 '&:focus': {
                     borderColor: palette.primary.main
                 }

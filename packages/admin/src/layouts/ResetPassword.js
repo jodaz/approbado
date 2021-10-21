@@ -6,14 +6,15 @@ import {
     makeStyles
 } from '@material-ui/core';
 import axios from 'axios'
-import Button from '../components/Button'
+import Button from '@approbado/lib/components/Button'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { TextInput } from 'react-admin'
+import Dialog from '@approbado/lib/components/Dialog'
 
 const validate = (values) => {
     const errors = {};
@@ -39,17 +40,27 @@ const useStyles = makeStyles(theme => ({
 const ResetPassword = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = { ...formStyles(), ...useStyles() };
+    const history = useHistory()
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+        history.push('/login')
+    };
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
         return axios.post(`${process.env.REACT_APP_API_DOMAIN}/reset-password`, values)
             .then(res => {
-                const { token } = res.data;
-
                 setLoading(false);
+                setOpen(true)
             }).catch(err => {
                 setLoading(false);
+
+                if (err.response.status == 500) {
+                    history.push('/error');
+                }
 
                 if (err.response.data.errors) {
                     return err.response.data.errors;
@@ -83,6 +94,14 @@ const ResetPassword = () => {
                     </Button>
                 </CardActions>
             </div>
+            <Dialog open={open} handleClose={handleClose}>
+                <Typography gutterBottom>
+                    ¡Hemos enviado un link de recuperación a su correo!.
+                </Typography>
+                <Button onClick={handleClose}>
+                    Vale, llévame al inicio.
+                </Button>
+            </Dialog>
         </AuthLayout >
     );
 };

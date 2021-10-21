@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field } from 'react-final-form';
 import {
-    Button,
     Card,
     CardActions,
     Typography,
@@ -17,7 +16,8 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Dialog from './Dialog'
+import Dialog from '@approbado/lib/components/Dialog'
+import Button from '@approbado/lib/components/Button'
 
 const validate = (values) => {
     const errors = {};

@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { makeStyles, styled } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Backdrop from '@material-ui/core/Backdrop';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -13,11 +10,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomizedBackdrop = styled(Backdrop)({
-    background: 'transparent'
-});
+CustomizedDialogs.defaultProps = {
+    children: <></>
+}
 
-export default function CustomizedDialogs({ open, handleClose, children }) {
+export default function CustomizedDialogs({ open, handleClose, children, backdrop }) {
     const classes = useStyles();
 
     return (
@@ -26,7 +23,7 @@ export default function CustomizedDialogs({ open, handleClose, children }) {
             aria-labelledby="customized-dialog-title"
             open={open}
             className={classes.root}
-            BackdropComponent={CustomizedBackdrop}
+            BackdropComponent={backdrop && backdrop}
         >
             <DialogContent>
                 {children}

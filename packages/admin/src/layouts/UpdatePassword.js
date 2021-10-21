@@ -1,24 +1,22 @@
 import * as React from 'react';
-import { Field } from 'react-final-form';
 import {
-    Button,
-    Card,
+    makeStyles,
     CardActions,
     Typography,
     Box
 } from '@material-ui/core';
 import axios from 'axios'
-import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
-import useStyles from '@approbado/lib/styles/formStyles'
-import AuthHeaderForm from './AuthHeaderForm';
+import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
-import { Link, useLocation } from 'react-router-dom'
-import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import { useLocation, useHistory, Link } from 'react-router-dom'
+import { TextInput } from 'react-admin'
 import Spinner from '@approbado/lib/components/Spinner'
 import queryString from 'query-string'
+import Dialog from '@approbado/lib/components/Dialog'
+import InputContainer from '@approbado/lib/components/InputContainer'
+import Button from '@approbado/lib/components/Button'
 
 const validate = (values) => {
     const errors = {};
@@ -37,23 +35,54 @@ const validate = (values) => {
     return errors;
 };
 
+const useStyles = makeStyles(() => ({
+    form: {
+        width: '100%',
+        padding: '0 1.5rem'
+    },
+    cardHeader: {
+        textAlign: 'center',
+        marginBottom: '2rem'
+    },
+    errorMessage: {
+        display: 'flex',
+        height: '5rem',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: '1rem'
+    }
+}));
+
 const UpdatePassword = () => {
     const [loading, setLoading] = React.useState(false);
     const [isVerifying, setIsVerifying] = React.useState(true);
     const [verificationError, setVerificationError] = React.useState(undefined)
-    const classes = useStyles();
+    const classes = { ...formStyles(), ...useStyles() };
     const { search } = useLocation()
     const values = queryString.parse(search)
     const { token } = values;
+    const history = useHistory()
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+        history.push('/login')
+    };
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
         return axios.put(`${process.env.REACT_APP_API_DOMAIN}/reset-password/?token=${token}`, values)
-            .then(res => {
-                setIsVerifying(true)
+            .then(() => {
+                setLoading(false)
+                setOpen(true)
             }).catch(err => {
                 setLoading(false);
+
+                if (err.response.status == 500) {
+                    history.push('/error');
+                }
 
                 if (err.response.data.errors) {
                     return err.response.data.errors;
@@ -61,14 +90,21 @@ const UpdatePassword = () => {
             });
     }, [])
 
+    /**
+     * Verify if token is valid
+     */
     React.useEffect(() => {
         return axios.get(`${process.env.REACT_APP_API_DOMAIN}/reset-password/?token=${token}`)
-            .then(res => {
+            .then(() => {
                 setIsVerifying(false);
             }).catch(err => {
                 setIsVerifying(false);
 
                 if (err.response.data.errors) {
+                    if (err.response.status == 500) {
+                        history.push('/error');
+                    }
+
                     const { token } = err.response.data.errors
 
                     setVerificationError(token)
@@ -81,74 +117,59 @@ const UpdatePassword = () => {
             {(isVerifying)
                 ? <Spinner />
                 : (
-                    <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Recuperar contraseña'>
-                        <Card className={classes.card}>
-                            <div className={classes.form}>
-                                <AuthHeaderForm title='Recuperar cuenta' />
-                                {(verificationError == undefined)
-                                    ? (
-                                        <>
-                                            <Field
-                                                component={renderInput}
-                                                name="password"
-                                                type="text"
-                                                placeholder='Nueva contraseña'
+                    <AuthLayout validate={validate} handleSubmit={handleSubmit}>
+                        <div className={classes.form}>
+                            <Box className={classes.cardHeader}>
+                                <Typography variant="h5" classKey='h3'>
+                                    Recupera tu cuenta
+                                </Typography>
+                            </Box>
+                            {(verificationError == undefined)
+                                ? (
+                                    <>
+                                        <InputContainer labelName='Nueva contraseña' md={12}>
+                                            <TextInput
+                                                source="password"
+                                                placeholder="Ingrese su contraseña"
                                                 disabled={loading}
-                                                className={classes.input}
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AccountCircle />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
+                                                fullWidth
                                             />
-                                            <Field
-                                                component={renderInput}
-                                                name="password_confirmed"
-                                                type="text"
-                                                placeholder='Ingresa de nuevo tu contraseña'
+                                        </InputContainer>
+                                        <InputContainer labelName='Confirma tu contraseña' md={12}>
+                                            <TextInput
+                                                source="password_confirmed"
+                                                placeholder="Repita su contraseña"
                                                 disabled={loading}
-                                                className={classes.input}
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AccountCircle />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
+                                                fullWidth
                                             />
-                                        </>
-                                    )
-                                    : (
+                                        </InputContainer>
+                                    </>
+                                )
+                                : (
+                                    <Box className={classes.errorMessage}>
                                         <Typography variant='subtitle1'>
                                             Lo siento, {verificationError}.
                                         </Typography>
-                                    )
-                                }
-                                <CardActions className={classes.actions}>
-                                    {(verificationError == undefined) && (
-                                        <Button
-                                            variant='contained'
-                                            color='secondary'
-                                            type="submit"
-                                            className={classes.saveButton}
-                                            disabled={loading}
-                                            fullWidth
-                                        >
-                                            {'Enviar'}
-                                        </Button>
-                                    )}
-                                    <Box component="div" marginTop="2rem">
-                                        <Typography variant="subtitle1" component="p">
-                                            ¿Aún no tienes una cuenta?
-                                            {' '}
-                                            <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
-                                        </Typography>
+                                        <Link to='/login' className={classes.link}>Volver al inicio</Link>
                                     </Box>
+                                )
+                            }
+                            {(verificationError == undefined) && (
+                                <CardActions className={classes.actions}>
+                                    <Button disabled={loading} fullWidth>
+                                        {'Enviar'}
+                                    </Button>
                                 </CardActions>
-                            </div>
-                        </Card>
+                            )}
+                        </div>
+                        <Dialog open={open} handleClose={handleClose}>
+                            <Typography gutterBottom>
+                                Hemos recuperado tu cuenta con éxito.
+                            </Typography>
+                            <Button onClick={handleClose}>
+                                Continuar
+                            </Button>
+                        </Dialog>
                     </AuthLayout >
                 )
             }

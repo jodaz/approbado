@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomButton = ({ disabled, children }) => {
+const CustomButton = ({ disabled, children, ...rest }) => {
     const classes = useStyles();
 
     return (
@@ -31,7 +31,7 @@ const CustomButton = ({ disabled, children }) => {
             type="submit"
             className={classes.button}
             disabled={disabled}
-            fullWidth
+            {...rest}
         >
             {(!disabled)
                 ? <Typography variant="subtitle1">
@@ -41,6 +41,11 @@ const CustomButton = ({ disabled, children }) => {
             }
         </Button>
     )
+}
+
+CustomButton.defaultProps = {
+    fullWidth: true,
+    disabled: false
 }
 
 export default CustomButton

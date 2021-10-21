@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Field } from 'react-final-form';
 import {
-    Button,
     Card,
     CardActions,
     Typography,
     Box
 } from '@material-ui/core';
-// import Checkbox from '@material-ui/core/Checkbox'
+import Button from '@approbado/lib/components/Button'
 import axios from 'axios'
 import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'

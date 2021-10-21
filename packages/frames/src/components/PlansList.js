@@ -7,10 +7,12 @@ import {
     ThemeProvider,
     Button,
     Card,
+    styled,
+    Backdrop,
     CardContent
 } from '@material-ui/core'
 import { theme } from '@approbado/lib/styles';
-import Dialog from './Dialog'
+import Dialog from '@approbado/lib/components/Dialog'
 
 const cardStyles = {
     borderRadius: '12px !important',
@@ -108,6 +110,10 @@ const plans = [
     }
 ]
 
+const CustomizedBackdrop = styled(Backdrop)({
+    background: 'transparent'
+});
+
 const PlansList = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -144,7 +150,7 @@ const PlansList = () => {
                 </Card>
             ))}
 
-            <Dialog open={open} handleClose={handleClose} classes={classes}>
+            <Dialog open={open} handleClose={handleClose} classes={classes} backdrop={CustomizedBackdrop}>
                 <Typography gutterBottom>
                     ¡Lo siento! Nuestra app estará disponible muy pronto.
                 </Typography>

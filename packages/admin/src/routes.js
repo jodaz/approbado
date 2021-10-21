@@ -10,6 +10,8 @@ import Memberships from './memberships/Memberships';
 import PlanCreate from './memberships/PlanCreate';
 import PlanEdit from './memberships/PlanEdit';
 import ResetPassword from './layouts/ResetPassword';
+import ErrorLayout from '@approbado/lib/layouts/Error'
+import UpdatePassword from './layouts/UpdatePassword';
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -45,6 +47,14 @@ export default [
     <RouteWithoutLayout
         path="/reset-password"
         render={() => <ResetPassword />}
-    />
+    />,
+    <RouteWithoutLayout
+        path="/error"
+        render={() => <ErrorLayout />}
+    />,
+    <RouteWithoutLayout
+        path="/update-password"
+        render={() => <UpdatePassword />}
+    />,
 ];
 
