@@ -15,14 +15,19 @@ export const login = async (req, res) => {
             email: email
         });
 
+        const signedData = {
+            id: user.id,
+            picture: user.picture,
+            names: user.names
+        }
+
         const match = await bcrypt.compare(password, user.password)
 
         if (match) {
-            const token = await jwt.sign({ id: user.id }, SECRET, { expiresIn: SESSION_EXPIRE });
+            const token = await jwt.sign(signedData, SECRET, { expiresIn: SESSION_EXPIRE });
 
             return res.json({
                 success: true,
-                user: user,
                 token: token
             })
         } else {
