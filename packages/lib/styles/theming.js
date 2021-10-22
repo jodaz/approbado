@@ -105,6 +105,7 @@ const theme = {
             }
         },
         MuiButton: {
+            root: buttonStyles,
             contained: {
                 backgroundColor: '#fff',
                 color: '#4f3cc9',
@@ -246,8 +247,14 @@ const theme = {
                 }
             }
         },
-        MuiButton: {
-            root: buttonStyles,
+        MuiTooltip: {
+            tooltip: {
+                borderRadius: '8px',
+                backgroundColor: palette.primary.dark,
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '20px'
+            }
         }
     },
     props: {

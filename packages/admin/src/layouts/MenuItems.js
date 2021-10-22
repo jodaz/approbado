@@ -4,13 +4,13 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { MenuItemLink } from 'react-admin';
 import users from '../users';
 import trivias from '../trivias'
+import LogoutButton from '../components/LogoutButton'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
-        {' '}
         <MenuItemLink
             to="/"
-            primaryText={open ? 'Inicio' : <></>}
+            primaryText={'Inicio'}
             leftIcon={<SettingsIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
@@ -48,6 +48,9 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
+        />
+        <LogoutButton
+            sidebarIsOpen={open}
         />
     </React.Fragment>
 );

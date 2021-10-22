@@ -17,12 +17,10 @@ export const authProvider = (packageName) => ({
         }
     },
     checkError: async (error) => {
-        console.log("Check Error")
         const { response } = error;
 
         if (response.status === 401 || response.status === 403) {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-            await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
             await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
         }
 
@@ -30,13 +28,11 @@ export const authProvider = (packageName) => ({
     },
     checkAuth: async () => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
-        console.log(token)
+
         if (!token) {
             return (packageName == 'app')
                 ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
                 : Promise.reject({ redirectTo: '/login' })
-        } else {
-            console.log(jwtDecode(token))
         }
 
         return Promise.resolve()
@@ -48,18 +44,14 @@ export const authProvider = (packageName) => ({
         return Promise.resolve()
     },
     getIdentity: async () => {
-        // const token = await localStorage.getItem(CONFIG_NAMES.IDENTIFICATION);
+        const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
-        // if (token) {
-        //   const { id, full_name, picture, ...rest } = JSON.parse(token);
+        if (token) {
+            const { exp, iat, ...rest } = jwtDecode(token);
 
-        //   return ({
-        //     id: id,
-        //     full_name: full_name,
-        //     avatar: picture,
-        //     ...rest
-        //   });
-        // }
-        return Promise.resolve()
+            return Promise.resolve(rest);
+        }
+
+        return Promise.reject()
     }
 });

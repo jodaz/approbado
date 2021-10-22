@@ -15,12 +15,12 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 const useStyles = makeStyles(theme => ({
         root: {
-            backgroundColor: (props) => 
+            backgroundColor: (props) =>
                 props.isXSmall ? theme.palette.primary.main
                 : theme.palette.background.default,
-            width: (props) => 
+            width: (props) =>
                 !props.isOpenSidebar && (!props.isXSmall) // Large screens
-                    ? `calc(100% - 55px)` 
+                    ? `calc(100% - 55px)`
                 : (props.isXSmall) // Small screen
                     ? '100%'
                 : `calc(100% - 240px)`, // Large screen
@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
             justifyContent: 'space-between',
             paddingRight: 24,
             backgroundColor: 'transparent',
-            flexDirection: (props) => 
-                props.isXSmall 
+            flexDirection: (props) =>
+                props.isXSmall
                     ? 'row-reverse'
                     : 'row',
         },
@@ -73,9 +73,9 @@ const AppBar = ({ logout, ...rest }) => {
         isOpenSidebar: open,
         isXSmall: isXSmall
     });
-  
+
     return (
-        <MuiAppBar className={classes.root} position='absolute' {...rest}>
+        <MuiAppBar className={classes.root} position='absolute' {...rest} title=''>
             <Toolbar
                 disableGutters
                 variant={isXSmall ? 'regular' : 'dense'}
@@ -90,4 +90,3 @@ const AppBar = ({ logout, ...rest }) => {
 };
 
 export default AppBar;
-  
