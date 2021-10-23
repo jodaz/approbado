@@ -61,7 +61,7 @@ const Register = () => {
             : `${process.env.REACT_APP_API_DOMAIN}/auth/register`;
 
         return axios.post(url, values)
-            .then(res => {
+            .then(() => {
                 setSendWithCode(!sendWithCode);
                 setLoading(false);
             }).catch(err => {

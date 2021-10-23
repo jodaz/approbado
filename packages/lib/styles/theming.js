@@ -255,6 +255,11 @@ const theme = {
                 fontSize: '12px',
                 lineHeight: '20px'
             }
+        },
+        MuiCheckbox: {
+            colorSecondary: {
+                color: `${palette.info.main} !important`
+            }
         }
     },
     props: {

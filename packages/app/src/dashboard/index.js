@@ -1,16 +1,28 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import TabbedList from '@approbado/lib/components/TabbedList'
+import TestList from './TestList'
+
+const tags = ['pruebas'];
+
+const RenderList = ({ currentTab }) => {
+    if (currentTab === 'pruebas') {
+        return <TestList />
+    }
+    return null;
+}
 
 export default function Dashboard() {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <Grid item sm={12}>
-                    <Typography component='h3' variant={'h5'}>
-                        Resumen
-                    </Typography>
-                </Grid>
+                <TabbedList
+                    tags={tags}
+                    defaultTag={'pruebas'}
+                    name='Home'
+                >
+                    <RenderList />
+                </TabbedList>
             </Grid>
         </Grid>
     )
