@@ -8,7 +8,8 @@ import {
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin';
-import GridList from './GridList';
+import GridList from '@approbado/lib/components/GridList';
+import TriviaCard from './TriviaCard'
 
 const ListActions = () => (
     <TopToolbar>
@@ -37,7 +38,7 @@ const TriviaListView = () => (
         </FilterContext.Provider>
         <Box display="flex">
             <Box width={'100%'}>
-                <GridList />
+                <GridList component={<TriviaCard />} />
                 <Pagination rowsPerPageOptions={[5, 10, 20]} />
             </Box>
         </Box>

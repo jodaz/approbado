@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid'
+import UnsetDataComponent from '../components/UnsetDataComponent';
+import Typography from '@material-ui/core/Typography'
+import GridList from '@approbado/lib/components/GridList'
 import CardButton from './CardButton'
-import { useDataProvider } from 'react-admin'
+import { useDataProvider, ListBase } from 'react-admin'
 
 const initialState = {
     'users': {
@@ -114,6 +117,28 @@ const AdminDashboard = () => {
                         <CardButton {...trivias} />
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <ListBase
+                    resource='users'
+                    basePath='users'
+                    filterDefaultValues={{ is_registered: true, top: true }}
+                >
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Typography variant="h5">
+                                {'Usuarios destacados'}
+                            </Typography>
+                        </Grid>
+                        <GridList
+                            emptyListMessage={
+                                <UnsetDataComponent
+                                    message="¡Lo siento! Aún no tenemos usuarios destacados"
+                                />
+                            }
+                        />
+                    </Grid>
+                </ListBase>
             </Grid>
         </Grid>
     )

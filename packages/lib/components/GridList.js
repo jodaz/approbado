@@ -5,7 +5,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import { useListContext } from 'react-admin';
-import TriviaCard from './TriviaCard'
 
 const useStyles = makeStyles(theme => ({
     gridList: {
@@ -58,16 +57,23 @@ const LoadingGridList = (props) => {
     );
 };
 
-const LoadedGridList = (props) => {
-    const { ids, data } = useListContext();
+const EmptyList = props => (
+    React.cloneElement(props.emptyListMessage, {})
+)
 
-    if (!ids || !data) return null;
+const LoadedGridList = props => {
+    const { ids, data, total } = useListContext();
+
+    if (!ids || !data || !total) return <EmptyList {...props} />;
 
     return (
         <Grid container>
             {ids.map((id) => (
                 <Grid item xs={12} sm={6} md={4}>
-                    <TriviaCard data={data[id]} id={id} />
+                    {React.cloneElement(props.component, {
+                        data: data[id],
+                        id: id
+                    })}
                 </Grid>
             ))}
         </Grid>
@@ -75,13 +81,19 @@ const LoadedGridList = (props) => {
 };
 
 const GridList = (props) => {
-    const { width } = props;
+    const { width, component, emptyListMessage } = props;
     const { loaded } = useListContext();
+
     return loaded ? (
-        <LoadedGridList width={width} />
+        <LoadedGridList width={width} component={component} emptyListMessage={emptyListMessage} />
     ) : (
         <LoadingGridList width={width} />
     );
 };
+
+GridList.defaultProps = {
+    component: <></>,
+    emptyListMessage: <></>
+}
 
 export default withWidth()(GridList);
