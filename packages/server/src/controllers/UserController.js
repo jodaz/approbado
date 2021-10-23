@@ -15,6 +15,18 @@ export const index = async (req, res) => {
         if (filter.is_registered) {
             query.where('is_registered', filter.is_registered)
         }
+        if (filter.top) {
+            query.withGraphFetched('profile')
+                .modifiers({
+                    topUsers(builder) {
+                        builder.where('points', '>', 0)
+                    },
+
+                    orderByPoints(builder) {
+                        builder.orderBy('points', 'DESC')
+                    }
+                })
+        }
     }
 
     return paginatedQueryResponse(query, req, res)
