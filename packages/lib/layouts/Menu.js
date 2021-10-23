@@ -10,7 +10,7 @@ const Menu = ({ onMenuClick, logout, dense = false, children }) => {
     const open = useSelector(state => state.admin.ui.sidebarOpen);
 
     return (
-        <Box mt={1} textAlign="center" padding={open && "0 1rem"}>
+        <Box mt={1} textAlign="left" padding={open && "0 1rem"}>
             <Box width="80%" height="2rem" margin="1rem">
                 {(open) && (
                     <Link to='/'>

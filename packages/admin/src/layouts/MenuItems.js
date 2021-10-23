@@ -1,17 +1,19 @@
 import * as React from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
 import { MenuItemLink } from 'react-admin';
 import users from '../users';
 import trivias from '../trivias'
-import LogoutButton from '../components/LogoutButton'
+import LogoutButton from '@approbado/lib/components/LogoutButton'
+import HomeIcon from '@approbado/lib/icons/HomeIcon';
+import DollarIcon from '@approbado/lib/icons/DollarIcon';
+import Typography from '@material-ui/core/Typography'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
         <MenuItemLink
             to="/"
             primaryText={'Inicio'}
-            leftIcon={<SettingsIcon />}
+            leftIcon={<HomeIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
@@ -36,7 +38,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
         <MenuItemLink
             to="/memberships"
             primaryText={'Planes y membresías'}
-            leftIcon={<MonetizationOnIcon />}
+            leftIcon={<DollarIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
@@ -49,9 +51,13 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             sidebarIsOpen={open}
             dense={dense}
         />
-        <LogoutButton
-            sidebarIsOpen={open}
-        />
+        <LogoutButton>
+            {open && (
+                <Typography variant="subtitle1">
+                    {'Cerrar sesión'}
+                </Typography>
+            )}
+        </LogoutButton>
     </React.Fragment>
 );
 

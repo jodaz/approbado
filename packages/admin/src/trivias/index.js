@@ -1,6 +1,6 @@
 import TriviaList from './TriviaList'
 import TriviaCreate from './TriviaCreate'
-import GavelIcon from '@material-ui/icons/Gavel';
+import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 // import TriviaEdit from './TriviaEdit'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     list: TriviaList,
     create: TriviaCreate,
     // edit: TriviaEdit,
-    icon: GavelIcon,
+    icon: BalanceIcon,
     options: {
         label: 'Trivias'
     },

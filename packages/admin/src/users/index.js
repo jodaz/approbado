@@ -1,6 +1,6 @@
 import UserList from './UserList'
 import UserCreate from './UserCreate'
-import GroupIcon from '@material-ui/icons/Group'
+import UsersIcon from '@approbado/lib/icons/UsersIcon'
 import UserEdit from './UserEdit'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     list: UserList,
     create: UserCreate,
     edit: UserEdit,
-    icon: GroupIcon,
+    icon: UsersIcon,
     options: {
         label: 'Usuarios'
     },

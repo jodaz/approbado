@@ -23,14 +23,14 @@ const palette = {
 };
 
 const buttonStyles = {
-    background: "linear-gradient(135.16deg, #E6EA00 -22.35%, #FDE000 113.73%)",
-    boxShadow: "4px 4px 40px rgba(0, 0, 0, 0.08)",
-    borderRadius: "8px",
-    textTransform: 'none',
-    boxShadow: "4px 4px 40px 0px #00000014",
-    fontSize: '15px',
-    padding: '0.4rem 2rem !important',
-    fontWeight: 'bold'
+    // background: "linear-gradient(135.16deg, #E6EA00 -22.35%, #FDE000 113.73%)",
+    // boxShadow: "4px 4px 40px rgba(0, 0, 0, 0.08)",
+    // borderRadius: "8px",
+    // textTransform: 'none',
+    // boxShadow: "4px 4px 40px 0px #00000014",
+    // fontSize: '15px',
+    // padding: '0.4rem 2rem !important',
+    // fontWeight: 'bold'
 }
 
 const theme = {
@@ -73,13 +73,13 @@ const theme = {
                 color: palette.primary.light
             },
             active: {
-                borderLeft: `5px solid ${palette.secondary.main}`,
+                borderLeft: `3px solid ${palette.secondary.main}`,
                 backgroundColor: fade(palette.secondary.main, 0.16),
                 color: palette.secondary.main,
                 borderRadius: '6px'
             },
             icon: {
-                color: palette.primary.light
+                color: 'palette.primary.light'
             }
         },
         MuiDrawer: {

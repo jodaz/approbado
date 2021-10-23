@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import UserMenu from './UserMenu'
 import { MenuItemLink } from 'react-admin'
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import LogoutButton from '@approbado/lib/components/LogoutButton'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
         root: {
@@ -60,11 +62,16 @@ const CustomUserMenu = React.forwardRef((props, ref) => (
                 onClick={props.onClick}
                 sidebarIsOpen
             />
+            <LogoutButton>
+                <Typography variant="subtitle1">
+                    {'Cerrar sesión'}
+                </Typography>
+            </LogoutButton>
         </Box>
     </UserMenu>
 ));
 
-const AppBar = ({ logout, ...rest }) => {
+const AppBar = props => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
@@ -75,7 +82,7 @@ const AppBar = ({ logout, ...rest }) => {
     });
 
     return (
-        <MuiAppBar className={classes.root} position='absolute' {...rest} title=''>
+        <MuiAppBar className={classes.root} position='absolute' {...props} title=''>
             <Toolbar
                 disableGutters
                 variant={isXSmall ? 'regular' : 'dense'}
@@ -83,7 +90,7 @@ const AppBar = ({ logout, ...rest }) => {
             >
                 <ToggleSidebarButton />
 
-                <CustomUserMenu logout={logout} />
+                <CustomUserMenu />
             </Toolbar>
         </MuiAppBar>
     );
