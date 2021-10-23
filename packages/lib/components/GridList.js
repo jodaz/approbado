@@ -63,16 +63,16 @@ const EmptyList = props => (
 
 const LoadedGridList = props => {
     const { ids, data, total } = useListContext();
-
     if (!ids || !data || !total) return <EmptyList {...props} />;
 
     return (
         <Grid container>
-            {ids.map((id) => (
+            {ids.map((id, i) => (
                 <Grid item xs={12} sm={6} md={4}>
                     {React.cloneElement(props.component, {
                         data: data[id],
-                        id: id
+                        id: id,
+                        index: i
                     })}
                 </Grid>
             ))}

@@ -13,7 +13,7 @@ import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
-import { TextInput, useLogin } from 'react-admin'
+import { TextInput, useLogin, PasswordInput } from 'react-admin'
 
 const validate = (values) => {
     const errors = {};
@@ -89,7 +89,7 @@ const Login = () => {
                     />
                 </InputContainer>
                 <InputContainer labelName='Contraseña' md={12}>
-                    <TextInput
+                    <PasswordInput
                         source="password"
                         placeholder="Ingrese su contraseña"
                         disabled={loading}

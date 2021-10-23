@@ -4,6 +4,7 @@ import UnsetDataComponent from '../components/UnsetDataComponent';
 import Typography from '@material-ui/core/Typography'
 import GridList from '@approbado/lib/components/GridList'
 import CardButton from './CardButton'
+import UserCard from './UserCard'
 import { useDataProvider, ListBase } from 'react-admin'
 
 const initialState = {
@@ -136,6 +137,7 @@ const AdminDashboard = () => {
                                     message="¡Lo siento! Aún no tenemos usuarios destacados"
                                 />
                             }
+                            component={<UserCard />}
                         />
                     </Grid>
                 </ListBase>
