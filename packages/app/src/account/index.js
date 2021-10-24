@@ -6,30 +6,35 @@ import NotificationSettings from './NotificationSettings'
 import UpdatePassword from './UpdatePassword'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['Privacidad', 'Notificaciones', 'Cambiar contraseña', 'Eliminar cuenta'];
-
-const RenderList = ({ currentTab }) => {
-    if (currentTab === 'Privacidad') {
-        return <PrivacySettings />
-    } else if (currentTab === 'Eliminar cuenta') {
-        return <DeleteAccount />
-    } else if (currentTab === 'Notificaciones') {
-        return <NotificationSettings />
-    } else if (currentTab === 'Cambiar contraseña') {
-        return <UpdatePassword />
-    }
-
-    return null;
-}
+const tags = [
+    {
+        name: 'Privacidad',
+        pathname: 'privacy',
+        component: <PrivacySettings />
+    },
+    {
+        name: 'Notificaciones',
+        pathname: 'notifications',
+        component: <NotificationSettings />
+    },
+    {
+        name: 'Cambiar contraseña',
+        pathname: 'update password',
+        component: <UpdatePassword />
+    },
+    {
+        name: 'Eliminar cuenta',
+        pathname: 'delete account',
+        component: <DeleteAccount />
+    },
+]
 
 const AccountSettings = () => (
     <TabbedList
         tags={tags}
-        defaultTag='Privacidad'
+        defaultTag='privacy'
         name='Configuraciones'
-    >
-        <RenderList />
-    </TabbedList>
+    />
 )
 
 export default AccountSettings

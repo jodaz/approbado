@@ -4,25 +4,24 @@ import LevelsList from './LevelsList'
 import CategoriesList from './CategoryList'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['Categorías', 'Niveles'];
-
-const RenderList = ({ currentTab }) => {
-    if (currentTab === 'Niveles') {
-        return <LevelsList />
-    } else if (currentTab === 'Categorías') {
-        return <CategoriesList />
-    }
-    return null;
-}
+const tags = [
+    {
+        name: 'Categorías',
+        pathname: 'categories',
+        component: <CategoriesList />
+    },
+    {
+        name: 'Niveles',
+        pathname: 'levels',
+        component: <LevelsList />
+    },
+]
 
 const Configurations = () => (
     <TabbedList
         tags={tags}
-        defaultTag='Categorías'
         name='Configuraciones'
-    >
-        <RenderList />
-    </TabbedList>
+    />
 )
 
 export default Configurations
