@@ -1,12 +1,13 @@
 import { Profile } from '../models'
-import { validateRequest } from '../utils'
 
 export const show = async (req, res) => {
-    const settings = await Profile.query().where({
-        user_id: req.user.id
-    })
+    const { user } = req;
 
-    return res.status(201).json(settings)
+    const profile = await Profile.query().where('user_id', '=', user.id)
+
+    return res.status(201).json({
+        data: profile
+    })
 }
 
 export const update = async (req, res) => {
