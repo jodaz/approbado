@@ -11,7 +11,7 @@ import ToggleSidebarButton from './ToggleSidebarButton';
 import { useSelector } from 'react-redux';
 import UserMenu from './UserMenu'
 import { MenuItemLink } from 'react-admin'
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import LogoutButton from '@approbado/lib/components/LogoutButton'
 import Typography from '@material-ui/core/Typography'
 
@@ -58,7 +58,7 @@ const CustomUserMenu = React.forwardRef((props, ref) => (
                 to="/profile"
                 primaryText='Perfil'
                 title='Configuraciones de perfil'
-                leftIcon={<AccountBoxIcon />}
+                leftIcon={<ProfileIcon />}
                 onClick={props.onClick}
                 sidebarIsOpen
             />

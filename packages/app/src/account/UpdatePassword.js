@@ -28,7 +28,7 @@ const validate = values => {
     return errors;
 };
 
-const UpdatePassword = props => {
+const UpdatePassword = () => {
     const dataProvider = useDataProvider()
 
     const save = React.useCallback(async (values) => {
@@ -43,21 +43,21 @@ const UpdatePassword = props => {
             validate={validate}
             saveButtonLabel='Actualizar'
         >
-            <InputContainer labelName='Contraseña actual'>
+            <InputContainer labelName='Contraseña actual' md={8}>
                 <TextInput
                     source='curr_password'
                     placeholder="Contraseña actual"
                     fullWidth
             />
-        </InputContainer>
-            <InputContainer labelName='Contraseña actual'>
+            </InputContainer>
+            <InputContainer labelName='Nueva contraseña' md={8}>
                 <TextInput
                     source='new_password'
                     placeholder="Nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Contraseña actual'>
+            <InputContainer labelName='Nueva contraseña' md={8}>
                 <TextInput
                     source='new_password_confirm'
                     placeholder="Repita la nueva contraseña"

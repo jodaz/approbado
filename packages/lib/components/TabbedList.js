@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Divider from '@material-ui/core/Divider'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,14 +17,18 @@ const useStyles = makeStyles(theme => ({
     },
     tabs: {
         backgroundColor: 'transparent',
-        color: theme.palette.primary.light
+        color: fade(`${theme.palette.primary.dark}`, 0.8)
     },
     tab: {
-        textTransform: 'capitalize',
-        fontWeight: '500',
+        textTransform: 'none',
+        fontWeight: '700',
+        lineHeight: '20px',
+        fontSize: '14px',
+        letterSpacing: '0.3px',
         borderBottom: `2px solid ${theme.palette.primary.light}`,
         '&[aria-selected=true]': {
-            color: theme.palette.info.main
+            color: `${theme.palette.info.main} !important`,
+            borderBottom: `3px solid ${theme.palette.info.main}`
         }
     }
 }));

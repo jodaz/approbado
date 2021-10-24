@@ -2,14 +2,14 @@ import * as React from 'react'
 // Components
 import LevelsList from './LevelsList'
 import CategoriesList from './CategoryList'
-import TabbedList from '../components/TabbedList'
+import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['categorías', 'niveles'];
+const tags = ['Categorías', 'Niveles'];
 
 const RenderList = ({ currentTab }) => {
-    if (currentTab === 'niveles') {
+    if (currentTab === 'Niveles') {
         return <LevelsList />
-    } else if (currentTab === 'categorías') {
+    } else if (currentTab === 'Categorías') {
         return <CategoriesList />
     }
     return null;
@@ -18,7 +18,7 @@ const RenderList = ({ currentTab }) => {
 const Configurations = () => (
     <TabbedList
         tags={tags}
-        defaultTag='categorías'
+        defaultTag='Categorías'
         name='Configuraciones'
     >
         <RenderList />

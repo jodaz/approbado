@@ -1,13 +1,13 @@
 import UpdatePassword from './UpdatePassword'
 import EditProfile from './EditProfile'
-import TabbedList from '../components/TabbedList'
+import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['general', 'seguridad'];
+const tags = ['General', 'Seguridad'];
 
 const RenderList = ({ currentTab }) => {
-    if (currentTab === 'general') {
+    if (currentTab === 'General') {
         return <EditProfile />
-    } else if (currentTab === 'seguridad') {
+    } else if (currentTab === 'Seguridad') {
         return <UpdatePassword />
     }
     return null;
@@ -17,7 +17,7 @@ const Profile = () => {
     return (
         <TabbedList
             tags={tags}
-            defaultTag={'general'}
+            defaultTag={'General'}
             name='Perfil'
         >
             <RenderList />

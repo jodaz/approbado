@@ -1,14 +1,14 @@
 import * as React from 'react'
 import PlansList from './PlansList'
 import PaymentsList from './PaymentsList'
-import TabbedList from '../components/TabbedList'
+import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['pagos', 'planes'];
+const tags = ['Pagos', 'Planes'];
 
 const RenderList = ({ currentTab }) => {
-    if (currentTab === 'planes') {
+    if (currentTab === 'Planes') {
         return <PlansList />
-    } else if (currentTab === 'pagos') {
+    } else if (currentTab === 'Pagos') {
         return <PaymentsList />
     }
     return null;
@@ -17,7 +17,7 @@ const RenderList = ({ currentTab }) => {
 const Memberships = () => (
     <TabbedList
         tags={tags}
-        defaultTag='pagos'
+        defaultTag='Pagos'
         name='Pagos y membresías'
     >
         <RenderList />

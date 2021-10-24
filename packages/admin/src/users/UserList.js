@@ -2,14 +2,14 @@ import * as React from 'react'
 // Components
 import RegisteredUsersList from './RegisteredUsersList'
 import AdminUsersList from './AdminUsersList'
-import TabbedList from '../components/TabbedList'
+import TabbedList from '@approbado/lib/components/TabbedList'
 
-const tags = ['registrados', 'moderadores'];
+const tags = ['Registrados', 'Moderadores'];
 
 const RenderList = ({ currentTab }) => {
-    if (currentTab === 'registrados') {
+    if (currentTab === 'Registrados') {
         return <RegisteredUsersList />
-    } else if (currentTab === 'moderadores') {
+    } else if (currentTab === 'Moderadores') {
         return <AdminUsersList />
     }
     return null;
@@ -18,7 +18,7 @@ const RenderList = ({ currentTab }) => {
 const UserList = () => (
     <TabbedList
         tags={tags}
-        defaultTag={'registrados'}
+        defaultTag={'Registrados'}
         name='Usuarios'
     >
         <RenderList />

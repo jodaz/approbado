@@ -3,10 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import TabbedList from '@approbado/lib/components/TabbedList'
 import TestList from './TestList'
 
-const tags = ['pruebas'];
+const tags = ['Pruebas'];
 
 const RenderList = ({ currentTab }) => {
-    if (currentTab === 'pruebas') {
+    if (currentTab === 'Pruebas') {
         return <TestList />
     }
     return null;
@@ -18,7 +18,7 @@ export default function Dashboard() {
             <Grid item xs={12}>
                 <TabbedList
                     tags={tags}
-                    defaultTag={'pruebas'}
+                    defaultTag={'Pruebas'}
                     name='Home'
                 >
                     <RenderList />
