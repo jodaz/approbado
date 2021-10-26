@@ -11,9 +11,9 @@ export const show = async (req, res) => {
 }
 
 export const update = async (req, res) => {
-    const id = req.user.id
+    const { user, body } = req
 
-    const model = await Profile.query().updateAndFetchById(id, req.body)
+    await user.$relatedQuery('profile').update(body)
 
-    return res.status(201).json(model)
+    return res.status(201).json({ data: body })
 }
