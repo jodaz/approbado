@@ -228,11 +228,16 @@ const theme = {
                 color: '#ced4da'
             }
         },
+        MuiDialogTitle: {
+            root: {
+                padding: '0 !important'
+            }
+        },
         MuiDialogContent: {
             root: {
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '3rem 2rem !important',
+                padding: '1rem 2rem !important',
                 justifyContent: 'space-around',
                 alignItems: 'center'
             }

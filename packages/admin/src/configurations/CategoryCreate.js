@@ -6,7 +6,7 @@ import {
     CreateContextProvider
 } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
-import BaseForm from '../components/BaseForm'
+import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
 const CategoryCreate = (props) => {

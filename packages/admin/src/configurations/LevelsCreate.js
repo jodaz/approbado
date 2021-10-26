@@ -3,7 +3,9 @@ import {
     TextInput,
     useCreateController,
     useMutation,
-    CreateContextProvider
+    CreateContextProvider,
+    useRedirect,
+    useNotify,
 } from 'react-admin'
 import { validateLevel } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
@@ -11,7 +13,9 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 
 const LevelCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
+    const [mutate, { data, loading, loaded }] = useMutation();
+    const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -27,9 +31,16 @@ const LevelCreate = (props) => {
         }
     }, [mutate])
 
+    React.useEffect(() => {
+        if (data && loaded) {
+            notify('Se ha completado el registro con éxito')
+            redirect('/configurations?tab=levels')
+        }
+    }, [data, loaded])
+
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateLevel} formName='Nuevo nivel'>
+            <BaseForm save={save} validate={validateLevel} disabled={loading} formName='Nuevo nivel'>
                 <InputContainer
                     labelName='Nombre'
                 >

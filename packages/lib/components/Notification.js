@@ -1,4 +1,7 @@
 import * as React from 'react'
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@approbado/lib/components/Dialog'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -8,6 +11,7 @@ import {
     getNotification,
 } from 'ra-core';
 import { makeStyles } from '@material-ui/core/styles';
+import ConfirmIcon from '@approbado/lib/icons/ConfirmIcon'
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -16,11 +20,30 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "8px",
         textTransform: 'none',
         boxShadow: "4px 4px 40px 0px #00000014",
-        padding: '0.3rem 2rem',
+        padding: '0.7rem 2rem',
         marginTop: '2rem',
         fontWeight: 'bold'
     },
 }))
+
+const CustomDialogTitle = ({ handleClose }) => (
+    <DialogTitle>
+        {handleClose ? (
+        <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+            }}
+        >
+            <CloseIcon />
+        </IconButton>
+        ) : null}
+    </DialogTitle>
+)
 
 const Notification = () => {
     const [open, setOpen] = React.useState(false);
@@ -38,12 +61,15 @@ const Notification = () => {
     }, [notification]);
 
     return (
-        <Dialog open={open} handleClose={handleClose}>
+        <Dialog open={open} handleClose={handleClose} title={<CustomDialogTitle handleClose={handleClose} />}>
             <Typography gutterBottom>
                 {notification && notification.message}
             </Typography>
+            <ConfirmIcon width='144' height='144' />
             <Button onClick={handleClose} className={classes.button}>
-                Confirmar
+                <Typography variant="subtitle1">
+                    Continuar
+                </Typography>
             </Button>
         </Dialog>
     )

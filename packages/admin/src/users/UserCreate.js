@@ -3,15 +3,17 @@ import {
     useMutation,
     TextInput,
     SelectInput,
-    FormWithRedirect,
     BooleanInput,
     useCreateController,
     CreateContextProvider,
-    SaveButton,
-    useRedirect
+    useRedirect,
+    useNotify,
+    PasswordInput as RaPasswordInput
 } from 'react-admin'
 import { useFormState } from 'react-final-form'
-import { Box, Grid, InputLabel } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
+import BaseForm from '@approbado/lib/components/BaseForm'
+import InputContainer from '@approbado/lib/components/InputContainer'
 
 const ACCESS_TYPES = [
     { id: 'Administrador', name: 'Administrador' },
@@ -20,101 +22,45 @@ const ACCESS_TYPES = [
 ]
 
 const validate = (values) => {
-  const errors = {};
+    const errors = {};
 
-  if (!values.names) {
-    errors.names = "Ingrese el nombre.";
-  }
-  if (!values.email) {
-    errors.email = "Ingrese un correo electronico.";
-  }
-  if (!values.random_pass && !values.password) {
-    errors.password = "Ingrese una contraseña.";
-  }
+    if (!values.names) {
+        errors.names = "Ingrese el nombre.";
+    }
+    if (!values.email) {
+        errors.email = "Ingrese un correo electronico.";
+    }
+    if (!values.random_pass && !values.password) {
+        errors.password = "Ingrese una contraseña.";
+    }
 
-  return errors;
+    return errors;
 };
-
 
 const PasswordInput = (props) => {
     const { values } = useFormState();
-    
+
     if (!values.random_pass) {
         return (
-            <Grid item xs={12} sm={12} md={6}>
-                <InputLabel>Contraseña</InputLabel>
-                <TextInput
-                    label={false} 
-                    source='password' 
+            <InputContainer labelName='Nombre'>
+                <RaPasswordInput
+                    label={false}
+                    source='password'
                     placeholder="Contraseña"
                     fullWidth
                 />
-            </Grid>
+            </InputContainer>
         )
     }
 
     return null;
 }
 
-const UserCreateForm = (props) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="90em" padding='1em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Nombre</InputLabel>
-                        <TextInput 
-                            label={false}
-                            source="names" 
-                            placeholder="Nombre"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Correo electronico</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source="email" 
-                            placeholder="Correo electronico"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <BooleanInput
-                            source="random_pass"
-                            label="Generar contraseña y enviar por correo" 
-                        />
-                    </Grid>
-                    <PasswordInput />
-                    <Grid item xs={12} sm={12} md={6}>
-                        <InputLabel>Tipo de acceso</InputLabel>
-                        <SelectInput
-                            label={false}
-                            source="rol" 
-                            choices={ACCESS_TYPES}
-                            fullWidth
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
-
 const UserCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate, { data }] = useMutation();
+    const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -131,14 +77,48 @@ const UserCreate = (props) => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data) {
-            return () => redirect('/users')
+        if (data && loaded) {
+            notify('Se ha completado el registro con éxito')
+            redirect('/users?tab=admins')
         }
-    }, [data])
+    }, [data, loaded])
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <UserCreateForm save={save} validate={validate} />
+            <BaseForm save={save} validate={validate} loading={loading} formName='Agregar nuevo usuario'>
+                <InputContainer
+                    labelName='Nombres'
+                >
+                    <TextInput
+                        source="names"
+                        placeholder="Nombres"
+                        fullWidth
+                    />
+                </InputContainer>
+                <InputContainer labelName='Correo electrónico'>
+                    <TextInput
+                        label={false}
+                        source="email"
+                        placeholder="Correo electronico"
+                        fullWidth
+                    />
+                </InputContainer>
+                <Grid item xs={12}>
+                    <BooleanInput
+                        source="random_pass"
+                        label="Generar contraseña y enviar por correo"
+                    />
+                </Grid>
+                <PasswordInput />
+                <InputContainer labelName='Tipo de acceso'>
+                    <SelectInput
+                        label={false}
+                        source="rol"
+                        choices={ACCESS_TYPES}
+                        fullWidth
+                    />
+                </InputContainer>
+            </BaseForm>
         </CreateContextProvider>
     )
 }
