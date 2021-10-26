@@ -1,40 +1,38 @@
 import * as React from 'react'
 import {
-    useRedirect,
+    useNotify,
     useDataProvider
 } from 'react-admin'
-// import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import Checkbox from '@approbado/lib/components/FinalFormCheckbox'
 import Grid from '@material-ui/core/Grid'
 
 const PrivacySettings = () => {
     const [record, setRecord] = React.useState({})
-    const dataProvider = useDataProvider();
-    const redirect = useRedirect()
+    const [loading, setLoading] = React.useState(false)
+    const dataProvider = useDataProvider()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        console.log(values)
-        const data = await dataProvider.post('profile', values);
+        setLoading(true)
 
-        console.log("data", data)
-        // try {
-        //     await mutate({
-        //         type: 'update',
-        //         resource: props.resource,
-        //         payload: { id: record.id, data: values }
-        //     }, { returnPromise: true })
-        // } catch (error) {
-        //     if (error.response.data.errors) {
-        //         return error.response.data.errors;
-        //     }
-        // }
-    }, [])
+        try {
+            await dataProvider.post('profile', values);
+
+            notify('Hemos actualizado tus configuraciones de privacidad con éxito.')
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [dataProvider])
 
     const fetchProfile = React.useCallback(async () => {
         const { data } = await dataProvider.get('profile');
 
-        setRecord(data[0])
+        setRecord(data)
     }, [dataProvider])
 
     React.useEffect(() => {
@@ -44,8 +42,9 @@ const PrivacySettings = () => {
     return (
         <BaseForm
             save={save}
+            saveButtonLabel='Actualizar'
+            loading={loading}
             record={record}
-            saveButtonLabel='Guardar cambios'
         >
             <Grid item xs={12}>
                 <Checkbox
@@ -61,11 +60,6 @@ const PrivacySettings = () => {
             </Grid>
         </BaseForm>
     )
-}
-
-PrivacySettings.defaultProps = {
-    basePath: '/account',
-    resource: 'profile'
 }
 
 export default PrivacySettings

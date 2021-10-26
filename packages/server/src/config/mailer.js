@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import previewEmail from 'preview-email'
 import hbs from "nodemailer-express-handlebars";
 import { MAIL } from './env'
 import path from 'path'
@@ -22,6 +23,12 @@ const MailTransporter = nodemailer.createTransport({
     },
 });
 
+const PreviewEmail = async (data) => (
+    await previewEmail(data, {
+        template: path.resolve('./src/resources/mail/layouts'),
+    })
+)
+
 MailTransporter.use("compile", hbs(options))
 
-export { MailTransporter }
+export { MailTransporter, PreviewEmail }

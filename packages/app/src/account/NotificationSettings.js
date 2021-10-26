@@ -1,39 +1,38 @@
 import * as React from 'react'
 import {
-    useRedirect,
+    useNotify,
     useDataProvider
 } from 'react-admin'
-// import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
-import { Field } from 'react-final-form';
 import Checkbox from '@approbado/lib/components/FinalFormCheckbox'
 import Grid from '@material-ui/core/Grid'
 
 const NotificationSettings = () => {
     const [record, setRecord] = React.useState({})
-    const dataProvider = useDataProvider();
-    const redirect = useRedirect()
+    const [loading, setLoading] = React.useState(false)
+    const dataProvider = useDataProvider()
+    const notify = useNotify();
 
-    // const save = React.useCallback(async (values) => {
-    //     try {
-    //         await mutate({
-    //             type: 'update',
-    //             resource: props.resource,
-    //             payload: { id: record.id, data: values }
-    //         }, { returnPromise: true })
-    //     } catch (error) {
-    //         if (error.response.data.errors) {
-    //             return error.response.data.errors;
-    //         }
-    //     }
-    // }, [mutate])
+    const save = React.useCallback(async (values) => {
+        setLoading(true)
 
-    const save = () => ({});
+        try {
+            await dataProvider.post('profile', values);
+
+            notify('Hemos actualizado tus configuraciones de notificaciones con éxito.')
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [dataProvider])
 
     const fetchProfile = React.useCallback(async () => {
         const { data } = await dataProvider.get('profile');
 
-        setRecord(data[0])
+        setRecord(data)
     }, [dataProvider])
 
     React.useEffect(() => {
@@ -43,82 +42,42 @@ const NotificationSettings = () => {
     return (
         <BaseForm
             save={save}
+            saveButtonLabel='Actualizar'
+            loading={loading}
             record={record}
-            saveButtonLabel='Guardar cambios'
         >
             <Grid item xs={12}>
                 <Checkbox
-                    source="show_name"
-                    label='Mostrar mi nombre cuando vean mi perfil'
+                    source="general_notifications"
+                    label='Recibir notificaciones generales'
                 />
             </Grid>
             <Grid item xs={12}>
-                <Field
-                    name="display_name"
-                    type="checkbox"
-                    value="display_name"
-                    component={Checkbox}
-                >
-                    <label>
-                        Recibir notificaciones generales
-                    </label>
-                </Field>
+                <Checkbox
+                    source="notify_mobile_app"
+                    label='Recibir notificaciones sobre comentarios en aplicativo móvil'
+                />
             </Grid>
             <Grid item xs={12}>
-                <Field
-                    name="public_profile"
-                    type="checkbox"
-                    value="public_profile"
-                    component={Checkbox}
-                >
-                    <label>
-                        Recibir notificaciones sobre comentarios en aplicativo móvil
-                    </label>
-                </Field>
+                <Checkbox
+                    source="notify_email"
+                    label='Recibir notificaciones sobre comentarios en el correo electrónico vinculado'
+                />
             </Grid>
             <Grid item xs={12}>
-                <Field
-                    name="public_profile"
-                    type="checkbox"
-                    value="public_profile"
-                    component={Checkbox}
-                >
-                    <label>
-                        Recibir notificaciones sobre comentarios en el correo electrónico vinculado
-                    </label>
-                </Field>
+                <Checkbox
+                    source="notify_about_chat"
+                    label='Recibir notificaciones sobre mensajería'
+                />
             </Grid>
             <Grid item xs={12}>
-                <Field
-                    name="public_profile"
-                    type="checkbox"
-                    value="public_profile"
-                    component={Checkbox}
-                >
-                    <label>
-                        Recibir notificaciones sobre mensajería
-                    </label>
-                </Field>
-            </Grid>
-            <Grid item xs={12}>
-                <Field
-                    name="public_profile"
-                    type="checkbox"
-                    value="public_profile"
-                    component={Checkbox}
-                >
-                    <label>
-                        Recibir notificaciones sobre actualizaciones a la cuenta
-                    </label>
-                </Field>
+                <Checkbox
+                    source="notify_about_account"
+                    label='Recibir notificaciones sobre actualizaciones a la cuenta'
+                />
             </Grid>
         </BaseForm>
     )
-}
-
-NotificationSettings.defaultProps = {
-    basePath: '/account',
-    resource: 'profile'
 }
 
 export default NotificationSettings
