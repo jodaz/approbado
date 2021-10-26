@@ -12,6 +12,11 @@ export async function up(knex) {
         table.string('summary').nullable();
         table.string('linkedin').nullable();
         table.string('twitter').nullable();
+        table.boolean('general_notifications').defaultTo(1);
+        table.boolean('notify_mobile_app').defaultTo(1);
+        table.boolean('notify_email').defaultTo(1);
+        table.boolean('notify_about_chat').defaultTo(1);
+        table.boolean('notify_about_account').defaultTo(1);
         table.timestamps();
         table.integer('user_id').unsigned();
         table.foreign('user_id').references('users.id').onDelete('cascade');

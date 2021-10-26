@@ -46,14 +46,6 @@ export class User extends BaseClass {
                 to: 'blacklisted.user_id'
             }
         },
-        notifications: {
-            relation: BaseClass.HasOneRelation,
-            modelClass: `${__dirname}/NotificationSettings`,
-            join: {
-                from: 'users.id',
-                to: 'notification_settings.user_id'
-            }
-        },
         password_resets: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/PasswordReset`,

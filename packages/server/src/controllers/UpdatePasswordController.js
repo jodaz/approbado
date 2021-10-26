@@ -9,7 +9,7 @@ export const update = async (req, res) => {
 
         // Send email
         const mailerData = {
-            email: user.email,
+            to: user.email,
             template: 'updatePassword',
             subject: 'Su contraseña ha sido actualizada',
             context: {
