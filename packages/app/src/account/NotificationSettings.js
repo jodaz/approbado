@@ -6,7 +6,7 @@ import {
 // import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import { Field } from 'react-final-form';
-import Checkbox from '@approbado/lib/components/Checkbox'
+import Checkbox from '@approbado/lib/components/FinalFormCheckbox'
 import Grid from '@material-ui/core/Grid'
 
 const NotificationSettings = () => {
@@ -46,6 +46,12 @@ const NotificationSettings = () => {
             record={record}
             saveButtonLabel='Guardar cambios'
         >
+            <Grid item xs={12}>
+                <Checkbox
+                    source="show_name"
+                    label='Mostrar mi nombre cuando vean mi perfil'
+                />
+            </Grid>
             <Grid item xs={12}>
                 <Field
                     name="display_name"

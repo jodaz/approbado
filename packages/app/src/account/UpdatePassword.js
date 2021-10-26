@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {
     useDataProvider,
-    TextInput
+    PasswordInput,
+    useNotify
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -15,26 +16,38 @@ const validate = values => {
     if (!values.new_password) {
         errors.new_password = "Ingrese una nueva contraseña.";
     }
-    if (!values.new_password_confirm) {
-        errors.new_password_confirm = "Ingrese una nueva contraseña.";
+    if (!values.new_password_confirmed) {
+        errors.new_password_confirmed = "Ingrese una nueva contraseña.";
     }
     if (values.curr_password === values.new_password) {
         errors.new_password = "La nueva contraseña no debe ser igual a la anterior."
     }
-    if (values.new_password !== values.new_password_confirm) {
-        errors.new_password_confirm = "Las contraseñas no coinciden.";
+    if (values.new_password !== values.new_password_confirmed) {
+        errors.new_password_confirmed = "Las contraseñas no coinciden.";
     }
 
     return errors;
 };
 
 const UpdatePassword = () => {
+    const [loading, setLoading] = React.useState(false)
     const dataProvider = useDataProvider()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        const { data } = await dataProvider.post('update-password', values);
+        setLoading(true)
 
-        console.log(data)
+        try {
+            await dataProvider.post('update-password', values);
+
+            notify('Hemos cambiado tu contraseña con éxito')
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
     }, [dataProvider])
 
     return (
@@ -42,35 +55,31 @@ const UpdatePassword = () => {
             save={save}
             validate={validate}
             saveButtonLabel='Actualizar'
+            loading={loading}
         >
             <InputContainer labelName='Contraseña actual' md={8}>
-                <TextInput
+                <PasswordInput
                     source='curr_password'
                     placeholder="Contraseña actual"
                     fullWidth
-            />
+                />
             </InputContainer>
             <InputContainer labelName='Nueva contraseña' md={8}>
-                <TextInput
+                <PasswordInput
                     source='new_password'
                     placeholder="Nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Nueva contraseña' md={8}>
-                <TextInput
-                    source='new_password_confirm'
+                <PasswordInput
+                    source='new_password_confirmed'
                     placeholder="Repita la nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
         </BaseForm>
     )
-}
-
-UpdatePassword.defaultProps = {
-    basePath: 'profile',
-    resource: 'profile'
 }
 
 export default UpdatePassword

@@ -1,19 +1,35 @@
 import bcrypt from 'bcrypt'
-import { User } from '../models'
+import { validateRequest, sendMail } from '../utils'
 
 export const update = async (req, res) => {
-    const { id } = req.user
-    const { new_password } = req.body
+    const reqErrors = await validateRequest(req, res);
 
-    const encryptedPassword = await bcrypt.hash(new_password, 10);
+    if (!reqErrors) {
+        const { user } = req
 
-    await User.query()
-        .updateAndFetchById(id, { password: encryptedPassword })
+        // Send email
+        const mailerData = {
+            email: user.email,
+            template: 'updatePassword',
+            subject: 'Su contraseña ha sido actualizada',
+            context: {
+                name: user.names
+            }
+        };
 
-    return res.status(201).json({
-        data: {
-            id: id,
-            success: true
-        }
-    })
+        await sendMail(mailerData, res)
+
+        const { new_password } = req.body
+        const encryptedPassword = await bcrypt.hash(new_password, 10);
+
+        await user.$query()
+            .update({ password: encryptedPassword })
+
+        return res.status(201).json({
+            data: {
+                id: user.id,
+                success: true
+            }
+        })
+    }
 }

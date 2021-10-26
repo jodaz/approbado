@@ -38,9 +38,9 @@ export const authProvider = (packageName) => ({
         return Promise.resolve()
     },
     getPermissions: async () => {
-        // const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
+        const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
 
-        // return permissions ? Promise.resolve(permissions) : Promise.resolve('guest');
+        return permissions ? Promise.resolve(permissions) : Promise.resolve('guest');
         return Promise.resolve()
     },
     getIdentity: async () => {

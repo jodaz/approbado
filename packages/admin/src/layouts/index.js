@@ -4,6 +4,7 @@ import AppBar from '@approbado/lib/layouts/AppBar';
 import Menu from '@approbado/lib/layouts/Menu';
 import MenuItems from './MenuItems';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Notification from '@approbado/lib/components/Notification'
 
 const CustomSidebar = (props) => <Sidebar {...props} size={200} />;
 
@@ -21,6 +22,7 @@ export default (props) => {
             sidebar={CustomSidebar}
             menu={CustomMenu}
             theme={createMuiTheme(theme)}
+            notification={Notification}
         />
     );
 };
