@@ -1,7 +1,7 @@
 import { User } from '../models/User'
 import bcrypt from 'bcrypt'
 import { MailTransporter } from '../config'
-import { validateRequest, paginatedQueryResponse, getRandomPass } from '../utils'
+import { validateRequest, sendMail, paginatedQueryResponse, getRandomPass } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -56,11 +56,18 @@ export const store = async (req, res) => {
         })
 
         if (random_pass) {
-            await MailTransporter.sendMail({
-                to: BaseClass.email,
+            // Send email
+            const mailerData = {
+                to: model.email,
+                template: 'welcomeAdmin',
                 subject: '¡Bienvendo a Approbado!',
-                text: `Su contraseña de acceso es ${newPassword}`
-            })
+                context: {
+                    name: model.names,
+                    password: newPassword
+                }
+            };
+
+            sendMail(mailerData, res)
         }
 
         return res.status(201).json(model)

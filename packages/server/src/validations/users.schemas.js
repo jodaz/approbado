@@ -21,10 +21,5 @@ export const validateUserSchema = {
         notEmpty: {
             errorMessage: 'Ingrese su nombre'
         }
-    },
-    password: {
-        notEmpty: {
-            errorMessage: 'Ingrese su contraseña'
-        }
     }
 }
