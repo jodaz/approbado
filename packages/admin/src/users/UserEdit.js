@@ -56,7 +56,7 @@ const PasswordInput = (props) => {
     return null;
 }
 
-const UserEdit = (props) => {
+const UserEdit = props => {
     const editControllerProps = useEditController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
@@ -87,7 +87,7 @@ const UserEdit = (props) => {
 
     return (
         <EditContextProvider value={editControllerProps}>
-            <BaseForm save={save} validate={validate} loading={loading} record={record}>
+            <BaseForm save={save} validate={validate} disabled={loading} record={record}>
                 <InputContainer
                     labelName='Nombres'
                 >

@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             cursor: 'pointer'
         },
-        '& :nth-child(1)': {
+        '&:nth-child(1)': {
             marginRight: '0.5em'
         }
     }

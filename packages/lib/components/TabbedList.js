@@ -73,7 +73,7 @@ const TabbedList = ({
 
     return (
         <Box component='div' className={classes.root}>
-            <Typography component='h1' variant='h5'>{name}</Typography>
+            {name && <Typography component='h1' variant='h5'>{name}</Typography>}
             <Box component='div' paddingTop='1rem'>
                 <Tabs
                     value={currentTab}

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { SECRET, APP_DOMAIN, MailTransporter } from '../config'
 import bcrypt from 'bcrypt'
 import { User, PasswordReset } from '../models'
-import { validateRequest } from '../utils'
+import { validateRequest, sendMail } from '../utils'
 
 export const resetPassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
@@ -15,6 +15,18 @@ export const resetPassword = async (req, res) => {
             email: email
         });
 
+        const mailerData = {
+            to: user.email,
+            template: 'resetPassword',
+            subject: 'Cambiar contraseña',
+            context: {
+                name: user.names,
+                url: `${origin}/update-password/?token=${token}`
+            }
+        };
+
+        await sendMail(mailerData, res)
+
         const token = await jwt.sign(
             { id: user.id },
             SECRET,
@@ -24,25 +36,6 @@ export const resetPassword = async (req, res) => {
         await user.$relatedQuery('password_resets').insert({
             token: token
         })
-
-        const data = {
-            name: user.names,
-            url: `${origin}/update-password/?token=${token}`
-        };
-
-        try {
-            await MailTransporter.sendMail({
-                to: user.email,
-                subject: 'Reestablecer contraseña',
-                template: 'resetPassword',
-                context: data
-            })
-        } catch (err) {
-            console.log(err)
-            return res.status(500).json({
-                message: 'lossconnection.'
-            })
-        }
 
         return res.json({
             success: true

@@ -3,7 +3,7 @@ import * as React from 'react'
 import PrivacySettings from './PrivacySettings'
 import DeleteAccount from './DeleteAccount'
 import NotificationSettings from './NotificationSettings'
-import UpdatePassword from './UpdatePassword'
+import UpdatePassword from '@approbado/lib/layouts/UpdatePassword'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [

@@ -4,7 +4,8 @@ import {
     TextInput,
     useEditController,
     EditContextProvider,
-    useRedirect
+    useRedirect,
+    useNotify
 } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
@@ -17,12 +18,11 @@ const CategoryEdit = (props) => {
         ...props,
         id: id
     });
-    const [mutate, { data }] = useMutation();
-    const { record } = editControllerProps;
+    const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        console.log(values)
         try {
             await mutate({
                 type: 'update',
@@ -37,10 +37,13 @@ const CategoryEdit = (props) => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data) {
-            return () => redirect('/configurations')
+        if (data && loaded) {
+            notify('Se ha completado la actualización con éxito')
+            redirect('/configurations?tab=categories')
         }
-    }, [data, redirect])
+    }, [data, loaded])
+
+    const { record } = editControllerProps
 
     return (
         <EditContextProvider value={editControllerProps}>
@@ -49,6 +52,7 @@ const CategoryEdit = (props) => {
                 validate={validateCategory}
                 record={record}
                 saveButtonLabel='Actualizar'
+                disabled={loading}
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput

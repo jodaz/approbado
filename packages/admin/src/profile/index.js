@@ -1,4 +1,4 @@
-import UpdatePassword from './UpdatePassword'
+import UpdatePassword from '@approbado/lib/layouts/UpdatePassword'
 import EditProfile from './EditProfile'
 import TabbedList from '@approbado/lib/components/TabbedList'
 

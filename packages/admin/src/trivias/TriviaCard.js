@@ -10,8 +10,17 @@ import Divider from '@material-ui/core/Divider';
 import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
 import OptionMenuItem from '../components/OptionMenuItem';
 import OptionsCardMenu from '../components/OptionsCardMenu';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        margin: '1em',
+        radius: '8px',
+        background: '#F9F9F9',
+        '&:hover': {
+            boxShadow: "4px 4px 90px 0px #00000014",
+        },
+    },
     cardHeader: {
         padding: '1em 1em 0 1em !important'
     },
@@ -63,7 +72,17 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         padding: '0 0.8em'
-    }
+    },
+    link: {
+        textDecoration: 'none',
+        color: theme.palette.primary.main,
+        '&:hover': {
+            cursor: 'pointer'
+        },
+        '&visited': {
+            color: theme.palette.primary.main,
+        }
+    },
 }))
 
 const OptionsMenu = () => (
@@ -72,14 +91,18 @@ const OptionsMenu = () => (
     </OptionsCardMenu>
 );
 
-const CardWithDots = ({ data, id }) => {
+const TriviaCard = ({ data, id }) => {
     const classes = useStyles();
 
     return (
-        <Card style={{ margin: '1em', radius: '8px', background: '#F9F9F9' }}>
+        <Card className={classes.root}>
             <CardHeader
                 action={<OptionsMenu />}
-                title={data.name}
+                title={
+                    <Link to={`trivias/${data.id}/show`} className={classes.link}>
+                        {data.name}
+                    </Link>
+                }
                 className={classes.cardHeader}
             />
             <CardContent className={classes.cardContent}>
@@ -103,9 +126,9 @@ const CardWithDots = ({ data, id }) => {
     );
 }
 
-CardWithDots.propTypes = {
+TriviaCard.propTypes = {
     data: PropTypes.object,
     id: PropTypes.number
 }
 
-export default CardWithDots
+export default TriviaCard

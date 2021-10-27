@@ -12,7 +12,6 @@ const DatagridOptions = ({ children, ...rest }) => (
             {...rest}
         />
         <DeleteButton
-            undoable={false}
             {...rest}
         />
         {React.cloneElement(children, rest)}

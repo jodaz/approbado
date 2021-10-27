@@ -3,7 +3,9 @@ import {
     TextInput,
     useCreateController,
     useMutation,
-    CreateContextProvider
+    CreateContextProvider,
+    useRedirect,
+    useNotify,
 } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -11,7 +13,9 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 
 const CategoryCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
+    const [mutate, { data, loading, loaded }] = useMutation();
+    const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -27,12 +31,22 @@ const CategoryCreate = (props) => {
         }
     }, [mutate])
 
+    React.useEffect(() => {
+        if (data && loaded) {
+            notify('Se ha completado el registro con éxito')
+            redirect('/configurations?tab=categories')
+        }
+    }, [data, loaded])
+
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateCategory} formName='Nueva categoría'>
-                <InputContainer
-                    labelName='Nombre'
-                >
+            <BaseForm
+                save={save}
+                validate={validateCategory}
+                disabled={loading}
+                formName='Nueva categoría'
+            >
+                <InputContainer labelName='Nombre'>
                     <TextInput
                         source="name"
                         placeholder="Nombre"

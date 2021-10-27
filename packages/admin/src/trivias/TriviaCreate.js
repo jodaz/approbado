@@ -6,6 +6,7 @@ import {
     useCreateController,
     CreateContextProvider,
     useRedirect,
+    useNotify,
     ReferenceInput
 } from 'react-admin'
 import BaseForm from '../components/BaseForm'
@@ -37,14 +38,15 @@ const validate = (values) => {
 
 const TriviaCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate, { data }] = useMutation();
+    const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
                 type: 'create',
-                resource: 'trivias',
+                resource: props.resource,
                 payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
@@ -55,10 +57,11 @@ const TriviaCreate = (props) => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data) {
-            return () => redirect('/trivias')
+        if (data && loaded) {
+            notify('Has creado una nueva trivia')
+            redirect(`/trivias/${data.id}/show`)
         }
-    }, [data])
+    }, [data, loaded])
 
     return (
         <CreateContextProvider value={createControllerProps}>
@@ -66,6 +69,7 @@ const TriviaCreate = (props) => {
                 save={save}
                 validate={validate}
                 formName='Crear trivia'
+                disabled={loading}
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput
