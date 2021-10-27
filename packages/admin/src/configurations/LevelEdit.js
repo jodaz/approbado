@@ -4,7 +4,8 @@ import {
     TextInput,
     useEditController,
     EditContextProvider,
-    useRedirect
+    useRedirect,
+    useNotify
 } from 'react-admin'
 import { validateLevel } from './configurationsValidations';
 import BaseForm from '../components/BaseForm'
@@ -17,9 +18,9 @@ const LevelEdit = (props) => {
         ...props,
         id: id
     });
-    const [mutate, { data }] = useMutation();
-    const { record } = editControllerProps;
+    const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -36,10 +37,13 @@ const LevelEdit = (props) => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data) {
-            return () => redirect('/configurations')
+        if (data && loaded) {
+            notify('Se ha completado la actualización con éxito')
+            redirect('/configurations?tab=levels')
         }
-    }, [data, redirect])
+    }, [data, loaded])
+
+    const { record } = editControllerProps
 
     return (
         <EditContextProvider value={editControllerProps}>
@@ -48,6 +52,7 @@ const LevelEdit = (props) => {
                 validate={validateLevel}
                 record={record}
                 saveButtonLabel='Actualizar'
+                disabled={loading}
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput

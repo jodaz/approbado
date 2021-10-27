@@ -1,4 +1,5 @@
 import FacebookLogin from 'react-facebook-login'
+import { ReactComponent as FacebookIcon } from "@approbado/lib/icons/FacebookIconOutline.svg"
 
 const FBLoginButton = ({ className }) => {
     const processResponse = (response) => {
@@ -11,7 +12,7 @@ const FBLoginButton = ({ className }) => {
             autoload={true}
             fields='name,email'
             callback={processResponse}
-            icon='fa-facebook'
+            icon={<FacebookIcon style={{ marginRight: '0.5rem' }} />}
             textButton='Facebook'
             cssClass={className}
         />
