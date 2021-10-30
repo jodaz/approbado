@@ -1,9 +1,8 @@
 import { sendCode, verifyCode } from '../config';
-import jwt from 'jsonwebtoken'
-import { SECRET, SESSION_EXPIRE, MailTransporter } from '../config'
 import bcrypt from 'bcrypt'
-import { User, Profile } from '../models'
+import { User } from '../models'
 import { validateRequest } from '../utils'
+import { generateAuthToken, sendMail } from '../utils';
 
 export const login = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
@@ -15,16 +14,10 @@ export const login = async (req, res) => {
             email: email
         });
 
-        const signedData = {
-            id: user.id,
-            picture: user.picture,
-            names: user.names
-        }
-
         const match = await bcrypt.compare(password, user.password)
 
         if (match) {
-            const token = await jwt.sign(signedData, SECRET, { expiresIn: SESSION_EXPIRE });
+            const token = await generateAuthToken(user);
 
             return res.json({
                 success: true,
@@ -37,6 +30,41 @@ export const login = async (req, res) => {
                 }
             })
         }
+    }
+}
+
+export const externalLogin = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        const { email, key, provider } = req.body
+
+        const user = await User.query()
+            .findOne({
+                'email': email
+            })
+
+        const authProviderKey = await user.$relatedQuery('authProviders')
+            .findOne({
+                provider_type: provider,
+                provider_key: key
+            })
+
+        if (!authProviderKey) {
+            // Save social media profile (auth provider)
+            await user.$relatedQuery('authProviders')
+                .insert({
+                    provider_type: provider,
+                    provider_key: key
+                })
+        }
+
+        const token = await generateAuthToken(user);
+
+        return res.json({
+            success: true,
+            token: token
+        })
     }
 }
 
@@ -58,8 +86,8 @@ export const sendSMSCode = async (req, res) => {
             await sendCode(phone)
 
             return res.json({
-                message: 'Hemos enviado un código de verificación.',
-                phone: phone
+                success: true,
+                message: 'Hemos enviado un código de verificación.'
             })
         } catch (err) {
             console.log(err)
@@ -76,12 +104,33 @@ export const verifySMSCode = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const { email, password, phone, code, names } = req.body;
+            const {
+                email,
+                password,
+                phone,
+                code,
+                names,
+                key,
+                provider,
+                external
+            } = req.body;
 
             await verifyCode(phone, code)
 
             const encryptedPassword = await bcrypt.hash(password, 10);
 
+            const mailerData = {
+                to: email,
+                subject: '¡Bienvenido a Approbado!',
+                template: 'welcome',
+                context: {
+                    name: names,
+                }
+            };
+
+            await sendMail(mailerData, res)
+
+            // Save user data and profiles
             const user = await User.query().insert({
                 names: names,
                 password: encryptedPassword,
@@ -90,24 +139,24 @@ export const verifySMSCode = async (req, res) => {
                 phone: phone
             })
 
-            await Profile.query().insert({
+            await user.$relatedQuery('profile').insert({
                 user_id: user.id
             })
 
-            const data = {
-                name: user.names
-            };
+            if (external) {
+                // Save social media profile (auth provider)
+                await user.$relatedQuery('authProviders')
+                    .insert({
+                        provider_type: provider,
+                        provider_key: key
+                    })
+            }
 
-            await MailTransporter.sendMail({
-                to: user.email,
-                subject: '¡Bienvenido a Approbado!',
-                template: 'welcome',
-                context: data
-            })
+            const token = await generateAuthToken(user);
 
             return res.status(201).json({
                 message: 'Código aceptado',
-                phone: phone
+                token: token
             })
         } catch (err) {
             console.log(err)

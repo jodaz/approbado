@@ -1,6 +1,6 @@
 import { User } from '../models'
 
-export const validateLoginSchema = {
+const emailRule = async (value) => ({
     email: {
         notEmpty: {
             errorMessage: 'Ingrese su correo electrónico'
@@ -16,7 +16,24 @@ export const validateLoginSchema = {
                 }
             }
         }
+    }
+})
+
+const providerRules = {
+    provider: {
+        notEmpty: {
+            errorMessage: 'Ingrese el nombre del proveedor'
+        },
     },
+    key: {
+        notEmpty: {
+            errorMessage: 'Ingrese la llave del proveedor'
+        },
+    },
+}
+
+export const validateLoginSchema = {
+    ...emailRule,
     password: {
         notEmpty: {
             errorMessage: 'Ingrese su contraseña'
@@ -24,23 +41,13 @@ export const validateLoginSchema = {
     }
 };
 
-export const validateSendSMSCode = {
-    email: {
-        notEmpty: {
-            errorMessage: 'Ingrese su correo electrónico'
-        },
-        custom: {
-            options: async (value) => {
-                const user = await User.query().findOne({
-                    email: value
-                });
+export const validateExternalLogin = {
+    ...emailRule,
+    ...providerRules
+}
 
-                if (user) {
-                    throw new Error("Ya existe un usuario con ese correo");
-                }
-            }
-        }
-    },
+export const validateSendSMSCode = {
+    ...emailRule,
     names: {
         notEmpty: {
             errorMessage: 'Ingrese su nombre'
