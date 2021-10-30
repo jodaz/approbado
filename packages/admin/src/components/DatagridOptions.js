@@ -1,17 +1,22 @@
 import * as React from 'react'
-import { EditButton, DeleteButton } from 'react-admin'
+import { EditButton } from 'react-admin'
+import DeleteButton from '@approbado/lib/components/DeleteButton'
 import { Box } from '@material-ui/core'
 import PropTypes from 'prop-types';
-import EditOutlined from '@material-ui/icons/EditOutlined';
+import { ReactComponent as Edit } from '@approbado/lib/icons/Edit.svg'
 
-const DatagridOptions = ({ children, ...rest }) => (
+const DatagridOptions = ({ children, confirmTitle, confirmContent, deleteButtonLabel, ...rest }) => (
     <Box component='div' display='flex' justifyContent='end'>
         <EditButton
-            icon={<EditOutlined />}
+            icon={<Edit />}
             label=''
             {...rest}
         />
         <DeleteButton
+            confirmColor='warning'
+            confirmTitle={confirmTitle}
+            confirmContent={confirmContent}
+            label={deleteButtonLabel}
             {...rest}
         />
         {React.cloneElement(children, rest)}

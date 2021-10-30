@@ -14,7 +14,11 @@ import DatagridOptions from '../components/DatagridOptions';
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
-        <DatagridOptions basePath='/configurations/categories' />
+        <DatagridOptions
+            basePath='configurations/categories'
+            confirmTitle='Eliminar categoría'
+            confirmContent='¿Está seguro que desea eliminar esta categoría?'
+        />
     </Datagrid>
 );
 
@@ -25,17 +29,17 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const CategoryList = (props) => (
+const CategoryList = props => (
     <ListBase
         perPage={20}
         sort={{ field: 'reference', order: 'ASC' }}
         {...props}
     >
-        <CategoryListView />
+        <CategoryListView {...props} />
     </ListBase>
 );
 
-const CategoryListView = () => (
+const CategoryListView = props => (
     <>
         <FilterContext.Provider>
             <ListActions />

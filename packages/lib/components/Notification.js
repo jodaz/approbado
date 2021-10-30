@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
 import Dialog from '@approbado/lib/components/Dialog'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CustomDialogTitle = ({ handleClose }) => (
-    <DialogTitle>
+    <DialogTitle style={{ textAlign: 'right' }}>
         {handleClose ? (
         <IconButton
             aria-label="close"

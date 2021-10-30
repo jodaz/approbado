@@ -14,7 +14,11 @@ const UsersDatagrid = props => (
     <Datagrid optimized>
         <TextField source="names" label='Nombre' />
         <TextField source="email" label='Correo electrónico' />
-        <DatagridOptions />
+        <DatagridOptions
+            basePath='users'
+            confirmTitle='Eliminar usuario'
+            confirmContent='¿Está seguro que desea eliminar este usuario?'
+        />
     </Datagrid>
 )
 const ListActions = () => (

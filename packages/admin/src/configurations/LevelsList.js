@@ -14,7 +14,11 @@ import DatagridOptions from '../components/DatagridOptions';
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
-        <DatagridOptions basePath='configurations/levels' />
+        <DatagridOptions
+            basePath='configurations/levels'
+            confirmTitle='Eliminar nivel'
+            confirmContent='¿Está seguro que desea eliminar este nivel?'
+        />
     </Datagrid>
 );
 
