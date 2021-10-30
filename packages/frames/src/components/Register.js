@@ -60,9 +60,16 @@ const Register = () => {
             : `${process.env.REACT_APP_API_DOMAIN}/auth/register`;
 
         return axios.post(url, values)
-            .then(() => {
+            .then(res => {
                 setSendWithCode(!sendWithCode);
                 setLoading(false);
+
+                if (sendWithCode) {
+                    const { token } = res.data;
+
+                    window.location.href =
+                        `${process.env.REACT_APP_LOCATION}/auth?token=${token}`;
+                }
             }).catch(err => {
                 setLoading(false);
 

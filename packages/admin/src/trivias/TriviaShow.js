@@ -17,6 +17,7 @@ import OptionsCardMenu from '../components/OptionsCardMenu';
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 import TriviaEdit from './TriviaEdit'
+import SubthemesList from './Subthemes';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -68,6 +69,26 @@ TriviaShowHeader.propTypes = {
 
 const tags = record => ([
     {
+        name: 'Subtemas',
+        pathname: 'subthemes',
+        component: <SubthemesList {...record} />
+    },
+    {
+        name: 'Archivos',
+        pathname: 'files',
+        component: <SubthemesList {...record} />
+    },
+    {
+        name: 'Premios',
+        pathname: 'awards',
+        component: <SubthemesList {...record} />
+    },
+    {
+        name: 'Preguntas',
+        pathname: 'questions',
+        component: <SubthemesList {...record} />
+    },
+    {
         name: 'General',
         pathname: 'general',
         component: <TriviaEdit {...record} />
@@ -78,7 +99,7 @@ const TriviaShow = props => {
     const showControllerProps = useShowController(props)
 
     const { record } = showControllerProps
-    console.log(record)
+
     return (
         <>
             <TriviaShowHeader {...record} />

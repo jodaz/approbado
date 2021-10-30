@@ -35,7 +35,7 @@ export const update = async (req, res) => {
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await Trivia.query().findById(id,)
+    const model = await Trivia.query().findById(id)
 
     return res.status(201).json(model)
 }

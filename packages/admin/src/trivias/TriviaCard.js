@@ -77,6 +77,7 @@ const useStyles = makeStyles(theme => ({
         textDecoration: 'none',
         color: theme.palette.primary.main,
         '&:hover': {
+            textDecoration: 'underline',
             cursor: 'pointer'
         },
         '&visited': {

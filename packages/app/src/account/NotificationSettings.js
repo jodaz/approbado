@@ -43,7 +43,7 @@ const NotificationSettings = () => {
         <BaseForm
             save={save}
             saveButtonLabel='Actualizar'
-            loading={loading}
+            disabled={loading}
             record={record}
         >
             <Grid item xs={12}>
