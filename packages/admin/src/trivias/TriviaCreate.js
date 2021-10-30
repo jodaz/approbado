@@ -9,7 +9,7 @@ import {
     useNotify,
     ReferenceInput
 } from 'react-admin'
-import BaseForm from '../components/BaseForm'
+import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
 const ACCESS_TYPES = [

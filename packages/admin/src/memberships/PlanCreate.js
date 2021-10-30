@@ -9,7 +9,7 @@ import {
     SelectArrayInput
 } from 'react-admin'
 import { validatePlan } from './plansValidations';
-import BaseForm from '../components/BaseForm'
+import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
 const PlanCreate = (props) => {

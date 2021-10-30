@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { FormWithRedirect } from 'react-admin'
-import SaveButton from '@approbado/lib/components/SaveButton'
+import Button from '@approbado/lib/components/Button'
 import PropTypes from 'prop-types'
 
 const BaseForm = ({ formName, children, saveButtonLabel, loading, ...rest }) => (
     <Box component='div'>
-        <Typography component='h1' variant='h5'>{formName}</Typography>
+        { formName && <Typography component='h1' variant='h5'>{formName}</Typography> }
         <Box component='div' paddingTop='2rem'>
             <FormWithRedirect
                 {...rest}
-                render={ ({ handleSubmitWithRedirect, saving }) => (
+                render={ ({ handleSubmitWithRedirect }) => (
                     <Box maxWidth="90em">
                         <Grid container spacing={1}>
                             {
@@ -20,15 +20,20 @@ const BaseForm = ({ formName, children, saveButtonLabel, loading, ...rest }) => 
                                     })
                                 )
                             }
-                            <Grid item xs={12}>
-                                <SaveButton
-                                    handleSubmitWithRedirect={
-                                        handleSubmitWithRedirect
-                                    }
-                                    disabled={loading}
-                                    saving={saving}
-                                    label={saveButtonLabel}
-                                />
+                            <Grid container>
+                                <Grid item xs={12} sm={12} md={4} lg={3}>
+                                    <Button
+                                        disabled={loading}
+                                        onClick={event => {
+                                            if (event) {
+                                                event.preventDefault();
+                                            }
+                                            handleSubmitWithRedirect();
+                                        }}
+                                    >
+                                        {saveButtonLabel}
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Box>
@@ -45,7 +50,6 @@ BaseForm.propTypes = {
 }
 
 BaseForm.defaultProps = {
-    formName: '',
     saveButtonLabel: 'Guardar',
     disabled: false
 }
