@@ -3,7 +3,7 @@ import {
     ExtractJwt
 } from 'passport-jwt'
 import { User } from '../models/User'
-import { SECRET, FB_CREDS } from './env'
+import { SECRET } from './env'
 import passport from "passport";
 
 const options = {
