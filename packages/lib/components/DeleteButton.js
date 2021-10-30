@@ -25,6 +25,7 @@ const DeleteButton = (
         onClick,
         record,
         confirmColor,
+        customAction,
         ...rest
     } = props;
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -55,7 +56,12 @@ const DeleteButton = (
     React.useEffect(() => {
         if (data && loaded) {
             notify(`Se ha eliminado el registro con éxito`)
-            refresh();
+
+            if (customAction) {
+                customAction();
+            } else {
+                refresh();
+            }
         }
     }, [data, loaded])
 

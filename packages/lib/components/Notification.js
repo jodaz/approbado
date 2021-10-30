@@ -45,11 +45,31 @@ const CustomDialogTitle = ({ handleClose }) => (
     </DialogTitle>
 )
 
-const Notification = () => {
+const Notification = ({
+  autoHideDuration = 3000
+}) => {
     const [open, setOpen] = React.useState(false);
     const notification = useSelector(getNotification);
     const dispatch = useDispatch();
     const classes = useStyles();
+    const timerAutoHide = React.useRef();
+
+    const setAutoHideTimer = React.useCallback(autoHideDurationParam => {
+        clearTimeout(timerAutoHide.current);
+        timerAutoHide.current = setTimeout(function () {
+            handleClose();
+        }, autoHideDurationParam);
+    });
+
+    React.useEffect(function () {
+        if (open) {
+            setAutoHideTimer(autoHideDuration);
+        }
+
+        return function () {
+            clearTimeout(timerAutoHide.current);
+        };
+    }, [open, setAutoHideTimer]);
 
     const handleClose = React.useCallback(() => {
         setOpen(false);

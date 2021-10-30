@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    useRedirect,
     useShowController
 } from 'react-admin'
 import { makeStyles } from '@material-ui/core'
@@ -7,12 +8,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types'
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
-import OptionMenuItem from '../components/OptionMenuItem';
+import DeleteButton from '@approbado/lib/components/DeleteButton'
 import OptionsCardMenu from '../components/OptionsCardMenu';
 import TabbedList from '@approbado/lib/components/TabbedList'
 
@@ -38,20 +35,32 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const OptionsMenu = () => (
-    <OptionsCardMenu>
-        <OptionMenuItem />
-    </OptionsCardMenu>
-);
+const OptionsMenu = props => {
+    const redirect = useRedirect();
 
-const TriviaShowHeader = ({ name, id }) => {
+    return (
+        <OptionsCardMenu>
+            <DeleteButton
+                basePath='trivias'
+                confirmColor='warning'
+                confirmTitle='Eliminar trivia'
+                confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
+                label={'Eliminar'}
+                customAction={() => redirect('/trivias')}
+                {...props}
+            />
+        </OptionsCardMenu>
+    )
+};
+
+const TriviaShowHeader = record => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
             <CardHeader
-                action={<OptionsMenu />}
-                title={name}
+                action={<OptionsMenu record={record} />}
+                title={record.name}
                 className={classes.cardHeader}
             />
             <CardContent className={classes.cardContent}>
@@ -60,11 +69,6 @@ const TriviaShowHeader = ({ name, id }) => {
             </CardContent>
         </Card>
     );
-}
-
-TriviaShowHeader.propTypes = {
-    name: PropTypes.object,
-    id: PropTypes.number
 }
 
 const tags = record => ([

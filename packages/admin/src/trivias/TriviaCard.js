@@ -11,6 +11,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
 import OptionMenuItem from '../components/OptionMenuItem';
 import OptionsCardMenu from '../components/OptionsCardMenu';
 import { Link } from 'react-router-dom';
+import DeleteButton from '@approbado/lib/components/DeleteButton'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -86,9 +87,17 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const OptionsMenu = () => (
+
+const OptionsMenu = props => (
     <OptionsCardMenu>
-        <OptionMenuItem />
+        <DeleteButton
+            basePath='trivias'
+            confirmColor='warning'
+            confirmTitle='Eliminar trivia'
+            confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
+            label={'Eliminar'}
+            {...props}
+        />
     </OptionsCardMenu>
 );
 
@@ -98,7 +107,7 @@ const TriviaCard = ({ data, id }) => {
     return (
         <Card className={classes.root}>
             <CardHeader
-                action={<OptionsMenu />}
+                action={<OptionsMenu record={data} />}
                 title={
                     <Link to={`trivias/${data.id}/show`} className={classes.link}>
                         {data.name}

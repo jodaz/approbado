@@ -15,7 +15,7 @@ CustomizedDialogs.defaultProps = {
     title: <></>
 }
 
-export default function CustomizedDialogs({ open, handleClose, children, backdrop, title }) {
+export default function CustomizedDialogs({ open, handleClose, children, backdrop, title, ...rest }) {
     const classes = useStyles();
 
     return (
@@ -25,6 +25,7 @@ export default function CustomizedDialogs({ open, handleClose, children, backdro
             open={open}
             className={classes.root}
             BackdropComponent={backdrop && backdrop}
+            {...rest}
         >
             {React.cloneElement(title, {})}
             <DialogContent>

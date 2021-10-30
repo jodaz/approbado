@@ -5,10 +5,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Box from '@material-ui/core/Box';
+import DeleteButton from '@approbado/lib/components/DeleteButton'
 import Divider from '@material-ui/core/Divider';
-import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
-import OptionMenuItem from '../components/OptionMenuItem';
 import OptionsCardMenu from '../components/OptionsCardMenu';
 
 const useStyles = makeStyles(theme => ({
@@ -66,9 +64,16 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const OptionsMenu = () => (
+const OptionsMenu = props => (
     <OptionsCardMenu>
-        <OptionMenuItem />
+        <DeleteButton
+            basePath='memberships/plans'
+            confirmColor='warning'
+            confirmTitle='Eliminar plan'
+            confirmContent={'¿Está seguro que desea eliminar este plan?'}
+            label={'Eliminar'}
+            {...props}
+        />
     </OptionsCardMenu>
 );
 
@@ -78,7 +83,7 @@ const MembershipCard = ({ data, id }) => {
     return (
         <Card style={{ margin: '1em', radius: '8px', background: '#F9F9F9' }}>
             <CardHeader
-                action={<OptionsMenu />}
+                action={<OptionsMenu record={data} />}
                 title={data.name}
                 className={classes.cardHeader}
             />
