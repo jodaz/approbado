@@ -11,7 +11,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import classnames from 'classnames';
 import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
 import IconButton from '@material-ui/core/IconButton';
-import Box from '@material-ui/core/Box';
 
 const buttonStyles = {
     padding: '0.5rem 2rem',
@@ -25,6 +24,7 @@ const buttonStyles = {
 const useStyles = makeStyles(
     theme => ({
         root: {
+            borderRadius: '6px',
             padding: '1rem 2rem'
         },
         title: {
@@ -110,6 +110,7 @@ const Confirm = (props) => {
             onClose={onClose}
             onClick={handleClick}
             aria-labelledby="alert-dialog-title"
+            className={classes.root}
         >
             <DialogTitle className={classes.title}>
                 {title}

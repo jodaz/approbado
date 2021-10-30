@@ -1,18 +1,14 @@
 import {
-    Datagrid,
-    TextField,
-    EditButton,
     CreateButton,
     FilterContext,
     ListBase,
     Pagination,
     FilterLiveSearch,
-    TopToolbar,
-    NumberField,
-    DeleteButton
+    TopToolbar
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
-import GridList from './GridList'
+import GridList from '@approbado/lib/components/GridList';
+import MembershipCard from './MembershipCard'
 
 const ListActions = () => (
     <TopToolbar>
@@ -38,7 +34,7 @@ const PlansListView = () => (
         </FilterContext.Provider>
         <Box display="flex">
             <Box width={'100%'}>
-                <GridList />
+                <GridList component={<MembershipCard />} />
                 <Pagination rowsPerPageOptions={[5, 10, 20]} />
             </Box>
         </Box>

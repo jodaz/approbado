@@ -166,3 +166,26 @@ export const verifySMSCode = async (req, res) => {
         }
     }
 }
+
+export const deleteAccount = async (req, res) => {
+    const { user } = req
+
+    const mailerData = {
+        to: user.email,
+        subject: '¡Adiós!',
+        template: 'welcome',
+        context: {
+            name: names,
+        }
+    };
+
+    await sendMail(mailerData, res)
+
+    await user.$query().delete();
+
+    return res.status(201).json({
+        data: {
+            success: true
+        }
+    })
+}
