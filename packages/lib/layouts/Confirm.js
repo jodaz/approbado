@@ -30,7 +30,15 @@ const useStyles = makeStyles(
         title: {
             display: 'flex',
             justifyContent: 'space-between',
-            borderBottom: `1px solid ${theme.palette.primary.light}`
+            borderBottom: `1px solid ${theme.palette.primary.light}`,
+            '& > *': {
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                paddingLeft: '1rem',
+                paddingRight: '0.5rem',
+                alignItems: 'center'
+            }
         },
         cancel: {
             ...buttonStyles

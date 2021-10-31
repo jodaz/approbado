@@ -22,6 +22,9 @@ import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import LocalPhoneOutlinedIcon from '@material-ui/icons/LocalPhoneOutlined';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import Checkbox from '@approbado/lib/components/Checkbox'
+import { useSelector, useDispatch } from "react-redux";
+import { unset } from '../store/formFiller'
+
 
 const validate = (values) => {
     const errors = {};
@@ -48,10 +51,17 @@ const validate = (values) => {
     return errors;
 };
 
+const initialValues = {
+    external: false
+}
+
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
+    const [formInitialValues, setFormInitialValues] = React.useState(initialValues)
     const [sendWithCode, setSendWithCode] = React.useState(false);
     const classes = useStyles();
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
@@ -79,8 +89,15 @@ const Register = () => {
             });
     }, [sendWithCode]);
 
+    React.useEffect(() => {
+        if (state.isFilled) {
+            setFormInitialValues(state.data)
+            dispatch(unset())
+        }
+    }, [state]);
+
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit}>
+        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={formInitialValues}>
             <Card className={classes.card}>
                 <div className={classes.form}>
                     <AuthHeaderForm title='Crear cuenta' />
