@@ -1,6 +1,6 @@
 import { User } from '../models'
 
-const emailRule = async (value) => ({
+const emailRule = {
     email: {
         notEmpty: {
             errorMessage: 'Ingrese su correo electrónico'
@@ -17,7 +17,7 @@ const emailRule = async (value) => ({
             }
         }
     }
-})
+}
 
 const providerRules = {
     provider: {
@@ -47,7 +47,11 @@ export const validateExternalLogin = {
 }
 
 export const validateSendSMSCode = {
-    ...emailRule,
+    email: {
+        notEmpty: {
+            errorMessage: 'Ingrese su correo electrónico'
+        }
+    },
     names: {
         notEmpty: {
             errorMessage: 'Ingrese su nombre'
@@ -56,6 +60,11 @@ export const validateSendSMSCode = {
     password: {
         notEmpty: {
             errorMessage: 'Ingrese su contraseña'
+        }
+    },
+    external: {
+        notEmpty: {
+            errorMessage: 'Ingrese si es o no una autenticación con cuenta externa (Facebook, Google).'
         }
     },
     phone: {
