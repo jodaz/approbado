@@ -7,7 +7,6 @@ export async function up(knex) {
         table.string('cover');
         table.boolean('is_free').defaultsTo(true)
         table.boolean('grant_certification').defaultsTo(true);
-        table.integer('duration');
         table.integer('level_id').unsigned();
         table.integer('category_id').unsigned();
         table.foreign('category_id').references('categories.id').onDelete('cascade');
