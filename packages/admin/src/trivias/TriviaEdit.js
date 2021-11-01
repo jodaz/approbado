@@ -5,7 +5,8 @@ import {
     SelectInput,
     useNotify,
     ReferenceInput,
-    useRefresh
+    useRefresh,
+    FileInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -34,7 +35,7 @@ const validate = (values) => {
     return errors;
 };
 
-const TriviaEdit = record => {
+const TriviaEdit = ({ record }) => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
     const refresh = useRefresh()
@@ -51,7 +52,7 @@ const TriviaEdit = record => {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [mutate, record])
 
     React.useEffect(() => {
         if (data && loaded) {
@@ -93,6 +94,11 @@ const TriviaEdit = record => {
                 >
                     <SelectInput source="name" />
                 </ReferenceInput>
+            </InputContainer>
+            <InputContainer labelName='Categoría'>
+                <FileInput source="file">
+                    <></>
+                </FileInput>
             </InputContainer>
         </BaseForm>
     )

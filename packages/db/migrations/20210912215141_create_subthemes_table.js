@@ -11,9 +11,8 @@ export async function up(knex) {
         table.timestamps();
     });
 }
-  
-  
+
+
 export async function down(knex) {
     return knex.schema.dropTable('subthemes')
 }
-  

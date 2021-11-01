@@ -16,7 +16,7 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 import TriviaEdit from './TriviaEdit'
 import SubthemesList from './Subthemes';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         margin: '1em',
         borderRadius: '8px !important',
@@ -53,7 +53,7 @@ const OptionsMenu = props => {
     )
 };
 
-const TriviaShowHeader = record => {
+const TriviaShowHeader = ({ record }) => {
     const classes = useStyles();
 
     return (
@@ -75,43 +75,45 @@ const tags = record => ([
     {
         name: 'Subtemas',
         pathname: 'subthemes',
-        component: <SubthemesList {...record} />
+        component: <SubthemesList record={record} />
     },
     {
         name: 'Archivos',
         pathname: 'files',
-        component: <SubthemesList {...record} />
+        component: <SubthemesList record={record} />
     },
     {
         name: 'Premios',
         pathname: 'awards',
-        component: <SubthemesList {...record} />
+        component: <SubthemesList record={record} />
     },
     {
         name: 'Preguntas',
         pathname: 'questions',
-        component: <SubthemesList {...record} />
+        component: <SubthemesList record={record} />
     },
     {
         name: 'General',
         pathname: 'general',
-        component: <TriviaEdit {...record} />
+        component: <TriviaEdit record={record} />
     },
 ])
 
 const TriviaShow = props => {
     const showControllerProps = useShowController(props)
 
-    const { record } = showControllerProps
+    const { record, loaded } = showControllerProps
+
+    if (!loaded) return null;
 
     return (
-        <>
-            <TriviaShowHeader {...record} />
+        <React.Fragment>
+            <TriviaShowHeader record={record} />
 
             <TabbedList
                 tags={tags(record)}
             />
-        </>
+        </React.Fragment>
     )
 }
 

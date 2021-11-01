@@ -27,7 +27,14 @@ export const store = async (req, res) => {
 export const update = async (req, res) => {
     const { id } = req.params
 
-    const model = await Trivia.query().updateAndFetchById(id, req.body)
+    let data = req.body;
+
+    if (req.file) {
+        data.cover = req.file.path;
+    }
+
+    const model = await Trivia.query()
+        .updateAndFetchById(id, data)
 
     return res.status(201).json(model)
 }
