@@ -3,19 +3,17 @@ import {
     useRedirect,
     useShowController
 } from 'react-admin'
+import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
+import LayerIcon from '@approbado/lib/icons/LayerIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import OptionsCardMenu from '../components/OptionsCardMenu';
+import SubthemeEdit from './SubthemeEdit'
 import TabbedList from '@approbado/lib/components/TabbedList'
-
-import TriviaEdit from './TriviaEdit'
-import Example from './Subthemes';
-import SubthemesList from '../subthemes/SubthemesList'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -38,35 +36,36 @@ const useStyles = makeStyles(() => ({
 
 const OptionsMenu = props => {
     const redirect = useRedirect();
+    const { trivia_id } = props;
 
     return (
         <OptionsCardMenu>
             <DeleteButton
-                basePath='trivias'
+                basePath='subthemes'
                 confirmColor='warning'
-                confirmTitle='Eliminar trivia'
-                confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
+                confirmTitle='Eliminar subtema'
+                confirmContent={'¿Está seguro que desea eliminar este subtema?'}
                 label={'Eliminar'}
-                customAction={() => redirect('/trivias')}
+                customAction={() => redirect(`/trivias/${trivia_id}/show`)}
                 {...props}
             />
         </OptionsCardMenu>
     )
 };
 
-const TriviaShowHeader = ({ record }) => {
+const SubthemeShowHeader = ({ record, trivia_id }) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
             <CardHeader
-                action={<OptionsMenu record={record} />}
-                title={record.name}
+                action={<OptionsMenu record={record} trivia_id={trivia_id} />}
+                title={record.title}
                 className={classes.cardHeader}
             />
             <CardContent className={classes.cardContent}>
-                <BalanceIcon />
-                <Typography variant='subtitle1'>Trivia</Typography>
+                <LayerIcon />
+                <Typography variant='subtitle1'>Subtema</Typography>
             </CardContent>
         </Card>
     );
@@ -74,34 +73,19 @@ const TriviaShowHeader = ({ record }) => {
 
 const tags = record => ([
     {
-        name: 'Subtemas',
-        pathname: 'subthemes',
-        component: <SubthemesList record={record} />
-    },
-    {
-        name: 'Archivos',
-        pathname: 'files',
-        component: <Example record={record} />
-    },
-    {
-        name: 'Premios',
-        pathname: 'awards',
-        component: <Example record={record} />
-    },
-    {
-        name: 'Preguntas',
-        pathname: 'questions',
-        component: <Example record={record} />
-    },
-    {
         name: 'General',
         pathname: 'general',
-        component: <TriviaEdit record={record} />
+        component: <SubthemeEdit record={record} />
     },
 ])
 
-const TriviaShow = props => {
-    const showControllerProps = useShowController(props)
+const SubthemeShow = () => {
+    const { subtheme_id, trivia_id } = useParams();
+    const showControllerProps = useShowController({
+        basePath: 'subthemes',
+        resource: 'subthemes',
+        id: subtheme_id
+    })
 
     const { record, loaded } = showControllerProps
 
@@ -109,7 +93,7 @@ const TriviaShow = props => {
 
     return (
         <React.Fragment>
-            <TriviaShowHeader record={record} />
+            <SubthemeShowHeader record={record} trivia_id={trivia_id} />
 
             <TabbedList
                 tags={tags(record)}
@@ -118,4 +102,4 @@ const TriviaShow = props => {
     )
 }
 
-export default TriviaShow;
+export default SubthemeShow;

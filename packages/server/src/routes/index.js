@@ -8,12 +8,14 @@ import updatePasswordRouter from './update-password.routes';
 import triviasRoutes from './trivias.routes';
 import plansRoutes from './plans.routes';
 import paymentsRoutes from './payments.routes';
+import subthemesRoutes from './subthemes.routes';
 import memberships from './memberships.routes';
 import resetPasswordRouter from './reset-password.routes';
 import { isAuthorizedMiddleware } from '../config'
 
 const apiRouter = Router();
 
+apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
 apiRouter.use('/memberships', isAuthorizedMiddleware, memberships)
 apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 apiRouter.use('/memberships/plans', isAuthorizedMiddleware, plansRoutes)

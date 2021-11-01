@@ -20,6 +20,7 @@ const App = () => (
 	>
 		<Resource {...users} />
 		<Resource {...trivias} />
+		<Resource name="subthemes" />
 		<Resource name="profile" />
 		<Resource name="update-password" />
 		<Resource name="configurations/levels" />

@@ -12,6 +12,8 @@ import PlanEdit from './memberships/PlanEdit';
 import ResetPassword from './layouts/ResetPassword';
 import ErrorLayout from '@approbado/lib/layouts/Error'
 import UpdatePassword from './layouts/UpdatePassword';
+import SubthemeCreate from './subthemes/SubthemeCreate'
+import SubthemeShow from './subthemes/SubthemeShow';
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -43,6 +45,14 @@ export default [
     <Route
         path="/profile"
         render={() => <Profile />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/create"
+        render={() => <SubthemeCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/show"
+        render={() => <SubthemeShow />}
     />,
     <RouteWithoutLayout
         path="/reset-password"
