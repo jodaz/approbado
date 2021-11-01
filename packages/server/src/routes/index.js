@@ -12,6 +12,7 @@ import subthemesRoutes from './subthemes.routes';
 import memberships from './memberships.routes';
 import resetPasswordRouter from './reset-password.routes';
 import { isAuthorizedMiddleware } from '../config'
+import awardsRoutes from './awards.routes';
 
 const apiRouter = Router();
 
@@ -25,6 +26,7 @@ apiRouter.use('/update-password', isAuthorizedMiddleware, updatePasswordRouter)
 apiRouter.use('/profile', isAuthorizedMiddleware, profileRoutes)
 apiRouter.use('/users', isAuthorizedMiddleware, usersRoutes)
 apiRouter.use('/trivias', isAuthorizedMiddleware, triviasRoutes)
+apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
 
