@@ -5,6 +5,7 @@ import customRoutes from './routes'
 import Dashboard from './dashboard'
 // Resources
 import users from './users'
+import reports from './reports'
 import trivias from './trivias'
 import Login from './layouts/Login'
 
@@ -20,6 +21,8 @@ const App = () => (
 	>
 		<Resource {...users} />
 		<Resource {...trivias} />
+		<Resource {...reports} />
+		<Resource name="awards" />
 		<Resource name="subthemes" />
 		<Resource name="profile" />
 		<Resource name="update-password" />

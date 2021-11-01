@@ -7,6 +7,7 @@ import LogoutButton from '@approbado/lib/components/LogoutButton'
 import HomeIcon from '@approbado/lib/icons/HomeIcon';
 import DollarIcon from '@approbado/lib/icons/DollarIcon';
 import Typography from '@material-ui/core/Typography'
+import reports from '../reports';
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -39,6 +40,14 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             to="/memberships"
             primaryText={'Planes y membresías'}
             leftIcon={<DollarIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+        />
+        <MenuItemLink
+            to={reports.name}
+            primaryText={reports.options.label}
+            leftIcon={<reports.icon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}

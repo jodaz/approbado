@@ -40,11 +40,11 @@ const TriviaCard = ({ data, id }) => {
             <CardContent className={classes.cardContent}>
                 <div className={classes.innerContent}>
                     <Typography variant="span" component="span">
-                        20 preguntas
+                        {data.type}
                     </Typography>
                     <Divider className={classes.divider} />
                     <Typography variant="span" component="span">
-                        5 archivos
+                        {data.points}
                     </Typography>
                 </div>
             </CardContent>

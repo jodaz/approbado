@@ -14,8 +14,9 @@ import OptionsCardMenu from '../components/OptionsCardMenu';
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 import TriviaEdit from './TriviaEdit'
-import Example from './Subthemes';
+import NothingYet from '../components/NothingYet'
 import SubthemesList from '../subthemes/SubthemesList'
+import AwardsList from '../awards/AwardsList'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -81,17 +82,17 @@ const tags = record => ([
     {
         name: 'Archivos',
         pathname: 'files',
-        component: <Example record={record} />
+        component: <NothingYet record={record} />
     },
     {
         name: 'Premios',
         pathname: 'awards',
-        component: <Example record={record} />
+        component: <AwardsList record={record} />
     },
     {
         name: 'Preguntas',
         pathname: 'questions',
-        component: <Example record={record} />
+        component: <NothingYet record={record} />
     },
     {
         name: 'General',

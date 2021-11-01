@@ -14,6 +14,7 @@ import ErrorLayout from '@approbado/lib/layouts/Error'
 import UpdatePassword from './layouts/UpdatePassword';
 import SubthemeCreate from './subthemes/SubthemeCreate'
 import SubthemeShow from './subthemes/SubthemeShow';
+import AwardsCreate from './awards/AwardsCreate'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -49,6 +50,10 @@ export default [
     <Route
         path="/trivias/:trivia_id/subthemes/create"
         render={() => <SubthemeCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/awards/create"
+        render={() => <AwardsCreate />}
     />,
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/show"

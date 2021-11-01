@@ -14,6 +14,14 @@ export class Trivia extends BaseClass {
                 to: 'subthemes.trivia_id'
             }
         },
+        awards: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Award`,
+            join: {
+                from: 'trivias.id',
+                to: 'awards.trivia_id'
+            }
+        },
         level: {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Level`,

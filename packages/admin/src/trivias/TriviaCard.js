@@ -8,55 +8,12 @@ import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
-import OptionMenuItem from '../components/OptionMenuItem';
+import cardStyles from '@approbado/lib/styles/cardStyles'
 import OptionsCardMenu from '../components/OptionsCardMenu';
 import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        margin: '1em',
-        radius: '8px',
-        background: '#F9F9F9',
-        '&:hover': {
-            boxShadow: "4px 4px 90px 0px #00000014",
-        },
-    },
-    cardHeader: {
-        padding: '1em 1em 0 1em !important'
-    },
-    cardContent: {
-        padding: '1em',
-    },
-    innerContent: {
-        display: 'flex',
-        justifyContent: 'start',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    divider: {
-        width: '4px',
-        borderRadius: '50%',
-        background: theme.palette.text.primary,
-        height: '4px',
-        margin: '0 0.5em',
-        '&::after': {
-            content: '',
-            position: 'absolute',
-            width: '4px',
-            height: '100%',
-            background: '#fff',
-            right: 0,
-            left: 0,
-            textAlign: 'center',
-            margin: '0 auto',
-            '-webkit-transform': 'rotate(-66deg)',
-            '-moz-transform': 'rotate(-66deg)',
-            '-o-transform': 'rotate(-66deg)',
-            '-ms-transform': 'rotate(-66deg)',
-            'transform': 'rotate(-66deg)',
-        }
-    },
     tag: {
         display: 'flex',
         justifyContent: 'start',
@@ -73,17 +30,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         padding: '0 0.8em'
-    },
-    link: {
-        textDecoration: 'none',
-        color: theme.palette.primary.main,
-        '&:hover': {
-            textDecoration: 'underline',
-            cursor: 'pointer'
-        },
-        '&visited': {
-            color: theme.palette.primary.main,
-        }
     },
 }))
 
@@ -102,7 +48,7 @@ const OptionsMenu = props => (
 );
 
 const TriviaCard = ({ data, id }) => {
-    const classes = useStyles();
+    const classes = { ...cardStyles(), ...useStyles() };
 
     return (
         <Card className={classes.root}>
