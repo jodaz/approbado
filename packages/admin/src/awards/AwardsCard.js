@@ -6,17 +6,16 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '../components/OptionsCardMenu';
-import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 
 const OptionsMenu = props => (
     <OptionsCardMenu>
         <DeleteButton
-            basePath='subthemes'
+            basePath='awards'
             confirmColor='warning'
-            confirmTitle='Eliminar subtema'
-            confirmContent={'¿Está seguro que desea eliminar este subtema?'}
+            confirmTitle='Eliminar premio'
+            confirmContent={'¿Está seguro que desea eliminar este premio?'}
             label={'Eliminar'}
             {...props}
         />
@@ -31,9 +30,9 @@ const TriviaCard = ({ data, id }) => {
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Link to={`subthemes/${data.id}/show`} className={classes.link}>
+                    <Typography variant="h6">
                         {data.title}
-                    </Link>
+                    </Typography>
                 }
                 className={classes.cardHeader}
             />

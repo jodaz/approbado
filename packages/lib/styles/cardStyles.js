@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core'
 const cardStyles = makeStyles(theme => ({
     root: {
         margin: '1em',
-        radius: '8px',
+        borderRadius: '8px !important',
         background: '#F9F9F9',
+        cursor: 'pointer !important',
         '&:hover': {
-            boxShadow: "4px 4px 90px 0px #00000014",
+            boxShadow: "4px 4px 90px 0px #00000014"
         },
     },
     cardHeader: {

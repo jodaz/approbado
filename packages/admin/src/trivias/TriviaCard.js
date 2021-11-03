@@ -16,7 +16,6 @@ import DeleteButton from '@approbado/lib/components/DeleteButton'
 const useStyles = makeStyles(theme => ({
     tag: {
         display: 'flex',
-        justifyContent: 'start',
         backgroundColor: theme.palette.info.main,
         height: '2em',
         borderRadius: '6px',
@@ -31,8 +30,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         padding: '0 0.8em'
     },
-}))
-
+}));
 
 const OptionsMenu = props => (
     <OptionsCardMenu>

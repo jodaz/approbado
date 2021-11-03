@@ -3,6 +3,7 @@ import HomeIcon from '@approbado/lib/icons/HomeIcon';
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
 import { MenuItemLink } from 'react-admin';
+import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -25,8 +26,17 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             exact
         />
         <MenuItemLink
+            to="/trivias"
+            primaryText={open ? 'Trivias' : ''}
+            leftIcon={<BalanceIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+            exact
+        />
+        <MenuItemLink
             to="/account"
-            primaryText={open ? 'Configuración' : <></>}
+            primaryText={open ? 'Configuración' : ''}
             leftIcon={<SettingsIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}

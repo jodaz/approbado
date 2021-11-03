@@ -6,6 +6,9 @@ export async function up(knex) {
       table.string('icon')
       table.string('title')
       table.integer('min_points')
+      table.string('type');
+      table.integer('trivia_id').unsigned();
+      table.foreign('trivia_id').references('trivias.id').onDelete('cascade');
       table.timestamps();
   });
 }

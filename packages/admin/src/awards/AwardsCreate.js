@@ -4,7 +4,8 @@ import {
     TextInput,
     useRedirect,
     useNotify,
-    NumberInput
+    NumberInput,
+    SelectInput
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -13,15 +14,20 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 const validate = (values) => {
     const errors = {};
 
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
+    if (!values.title) {
+        errors.title = "Ingrese el nombre.";
     }
-    if (!values.points) {
-        errors.points = "Ingrese los puntos.";
+    if (!values.min_points) {
+        errors.min_points = "Ingrese los puntos.";
     }
 
     return errors;
 };
+
+const ACCESS_TYPES = [
+    { id: 'Insignia', name: 'Insignia' },
+    { id: 'Certificado', name: 'Certificado' }
+]
 
 const AwardsCreate = () => {
     const { trivia_id } = useParams()
@@ -48,7 +54,7 @@ const AwardsCreate = () => {
     React.useEffect(() => {
         if (data && loaded) {
             notify('¡Has creado un nuevo premio!')
-            redirect(`/trivias/${trivia_id}/awards`)
+            redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
     }, [data, loaded])
 
@@ -61,15 +67,22 @@ const AwardsCreate = () => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    source="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Ingresa los puntos'>
                 <NumberInput
-                    source="points"
+                    source="min_points"
                     placeholder="Ingresa los puntos"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Tipo de premio'>
+                <SelectInput
+                    source="type"
+                    choices={ACCESS_TYPES}
                     fullWidth
                 />
             </InputContainer>

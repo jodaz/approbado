@@ -62,6 +62,8 @@ const DeleteButton = (
             } else {
                 refresh();
             }
+
+            setOpen(!open);
         }
     }, [data, loaded])
 

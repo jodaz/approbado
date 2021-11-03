@@ -6,7 +6,9 @@ import {
     CreateContextProvider,
     NumberInput,
     ReferenceArrayInput,
-    SelectArrayInput
+    SelectArrayInput,
+    useRedirect,
+    useNotify,
 } from 'react-admin'
 import { validatePlan } from './plansValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -14,7 +16,9 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 
 const PlanCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
+    const [mutate, { data, loading, loaded }] = useMutation();
+    const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -29,6 +33,13 @@ const PlanCreate = (props) => {
             }
         }
     }, [mutate])
+
+    React.useEffect(() => {
+        if (data && loaded) {
+            notify('Se ha completado el registro con éxito')
+            redirect('/memberships?tab=plans')
+        }
+    }, [data, loaded])
 
     return (
         <CreateContextProvider value={createControllerProps}>
