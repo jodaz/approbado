@@ -1,11 +1,12 @@
 import * as React from 'react'
 import {
-    useDataProvider,
     TextInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
+import { fileProvider } from '@approbado/lib/providers'
+import { useFileProvider } from '@jodaz_/file-provider'
 
 const validate = values => {
     const errors = {};
@@ -20,19 +21,22 @@ const validate = values => {
     return errors;
 }
 
-const UpdateProfile = props => {
-    const dataProvider = useDataProvider()
+const UpdateProfile = () => {
+    const [provider, { loading }] = useFileProvider(fileProvider);
 
-    const save = React.useCallback(async (values) => {
-        const { data } = await dataProvider.post('update', values);
-
-        console.log(data)
-    }, [dataProvider])
+    const save = React.useCallback(async values => {
+        await provider({
+            resource: 'profile',
+            type: 'create',
+            payload: values
+        });
+    }, [provider]);
 
     return (
         <BaseForm
             save={save}
             validate={validate}
+            disabled={loading}
             saveButtonLabel='Actualizar'
         >
             <Grid container>

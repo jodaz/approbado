@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
     TextInput,
     SelectInput,
     useNotify,
@@ -10,6 +9,8 @@ import {
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import { fileProvider } from '@approbado/lib/providers'
+import { useFileProvider } from '@jodaz_/file-provider'
 
 const ACCESS_TYPES = [
     { id: '0', name: 'Gratis' },
@@ -36,23 +37,20 @@ const validate = (values) => {
 };
 
 const TriviaEdit = ({ record }) => {
-    const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
     const refresh = useRefresh()
+    const [provider, { data, loaded, loading }] = useFileProvider(fileProvider);
 
     const save = React.useCallback(async values => {
-        try {
-            await mutate({
-                type: 'update',
-                resource: 'trivias',
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
-        } catch (error) {
-            if (error.response.data.errors) {
-                return error.response.data.errors;
+        await provider({
+            resource: 'trivias',
+            type: 'update',
+            payload: {
+                id: record.id,
+                data: values
             }
-        }
-    }, [mutate, record])
+        });
+    }, []);
 
     React.useEffect(() => {
         if (data && loaded) {
