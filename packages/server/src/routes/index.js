@@ -13,9 +13,13 @@ import memberships from './memberships.routes';
 import resetPasswordRouter from './reset-password.routes';
 import { isAuthorizedMiddleware } from '../config'
 import awardsRoutes from './awards.routes';
+import forumsRoutes from './forums.routes';
+import commentsRoutes from './comments.routes';
 
 const apiRouter = Router();
 
+apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
+apiRouter.use('/forums', isAuthorizedMiddleware, forumsRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
 apiRouter.use('/memberships', isAuthorizedMiddleware, memberships)
 apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)

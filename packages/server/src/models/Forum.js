@@ -13,6 +13,18 @@ export class Forum extends BaseClass {
                 from: 'forums.created_by',
                 to: 'users.id'
             }
+        },
+        categories: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Category`,
+            join: {
+                from: 'forums.id',
+                through: {
+                    from: 'categories_forums.forums_id',
+                    to: 'categories_forums.category_id'
+                },
+                to: 'categories.id'
+            }
         }
     })
 }

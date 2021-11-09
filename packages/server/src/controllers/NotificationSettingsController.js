@@ -1,5 +1,4 @@
 import NotificationSettings from '../models'
-import { validateRequest } from '../utils'
 
 export const show = async (req, res) => {
     const user = await req.user.id
