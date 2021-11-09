@@ -1,7 +1,7 @@
 
 
 export async function up(knex) {
-  return knex.schema.createTable('blacklisted', table => {
+  return knex.schema.createTable('blacklisted_users', table => {
     table.increments('id').primary();
     table.boolean('is_restricted');
     table.integer('user_id').unsigned();
@@ -12,5 +12,5 @@ export async function up(knex) {
 
 
 export async function down(knex) {
-    return knex.schema.dropTable('blacklisted')
+    return knex.schema.dropTable('blacklisted_users')
 }
