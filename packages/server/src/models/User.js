@@ -40,7 +40,7 @@ export class User extends BaseClass {
         },
         blacklisted: {
             relation: BaseClass.HasOneRelation,
-            modelClass: `${__dirname}/Blacklisted`,
+            modelClass: `${__dirname}/BlacklistedUser`,
             join: {
                 from: 'users.id',
                 to: 'blacklisted.user_id'
@@ -62,5 +62,21 @@ export class User extends BaseClass {
                 to: 'messages.user_id'
             }
         },
+        comments: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Comment`,
+            join: {
+                from: 'users.id',
+                to: 'comments.user_id'
+            }
+        },
+        forums: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Forum`,
+            join: {
+                from: 'users.id',
+                to: 'forums.created_by'
+            }
+        }
     })
 }
