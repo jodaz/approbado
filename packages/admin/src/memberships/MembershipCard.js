@@ -39,7 +39,7 @@ const MembershipCard = ({ data, id }) => {
                     </Typography>
                     <Divider className={classes.divider} />
                     <Typography variant="span" component="span">
-                        5 trivias
+                        {data.triviasCount} trivias
                     </Typography>
                 </div>
             </CardContent>

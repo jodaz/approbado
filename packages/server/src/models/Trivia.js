@@ -14,6 +14,19 @@ export class Trivia extends BaseClass {
                 to: 'subthemes.trivia_id'
             }
         },
+        files: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/File`,
+            join: {
+                from: 'trivias.id',
+                through: {
+                    // persons_movies is the join table.
+                    from: 'subthemes.trivia_id',
+                    to: 'subthemes.id'
+                },
+                to: 'files.subtheme_id'
+            }
+        },
         awards: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Award`,

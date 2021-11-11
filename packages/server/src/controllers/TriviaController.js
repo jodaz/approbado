@@ -3,7 +3,11 @@ import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
-    const query = Trivia.query()
+    const query = Trivia.query().select(
+        Trivia.ref('*'),
+        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+        Trivia.relatedQuery('files').count().as('filesCount')
+    )
 
     if (filter) {
         if (filter.name) {

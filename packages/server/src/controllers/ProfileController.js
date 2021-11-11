@@ -1,9 +1,10 @@
 import { sendMail } from '../utils'
+import isEmpty from 'is-empty'
 
 export const show = async (req, res) => {
     const { user } = req;
 
-    const profile = await user.$relatedQuery('profile')
+    const profile = await user.$fetchGraph('profile')
 
     return res.status(201).json({
         data: profile
@@ -25,7 +26,16 @@ export const update = async (req, res) => {
 
     await sendMail(mailerData, res)
 
-    await user.$relatedQuery('profile').update(body)
+    const { profile, ...rest } = req.body;
 
-    return res.status(201).json({ data: body })
+    await user.$query().patch({
+        names: rest.names,
+        email: rest.email
+    });
+
+    if (typeof profile == 'object') {
+        await user.$relatedQuery('profile').update(profile)
+    }
+
+    return res.status(201).json({ data: await user.$fetchGraph('profile') })
 }
