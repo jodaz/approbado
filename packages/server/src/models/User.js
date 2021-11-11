@@ -79,4 +79,10 @@ export class User extends BaseClass {
             }
         }
     })
+
+    $formatJson(json) {
+        json = super.$formatJson(json);
+        delete json.password;
+        return json;
+    }
 }
