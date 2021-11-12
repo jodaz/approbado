@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar';
+import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -75,7 +76,7 @@ const UserCard = ({ data, index }) => {
                             <PositionIcon pos={position} />
                         )}
                         <Typography variant="subtitle2" component="span">
-                            {position}º Lugar · 2.5k ptos
+                            {position}º Lugar · {!isEmpty(data.profile) && data.profile.points} ptos
                         </Typography>
                     </div>
                 </div>

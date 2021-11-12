@@ -53,11 +53,11 @@ const TriviaEdit = ({ record }) => {
     }, []);
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (data) {
             notify('Se ha completado la actualización con éxito')
             refresh()
         }
-    }, [data, loaded])
+    }, [data])
 
     return (
         <BaseForm save={save} validate={validate} loading={loading} record={record}>

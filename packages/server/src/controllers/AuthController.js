@@ -140,6 +140,7 @@ export const verifySMSCode = async (req, res) => {
             })
 
             await user.$relatedQuery('profile').insert({
+                names: names,
                 user_id: user.id
             })
 

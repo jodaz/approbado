@@ -5,6 +5,14 @@ export class Profile extends BaseClass {
         return 'profiles'
     }
 
+    static modifiers = {
+        orderByPoints(query, order) {
+            query
+                .where('points', '<', 0)
+                .orderBy('points', order)
+        }
+    };
+
     static relationMappings = () => ({
         owner: {
             relation: BaseClass.BelongsToOneRelation,

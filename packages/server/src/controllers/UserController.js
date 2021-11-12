@@ -16,15 +16,10 @@ export const index = async (req, res) => {
             query.where('is_registered', filter.is_registered)
         }
         if (filter.top) {
-            query.withGraphFetched('profile')
+            query
+                .withGraphFetched('profile')
                 .modifiers({
-                    topUsers(builder) {
-                        builder.where('points', '>', 0)
-                    },
-
-                    orderByPoints(builder) {
-                        builder.orderBy('points', 'DESC')
-                    }
+                    filterTop: query => query.modify('orderByPoints', 'desc')
                 })
         }
     }
