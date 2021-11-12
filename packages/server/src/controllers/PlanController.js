@@ -4,7 +4,10 @@ import { validateRequest, paginatedQueryResponse } from '../utils'
 export const index = async (req, res) => {
     const { filter } = req.query
 
-    const query = Plan.query()
+    const query = Plan.query().select(
+        Plan.ref('*'),
+        Plan.relatedQuery('trivias').count().as('triviasCount')
+    )
 
     if (filter) {
         if (filter.name) {
