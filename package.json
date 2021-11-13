@@ -6,9 +6,9 @@
   ],
   "version": "1.0.0",
   "scripts": {
-    "dev:app": "concurrently \"npm run start:server\" \"npm run start:app\"",
-    "dev:admin": "concurrently \"npm run start:server\" \"npm run start:admin\"",
-    "dev:frames": "concurrently \"npm run start:server\" \"npm run start:frames\"",
+    "dev:app": "concurrently \"npm run server:dev\" \"npm run start:app\"",
+    "dev:admin": "concurrently \"npm run server:dev\" \"npm run start:admin\"",
+    "dev:frames": "concurrently \"npm run server:dev\" \"npm run start:frames\"",
     "build:app": "yarn workspace @approbado/app run build",
     "build:admin": "yarn workspace @approbado/admin run build",
     "build:frames": "yarn workspace @approbado/frames run build",

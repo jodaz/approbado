@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '../components/OptionsCardMenu';
-import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 
@@ -15,8 +14,8 @@ const OptionsMenu = props => (
         <DeleteButton
             basePath='files'
             confirmColor='warning'
-            confirmTitle='Eliminar subtema'
-            confirmContent={'¿Está seguro que desea eliminar este subtema?'}
+            confirmTitle='Eliminar archivo'
+            confirmContent={'¿Está seguro que desea eliminar este archivo?'}
             label={'Eliminar'}
             {...props}
         />
@@ -31,6 +30,7 @@ const FileCard = ({ data, id }) => {
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 className={classes.cardHeader}
+                title={data.title}
             />
             <CardContent className={classes.cardContent}>
                 <div className={classes.innerContent}>

@@ -18,13 +18,11 @@ const ListActions = ({ trivia_id }) => (
     </TopToolbar>
 );
 
-const FileList = ({ record, ...rest }) => (
+const SubthemeList = ({ record, ...rest }) => (
     <ListBase
         resource='files'
         basePath='files'
         perPage={20}
-        filter={{ trivia_id: record.id }}
-        sort={{ field: 'reference', order: 'ASC' }}
         {...rest}
     >
         <FileListView trivia_id={record.id} />
@@ -45,4 +43,4 @@ const FileListView = ({ trivia_id }) => (
     </>
 );
 
-export default FileList;
+export default SubthemeList;

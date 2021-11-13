@@ -17,6 +17,7 @@ import TriviaEdit from './TriviaEdit'
 import NothingYet from '../components/NothingYet'
 import SubthemesList from '../subthemes/SubthemesList'
 import AwardsList from '../awards/AwardsList'
+import FilesList from '../files/FilesList'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -82,7 +83,7 @@ const tags = record => ([
     {
         name: 'Archivos',
         pathname: 'files',
-        component: <NothingYet record={record} />
+        component: <FilesList record={record} />
     },
     {
         name: 'Premios',

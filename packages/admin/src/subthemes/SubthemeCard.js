@@ -23,7 +23,7 @@ const OptionsMenu = props => (
     </OptionsCardMenu>
 );
 
-const TriviaCard = ({ data, id }) => {
+const SubthemeCard = ({ data, id }) => {
     const classes = cardStyles();
 
     return (
@@ -40,11 +40,11 @@ const TriviaCard = ({ data, id }) => {
             <CardContent className={classes.cardContent}>
                 <div className={classes.innerContent}>
                     <Typography variant="span" component="span">
-                        20 preguntas
+                        {data.questionsCount} preguntas
                     </Typography>
                     <Divider className={classes.divider} />
                     <Typography variant="span" component="span">
-                        5 archivos
+                        {data.filesCount} archivos
                     </Typography>
                 </div>
             </CardContent>
@@ -52,9 +52,9 @@ const TriviaCard = ({ data, id }) => {
     );
 }
 
-TriviaCard.propTypes = {
+SubthemeCard.propTypes = {
     data: PropTypes.object,
     id: PropTypes.number
 }
 
-export default TriviaCard
+export default SubthemeCard

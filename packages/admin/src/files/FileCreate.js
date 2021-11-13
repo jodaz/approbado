@@ -2,7 +2,10 @@ import * as React from 'react'
 import {
     TextInput,
     useRedirect,
-    useNotify
+    useNotify,
+    SelectInput,
+    ReferenceInput,
+    SelectArrayInput
 } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
@@ -14,10 +17,10 @@ const validate = (values) => {
     const errors = {};
 
     if (!values.title) {
-        errors.title = "Ingrese el nombre.";
+        errors.title = "Ingrese un nombre para el archivo.";
     }
-    if (!values.duration) {
-        errors.duration = "Ingrese un tiempo límite.";
+    if (!values.subtheme_id) {
+        errors.subtheme_id = "Seleccione un subtema.";
     }
 
     return errors;
@@ -25,7 +28,7 @@ const validate = (values) => {
 
 const FileCreate = () => {
     const { trivia_id } = useParams()
-    const [provider, { data, loading, loaded }] = useFileProvider(fileProvider);
+    const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
     const notify = useNotify();
 
@@ -34,23 +37,16 @@ const FileCreate = () => {
 
         try {
             await provider({
-                type: 'create',
                 resource: 'files',
-                payload: { data: data }
-            }, { returnPromise: true })
+                type: 'create',
+                payload: data
+            });
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
     }, [provider, trivia_id])
-
-    React.useEffect(() => {
-        if (data && loaded) {
-            notify('¡Has creado un nuevo archivo!')
-            redirect(`/trivias/${trivia_id}/files`)
-        }
-    }, [data, loaded])
 
     return (
         <BaseForm
@@ -66,12 +62,15 @@ const FileCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Tiempo límite'>
-                <TextInput
-                    source="duration"
-                    placeholder="Tiempo límite"
+            <InputContainer labelName='Subtema'>
+                <ReferenceInput
+                    source='subtheme_id'
+                    reference='subthemes'
+                    filter={{ trivia_id: trivia_id }}
                     fullWidth
-                />
+                >
+                    <SelectInput optionText="title" />
+                </ReferenceInput>
             </InputContainer>
         </BaseForm>
     )

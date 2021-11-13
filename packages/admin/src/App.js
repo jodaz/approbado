@@ -23,6 +23,7 @@ const App = () => (
 		<Resource {...trivias} />
 		<Resource {...reports} />
 		<Resource name="awards" />
+		<Resource name="files" />
 		<Resource name="subthemes" />
 		<Resource name="profile" />
 		<Resource name="update-password" />

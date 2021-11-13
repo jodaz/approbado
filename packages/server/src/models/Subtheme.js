@@ -13,6 +13,22 @@ export class Subtheme extends BaseClass {
                 from: 'subthemes.trivia_id',
                 to: 'trivias.id'
             }
+        },
+        questions: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Question`,
+            join: {
+                from: 'subthemes.id',
+                to: 'questions.subtheme_id'
+            }
+        },
+        files: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/File`,
+            join: {
+                from: 'subthemes.id',
+                to: 'files.subtheme_id'
+            }
         }
     })
 }
