@@ -15,9 +15,11 @@ import { isAuthorizedMiddleware } from '../config'
 import awardsRoutes from './awards.routes';
 import forumsRoutes from './forums.routes';
 import commentsRoutes from './comments.routes';
+import filesRoutes from './files.routes';
 
 const apiRouter = Router();
 
+apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)
 apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
 apiRouter.use('/forums', isAuthorizedMiddleware, forumsRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
