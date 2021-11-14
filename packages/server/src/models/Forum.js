@@ -25,6 +25,14 @@ export class Forum extends BaseClass {
                 },
                 to: 'categories.id'
             }
+        },
+        comments: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Comment`,
+            join: {
+                from: 'forums.id',
+                to: 'comments.forum_id'
+            }
         }
     })
 }

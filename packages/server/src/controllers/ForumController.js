@@ -2,8 +2,29 @@ import { Forum } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
+    const { filter, sort, order } = req.query
 
-    const query = Forum.query()
+    const query = Forum.query().select(
+        Forum.ref('*'),
+        Forum.relatedQuery('comments').count().as('commentsCount'),
+    )
+
+    if (filter) {
+        if (filter.unanswered) {
+            query.whereNotExists(Forum.relatedQuery('comments'));
+        }
+    }
+    if (sort && order) {
+        switch (sort) {
+            case 'comments':
+                query.whereExists(Forum.relatedQuery('comments'))
+                    .orderBy(Forum.relatedQuery('comments').count(), order);
+                break;
+            default:
+                query.orderBy(sort, order);
+                break;
+        }
+    }
 
     return paginatedQueryResponse(query, req, res)
 }
