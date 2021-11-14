@@ -16,9 +16,11 @@ import awardsRoutes from './awards.routes';
 import forumsRoutes from './forums.routes';
 import commentsRoutes from './comments.routes';
 import filesRoutes from './files.routes';
+import schedulesRoutes from './schedules.routes';
 
 const apiRouter = Router();
 
+apiRouter.use('/schedules', isAuthorizedMiddleware, schedulesRoutes)
 apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)
 apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
 apiRouter.use('/forums', isAuthorizedMiddleware, forumsRoutes)
