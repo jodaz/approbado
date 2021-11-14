@@ -81,7 +81,19 @@ export class User extends BaseClass {
                 from: 'users.id',
                 to: 'posts.created_by'
             }
-        }
+        },
+        schedules: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Schedule`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'participants.user_id',
+                    to: 'participants.schedule_id'
+                },
+                to: 'schedules.id'
+            }
+        },
     })
 
     $formatJson(json) {
