@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
-import OptionsCardMenu from '../components/OptionsCardMenu';
+import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 import TriviaEdit from './TriviaEdit'

@@ -68,20 +68,6 @@ const theme = {
                 }
             }
         },
-        RaMenuItemLink: {
-            root: {
-                color: palette.primary.light
-            },
-            active: {
-                borderLeft: `3px solid ${palette.secondary.main}`,
-                backgroundColor: fade(palette.secondary.main, 0.16),
-                color: palette.secondary.main,
-                borderRadius: '6px'
-            },
-            icon: {
-                color: 'palette.primary.light'
-            }
-        },
         MuiDrawer: {
             root: {
                 backgroundColor: palette.primary.main

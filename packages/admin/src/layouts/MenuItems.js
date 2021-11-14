@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
-import { MenuItemLink } from 'react-admin';
+import MenuItemLink from '@approbado/lib/components/MenuItemLink'
 import users from '../users';
 import trivias from '../trivias'
 import LogoutButton from '@approbado/lib/components/LogoutButton'

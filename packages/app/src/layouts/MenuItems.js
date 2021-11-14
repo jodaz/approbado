@@ -3,7 +3,7 @@ import HomeIcon from '@approbado/lib/icons/HomeIcon';
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
-import MenuItemLink from './MenuItemLink'
+import MenuItemLink from '@approbado/lib/components/MenuItemLink'
 
 // Other resources
 import forums from '../forums'

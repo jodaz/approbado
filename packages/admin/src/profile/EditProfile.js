@@ -7,7 +7,7 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
 import { fileProvider } from '@approbado/lib/providers'
-import { useFileProvider } from 'file-provider'
+import { useFileProvider } from '@jodaz_/file-provider'
 
 const validate = values => {
     const errors = {};

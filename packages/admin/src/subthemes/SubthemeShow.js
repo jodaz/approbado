@@ -11,7 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import LayerIcon from '@approbado/lib/icons/LayerIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
-import OptionsCardMenu from '../components/OptionsCardMenu';
+import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import SubthemeEdit from './SubthemeEdit'
 import TabbedList from '@approbado/lib/components/TabbedList'
 

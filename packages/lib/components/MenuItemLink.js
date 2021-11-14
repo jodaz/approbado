@@ -1,22 +1,15 @@
-import React, {
-    forwardRef,
-    cloneElement,
-    useCallback
-} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { setSidebarVisibility } from 'ra-core';
-import {
-    MenuItem,
-    ListItemIcon,
-    Tooltip,
-    useMediaQuery
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from '@material-ui/core/Tooltip';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { useMediaQuery, makeStyles, fade } from '@material-ui/core';
 
-const NavLinkRef = forwardRef((props, ref) => (
+const NavLinkRef = React.forwardRef((props, ref) => (
     <NavLink innerRef={ref} {...props} />
 ));
 
@@ -24,19 +17,35 @@ const useStyles = makeStyles(
     theme => ({
         root: {
             color: theme.palette.primary.light,
+            fill: theme.palette.primary.light,
+            stroke: theme.palette.primary.light,
+            borderRadius: '6px',
+            marginTop: '0.15rem',
+            display: 'flex',
+            alignItems: 'center',
+            '&:hover': {
+                backgroundColor: fade(theme.palette.primary.light, 0.16),
+            }
         },
         active: {
+            borderLeft: `3px solid ${theme.palette.secondary.main}`,
+            backgroundColor: fade(theme.palette.secondary.main, 0.16),
             color: theme.palette.secondary.main,
+            fill: theme.palette.secondary.main,
+            stroke: theme.palette.secondary.main
+        },
+        linkIcon: {
+            minWidth: theme.spacing(4),
         },
         icon: {
-            minWidth: theme.spacing(5),
-            fill: '#B7B7B7'
+            fill: 'inherit',
+            stroke: 'inherit',
         },
     }),
     { name: 'RaMenuItemLink' }
 );
 
-const MenuItemLink = forwardRef((props, ref) => {
+const MenuItemLink = React.forwardRef((props, ref) => {
     const {
         classes: classesOverride,
         className,
@@ -51,7 +60,7 @@ const MenuItemLink = forwardRef((props, ref) => {
     const dispatch = useDispatch();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const open = useSelector((state) => state.admin.ui.sidebarOpen);
-    const handleMenuTap = useCallback(
+    const handleMenuTap = React.useCallback(
         e => {
             if (isSmall) {
                 dispatch(setSidebarVisibility(false));
@@ -73,9 +82,10 @@ const MenuItemLink = forwardRef((props, ref) => {
                 onClick={handleMenuTap}
             >
                 {leftIcon && (
-                    <ListItemIcon className={classes.icon}>
-                        {cloneElement(leftIcon, {
+                    <ListItemIcon className={classes.linkIcon}>
+                        {React.cloneElement(leftIcon, {
                             titleAccess: primaryText,
+                            className: classes.icon
                         })}
                     </ListItemIcon>
                 )}
