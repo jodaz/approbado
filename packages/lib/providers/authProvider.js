@@ -11,7 +11,8 @@ export const authProvider = (packageName) => ({
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
 
         if (packageName == 'app') {
-            return Promise.resolve(window.location.assign(`${CONFIG_NAMES.REDIRECT_TO}`));
+            return Promise.resolve();
+            // return Promise.resolve(window.location.assign(`${CONFIG_NAMES.REDIRECT_TO}`));
         } else {
             return Promise.resolve();
         }
@@ -19,21 +20,21 @@ export const authProvider = (packageName) => ({
     checkError: async (error) => {
         const { response } = error;
 
-        if (response.status === 401 || response.status === 403) {
-            await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-            await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
-        }
+        // if (response.status === 401 || response.status === 403) {
+        //     await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+        //     await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
+        // }
 
         return Promise.resolve();
     },
     checkAuth: async () => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
-        if (!token) {
-            return (packageName == 'app')
-                ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
-                : Promise.reject({ redirectTo: '/login' })
-        }
+        // if (!token) {
+        //     return (packageName == 'app')
+        //         ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
+        //         : Promise.reject({ redirectTo: '/login' })
+        // }
 
         return Promise.resolve()
     },

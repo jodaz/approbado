@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { useMediaQuery, Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom'
 
-const Menu = ({ onMenuClick, logout, dense = false, children }) => {
-    const isXSmall = useMediaQuery(theme =>
-        theme.breakpoints.down('xs')
-    );
+const Menu = ({ children }) => {
     const open = useSelector(state => state.admin.ui.sidebarOpen);
 
     return (

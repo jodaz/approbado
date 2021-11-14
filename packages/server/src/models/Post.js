@@ -1,8 +1,8 @@
 import { BaseClass } from '../utils'
 
-export class Forum extends BaseClass {
+export class Post extends BaseClass {
     static get tableName () {
-        return 'forums'
+        return 'posts'
     }
 
     static relationMappings = () => ({
@@ -10,7 +10,7 @@ export class Forum extends BaseClass {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,
             join: {
-                from: 'forums.created_by',
+                from: 'posts.created_by',
                 to: 'users.id'
             }
         },
@@ -18,21 +18,29 @@ export class Forum extends BaseClass {
             relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/Category`,
             join: {
-                from: 'forums.id',
+                from: 'posts.id',
                 through: {
-                    from: 'categories_forums.forums_id',
-                    to: 'categories_forums.category_id'
+                    from: 'categories_posts.posts_id',
+                    to: 'categories_posts.category_id'
                 },
                 to: 'categories.id'
             }
         },
+        parent: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Post`,
+            join: {
+                from: 'posts.parent_id',
+                to: 'posts.id'
+            }
+        },
         comments: {
             relation: BaseClass.HasManyRelation,
-            modelClass: `${__dirname}/Comment`,
+            modelClass: `${__dirname}/Post`,
             join: {
-                from: 'forums.id',
-                to: 'comments.forum_id'
+                from: 'posts.id',
+                to: 'posts.parent_id'
             }
-        }
+        },
     })
 }

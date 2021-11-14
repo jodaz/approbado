@@ -59,7 +59,6 @@ const MenuItemLink = React.forwardRef((props, ref) => {
     const classes = useStyles(props);
     const dispatch = useDispatch();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const open = useSelector((state) => state.admin.ui.sidebarOpen);
     const handleMenuTap = React.useCallback(
         e => {
             if (isSmall) {
@@ -89,12 +88,12 @@ const MenuItemLink = React.forwardRef((props, ref) => {
                         })}
                     </ListItemIcon>
                 )}
-                {primaryText}
+                {sidebarIsOpen && primaryText}
             </MenuItem>
         );
     };
 
-    return open ? (
+    return sidebarIsOpen ? (
         renderMenuItem()
     ) : (
         <Tooltip title={primaryText} placement="right" {...tooltipProps}>

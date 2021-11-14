@@ -14,16 +14,16 @@ export class Category extends BaseClass {
                 to: 'trivias.category_id'
             }
         },
-        forums: {
+        posts: {
             relation: BaseClass.ManyToManyRelation,
-            modelClass: `${__dirname}/Forum`,
+            modelClass: `${__dirname}/Post`,
             join: {
                 from: 'categories.id',
                 through: {
-                    from: 'categories_forums.category_id',
-                    to: 'categories_forums.forum_id'
+                    from: 'categories_posts.category_id',
+                    to: 'categories_posts.post_id'
                 },
-                to: 'forums.id'
+                to: 'posts.id'
             }
         }
     })

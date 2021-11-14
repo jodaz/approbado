@@ -62,20 +62,24 @@ export class User extends BaseClass {
                 to: 'messages.user_id'
             }
         },
-        comments: {
-            relation: BaseClass.HasManyRelation,
-            modelClass: `${__dirname}/Comment`,
+        reports: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/User`,
             join: {
                 from: 'users.id',
-                to: 'comments.user_id'
+                through: {
+                    from: 'user_reports.user_id',
+                    to: 'user_reports.report_id'
+                },
+                to: 'reports.id'
             }
         },
-        forums: {
+        posts: {
             relation: BaseClass.HasManyRelation,
-            modelClass: `${__dirname}/Forum`,
+            modelClass: `${__dirname}/Post`,
             join: {
                 from: 'users.id',
-                to: 'forums.created_by'
+                to: 'posts.created_by'
             }
         }
     })
