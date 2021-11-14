@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Divider from '@material-ui/core/Divider';
-import OptionsCardMenu from '../components/OptionsCardMenu';
+import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'

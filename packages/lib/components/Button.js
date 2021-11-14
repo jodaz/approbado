@@ -3,10 +3,27 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@material-ui/core/Typography';
+import { useMediaQuery } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import { ReactComponent as PlusIcon } from '@approbado/lib/icons/Plus.svg'
 
 const useStyles = makeStyles(theme => ({
     loader: {
         margin: '0.36rem'
+    },
+    floating: {
+        color: theme.palette.getContrastText(theme.palette.secondary.main),
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 60,
+        left: 'auto',
+        position: 'fixed',
+        zIndex: 1000,
+        '&:hover': {
+            boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
+            backgroundColor: fade(theme.palette.secondary.main, 0.95)
+        }
     },
     button: {
         padding: '0.7rem 2rem',
@@ -23,8 +40,22 @@ const useStyles = makeStyles(theme => ({
 
 const CustomButton = ({ disabled, children, ...rest }) => {
     const classes = useStyles();
+    const isSmall = useMediaQuery( theme =>
+        theme.breakpoints.down('sm')
+    );
 
-    return (
+    return isSmall ? (
+        <Fab
+            variant='contained'
+            color='secondary'
+            type="submit"
+            className={classes.floating}
+            disabled={disabled}
+            {...rest}
+        >
+            <PlusIcon />
+        </Fab>
+    ) : (
         <Button
             variant='contained'
             color='secondary'

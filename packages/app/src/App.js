@@ -4,6 +4,9 @@ import Layout from './layouts'
 import customRoutes from './routes'
 import Dashboard from './dashboard'
 
+// Other resources
+import forums from './forums'
+
 const App = () => (
 	<Admin
 		dashboard={Dashboard}
@@ -15,6 +18,7 @@ const App = () => (
 		authProvider={authProvider('app')}
 	>
         <Resource name='trivias' />
+        <Resource {...forums} />
 	</Admin>
 )
 

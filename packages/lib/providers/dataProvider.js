@@ -1,4 +1,4 @@
-import apiClient from 'ra-laravel-client';
+import apiClient from '@jodaz_/data-provider';
 import CONFIG_NAMES from '../configs'
 
 export const dataProvider = apiClient(`${process.env.REACT_APP_API_DOMAIN}`, {

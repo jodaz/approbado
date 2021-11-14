@@ -35,17 +35,17 @@ const useStyles = makeStyles(theme => ({
 const OptionsMenu = props => (
     <OptionsCardMenu>
         <DeleteButton
-            basePath='trivias'
+            basePath='forums'
             confirmColor='warning'
-            confirmTitle='Eliminar trivia'
-            confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
+            confirmTitle='Eliminar foro'
+            confirmContent={'¿Está seguro que desea eliminar esta foro?'}
             label={'Eliminar'}
             {...props}
         />
     </OptionsCardMenu>
 );
 
-const TriviaCard = ({ data, id }) => {
+const ForumCard = ({ data, id }) => {
     const classes = { ...cardStyles(), ...useStyles() };
 
     return (
@@ -53,36 +53,19 @@ const TriviaCard = ({ data, id }) => {
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Link to={`trivias/${data.id}/show`} className={classes.link}>
-                        {data.name}
+                    <Link to={`forums/${data.id}/show`} className={classes.link}>
+                        {data.title}
                     </Link>
                 }
                 className={classes.cardHeader}
             />
-            <CardContent className={classes.cardContent}>
-                <div className={classes.innerContent}>
-                    <Typography variant="span" component="span">
-                        {data.subthemesCount} subtemas
-                    </Typography>
-                    <Divider className={classes.divider} />
-                    <Typography variant="span" component="span">
-                        {data.filesCount} archivos
-                    </Typography>
-                </div>
-                <Box component='div' className={classes.tag}>
-                    <LocalOfferIcon fontSize="small" />
-                    <Typography variant="span" component="span" style={{ paddingLeft: '5px' }}>
-                        Intermedio
-                    </Typography>
-                </Box>
-            </CardContent>
         </Card>
     );
 }
 
-TriviaCard.propTypes = {
+ForumCard.propTypes = {
     data: PropTypes.object,
     id: PropTypes.number
 }
 
-export default TriviaCard
+export default ForumCard

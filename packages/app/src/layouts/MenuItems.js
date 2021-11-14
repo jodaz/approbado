@@ -2,8 +2,11 @@ import * as React from 'react';
 import HomeIcon from '@approbado/lib/icons/HomeIcon';
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
-import { MenuItemLink } from 'react-admin';
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
+import MenuItemLink from './MenuItemLink'
+
+// Other resources
+import forums from '../forums'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -17,18 +20,26 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             exact
         />
         <MenuItemLink
-            to="/profile"
-            primaryText={open ? 'Perfil' : <></>}
-            leftIcon={<ProfileIcon />}
+            to="/trivias"
+            primaryText={open ? 'Trivias' : ''}
+            leftIcon={<BalanceIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
             exact
         />
         <MenuItemLink
-            to="/trivias"
-            primaryText={open ? 'Trivias' : ''}
-            leftIcon={<BalanceIcon />}
+            to={forums.name}
+            primaryText={forums.options.label}
+            leftIcon={<forums.icon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+        />
+        <MenuItemLink
+            to="/profile"
+            primaryText={open ? 'Perfil' : <></>}
+            leftIcon={<ProfileIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}

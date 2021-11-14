@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import Divider from '@material-ui/core/Divider';
-import OptionsCardMenu from '../components/OptionsCardMenu';
+import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import cardStyles from '@approbado/lib/styles/cardStyles'
 
 const OptionsMenu = props => (
