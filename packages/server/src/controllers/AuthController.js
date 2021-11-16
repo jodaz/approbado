@@ -21,7 +21,8 @@ export const login = async (req, res) => {
 
             return res.json({
                 success: true,
-                token: token
+                token: token,
+                user : user
             })
         } else {
             res.status(422).json({
@@ -63,7 +64,8 @@ export const externalLogin = async (req, res) => {
 
         return res.json({
             success: true,
-            token: token
+            token: token,
+            user : user
         })
     }
 }
@@ -157,7 +159,8 @@ export const verifySMSCode = async (req, res) => {
 
             return res.status(201).json({
                 message: 'Código aceptado',
-                token: token
+                token: token,
+                 ser : user
             })
         } catch (err) {
             console.log(err)
