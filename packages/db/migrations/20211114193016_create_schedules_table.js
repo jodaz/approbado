@@ -4,6 +4,7 @@ export async function up(knex) {
     return knex.schema.createTable('schedules', table => {
         table.increments('id').primary();
         table.string('title');
+        table.text('description');
         table.string('share_link');
         table.integer('level_id').unsigned();
         table.integer('subtheme_id').unsigned();
