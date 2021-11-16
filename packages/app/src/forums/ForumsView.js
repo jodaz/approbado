@@ -6,6 +6,7 @@ import ForumList from './ForumList'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@approbado/lib/components/Button'
+import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 
 const tags = [
     {
@@ -29,6 +30,7 @@ const ForumsView = () => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
+    const { setDialog } = useDialogDispatch('forums.warning');
 
     return (
         <Box>
@@ -45,7 +47,7 @@ const ForumsView = () => {
                     </Box>
                 )}
                 <Box sm='3'>
-                    <Button>
+                    <Button onClick={setDialog}>
                         {'Iniciar un debate'}
                     </Button>
                 </Box>

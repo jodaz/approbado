@@ -11,6 +11,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import classnames from 'classnames';
 import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 const buttonStyles = {
     padding: '0.5rem 2rem',
@@ -45,6 +46,7 @@ const useStyles = makeStyles(
         },
         confirmPrimary: {
             ...buttonStyles,
+            backgroundColor: theme.palette.secondary.main,
             color: theme.palette.primary.main,
         },
         confirmWarning: {
@@ -96,7 +98,8 @@ const Confirm = (props) => {
         cancel,
         confirmColor,
         onClose,
-        onConfirm
+        onConfirm,
+        noCancel
     } = props;
     const classes = useStyles(props);
 
@@ -121,7 +124,9 @@ const Confirm = (props) => {
             className={classes.root}
         >
             <DialogTitle className={classes.title}>
-                {title}
+                <Typography variant="subtitle1">
+                    {title && title}
+                </Typography>
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
@@ -145,15 +150,17 @@ const Confirm = (props) => {
                 )}
             </DialogContent>
             <DialogActions className={classes.actions}>
-                <Button
-                    disabled={loading}
-                    onClick={onClose}
-                    variant='outlined'
-                    className={classes.cancel}
-                    fullWidth
-                >
-                    {cancel}
-                </Button>
+                {noCancel && (
+                    <Button
+                        disabled={loading}
+                        onClick={onClose}
+                        variant='outlined'
+                        className={classes.cancel}
+                        fullWidth
+                    >
+                        {cancel}
+                    </Button>
+                )}
                 <Button
                     disabled={loading}
                     onClick={handleConfirm}
@@ -185,6 +192,7 @@ Confirm.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
+    noCancel: PropTypes.bool
 };
 
 Confirm.defaultProps = {

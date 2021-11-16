@@ -3,6 +3,7 @@ import { dataProvider, authProvider, browserHistory } from '@approbado/lib/provi
 import Layout from './layouts'
 import customRoutes from './routes'
 import Dashboard from './dashboard'
+import customReducers from '@approbado/lib/reducers'
 
 // Other resources
 import forums from './forums'
@@ -16,6 +17,7 @@ const App = () => (
 		dataProvider={dataProvider}
 		loginPage={false}
 		authProvider={authProvider('app')}
+        customReducers={customReducers}
 	>
         <Resource name='trivias' />
         <Resource {...forums} />

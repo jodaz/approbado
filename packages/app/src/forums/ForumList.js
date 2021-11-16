@@ -5,6 +5,7 @@ import {
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import ForumCard from './ForumCard'
+import ForumWarning from './ForumWarning'
 
 const ForumList = (props) => (
     <ListBase
@@ -22,6 +23,7 @@ const ForumListView = () => (
             <Box width={'100%'}>
                 <GridList component={<ForumCard />} />
             </Box>
+            <ForumWarning />
         </Box>
     </>
 );
