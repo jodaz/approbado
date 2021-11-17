@@ -1,3 +1,5 @@
+import { checkArray } from '../utils'
+
 export const createScheduleSchema = {
     title: {
         isLength: {
@@ -18,15 +20,11 @@ export const createScheduleSchema = {
     users_ids: {
         custom: {
             options: async (value) => {
-                if (typeof value === 'object'
-                    && value
-                    && Array.isArray(value)
-                    && value.length
-                ) {
-                    return true;
-                }
+                const isValid = await checkArray(value);
 
-                throw new Error("Seleccione los usuarios a invitar");
+                if (!isValid) {
+                    throw new Error("Seleccione los usuarios a invitar");
+                }
             }
         }
     }
