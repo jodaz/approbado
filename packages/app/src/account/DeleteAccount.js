@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useRedirect,
     useDataProvider
 } from 'react-admin'
 // import { validateCategory } from './configurationsValidations';
@@ -14,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Confirm from '@approbado/lib/layouts/Confirm';
 import Button from '@material-ui/core/Button';
 
-const DeleteAccount = ({ basePath }) => {
+const DeleteAccount = () => {
     const dataProvider = useDataProvider();
     const [loading, setLoading] = React.useState(false)
     const classes = useStyles();
