@@ -29,7 +29,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             exact
         />
         <MenuItemLink
-            to={forums.name}
+            to='/forums'
             primaryText={forums.options.label}
             leftIcon={<forums.icon />}
             onClick={onMenuClick}

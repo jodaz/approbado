@@ -21,7 +21,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             exact
         />
         <MenuItemLink
-            to={trivias.name}
+            to='/trivias'
             primaryText={trivias.options.label}
             leftIcon={<trivias.icon />}
             onClick={onMenuClick}
@@ -29,7 +29,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             dense={dense}
         />
         <MenuItemLink
-            to={users.name}
+            to='/users'
             primaryText={users.options.label}
             leftIcon={<users.icon />}
             onClick={onMenuClick}
@@ -45,7 +45,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             dense={dense}
         />
         <MenuItemLink
-            to={reports.name}
+            to='/reports'
             primaryText={reports.options.label}
             leftIcon={<reports.icon />}
             onClick={onMenuClick}

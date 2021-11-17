@@ -72,7 +72,8 @@ const LoadedGridList = props => {
                     {React.cloneElement(props.component, {
                         data: data[id],
                         id: id,
-                        index: i
+                        index: i,
+                        key: id
                     })}
                 </Grid>
             ))}
@@ -85,7 +86,11 @@ const GridList = (props) => {
     const { loaded } = useListContext();
 
     return loaded ? (
-        <LoadedGridList width={width} component={component} emptyListMessage={emptyListMessage} />
+        <LoadedGridList
+            width={width}
+            component={component}
+            emptyListMessage={emptyListMessage}
+        />
     ) : (
         <LoadingGridList width={width} />
     );
