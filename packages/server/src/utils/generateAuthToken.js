@@ -1,7 +1,7 @@
 import { SECRET, SESSION_EXPIRE } from '../config'
 import jwt from 'jsonwebtoken'
 
-const generateAuthToken = async (user) => {
+export const generateAuthToken = async (user) => {
     const signedData = {
         id: user.id,
         picture: user.picture,
@@ -15,5 +15,3 @@ const generateAuthToken = async (user) => {
             expiresIn: SESSION_EXPIRE
         });
 }
-
-export { generateAuthToken }
