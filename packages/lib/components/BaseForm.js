@@ -4,7 +4,7 @@ import { FormWithRedirect } from 'react-admin'
 import Button from '@approbado/lib/components/Button'
 import PropTypes from 'prop-types'
 
-const BaseForm = ({ formName, children, saveButtonLabel, loading, ...rest }) => (
+const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, ...rest }) => (
     <Box component='div'>
         { formName && <Typography component='h1' variant='h5'>{formName}</Typography> }
         <Box component='div' paddingTop='2rem'>
@@ -20,21 +20,23 @@ const BaseForm = ({ formName, children, saveButtonLabel, loading, ...rest }) => 
                                     })
                                 )
                             }
-                            <Grid container>
-                                <Grid item xs={12} sm={12} md={4} lg={3}>
-                                    <Button
-                                        disabled={loading}
-                                        onClick={event => {
-                                            if (event) {
-                                                event.preventDefault();
-                                            }
-                                            handleSubmitWithRedirect();
-                                        }}
-                                    >
-                                        {saveButtonLabel}
-                                    </Button>
+                            {!noButton && (
+                                <Grid container>
+                                    <Grid item xs={12} sm={12} md={4} lg={3}>
+                                        <Button
+                                            disabled={loading}
+                                            onClick={event => {
+                                                if (event) {
+                                                    event.preventDefault();
+                                                }
+                                                handleSubmitWithRedirect();
+                                            }}
+                                        >
+                                            {saveButtonLabel}
+                                        </Button>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            )}
                         </Grid>
                     </Box>
                 )}
@@ -51,7 +53,8 @@ BaseForm.propTypes = {
 
 BaseForm.defaultProps = {
     saveButtonLabel: 'Guardar',
-    disabled: false
+    disabled: false,
+    noButton: false
 }
 
 export default BaseForm;

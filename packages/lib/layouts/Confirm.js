@@ -150,7 +150,7 @@ const Confirm = (props) => {
                 )}
             </DialogContent>
             <DialogActions className={classes.actions}>
-                {noCancel && (
+                {!noCancel && (
                     <Button
                         disabled={loading}
                         onClick={onClose}
@@ -201,6 +201,7 @@ Confirm.defaultProps = {
     confirm: 'Eliminar',
     confirmColor: 'primary',
     isOpen: false,
+    noCancel: false
 };
 
 export default Confirm;

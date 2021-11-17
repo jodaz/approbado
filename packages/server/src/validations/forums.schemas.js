@@ -1,3 +1,5 @@
+import { checkArray } from '../utils'
+
 export const createForumSchema = {
     title: {
         notEmpty: {
@@ -7,6 +9,17 @@ export const createForumSchema = {
     trivia_id: {
         notEmpty: {
             errorMessage: 'Seleccione una trivia en específico'
+        }
+    },
+    categories_ids: {
+        custom: {
+            options: async (value) => {
+                const isValid = await checkArray(value);
+
+                if (!isValid) {
+                    throw new Error("Seleccione los usuarios a invitar");
+                }
+            }
         }
     }
 };

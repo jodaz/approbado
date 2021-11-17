@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@approbado/lib/components/Button'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
+import ForumCreate from './ForumCreate'
 
 const tags = [
     {
@@ -55,6 +56,7 @@ const ForumsView = () => {
             <Box width={isXSmall ? '100%' : '70%'}>
                 <TabbedList tags={tags} />
             </Box>
+            <ForumCreate />
         </Box>
     )
 }

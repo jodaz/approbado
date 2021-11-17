@@ -19,8 +19,10 @@ const App = () => (
 		authProvider={authProvider('app')}
         customReducers={customReducers}
 	>
-        <Resource name='trivias' />
         <Resource {...forums} />
+        <Resource name='trivias' />
+        <Resource name="configurations/categories" />
+        <Resource name="configurations/levels" />
 	</Admin>
 )
 

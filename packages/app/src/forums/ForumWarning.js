@@ -23,17 +23,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ForumWarning = (props) => {
-    const [open, setOpen] = React.useState(false);
-    const [loading, setLoading] = React.useState(false)
+const ForumWarning = () => {
     const classes = useStyles();
     const status = useDialogState('forums.warning');
     const { unsetDialog } = useDialogDispatch('forums.warning');
+    const { setDialog: setCreateForumDialog } = useDialogDispatch('forums.create')
 
     return (
         <Confirm
             isOpen={status}
-            loading={loading}
             content={
                 <Box className={classes.root}>
                     <Typography variant="h5">
@@ -55,10 +53,14 @@ const ForumWarning = (props) => {
                     </Typography>
                 </Box>
             }
-            onConfirm={() => console.log("Confirmado")}
+            onConfirm={() => {
+                unsetDialog();
+                setCreateForumDialog();
+            }}
             onClose={unsetDialog}
             confirmColor='primary'
             confirm={'Comenzar'}
+            noCancel
         />
     );
 }
