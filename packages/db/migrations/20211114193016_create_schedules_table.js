@@ -6,6 +6,7 @@ export async function up(knex) {
         table.string('title');
         table.text('description');
         table.string('share_link');
+        table.string('notify_before');
         table.integer('level_id').unsigned();
         table.integer('subtheme_id').unsigned();
         table.foreign('subtheme_id').references('subthemes.id').onDelete('cascade');

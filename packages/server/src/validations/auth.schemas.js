@@ -19,6 +19,14 @@ const emailRule = {
     }
 }
 
+const emailMobileRule = {
+    email: {
+        notEmpty: {
+            errorMessage: 'Ingrese su correo electrónico'
+        }
+    }
+}
+
 const providerRules = {
     provider: {
         notEmpty: {
@@ -43,6 +51,11 @@ export const validateLoginSchema = {
 
 export const validateExternalLogin = {
     ...emailRule,
+    ...providerRules
+}
+
+export const validateExternalMobileLogin = {
+    ...emailMobileRule,
     ...providerRules
 }
 
