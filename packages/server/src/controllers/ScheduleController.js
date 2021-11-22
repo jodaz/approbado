@@ -1,5 +1,5 @@
 import { Schedule } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { validateRequest, paginatedQueryResponse,getDateString,getDayWeekString } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -10,9 +10,23 @@ export const index = async (req, res) => {
             query.where('title', filter.title)
         }
     }
-
+   
     return paginatedQueryResponse(query, req, res)
 }
+
+export const all = async (req, res) => {
+    const { filter } = req.query
+    const schedules = await Schedule.query().select('*')
+    
+    schedules.forEach(schedule => {
+        schedule.date_string = getDateString(schedule.starts_at)
+        schedule.day_week_string = getDayWeekString(schedule.starts_at,new Date(schedule.starts_at).getDate())
+        schedule.color  = '#F6FA00'
+    })   
+
+    return res.status(200).json(schedules)
+}
+
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
