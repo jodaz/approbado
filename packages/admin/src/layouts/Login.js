@@ -100,7 +100,7 @@ const Login = () => {
                     <Link to="/reset-password" className={classes.link}>¿Olvidaste tu contraseña?</Link>
                 </Box>
                 <CardActions className={classes.actions}>
-                    <Button disabled={loading}>
+                    <Button disabled={loading} unresponsive>
                         {'Iniciar sesión'}
                     </Button>
                 </CardActions>

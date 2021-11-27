@@ -11,7 +11,6 @@ export const authProvider = (packageName) => ({
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
 
         if (packageName == 'app') {
-            return Promise.resolve();
             return Promise.resolve(window.location.assign(`${CONFIG_NAMES.REDIRECT_TO}`));
         } else {
             return Promise.resolve();
