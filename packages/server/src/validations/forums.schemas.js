@@ -1,7 +1,7 @@
 import { checkArray } from '../utils'
 
 export const createForumSchema = {
-    title: {
+    message: {
         notEmpty: {
             errorMessage: 'Ingrese un nombre para el foro.'
         }
@@ -17,9 +17,11 @@ export const createForumSchema = {
                 const isValid = await checkArray(value);
 
                 if (!isValid) {
-                    throw new Error("Seleccione los usuarios a invitar");
+                    throw new Error("Seleccione al menos una categorias");
                 }
             }
         }
     }
 };
+
+

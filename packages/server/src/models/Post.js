@@ -20,7 +20,7 @@ export class Post extends BaseClass {
             join: {
                 from: 'posts.id',
                 through: {
-                    from: 'categories_posts.posts_id',
+                    from: 'categories_posts.post_id',
                     to: 'categories_posts.category_id'
                 },
                 to: 'categories.id'

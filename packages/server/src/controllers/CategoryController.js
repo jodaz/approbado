@@ -1,4 +1,4 @@
-import { Category } from '../models'
+import { Category, Post } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -35,6 +35,15 @@ export const show = async (req, res) => {
     const model = await Category.query().findById(id)
 
     return res.status(201).json(model)
+}
+
+export const showByForum = async (req, res) => {
+    const { forum_id } = req.params
+
+    const post = await Post.query().findById(forum_id)
+    const categories = await post.$relatedQuery('categories')
+
+    return res.status(200).json(categories)
 }
 
 export const update = async (req, res) => {

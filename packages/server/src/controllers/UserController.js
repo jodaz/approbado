@@ -9,8 +9,12 @@ export const index = async (req, res) => {
     const query = User.query();
 
     if (filter) {
+
         if (filter.names) {
-            query.where('names', filter.names)
+            query.orWhereRaw("lower(names) LIKE '%"+filter.names.toLowerCase()+"%'")
+        }
+        if (filter.email) {
+            query.orWhereRaw("lower(email) LIKE '%"+filter.email.toLowerCase()+"%'")
         }
         if (filter.is_registered) {
             query.where('is_registered', filter.is_registered)
@@ -89,6 +93,31 @@ export const update = async (req, res) => {
             text: `Su nueva contraseña es ${newPassword}`
         })
     }
+
+    return res.status(201).json(model)
+}
+
+export const update_mobile = async (req, res) => {
+    const { id } = req.params
+    const {...rest } = req.body;
+    let filename;
+    let data;
+
+    if(req.file){
+        filename = req.file.filename;
+        data = {
+            ...rest,
+            picture : filename
+        }
+    }else{
+       data = {
+            ...rest,
+        }  
+    }
+   
+    const model = await User.query().updateAndFetchById(id, {
+        ...data,
+    })
 
     return res.status(201).json(model)
 }
