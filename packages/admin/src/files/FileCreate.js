@@ -4,14 +4,14 @@ import {
     useRedirect,
     useNotify,
     SelectInput,
-    ReferenceInput,
-    SelectArrayInput
+    ReferenceInput
 } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import isEmpty from 'is-empty'
 
 const validate = (values) => {
     const errors = {};
@@ -47,6 +47,13 @@ const FileCreate = () => {
             }
         }
     }, [provider, trivia_id])
+
+    React.useEffect(() => {
+        if (!isEmpty(fileDataResponse)) {
+            notify('¡Ha registrado un nuevo archivo!.')
+            redirect(`/trivias/${trivia_id}/show?tab=files`)
+        }
+    }, [fileDataResponse])
 
     return (
         <BaseForm

@@ -13,7 +13,7 @@ export const login = async (req, res) => {
         const user = await User.query().findOne({
             email: email
         });
-        console.log(user)
+
         if(!user) {
             return res.status(422).json({
                 'errors': {
@@ -88,15 +88,15 @@ export const externalMobileLogin = async (req, res) => {
             .findOne({
                 'email': email
             })
-        
+
         if(!user){
             user = await User.query().insert({
                 names: names,
                 rol: 'USER',
                 email: email
             })
-        }    
-        
+        }
+
         const authProviderKey = await user.$relatedQuery('authProviders')
             .findOne({
                 provider_type: provider,

@@ -1,4 +1,4 @@
-import { File } from '../models'
+import { File, Subtheme } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -9,9 +9,12 @@ export const index = async (req, res) => {
         if (filter.title) {
             query.where('title', filter.title)
         }
-        // if (filter.trivia_id) {
-        //     query.where('trivia_id', filter.trivia_id)
-        // }
+        if (filter.trivia_id) {
+            query.select('files.*')
+                .join('subthemes', 'files.subtheme_id', 'subthemes.id')
+                .join('trivias', 'subthemes.trivia_id', 'trivias.id')
+                .where('trivias.id', filter.trivia_id)
+        }
     }
 
     return paginatedQueryResponse(query, req, res)
