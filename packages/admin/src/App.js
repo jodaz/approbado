@@ -1,19 +1,36 @@
 import { Admin, Resource } from 'react-admin'
-import { dataProvider, authProvider, browserHistory } from '@approbado/lib/providers'
+import { dataProvider, authProvider } from '@approbado/lib/providers'
 import Layout from './layouts'
 import customRoutes from './routes'
 import Dashboard from './dashboard'
+import createAdminStore from '@approbado/lib/store'
 // Resources
 import users from './users'
 import reports from './reports'
 import trivias from './trivias'
 import Login from './layouts/Login'
+import { Provider } from 'react-redux'
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
 
 const App = () => (
+    <Provider
+        store={createAdminStore({
+                authProvider,
+                dataProvider,
+                history
+        })}
+    >
+        <AAdmin />
+    </Provider>
+)
+
+const AAdmin = () => (
 	<Admin
 		dashboard={Dashboard}
 		customRoutes={customRoutes}
-		history={browserHistory}
+		history={history}
 		layout={Layout}
 		dataProvider={dataProvider}
 		loginPage={Login}

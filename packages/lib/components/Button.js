@@ -38,24 +38,28 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomButton = ({ disabled, children, ...rest }) => {
+const CustomButton = ({ disabled, children, unresponsive, ...rest }) => {
     const classes = useStyles();
-    const isSmall = useMediaQuery( theme =>
+    const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     );
 
-    return isSmall ? (
-        <Fab
-            variant='contained'
-            color='secondary'
-            type="submit"
-            className={classes.floating}
-            disabled={disabled}
-            {...rest}
-        >
-            <PlusIcon />
-        </Fab>
-    ) : (
+    if (isSmall && !unresponsive) {
+        return (
+            <Fab
+                variant='contained'
+                color='secondary'
+                type="submit"
+                className={classes.floating}
+                disabled={disabled}
+                {...rest}
+            >
+                <PlusIcon />
+            </Fab>
+        )
+    }
+
+    const FullWidthButton = () => (
         <Button
             variant='contained'
             color='secondary'
@@ -72,11 +76,14 @@ const CustomButton = ({ disabled, children, ...rest }) => {
             }
         </Button>
     )
+
+    return <FullWidthButton />
 }
 
 CustomButton.defaultProps = {
     fullWidth: true,
-    disabled: false
+    disabled: false,
+    unresponsive: false
 }
 
 export default CustomButton
