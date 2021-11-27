@@ -65,11 +65,11 @@ export const  getDateString =  (value) => {
       month = 'DICIEMBRE'
     }
 
-  return day_week +', '+day+', '+month
+  return day_week +'. '+day+', '+month
 }
 
 export const getDayWeekString =  (value,day)  =>{
-
+  
   let date = new Date(value).toDateString()
   let day_week = ''
 
@@ -98,3 +98,33 @@ export const getDayWeekString =  (value,day)  =>{
   
   return day_week+' '+day;
 }
+
+
+export const getTimeString =  (value)  =>{
+
+  let date = new Date(value);
+  let year = date.getFullYear();
+  let month = date.getMonth()+1;
+  let dt = date.getDate();
+
+  if (dt < 10) {
+    dt = '0' + dt;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+  
+  let TimeString = new Date(value).toLocaleTimeString()
+  let day_week = ''
+  let time = TimeString.split(':') 
+  let response;
+  
+  if (parseInt(time[0]) > 12) {
+    response = parseInt(time[0]) - 12+' PM'
+  }else{
+    response = time[0] +' AM'
+  }
+  
+  return response;
+}
+
