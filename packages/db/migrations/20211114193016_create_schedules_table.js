@@ -6,12 +6,13 @@ export async function up(knex) {
         table.string('title');
         table.text('description');
         table.string('share_link');
+        table.boolean('notify_before');
         table.integer('level_id').unsigned();
         table.integer('subtheme_id').unsigned();
         table.foreign('subtheme_id').references('subthemes.id').onDelete('cascade');
         table.foreign('level_id').references('levels.id').onDelete('cascade');
         table.timestamps();
-        table.timestamp('starts_at');
+        table.timestamp('starts_at',true);
     });
 }
 
