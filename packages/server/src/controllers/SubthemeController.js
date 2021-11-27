@@ -11,7 +11,7 @@ export const index = async (req, res) => {
 
     if (filter) {
         if (filter.title) {
-            query.where('title', filter.title)
+            query.where('title', 'ilike', `%${filter.title}%`)
         }
         if (filter.trivia_id) {
             query.where('trivia_id', filter.trivia_id)

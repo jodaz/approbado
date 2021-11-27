@@ -11,10 +11,10 @@ export const index = async (req, res) => {
     if (filter) {
 
         if (filter.names) {
-            query.orWhereRaw("lower(names) LIKE '%"+filter.names.toLowerCase()+"%'")
+            query.where('names', 'ilike', `%${filter.names}%`)
         }
         if (filter.email) {
-            query.orWhereRaw("lower(email) LIKE '%"+filter.email.toLowerCase()+"%'")
+            query.where('email', 'ilike', `%${filter.email}%`)
         }
         if (filter.is_registered) {
             query.where('is_registered', filter.is_registered)
@@ -112,9 +112,9 @@ export const update_mobile = async (req, res) => {
     }else{
        data = {
             ...rest,
-        }  
+        }
     }
-   
+
     const model = await User.query().updateAndFetchById(id, {
         ...data,
     })

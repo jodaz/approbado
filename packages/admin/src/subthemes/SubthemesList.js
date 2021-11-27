@@ -13,7 +13,7 @@ import SubthemeCard from './SubthemeCard'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="title" />
         <CreateButton basePath={`/trivias/${trivia_id}/subthemes`} />
     </TopToolbar>
 );
