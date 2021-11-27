@@ -14,7 +14,15 @@ export const login = async (req, res) => {
             email: email
         });
 
-        const match = await bcrypt.compare(password, user.password)
+        if(!user) {
+            return res.status(422).json({
+                'errors': {
+                    "user": "Usuario no encontrado"
+                }
+            })
+        }
+
+        const match = await bcrypt.compare(password, user.password ?? '' )
 
         if (match) {
             const token = await generateAuthToken(user);
@@ -25,7 +33,7 @@ export const login = async (req, res) => {
                 user : user
             })
         } else {
-            res.status(422).json({
+            return res.status(422).json({
                 'errors': {
                     "password": "Contraseña incorrecta"
                 }
@@ -44,6 +52,50 @@ export const externalLogin = async (req, res) => {
             .findOne({
                 'email': email
             })
+
+        const authProviderKey = await user.$relatedQuery('authProviders')
+            .findOne({
+                provider_type: provider,
+                provider_key: key
+            })
+
+        if (!authProviderKey) {
+            // Save social media profile (auth provider)
+            await user.$relatedQuery('authProviders')
+                .insert({
+                    provider_type: provider,
+                    provider_key: key
+                })
+        }
+
+        const token = await generateAuthToken(user);
+
+        return res.json({
+            success: true,
+            token: token,
+            user : user
+        })
+    }
+}
+
+export const externalMobileLogin = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        const { email, names, key, provider } = req.body
+
+        let user = await User.query()
+            .findOne({
+                'email': email
+            })
+
+        if(!user){
+            user = await User.query().insert({
+                names: names,
+                rol: 'USER',
+                email: email
+            })
+        }
 
         const authProviderKey = await user.$relatedQuery('authProviders')
             .findOne({
@@ -160,7 +212,7 @@ export const verifySMSCode = async (req, res) => {
             return res.status(201).json({
                 message: 'Código aceptado',
                 token: token,
-                 ser : user
+                user : user
             })
         } catch (err) {
             console.log(err)

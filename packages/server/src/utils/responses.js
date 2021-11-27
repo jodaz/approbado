@@ -6,7 +6,7 @@ export const paginatedQueryResponse = async (query, req, res) => {
         results: data
     } = await query.page(parseInt(page), parseInt(perPage))
 
-    return res.status(201).json({
+    return res.status(200).json({
         data,
         total
     })

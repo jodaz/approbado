@@ -1,12 +1,13 @@
 export const createCommentSchema = {
-    message: {
+    summary: {
         notEmpty: {
             errorMessage: 'Ingrese un mensaje'
         }
     },
-    forum_id: {
+    parent_id: {
         notEmpty: {
             errorMessage: 'Ingrese el foro'
         }
     }
 };
+

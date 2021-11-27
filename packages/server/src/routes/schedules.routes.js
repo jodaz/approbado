@@ -1,11 +1,13 @@
 import { Router } from "express"
-import { destroy, index, show, store, update } from '../controllers/ScheduleController'
+import { destroy, index,byUserId, show, store,show_participants, update } from '../controllers/ScheduleController'
 import { createScheduleSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const schedulesRouter = Router()
 
 schedulesRouter.get('/', index)
+schedulesRouter.get('/user/:user_id', byUserId)
+schedulesRouter.get('/participants/:id', show_participants)
 schedulesRouter.get('/:id', show)
 schedulesRouter.post('/', checkSchema(createScheduleSchema), store)
 schedulesRouter.put('/:id', checkSchema(createScheduleSchema), update)

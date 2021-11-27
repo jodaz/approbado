@@ -35,4 +35,9 @@ export class Schedule extends BaseClass {
             }
         },
     })
+
+     $formatJson(json) {
+        json = super.$formatJson(json);
+        return json;
+    }
 }
