@@ -43,31 +43,33 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { random_pass, password, ...rest } = req.body;
+        const { random_pass, password, names, email, ...rest } = req.body;
 
         let newPassword = random_pass ? getRandomPass() : password;
         const encryptedPassword = await bcrypt.hash(newPassword, 10)
 
-        const model = await User.query().insert({
-            ...rest,
-            password: encryptedPassword,
-            is_registered: false
-        })
-
         if (random_pass) {
             // Send email
             const mailerData = {
-                to: model.email,
+                to: email,
                 template: 'welcomeAdmin',
                 subject: '¡Bienvendo a Approbado!',
                 context: {
-                    name: model.names,
+                    name: names,
                     password: newPassword
                 }
             };
 
             sendMail(mailerData, res)
         }
+
+        const model = await User.query().insert({
+            ...rest,
+            email: email,
+            names: names,
+            password: encryptedPassword,
+            is_registered: false
+        })
 
         return res.status(201).json(model)
     }
