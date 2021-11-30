@@ -7,6 +7,8 @@ export const index = async (req, res) => {
     const query = Post.query().select(
         Post.ref('*'),
         Post.relatedQuery('comments').count().as('commentsCount'),
+        Post.relatedQuery('likes').count().as('likesCount'),
+        Post.relatedQuery('likes').where('user_id',req.user.id).count().as('likeUser'),
     )
 
     if (filter) {
