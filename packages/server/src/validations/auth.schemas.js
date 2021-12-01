@@ -75,11 +75,11 @@ export const validateSendSMSCode = {
             errorMessage: 'Ingrese su contraseña'
         }
     },
-    external: {
+    /*external: {
         notEmpty: {
             errorMessage: 'Ingrese si es o no una autenticación con cuenta externa (Facebook, Google).'
         }
-    },
+    },*/
     phone: {
         notEmpty: {
             errorMessage: 'Ingrese su número de teléfono'
