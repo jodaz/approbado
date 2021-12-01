@@ -93,7 +93,8 @@ export const externalMobileLogin = async (req, res) => {
             user = await User.query().insert({
                 names: names,
                 rol: 'USER',
-                email: email
+                email: email,
+                picture : 'default/user.png'
             })
         }
 
