@@ -25,7 +25,13 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         const { trivia_id, ...rest } = req.body
-        const model = await File.query().insert(rest)
+        let data = rest;
+
+        if (req.file) {
+            data.file = req.file.path;
+        }
+
+        const model = await File.query().insert(data)
 
         return res.status(201).json(model)
     }
@@ -33,6 +39,7 @@ export const store = async (req, res) => {
 
 export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
+    let data = req.body;
 
     if (!reqErrors) {
         const { id } = req.params
