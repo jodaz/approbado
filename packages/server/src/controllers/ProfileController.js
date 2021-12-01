@@ -34,7 +34,8 @@ export const update = async (req, res) => {
     });
 
     if (typeof profile == 'object') {
-        await user.$relatedQuery('profile').update(profile)
+        let user_profile = await user.$relatedQuery('profile');
+        user_profile === undefined ? await user.$relatedQuery('profile').insert(profile) : await user.$relatedQuery('profile').update(profile) 
     }
 
     return res.status(201).json({ data: await user.$fetchGraph('profile') })
