@@ -164,6 +164,7 @@ export const verifySMSCode = async (req, res) => {
                 phone,
                 code,
                 names,
+                last_name,
                 key,
                 provider,
                 external
@@ -187,10 +188,12 @@ export const verifySMSCode = async (req, res) => {
             // Save user data and profiles
             const user = await User.query().insert({
                 names: names,
+                last_name: last_name,
                 password: encryptedPassword,
                 rol: 'USER',
                 email: email,
-                phone: phone
+                phone: phone,
+                picture : 'default/user.png'
             })
 
             await user.$relatedQuery('profile').insert({
