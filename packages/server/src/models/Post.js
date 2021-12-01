@@ -14,6 +14,14 @@ export class Post extends BaseClass {
                 to: 'users.id'
             }
         },
+        likes: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/LikePost`,
+            join: {
+                from: 'posts.id',
+                to: 'like_posts.post_id'
+            }
+        },
         categories: {
             relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/Category`,

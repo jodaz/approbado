@@ -1,12 +1,12 @@
 import { Router } from "express"
-import { destroy, index,index_mobile, store, byUserId,update, show } from '../controllers/ForumController'
+import { destroy, index,indexMobile, store, byUserId,update, show } from '../controllers/ForumController'
 import { createForumSchema,createForumCommentSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const forumsRouter = Router()
 
 forumsRouter.get('/', index)
-forumsRouter.get('/mobile', index_mobile)
+forumsRouter.get('/mobile', indexMobile)
 forumsRouter.get('/:id', show)
 forumsRouter.get('/user/:user_id', byUserId)
 forumsRouter.post('/', checkSchema(createForumSchema), store)

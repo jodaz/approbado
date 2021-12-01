@@ -17,7 +17,8 @@ import forumsRoutes from './forums.routes';
 import commentsRoutes from './comments.routes';
 import filesRoutes from './files.routes';
 import schedulesRoutes from './schedules.routes';
-
+import likePostRoutes from './like-posts.routes';
+import reportReasonRoutes from './report-reason.routes';
 
 const apiRouter = Router();
 
@@ -25,8 +26,9 @@ apiRouter.use('/schedules', isAuthorizedMiddleware, schedulesRoutes)
 apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)
 apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
 apiRouter.use('/forums', isAuthorizedMiddleware, forumsRoutes)
+apiRouter.use('/like-posts', isAuthorizedMiddleware, likePostRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
-apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
+apiRouter.use('/report-reason', isAuthorizedMiddleware, reportReasonRoutes)
 apiRouter.use('/memberships', isAuthorizedMiddleware, memberships)
 apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 apiRouter.use('/memberships/plans', isAuthorizedMiddleware, plansRoutes)
