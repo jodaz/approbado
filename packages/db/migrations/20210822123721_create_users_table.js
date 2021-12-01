@@ -3,6 +3,7 @@ export async function up(knex) {
     return knex.schema.createTable('users', table => {
         table.increments('id').primary();
         table.string('names');
+        table.string('last_name');
         table.string('user_name');
         table.text('bio');
         table.string('picture').defaultsTo('default/user.png')

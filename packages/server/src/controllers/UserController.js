@@ -101,7 +101,7 @@ export const update = async (req, res) => {
 
 export const update_mobile = async (req, res) => {
     const { id } = req.params
-    const {...rest } = req.body;
+    const { current_password , new_password,...rest } = req.body;
     let filename;
     let data;
 
@@ -112,11 +112,28 @@ export const update_mobile = async (req, res) => {
             picture : filename
         }
     }else{
-       data = {
+        data = {
             ...rest,
         }
     }
 
+    if (current_password) {
+        const user = await User.query().findById(id)
+        
+        const match = await bcrypt.compare(current_password, user.password)
+        
+        if (match) {
+            data = {
+                ...data,
+                password : await bcrypt.hash(new_password, 10)
+            }
+        }else{
+            return res.status(422).json({
+                errors: { "current_password" : "Contraseña actual incorrecta"} 
+            })
+        }
+    }
+    
     const model = await User.query().updateAndFetchById(id, {
         ...data,
     })
@@ -126,7 +143,19 @@ export const update_mobile = async (req, res) => {
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const user = await User.query().findById(id).delete();
-
-    return res.json(user);
+    const user = await User.query().findById(id);
+    
+    await user.$relatedQuery('memberships').delete()
+    await user.$relatedQuery('profile').delete()
+    await user.$relatedQuery('authProviders').delete()
+    //await user.$relatedQuery('blacklisted').delete()
+    await user.$relatedQuery('messages').delete()
+   // await user.$relatedQuery('reports').delete()
+    await user.$relatedQuery('posts').delete()
+    await user.$relatedQuery('schedules').delete()
+    await user.$relatedQuery('payments').delete()
+    
+    await User.query().findById(id).delete();
+    
+    return res.json({data : "Cuenta Eliminada"});
 }
