@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
+import UploadFileButton from './UploadFileButton'
 
 const validate = (values) => {
     const errors = {};
@@ -21,6 +22,9 @@ const validate = (values) => {
     }
     if (!values.subtheme_id) {
         errors.subtheme_id = "Seleccione un subtema.";
+    }
+    if (!values.file) {
+        errors.file = "Ingrese un archivo.";
     }
 
     return errors;
@@ -78,6 +82,9 @@ const FileCreate = () => {
                 >
                     <SelectInput optionText="title" />
                 </ReferenceInput>
+            </InputContainer>
+            <InputContainer labelName="" xs={12} md={12}>
+                <UploadFileButton name="file"><></></UploadFileButton>
             </InputContainer>
         </BaseForm>
     )
