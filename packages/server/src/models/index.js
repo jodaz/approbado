@@ -20,4 +20,4 @@ export * from './File'
 export * from './Question'
 export * from './Schedule'
 export * from './LikePost'
-
+export * from './Friend'
