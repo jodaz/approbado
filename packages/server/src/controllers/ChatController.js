@@ -1,4 +1,4 @@
-import { Chat } from '../models'
+import { Chat, Message } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -43,9 +43,29 @@ export const show = async (req, res) => {
 
     const model = await Chat.query()
         .findById(id)
-        .withGraphFetched('participants');
+        .withGraphFetched('[participants,messages.user]');
 
     return res.status(201).json(model)
+}
+
+export const storeMessage = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        const { id } = req.params
+        const { id: currUserId } = req.user;
+        let data = req.body;
+
+        if (req.file) {
+            data.file = req.file.path;
+        }
+        data.chat_id = id
+        data.user_id = currUserId
+
+        const model = await Message.query().insert(data)
+
+        return res.status(201).json(model)
+    }
 }
 
 export const update = async (req, res) => {
