@@ -19,9 +19,11 @@ import filesRoutes from './files.routes';
 import schedulesRoutes from './schedules.routes';
 import likePostRoutes from './like-posts.routes';
 import reportReasonRoutes from './report-reason.routes';
+import chatsRoutes from './chats.routes';
 
 const apiRouter = Router();
 
+apiRouter.use('/chats', isAuthorizedMiddleware, chatsRoutes)
 apiRouter.use('/schedules', isAuthorizedMiddleware, schedulesRoutes)
 apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)
 apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
