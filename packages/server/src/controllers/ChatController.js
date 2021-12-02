@@ -8,11 +8,12 @@ export const index = async (req, res) => {
     const query = Chat.query()
         .select('chats.*')
         .join('chats_users', 'chats.id', 'chats_users.chat_id')
+        .join('users', 'chats_users.user_id', 'users.id')
         .where('chats_users.user_id', currUserId)
 
     if (filter) {
         if (filter.name) {
-            query.where('name', 'ilike', `%${filter.name}%`)
+            query.where('users.user_name', 'ilike', `%${filter.name}%`)
         }
     }
 
@@ -31,7 +32,9 @@ export const store = async (req, res) => {
         const model = await Chat.query().insert(rest)
         await model.$relatedQuery('participants').relate(ids)
 
-        return res.status(201).json(model)
+        const data = await model.$fetchGraph('participants');
+
+        return res.status(201).json(data)
     }
 }
 
@@ -60,7 +63,9 @@ export const update = async (req, res) => {
         await model.$relatedQuery('participants').unrelate()
         await model.$relatedQuery('participants').relate(ids)
 
-        return res.status(201).json(model)
+        const data = await model.$fetchGraph('participants');
+
+        return res.status(201).json(data)
     }
 }
 
