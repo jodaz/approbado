@@ -1,10 +1,8 @@
 
 
 export async function up(knex) {
-    return knex.schema.createTable('messages', table => {
+    return knex.schema.createTable('chats_users', table => {
         table.increments('id').primary();
-        table.string('message');
-        table.string('file').nullable();
         table.integer('user_id').unsigned();
         table.integer('chat_id').unsigned();
         table.foreign('chat_id').references('chats.id').onDelete('cascade');
@@ -15,5 +13,5 @@ export async function up(knex) {
 
 
 export async function down(knex) {
-    return knex.schema.dropTable('messages')
+    return knex.schema.dropTable('chats_users')
 }
