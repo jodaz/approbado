@@ -15,7 +15,8 @@ const palette = {
         main: '#E02340',  // Rojo
     },
     background: {
-        default: '#FFFFFF'
+        default: '#FFFFFF',
+        dark: '#F9F9F9'
     },
     info: {
         main: '#2280ED' // Azul primario

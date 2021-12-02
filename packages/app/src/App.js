@@ -27,7 +27,7 @@ const App = () => (
 const AppLayout = () => (
 	<Admin
 		dashboard={Dashboard}
-		history={browserHistory}
+		history={history}
 		layout={Layout}
 		customRoutes={customRoutes}
 		dataProvider={dataProvider}

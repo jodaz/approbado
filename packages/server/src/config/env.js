@@ -25,7 +25,7 @@ export const MAIL = {
     MAIL_USERNAME: process.env.MAIL_USERNAME,
     MAIL_PASSWORD: process.env.MAIL_PASSWORD,
     MAIL_PORT: process.env.MAIL_PORT,
-    IS_SECURE: (process.env.APP_ENV === 'production') ? true : false,
+    IS_SECURE: process.env.IS_SECURE || false,
     MAIL_HOST: process.env.MAIL_HOST
 }
 

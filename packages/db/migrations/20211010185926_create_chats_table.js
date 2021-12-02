@@ -3,7 +3,8 @@
 export async function up(knex) {
     return knex.schema.createTable('chats', table => {
         table.increments('id').primary();
-        table.string('name');
+        table.string('name').nullable();
+        table.boolean('is_private').defaultsTo(1);
         table.timestamps();
     });
 }
