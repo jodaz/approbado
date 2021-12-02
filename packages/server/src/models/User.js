@@ -62,6 +62,18 @@ export class User extends BaseClass {
                 to: 'messages.user_id'
             }
         },
+        chats: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Chat`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'chats_users.user_id',
+                    to: 'chats_users.chat_id'
+                },
+                to: 'chats.id'
+            }
+        },
         reports: {
             relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/User`,
