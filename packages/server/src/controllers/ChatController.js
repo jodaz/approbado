@@ -10,6 +10,7 @@ export const index = async (req, res) => {
         .join('chats_users', 'chats.id', 'chats_users.chat_id')
         .join('users', 'chats_users.user_id', 'users.id')
         .where('chats_users.user_id', currUserId)
+        .withGraphFetched('participants')
 
     if (filter) {
         if (filter.name) {
