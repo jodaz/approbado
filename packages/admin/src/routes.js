@@ -16,6 +16,7 @@ import SubthemeCreate from './subthemes/SubthemeCreate'
 import SubthemeShow from './subthemes/SubthemeShow';
 import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
+import QuestionsCreate from './questions/QuestionCreate'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -71,6 +72,10 @@ export default [
     <RouteWithoutLayout
         path="/error"
         render={() => <ErrorLayout />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create"
+        render={() => <QuestionsCreate />}
     />,
     <RouteWithoutLayout
         path="/update-password"

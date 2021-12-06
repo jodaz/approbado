@@ -20,9 +20,11 @@ import schedulesRoutes from './schedules.routes';
 import likePostRoutes from './like-posts.routes';
 import reportReasonRoutes from './report-reason.routes';
 import chatsRoutes from './chats.routes';
+import questionsRoutes from './questions.routes';
 
 const apiRouter = Router();
 
+apiRouter.use('/questions', isAuthorizedMiddleware, questionsRoutes)
 apiRouter.use('/chats', isAuthorizedMiddleware, chatsRoutes)
 apiRouter.use('/schedules', isAuthorizedMiddleware, schedulesRoutes)
 apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)

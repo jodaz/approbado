@@ -3,11 +3,7 @@ import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
-    const query = Question.query().select(
-        Question.ref('*'),
-        Question.relatedQuery('questions').count().as('questionsCount'),
-        Question.relatedQuery('files').count().as('filesCount')
-    )
+    const query = Question.query()
 
     if (filter) {
         if (filter.title) {

@@ -39,6 +39,7 @@ const AAdmin = () => (
 		<Resource {...users} />
 		<Resource {...trivias} />
 		<Resource {...reports} />
+		<Resource name="questions" />
 		<Resource name="awards" />
 		<Resource name="files" />
 		<Resource name="subthemes" />
