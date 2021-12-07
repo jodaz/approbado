@@ -25,7 +25,10 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         const { options, ...rest } = req.body;
-        const model = await Question.query().insert(rest)
+        const model = await Question.query().insertGraphAndFetch({
+            ...rest,
+            options: options
+        });
 
         return res.status(201).json(model)
     }
