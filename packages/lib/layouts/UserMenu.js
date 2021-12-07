@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import isEmpty from 'is-empty';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -45,7 +46,7 @@ const initialMenuState = {
 const UserMenu= props => {
     const [anchorEl, setAnchorEl] = React.useState(null)
     const [state, setState] = React.useState(initialMenuState)
-    const { loaded, identity } = useGetIdentity()
+    const { identity } = useGetIdentity()
     const classes = useStyles();
     const { children, logout } = props
     const open = Boolean(anchorEl)
@@ -56,7 +57,7 @@ const UserMenu= props => {
     if (!logout && !children) return null
 
     React.useEffect(() => {
-        if (loaded) {
+        if (!isEmpty(identity)) {
             const { status, ...rest } = identity;
             let text = '';
 
@@ -68,7 +69,7 @@ const UserMenu= props => {
 
             setState({ text: text, ...rest })
         }
-    }, [loaded])
+    }, [identity])
 
     const { picture, text } = state;
 

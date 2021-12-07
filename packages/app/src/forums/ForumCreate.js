@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Confirm from '@approbado/lib/layouts/Confirm';
-import { makeStyles, fade } from '@material-ui/core/styles';
 import { useDialogState, useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -13,26 +12,7 @@ import {
     ReferenceArrayInput
 } from 'react-admin'
 
-// const useStyles = makeStyles(theme => ({
-//     root: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//         justifyContent: 'space-between',
-//         width: '30rem',
-//         height: '15rem',
-//         textAlign: 'center'
-//     },
-//     link: {
-//         textDecoration: 'underline',
-//         color: theme.palette.info.main,
-//         '&visited': {
-//             color: theme.palette.info.main,
-//         }
-//     },
-// }));
-
 const ForumCreate = () => {
-    // const classes = useStyles();
     const status = useDialogState('forums.create');
     const { unsetDialog } = useDialogDispatch('forums.create');
     const [mutate, { data, loading, loaded }] = useMutation();

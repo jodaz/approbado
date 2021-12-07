@@ -8,12 +8,13 @@ export async function seed(knex) {
         const encryptedPassword = await bcrypt.hash(USER.password, 10);
 
         // Create user test
-        await User.query().insert({
+        await User.query().insertGraph({
             names: 'Test User',
             user_name: 'test',
             password: encryptedPassword,
             is_registered: true,
-            email: 'user@ejemplo.com'
+            email: 'user@ejemplo.com',
+            profile: {}
         })
 
         await Category.query().insert({

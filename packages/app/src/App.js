@@ -15,9 +15,10 @@ const history = createBrowserHistory();
 const App = () => (
     <Provider
         store={createAdminStore({
-                authProvider,
-                dataProvider,
-                history
+            authProvider,
+            dataProvider,
+            history,
+            customReducers
         })}
     >
         <AppLayout />

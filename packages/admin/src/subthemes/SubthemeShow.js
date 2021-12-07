@@ -14,6 +14,7 @@ import DeleteButton from '@approbado/lib/components/DeleteButton'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import SubthemeEdit from './SubthemeEdit'
 import TabbedList from '@approbado/lib/components/TabbedList'
+import QuestionsList from '../questions/QuestionsList'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -73,10 +74,15 @@ const SubthemeShowHeader = ({ record, trivia_id }) => {
 
 const tags = record => ([
     {
+        name: 'Preguntas',
+        pathname: 'questions',
+        component: <QuestionsList record={record} />
+    },
+    {
         name: 'General',
         pathname: 'general',
         component: <SubthemeEdit record={record} />
-    },
+    }
 ])
 
 const SubthemeShow = () => {
