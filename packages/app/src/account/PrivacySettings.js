@@ -48,13 +48,13 @@ const PrivacySettings = () => {
         >
             <Grid item xs={12}>
                 <Checkbox
-                    source="show_name"
+                    source="profile.show_name"
                     label='Mostrar mi nombre cuando vean mi perfil'
                 />
             </Grid>
             <Grid item xs={12}>
                 <Checkbox
-                    source="public_profile"
+                    source="profile.public_profile"
                     label='Permitir que otras personas puedan ver mi perfil como público'
                 />
             </Grid>

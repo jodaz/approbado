@@ -48,31 +48,31 @@ const NotificationSettings = () => {
         >
             <Grid item xs={12}>
                 <Checkbox
-                    source="general_notifications"
+                    source="profile.general_notifications"
                     label='Recibir notificaciones generales'
                 />
             </Grid>
             <Grid item xs={12}>
                 <Checkbox
-                    source="notify_mobile_app"
+                    source="profile.notify_mobile_app"
                     label='Recibir notificaciones sobre comentarios en aplicativo móvil'
                 />
             </Grid>
             <Grid item xs={12}>
                 <Checkbox
-                    source="notify_email"
+                    source="profile.notify_email"
                     label='Recibir notificaciones sobre comentarios en el correo electrónico vinculado'
                 />
             </Grid>
             <Grid item xs={12}>
                 <Checkbox
-                    source="notify_about_chat"
+                    source="profile.notify_about_chat"
                     label='Recibir notificaciones sobre mensajería'
                 />
             </Grid>
             <Grid item xs={12}>
                 <Checkbox
-                    source="notify_about_account"
+                    source="profile.notify_about_account"
                     label='Recibir notificaciones sobre actualizaciones a la cuenta'
                 />
             </Grid>
