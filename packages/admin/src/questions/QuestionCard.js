@@ -15,8 +15,8 @@ const OptionsMenu = props => (
         <DeleteButton
             basePath='questions'
             confirmColor='warning'
-            confirmTitle='Eliminar subtema'
-            confirmContent={'¿Está seguro que desea eliminar este subtema?'}
+            confirmTitle='Eliminar pregunta'
+            confirmContent={'¿Está seguro que desea eliminar esta pregunta?'}
             label={'Eliminar'}
             {...props}
         />
@@ -32,11 +32,12 @@ const QuestionCard = ({ data, id }) => {
                 action={<OptionsMenu record={data} />}
                 title={
                     <Link to={`questions/${data.id}/show`} className={classes.link}>
-                        {data.title}
+                        {data.description}
                     </Link>
                 }
                 className={classes.cardHeader}
             />
+            <CardContent className={classes.cardContent}></CardContent>
         </Card>
     );
 }

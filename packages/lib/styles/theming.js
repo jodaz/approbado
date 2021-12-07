@@ -19,7 +19,8 @@ const palette = {
         dark: '#F9F9F9'
     },
     info: {
-        main: '#2280ED' // Azul primario
+        main: '#2280ED', // Azul primario,
+        light: '#6D6D6D', // Plomo secundario
     }
 };
 
@@ -193,7 +194,7 @@ const theme = {
         },
         RaSidebar: {
             root: {
-                height: '100vh'
+                height: 'inherit'
             },
             fixed: {
                 width: 'inherit',

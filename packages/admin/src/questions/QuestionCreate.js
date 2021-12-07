@@ -5,13 +5,21 @@ import {
     useRedirect,
     SelectInput,
     useNotify,
-    ReferenceInput
+    ReferenceInput,
+    BooleanInput
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
-import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import { FieldArray } from 'react-final-form-arrays'
+import { Form } from 'react-final-form'
+import arrayMutators from 'final-form-arrays'
+import CustomCreateButton from '@approbado/lib/components/Button'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core'
 
 const validate = (values) => {
     const errors = {};
@@ -37,11 +45,31 @@ const OPTIONS = [
     { id: '0', name: 'Respuesta incorrecta' }
 ]
 
+const useStyles = makeStyles(theme => ({
+    arrayRootField: {
+        marginBottom: '2rem'
+    },
+    button: {
+        border: `1px solid ${theme.palette.primary.light}`,
+        color: `${theme.palette.info.light}`,
+        borderRadius: '6px',
+        textTransform: 'none',
+        fontWeight: 600,
+        padding: '5px 15px !important'
+    },
+    arrayItem: {
+        paddingBottom: '2rem',
+        paddingRight: '1rem'
+    }
+}))
+
 const QuestionCreate = () => {
     const { subtheme_id } = useParams()
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
+    const initialFormState = { options: [{}] };
+    const classes = useStyles();
 
     const save = React.useCallback(async (values) => {
         const data = { subtheme_id: subtheme_id, ...values };
@@ -60,6 +88,7 @@ const QuestionCreate = () => {
     }, [mutate, subtheme_id])
 
     React.useEffect(() => {
+        console.log(data)
         if (data && loaded) {
             notify('¡Has creado una nueva pregunta!')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
@@ -67,53 +96,132 @@ const QuestionCreate = () => {
     }, [data, loaded])
 
     return (
-        <BaseForm
-            save={save}
-            validate={validate}
-            formName='Crear pregunta'
-            disabled={loading}
-        >
-            <Box paddingBottom='1rem' width='100%'>
-                <Typography variant="subtitle1" color="textSecondary">
-                    {'Enunciado'}
-                </Typography>
-            </Box>
-            <InputContainer labelName='Pregunta'>
-                <TextInput
-                    source="description"
-                    placeholder="Ingresa el enunciado"
-                    fullWidth
-                />
-            </InputContainer>
-            <Box paddingBottom='1rem' width='100%'>
-                <Typography variant="subtitle1" color="textSecondary">
-                    {'Aclaratorias'}
-                </Typography>
-            </Box>
-            <InputContainer labelName='Mostrar cuando'>
-                <SelectInput
-                    source="explanation_type"
-                    choices={OPTIONS}
-                    fullWidth
-                />
-            </InputContainer>
-            <InputContainer labelName='Aclaratoria'>
-                <TextInput
-                    source="explanation"
-                    placeholder="Ingrese el texto de la aclaratoria"
-                    fullWidth
-                />
-            </InputContainer>
-            <InputContainer labelName='Archivo de referencia'>
-                <ReferenceInput
-                    source="file_id"
-                    reference="files"
-                    fullWidth
-                >
-                    <SelectInput optionText="title" />
-                </ReferenceInput>
-            </InputContainer>
-        </BaseForm>
+        <Box component='div'>
+            <Form
+                onSubmit={save}
+                mutators={{
+                    ...arrayMutators
+                }}
+                validate={validate}
+                initialValues={initialFormState}
+                render={({
+                    handleSubmit,
+                    form: {
+                        mutators: { push, pop }
+                    },
+                    values
+            }) => {
+                    return (
+                        <form onSubmit={handleSubmit}>
+                            <Box maxWidth="90em" paddingTop='2rem'>
+                                <Grid container spacing={1}>
+                                    <Typography component='h1' variant='h5'>{'Crear pregunta'}</Typography>
+                                    <Box paddingBottom='1rem' width='100%'>
+                                        <Typography variant="subtitle1" color="textSecondary">
+                                            {'Enunciado'}
+                                        </Typography>
+                                    </Box>
+                                    <InputContainer labelName='Pregunta' sm={12} md={12}>
+                                        <TextInput
+                                            source="description"
+                                            placeholder="Ingresa el enunciado"
+                                            fullWidth
+                                        />
+                                    </InputContainer>
+                                    <Grid container className={classes.arrayRootField}>
+                                        <FieldArray name="options">
+                                            {({ fields }) =>
+                                                fields.map((name, index) => (
+                                                    <Grid item xs={12} sm={12} md={6} key={name} className={classes.arrayItem}>
+                                                        <InputLabel>Opción {index + 1}</InputLabel>
+                                                        <TextInput
+                                                            source={`${name}.statement`}
+                                                            placeholder="Ingrese la respuesta"
+                                                            fullWidth
+                                                            label=""
+                                                        />
+                                                        <Box width="100%" display="flex" justifyContent="space-between">
+                                                            <BooleanInput
+                                                                source={`${name}.is_right`}
+                                                                label="Opción correcta"
+                                                            />
+                                                            <Grid item>
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    type="button"
+                                                                    onClick={() => (values.options.length > 1) ? fields.remove(index) : null}
+                                                                    className={classes.button}
+                                                                    disabled={!(values.options.length > 1)}
+                                                                >
+                                                                    Eliminar opción
+                                                                </Button>
+                                                            </Grid>
+                                                        </Box>
+                                                    </Grid>
+                                                ))
+                                            }
+                                        </FieldArray>
+                                        <Grid container>
+                                            <Button
+                                                variant="outlined"
+                                                type="button"
+                                                onClick={() => push('options', undefined)}
+                                                className={classes.button}
+                                            >
+                                                Agregar opción
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    <Box paddingBottom='1rem' width='100%'>
+                                        <Typography variant="subtitle1" color="textSecondary">
+                                            {'Aclaratorias'}
+                                        </Typography>
+                                    </Box>
+                                    <InputContainer sm='12' md='6' labelName='Mostrar cuando'>
+                                        <SelectInput
+                                            source="explanation_type"
+                                            choices={OPTIONS}
+                                            fullWidth
+                                        />
+                                    </InputContainer>
+                                    <InputContainer sm='12' md='6' labelName='Aclaratoria'>
+                                        <TextInput
+                                            source="explanation"
+                                            placeholder="Ingrese el texto de la aclaratoria"
+                                            fullWidth
+                                        />
+                                    </InputContainer>
+                                    <InputContainer sm='12' md='6' labelName='Archivo de referencia'>
+                                        <ReferenceInput
+                                            source="file_id"
+                                            reference="files"
+                                            fullWidth
+                                        >
+                                            <SelectInput optionText="title" />
+                                        </ReferenceInput>
+                                    </InputContainer>
+                                    <Grid container>
+                                        <Grid item xs={12} sm={12} md={4} lg={3}>
+                                            <CustomCreateButton
+                                                disabled={loading}
+                                                onClick={event => {
+                                                    if (event) {
+                                                        event.preventDefault();
+                                                    }
+                                                    handleSubmit()
+                                                }}
+                                            >
+                                                {'Crear'}
+                                            </CustomCreateButton>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </form>
+                    )
+                }}
+            />
+        </Box>
     )
 }
 

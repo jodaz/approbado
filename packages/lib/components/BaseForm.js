@@ -29,7 +29,6 @@ const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, ...r
                                                 if (event) {
                                                     event.preventDefault();
                                                 }
-                                                handleSubmitWithRedirect();
                                             }}
                                         >
                                             {saveButtonLabel}
