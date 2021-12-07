@@ -1,5 +1,4 @@
 import { sendMail } from '../utils'
-import isEmpty from 'is-empty'
 
 export const show = async (req, res) => {
     const { user } = req;
@@ -12,7 +11,7 @@ export const show = async (req, res) => {
 }
 
 export const update = async (req, res) => {
-    const { user, body } = req
+    const { user } = req
 
     // Send email
     const mailerData = {
@@ -35,7 +34,7 @@ export const update = async (req, res) => {
 
     if (typeof profile == 'object') {
         let user_profile = await user.$relatedQuery('profile');
-        user_profile === undefined ? await user.$relatedQuery('profile').insert(profile) : await user.$relatedQuery('profile').update(profile) 
+        user_profile === undefined ? await user.$relatedQuery('profile').insert(profile) : await user.$relatedQuery('profile').update(profile)
     }
 
     return res.status(201).json({ data: await user.$fetchGraph('profile') })
