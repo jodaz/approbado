@@ -5,7 +5,6 @@ export const dataProvider = apiClient(`${process.env.REACT_APP_API_DOMAIN}`, {
   offsetPageNum: -1,
 }, `${CONFIG_NAMES.AUTH_TOKEN}`);
 
-
 const defaultDataProvider = {
     create: () => Promise.resolve({ data: { id: 0 } }),
     delete: () => Promise.resolve({ data: {} }),

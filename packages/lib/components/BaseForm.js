@@ -28,6 +28,7 @@ const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, ...r
                                             onClick={event => {
                                                 if (event) {
                                                     event.preventDefault();
+                                                    handleSubmitWithRedirect();
                                                 }
                                             }}
                                         >
