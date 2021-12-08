@@ -9,8 +9,10 @@ export async function up(knex) {
         table.integer('chat_id').unsigned();
         table.foreign('chat_id').references('chats.id').onDelete('cascade');
         table.foreign('user_id').references('users.id').onDelete('cascade');
+        table.timestamp('read_at',true);
         table.timestamps();
     });
+
 }
 
 
