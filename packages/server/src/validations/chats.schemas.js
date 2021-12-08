@@ -14,3 +14,12 @@ export const createChatSchema = {
     }
 };
 
+export const updateChatSchema = {
+    status: {
+        notEmpty: {
+            errorMessage: 'Ingrese el status'
+        }
+    }
+};
+
+

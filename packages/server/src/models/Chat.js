@@ -21,9 +21,18 @@ export class Chat extends BaseClass {
                 from: 'chats.id',
                 through: {
                     from: 'chats_users.chat_id',
-                    to: 'chats_users.user_id'
+                    to: 'chats_users.user_id',
+                    extra: ['status']
                 },
                 to: 'users.id'
+            }
+        },
+        notification: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Notification`,
+            join: {
+                from: 'chats.id',
+                to: 'notifications.chat_id'
             }
         },
     })
