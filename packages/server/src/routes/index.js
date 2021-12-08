@@ -21,6 +21,7 @@ import likePostRoutes from './like-posts.routes';
 import reportReasonRoutes from './report-reason.routes';
 import chatsRoutes from './chats.routes';
 import questionsRoutes from './questions.routes';
+import notificationsRoutes from './notifications.routes';
 
 const apiRouter = Router();
 
@@ -34,6 +35,8 @@ apiRouter.use('/like-posts', isAuthorizedMiddleware, likePostRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
 apiRouter.use('/report-reason', isAuthorizedMiddleware, reportReasonRoutes)
 apiRouter.use('/memberships', isAuthorizedMiddleware, memberships)
+apiRouter.use('/notifications', isAuthorizedMiddleware, notificationsRoutes)
+apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 apiRouter.use('/memberships/plans', isAuthorizedMiddleware, plansRoutes)
 apiRouter.use('/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
@@ -45,6 +48,7 @@ apiRouter.use('/trivias', isAuthorizedMiddleware, triviasRoutes)
 apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
+
 
 // Catch all other routes
 apiRouter.use('/*', (req, res) => {
