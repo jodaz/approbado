@@ -106,6 +106,18 @@ export class User extends BaseClass {
                 to: 'schedules.id'
             }
         },
+        notifications : {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Notification`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'user_notifications.user_id',
+                    to: 'user_notifications.notification_id'
+                },
+                to: 'notifications.id'
+            }
+        },
     })
 
     $formatJson(json) {
