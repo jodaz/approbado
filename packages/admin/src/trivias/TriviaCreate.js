@@ -82,9 +82,10 @@ const TriviaCreate = (props) => {
                     <ReferenceInput
                         source='level_id'
                         reference='configurations/levels'
+                        allowEmpty
                         fullWidth
                     >
-                        <SelectInput source="name" />
+                        <SelectInput source="name" emptyText="N/A" />
                     </ReferenceInput>
                 </InputContainer>
                 <InputContainer labelName='Acceso'>
@@ -98,9 +99,10 @@ const TriviaCreate = (props) => {
                     <ReferenceInput
                         source='category_id'
                         reference='configurations/categories'
+                        allowEmpty
                         fullWidth
                     >
-                        <SelectInput source="name" />
+                        <SelectInput source="name" emptyText="N/A" />
                     </ReferenceInput>
                 </InputContainer>
             </BaseForm>

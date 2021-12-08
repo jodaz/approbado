@@ -24,17 +24,6 @@ const palette = {
     }
 };
 
-const buttonStyles = {
-    // background: "linear-gradient(135.16deg, #E6EA00 -22.35%, #FDE000 113.73%)",
-    // boxShadow: "4px 4px 40px rgba(0, 0, 0, 0.08)",
-    // borderRadius: "8px",
-    // textTransform: 'none',
-    // boxShadow: "4px 4px 40px 0px #00000014",
-    // fontSize: '15px',
-    // padding: '0.4rem 2rem !important',
-    // fontWeight: 'bold'
-}
-
 const theme = {
     palette: palette,
     typography: {
@@ -93,7 +82,6 @@ const theme = {
             }
         },
         MuiButton: {
-            root: buttonStyles,
             contained: {
                 backgroundColor: '#fff',
                 color: '#4f3cc9',
@@ -103,7 +91,7 @@ const theme = {
         MuiInputBase: {
             root: {
                 border: `1px solid ${palette.primary.light}`,
-                borderRadius: 4,
+                borderRadius: 6,
                 backgroundColor: palette.background.default,
                 padding: '0 !important',
                 fontSize: 16,
@@ -117,7 +105,14 @@ const theme = {
             },
             input: {
                 backgroundColor: fade('#fff', 0.8),
-                padding: '0.7rem !important'
+                padding: '0.7rem !important',
+                borderRadius: 6,
+                '&:focus': {
+                    borderRadius: 6,
+                    color: '#fff',
+                    border: `1px solid ${palette.info.main}`,
+                    boxShadow: `0px 0px 1px 1px ${fade(palette.info.main, 0.7)}`
+                }
             }
         },
         MuiInputLabel: {

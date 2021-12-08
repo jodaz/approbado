@@ -196,8 +196,12 @@ const QuestionCreate = () => {
                                             source="file_id"
                                             reference="files"
                                             fullWidth
+                                            allowEmpty
                                         >
-                                            <SelectInput optionText="title" />
+                                            <SelectInput
+                                                optionText="title"
+                                                emptyText="N/A"
+                                            />
                                         </ReferenceInput>
                                     </InputContainer>
                                     <Grid container>
