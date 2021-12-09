@@ -1,11 +1,11 @@
 import * as React from 'react'
 import {
-    useDataProvider,
     TextInput,
     useNotify
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import { axios } from '@approbado/lib/providers'
 
 const validate = values => {
     const errors = {};
@@ -23,14 +23,13 @@ const validate = values => {
 const UpdateProfile = () => {
     const [record, setRecord] = React.useState({})
     const [loading, setLoading] = React.useState(false)
-    const dataProvider = useDataProvider()
     const notify = useNotify()
 
     const save = React.useCallback(async (values) => {
         setLoading(true)
 
         try {
-            await dataProvider.post('profile', values);
+            await axios.post('profile', values);
 
             notify('Hemos actualizado tu perfil con éxito.')
             setLoading(false)
@@ -40,13 +39,13 @@ const UpdateProfile = () => {
                 return error.response.data.errors;
             }
         }
-    }, [dataProvider])
+    }, [axios])
 
     const fetchProfile = React.useCallback(async () => {
-        const { data } = await dataProvider.get('profile');
+        const { data } = await axios.get('profile');
 
         setRecord(data)
-    }, [dataProvider])
+    }, [axios])
 
     React.useEffect(() => {
         fetchProfile();

@@ -1,7 +1,4 @@
 import * as React from 'react'
-import {
-    useDataProvider
-} from 'react-admin'
 // import { validateCategory } from './configurationsValidations';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -12,9 +9,9 @@ import { ReactComponent as DeleteIllustration } from '@approbado/lib/illustratio
 import Box from '@material-ui/core/Box';
 import Confirm from '@approbado/lib/layouts/Confirm';
 import Button from '@material-ui/core/Button';
+import { axios } from '@approbado/lib/providers'
 
 const DeleteAccount = () => {
-    const dataProvider = useDataProvider();
     const [loading, setLoading] = React.useState(false)
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -22,12 +19,12 @@ const DeleteAccount = () => {
     const handleDelete = React.useCallback(async () => {
         setLoading(!loading)
         try {
-            await dataProvider.get('auth/delete-account');
+            await axios.get('auth/delete-account');
         } catch (err) {
             console.log(err)
         }
         setLoading(!loading)
-    }, [dataProvider])
+    }, [axios])
 
     const handleDialog = e => {
         setOpen(!open);

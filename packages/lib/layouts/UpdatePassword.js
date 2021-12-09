@@ -1,11 +1,11 @@
 import * as React from 'react'
 import {
-    useDataProvider,
     PasswordInput,
     useNotify
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import { axios } from '@approbado/lib/providers';
 
 const validate = values => {
     const errors = {};
@@ -31,15 +31,13 @@ const validate = values => {
 
 const UpdatePassword = () => {
     const [loading, setLoading] = React.useState(false)
-    const dataProvider = useDataProvider()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         setLoading(true)
 
         try {
-            await dataProvider.post('update-password', values);
-
+            await axios.post('update-password', values);
             notify('Hemos cambiado tu contraseña con éxito')
             setLoading(false)
         } catch (error) {
@@ -48,7 +46,7 @@ const UpdatePassword = () => {
                 return error.response.data.errors;
             }
         }
-    }, [dataProvider])
+    }, [axios])
 
     return (
         <BaseForm

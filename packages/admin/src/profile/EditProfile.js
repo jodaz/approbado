@@ -1,13 +1,11 @@
 import * as React from 'react'
-import {
-    useDataProvider,
-    TextInput
-} from 'react-admin'
+import { TextInput } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
+import { axios } from '@approbado/lib/providers';
 
 const validate = values => {
     const errors = {};
@@ -25,7 +23,6 @@ const validate = values => {
 const UpdateProfile = () => {
     const [record, setRecord] = React.useState({})
     const [provider, { loading }] = useFileProvider(fileProvider);
-    const dataProvider = useDataProvider()
 
     const save = React.useCallback(async values => {
         await provider({
@@ -35,12 +32,11 @@ const UpdateProfile = () => {
         });
     }, [provider]);
 
-
     const fetchProfile = React.useCallback(async () => {
-        const { data } = await dataProvider.get('profile');
+        const { data } = await axios.get('profile');
 
         setRecord(data)
-    }, [dataProvider])
+    }, [axios])
 
     React.useEffect(() => {
         fetchProfile();

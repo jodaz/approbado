@@ -1,24 +1,22 @@
 import * as React from 'react'
 import {
-    useNotify,
-    useDataProvider
+    useNotify
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import Checkbox from '@approbado/lib/components/FinalFormCheckbox'
 import Grid from '@material-ui/core/Grid'
+import { axios } from '@approbado/lib/providers'
 
 const NotificationSettings = () => {
     const [record, setRecord] = React.useState({})
     const [loading, setLoading] = React.useState(false)
-    const dataProvider = useDataProvider()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         setLoading(true)
 
         try {
-            await dataProvider.post('profile', values);
-
+            await axios.post('profile', values);
             notify('Hemos actualizado tus configuraciones de notificaciones con éxito.')
             setLoading(false)
         } catch (error) {
@@ -27,13 +25,13 @@ const NotificationSettings = () => {
                 return error.response.data.errors;
             }
         }
-    }, [dataProvider])
+    }, [axios])
 
     const fetchProfile = React.useCallback(async () => {
-        const { data } = await dataProvider.get('profile');
+        const { data } = await axios.get('profile');
 
         setRecord(data)
-    }, [dataProvider])
+    }, [axios])
 
     React.useEffect(() => {
         fetchProfile();
