@@ -28,7 +28,6 @@ export async function seed(knex) {
         const trivia = await Trivia.query().insert({
             name: 'Derecho comercial',
             category_id: 1,
-            level_id: 1,
             is_free: 1
         });
 

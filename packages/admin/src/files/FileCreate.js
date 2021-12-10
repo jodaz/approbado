@@ -78,9 +78,10 @@ const FileCreate = () => {
                     source='subtheme_id'
                     reference='subthemes'
                     filter={{ trivia_id: trivia_id }}
+                    allowEmpty
                     fullWidth
                 >
-                    <SelectInput optionText="title" />
+                    <SelectInput source="title" emptyText="N/A" />
                 </ReferenceInput>
             </InputContainer>
             <InputContainer labelName="" xs={12} md={12}>

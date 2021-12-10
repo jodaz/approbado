@@ -204,6 +204,16 @@ const QuestionCreate = () => {
                                             />
                                         </ReferenceInput>
                                     </InputContainer>
+                                    <InputContainer labelName='Nivel' sm='12' md='6'>
+                                        <ReferenceInput
+                                            source='level_id'
+                                            reference='configurations/levels'
+                                            allowEmpty
+                                            fullWidth
+                                        >
+                                            <SelectInput source="name" emptyText="N/A" />
+                                        </ReferenceInput>
+                                    </InputContainer>
                                     <Grid container>
                                         <Grid item xs={12} sm={12} md={4} lg={3}>
                                             <CustomCreateButton

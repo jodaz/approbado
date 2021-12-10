@@ -26,9 +26,6 @@ const validate = (values) => {
     if (!values.category_id) {
         errors.category_id = "Seleccione una categoría.";
     }
-    if (!values.level_id) {
-        errors.level_id = "Seleccione un nivel.";
-    }
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
@@ -77,16 +74,6 @@ const TriviaCreate = (props) => {
                         placeholder="Nombre"
                         fullWidth
                     />
-                </InputContainer>
-                <InputContainer labelName='Nivel'>
-                    <ReferenceInput
-                        source='level_id'
-                        reference='configurations/levels'
-                        allowEmpty
-                        fullWidth
-                    >
-                        <SelectInput source="name" emptyText="N/A" />
-                    </ReferenceInput>
                 </InputContainer>
                 <InputContainer labelName='Acceso'>
                     <SelectInput

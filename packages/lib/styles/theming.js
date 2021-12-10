@@ -109,7 +109,7 @@ const theme = {
                 borderRadius: 6,
                 '&:focus': {
                     borderRadius: 6,
-                    color: '#fff',
+                    color: `${palette.primary.main}`,
                     border: `1px solid ${palette.info.main}`,
                     boxShadow: `0px 0px 1px 1px ${fade(palette.info.main, 0.7)}`
                 }

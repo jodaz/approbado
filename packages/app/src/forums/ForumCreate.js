@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Confirm from '@approbado/lib/layouts/Confirm';
 import { useDialogState, useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
-import BaseForm from '@approbado/lib/components/BaseForm'
+import { FormWithRedirect } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import {
     TextInput,
@@ -9,8 +9,11 @@ import {
     useRedirect,
     useNotify,
     SelectArrayInput,
-    ReferenceArrayInput
+    ReferenceArrayInput,
+    SelectInput
 } from 'react-admin'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 
 const ForumCreate = () => {
     const status = useDialogState('forums.create');
@@ -31,59 +34,72 @@ const ForumCreate = () => {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [mutate]);
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado el registro con éxito')
-            redirect(`/forums/${data.id}`)
+            notify('Se ha completado el registro con éxito');
+            redirect(`/forums/${data.id}`);
+            unsetDialog();
         }
     }, [data, loaded])
 
     return (
-        <Confirm
-            isOpen={status}
-            loading={loading}
-            title="Crear nuevo debate"
-            content={
-                <BaseForm
-                    save={save}
-                    disabled={loading}
-                    noButton
-                >
-                    <InputContainer labelName='Título' md={12}>
-                        <TextInput
-                            source="title"
-                            placeholder="Ingrese un título"
-                            fullWidth
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Descripción' md={12}>
-                        <TextInput
-                            source="summary"
-                            placeholder="Ingrese una descripción (Opcional)"
-                            fullWidth
-                            multiline
-                        />
-                    </InputContainer>
-                    <InputContainer labelName='Etiquetas'  md={12}>
-                        <ReferenceArrayInput
-                            source="categories_ids"
-                            reference="configurations/categories"
-                            fullWidth
-                        >
-                            <SelectArrayInput />
-                        </ReferenceArrayInput>
-                    </InputContainer>
-                </BaseForm>
-            }
-            onConfirm={async () => {
-                await save();
-                await unsetDialog();
-            }}
-            onClose={unsetDialog}
-            confirmColor='primary'
-            confirm={'Publicar'}
+        <FormWithRedirect
+            save={save}
+            disabled={loading}
+            render={ ({ handleSubmitWithRedirect }) => (
+                <Confirm
+                    isOpen={status}
+                    loading={loading}
+                    title="Crear nuevo debate"
+                    content={
+                        <Box maxWidth="90em">
+                            <Grid container spacing={1}>
+                                <InputContainer labelName='Título' md={12}>
+                                    <TextInput
+                                        source="message"
+                                        placeholder="Ingrese un título"
+                                        fullWidth
+                                    />
+                                </InputContainer>
+                                <InputContainer labelName='Descripción' md={12}>
+                                    <TextInput
+                                        source="summary"
+                                        placeholder="Ingrese una descripción (Opcional)"
+                                        fullWidth
+                                        multiline
+                                    />
+                                </InputContainer>
+                                <InputContainer labelName='Trivia'  md={12}>
+                                    <ReferenceArrayInput
+                                        source="trivia_id"
+                                        reference="trivias"
+                                        fullWidth
+                                    >
+                                        <SelectInput />
+                                    </ReferenceArrayInput>
+                                </InputContainer>
+                                <InputContainer labelName='Etiquetas'  md={12}>
+                                    <ReferenceArrayInput
+                                        source="categories_ids"
+                                        reference="configurations/categories"
+                                        fullWidth
+                                    >
+                                        <SelectArrayInput />
+                                    </ReferenceArrayInput>
+                                </InputContainer>
+                            </Grid>
+                        </Box>
+                    }
+                    onConfirm={async () => {
+                        await handleSubmitWithRedirect();
+                    }}
+                    onClose={unsetDialog}
+                    confirmColor='primary'
+                    confirm={'Publicar'}
+                />
+            )}
         />
     );
 }
