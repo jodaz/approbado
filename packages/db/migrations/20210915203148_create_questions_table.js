@@ -6,8 +6,10 @@ export async function up(knex) {
         table.string('explanation');
         table.boolean('explanation_type').defaultsTo(1);
         table.integer('subtheme_id').unsigned();
+        table.integer('level_id').unsigned();
         table.integer('trivia_id').unsigned();
         table.integer('file_id').unsigned();
+        table.foreign('level_id').references('levels.id').onDelete('cascade');
         table.foreign('subtheme_id').references('subthemes.id').onDelete('cascade');
         table.foreign('file_id').references('files.id').onDelete('cascade');
         table.foreign('trivia_id').references('trivias.id').onDelete('cascade');

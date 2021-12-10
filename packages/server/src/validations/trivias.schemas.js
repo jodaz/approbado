@@ -10,11 +10,6 @@ export const createTriviaSchema = {
             errorMessage: 'Seleccione una opción'
         }
     },
-    level_id: {
-        notEmpty: {
-            errorMessage: 'Seleccione una opción'
-        }
-    },
     category_id: {
         notEmpty: {
             errorMessage: 'Seleccione una opción'
