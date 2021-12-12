@@ -6,7 +6,6 @@ import { checkSchema } from 'express-validator';
 const forumsRouter = Router()
 
 forumsRouter.get('/', index)
-forumsRouter.get('/mobile', indexMobile)
 forumsRouter.get('/:id', show)
 forumsRouter.get('/user/:user_id', byUserId)
 forumsRouter.post('/', checkSchema(createForumSchema), store)

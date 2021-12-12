@@ -6,6 +6,14 @@ export class Post extends BaseClass {
     }
 
     static relationMappings = () => ({
+        trivia: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'posts.trivia_id',
+                to: 'trivias.id'
+            }
+        },
         owner: {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,

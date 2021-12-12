@@ -34,7 +34,7 @@ export const index = async (req, res) => {
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await User.query().findById(id)
+    const model = await User.query().findById(id).withGraphFetched('profile')
 
     return res.status(201).json(model)
 }
