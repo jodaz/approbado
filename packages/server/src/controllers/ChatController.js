@@ -99,8 +99,9 @@ export const storeMessage = async (req, res) => {
         let data = req.body;
 
         if (req.file) {
-            data.file = req.file.path;
+            data.file = 'uploads/'+req.file.filename;
         }
+        
         data.chat_id = id
         data.user_id = currUserId
 
