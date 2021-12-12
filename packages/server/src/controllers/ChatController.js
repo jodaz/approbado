@@ -188,7 +188,13 @@ export const updateReadAt = async (req, res) => {
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Chat.query().findById(id).delete();
-
-    return res.json(model);
+    const { id: currUserId } = req.user;
+    
+    const chat = await Chat.query().findById(id).delete();
+    const chatUser = await ChatUser.query()
+                                .where('chat_id',id)
+                                .where('user_id',currUserId)
+                                .delete();
+    
+    return res.json({chat,chatUser});
 }
