@@ -94,8 +94,24 @@ export const externalMobileLogin = async (req, res) => {
                 names: names,
                 rol: 'USER',
                 email: email,
+                user_name : email.split('@')[0],
                 picture : 'default/user.png'
             })
+
+            const payment = await user.$relatedQuery('payments').insert({
+                payment_method: 'none',
+                amount: 0,
+                plan_id : 1,
+                user_id : user.id
+            })
+
+            await user.$relatedQuery('memberships').insert({
+                plan_id: 1,
+                user_id: user.id,
+                payment_id : payment.id,
+                active : true
+            })
+               
         }
 
         const authProviderKey = await user.$relatedQuery('authProviders')
@@ -161,6 +177,7 @@ export const verifySMSCode = async (req, res) => {
         try {
             const {
                 email,
+                user_name,
                 password,
                 phone,
                 code,
@@ -190,6 +207,7 @@ export const verifySMSCode = async (req, res) => {
             const user = await User.query().insert({
                 names: names,
                 last_name: last_name,
+                user_name: user_name,
                 password: encryptedPassword,
                 rol: 'USER',
                 email: email,
@@ -202,6 +220,20 @@ export const verifySMSCode = async (req, res) => {
                 user_id: user.id
             })
 
+            const payment = await user.$relatedQuery('payments').insert({
+                payment_method: 'none',
+                amount: 0,
+                plan_id : 1,
+                user_id : user.id
+            })
+  
+            await user.$relatedQuery('memberships').insert({
+                plan_id: 1,
+                user_id: user.id,
+                payment_id : payment.id,
+                active : true
+            })
+              
             if (external) {
                 // Save social media profile (auth provider)
                 await user.$relatedQuery('authProviders')

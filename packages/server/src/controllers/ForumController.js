@@ -8,12 +8,17 @@ export const index = async (req, res) => {
         Post.ref('*'),
         Post.relatedQuery('comments').count().as('commentsCount'),
         Post.relatedQuery('likes').count().as('likesCount'),
-    ).where('parent_id', null)
+    )
+    .where('parent_id', null)
     .withGraphFetched('owner')
+    .withGraphFetched('categories')
 
     if (filter) {
         if (filter.unanswered) {
             query.whereNotExists(Post.relatedQuery('comments'));
+        }
+        if (filter.message) {
+            query.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
         }
     }
     if (sort && order) {
@@ -33,8 +38,13 @@ export const index = async (req, res) => {
 
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
+<<<<<<< HEAD
 
     const { filter,page, perPage } = req.query
+=======
+
+    const { filter, page, perPage } = req.query
+>>>>>>> cb98df41f6a37bb0c6dfe4d936c4b9ff1c622bd1
 
     const user = await  User.query().findById(user_id)
 
@@ -63,53 +73,6 @@ export const byUserId = async (req, res) => {
     return res.status(200).json(posts)
 }
 
-export const indexMobile = async (req, res) => {
-    const { filter, sort, order } = req.query
-
-    const query = Post.query().select(
-        Post.ref('*'),
-        Post.relatedQuery('comments').count().as('commentsCount'),
-        Post.relatedQuery('likes').count().as('likesCount'),
-    ).where('parent_id', null)
-
-    if (filter) {
-        if (filter.unanswered) {
-            query.whereNotExists(Post.relatedQuery('comments'));
-        }
-        if (filter.message) {
-            query.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
-        }
-    }
-
-    if (sort && order) {
-        switch (sort) {
-            case 'comments':
-                query.whereExists(Post.relatedQuery('comments'))
-                    .orderBy(Post.relatedQuery('comments').count(), order);
-                break;
-            default:
-                query.orderBy(sort, order);
-                break;
-        }
-    }
-
-    const { page, perPage } = req.query
-
-    const {
-        total,
-        results: data
-    } = await query.page(parseInt(page), parseInt(perPage))
-
-    for (var i = 0; i < data.length; i++) {
-        data[i].categories = await data[i].$relatedQuery('categories')
-        data[i].user =  await data[i].$relatedQuery('owner')
-    }
-
-    return res.status(200).json({
-        data,
-        total
-    })
-}
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
@@ -121,6 +84,7 @@ export const store = async (req, res) => {
             created_by: req.user.id,
             ...rest
         });
+
         await model.$relatedQuery('categories').relate(categories_ids)
 
         return res.status(201).json(model)
@@ -132,6 +96,8 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     const model = await Post.query().findById(id)
+    .withGraphFetched('categories')
+    .withGraphFetched('trivia')
 
     return res.status(201).json(model)
 }
@@ -141,8 +107,12 @@ export const update = async (req, res) => {
 
     if (!reqErrors) {
         const { id } = req.params
+        const { categories_ids, ...rest } = req.body;
 
-        const model = await Post.query().updateAndFetchById(id, req.body)
+        const model = await Post.query().updateAndFetchById(id, rest)
+
+        await model.$relatedQuery('categories').unrelate()
+        await model.$relatedQuery('categories').relate(categories_ids)
 
         return res.status(201).json(model)
     }

@@ -6,8 +6,11 @@ export const paginatedQueryResponse = async (query, req, res) => {
         results: data
     } = await query.page(parseInt(page), parseInt(perPage))
 
+    //console.log(await query.toKnexQuery().toSQL())
+
     return res.status(200).json({
         data,
         total
     })
 }
+

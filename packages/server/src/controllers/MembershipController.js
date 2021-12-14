@@ -1,4 +1,4 @@
-import { Membership } from '../models'
+import { Membership,User } from '../models'
 import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -13,4 +13,15 @@ export const index = async (req, res) => {
     }
 
     return paginatedQueryResponse(query, req, res)
+}
+
+
+export const byUserId = async (req, res) => {
+    const { user_id } = req.params
+
+    const user = await User.query().findById(user_id)
+
+    const memberships = await user.$relatedQuery('memberships').withGraphFetched('plans')
+
+    return res.status(200).json(memberships)
 }
