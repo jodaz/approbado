@@ -9,6 +9,7 @@ export const index = async (req, res) => {
         Post.relatedQuery('comments').count().as('commentsCount'),
         Post.relatedQuery('likes').count().as('likesCount'),
     ).where('parent_id', null)
+    .withGraphFetched('owner')
 
     if (filter) {
         if (filter.unanswered) {
@@ -32,28 +33,28 @@ export const index = async (req, res) => {
 
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
-    
+
     const { filter,page, perPage } = req.query
 
     const user = await  User.query().findById(user_id)
-    
+
     const data = user.$relatedQuery('posts').select(
         Post.ref('*'),
         Post.relatedQuery('comments').count().as('commentsCount'),
         Post.relatedQuery('likes').count().as('likesCount'),
     ).where('parent_id', null)
-    
+
     if (filter) {
         if (filter.message) {
             data.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
         }
     }
-    
+
     const {
         total,
         results: posts
     } = await data.page(parseInt(page), parseInt(perPage))
-    
+
     for (var i = 0; i < posts.length; i++) {
         posts[i].categories = await posts[i].$relatedQuery('categories')
         posts[i].user = user
