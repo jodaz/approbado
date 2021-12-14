@@ -1,5 +1,5 @@
 import { Chat, Message, Notification,ChatUser } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 
 export const index = async (req, res) => {
@@ -67,7 +67,18 @@ export const store = async (req, res) => {
             created_by : currUserId,
             chat_id : model.id 
         }    
-        
+
+        let data_push_notification = {
+            title :  req.body.is_private ? 'Nueva solicitud de chat' : 'Nueva invitación de chat',
+            body :   req.body.is_private ? `${names} te ha enviado una solicitud a un chat privado` : `${names} te ha enviado una invitación para formar parte de su grupo de debate “${req.body.name}”`,
+            data : {
+                path : {
+                    name : 'message'
+                },
+                message : 'Has recibido una nueva solicitud de chat'
+            }
+        }
+
         const notification = await Notification.query().insert(data_notification)
         
         await notification.$relatedQuery('users').relate(participants)
@@ -75,6 +86,8 @@ export const store = async (req, res) => {
         const io = req.app.locals.io;
 
         io.emit('new_notification',participants)
+        
+        await sendNotification(data_push_notification,ids) 
 
         return res.status(201).json(model)
     }
@@ -99,8 +112,9 @@ export const storeMessage = async (req, res) => {
         let data = req.body;
 
         if (req.file) {
-            data.file = req.file.path;
+            data.file = 'uploads/'+req.file.filename;
         }
+        
         data.chat_id = id
         data.user_id = currUserId
 
@@ -188,7 +202,13 @@ export const updateReadAt = async (req, res) => {
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Chat.query().findById(id).delete();
-
-    return res.json(model);
+    const { id: currUserId } = req.user;
+    
+    const chat = await Chat.query().findById(id).delete();
+    const chatUser = await ChatUser.query()
+                                .where('chat_id',id)
+                                .where('user_id',currUserId)
+                                .delete();
+    
+    return res.json({chat,chatUser});
 }
