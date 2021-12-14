@@ -14,6 +14,14 @@ export class User extends BaseClass {
                 to: 'memberships.user_id'
             }
         },
+        fcms: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Fcm`,
+            join: {
+                from: 'users.id',
+                to: 'fcms.user_id'
+            }
+        },
         payments: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Payment`,

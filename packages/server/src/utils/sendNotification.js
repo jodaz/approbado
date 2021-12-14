@@ -1,35 +1,47 @@
-import http from 'http'
+import request from 'request'
+import { Fcm } from '../models'
 
-export const sendNotification = async () => {
-    
-  const requestedHostname = 'http://www.simiapi.com';
-  const requestedPort = 80; // <- puerto de escucha del host
-  const requestedPath = '/ApiSimiweb/response/v21/inmueblesDestacados/total/:cantidad'; // <- :cantidad debe ser sustituido por un valor válido
-  const headers = {
-    'Authorization': 'Basic ' + 'Aqui pones tu token', // <- aqui puedes pasar el resultado de tu función que calcula el token
+export const sendNotification = async (data,ids) => {
+
+  const tokens = await Fcm.query().select('fcms.token').whereIn('user_id',ids)
+
+  if (tokens === null) {
+    return false
   }
+  
+  let fcms = []
 
-  const requestOptions = {
-    hostname: requestedHostname,
-    port: requestedPort,
-    path: requestedPath,
-    method: 'GET',
-    headers: headers
-  }
+  tokens.forEach(token => {
+    fcms.push(token.token)
+  })
+  
+  let send = {
+        'notification': {
+          'title': data.title,
+          'body': data.body 
+        },
+        data : data.data,
+        'registration_ids': fcms,
+        "priority": "high"
+      }
 
-  const req = http.request(requestOptions, (response) => {
-    console.log(`STATUS: ${response.statusCode}`); // <- Vemos el estatus de la respuesta
-    console.log(`HEADERS: ${JSON.stringify(response.headers)}`); // <- vemos las cabeceras de la respuesta
-    response.setEncoding('utf-8'); // <- es el encoding más usual actualmente
-    response.on('data', (data) => {
-      console.log(data); // <- mostramos la data recibida
-      let receivedData = JSON.parse(data); // <- esto fallará si la respuesta no es un string JSON válido
-    });
-  });
-
-  req.on('error', (error) => {
-    console.log(`Error in request: ${error.message}`); // <- mostramos el error si lo hubo
-  });
-
-  req.end(); // <- este comando finaliza la solicitud
+  request({
+    url: 'https://fcm.googleapis.com/fcm/send',
+    method: 'POST',
+    headers: {
+      'Content-Type' :' application/json',
+      'Authorization': 'key=AAAAnGbnFjQ:APA91bEWjTs4SwVAgHvvU5kOWn3TpUDyT-QZ7DQKUjMhYdrXMaL3cJK9u_o8ihkOUQFGkLFgKd2XD5kPaCwXppBpEGdGDVGJH6pHp5VZUdDTv_QEuW5qQry62myDZfjMQjybZ78Ei7Lo', // <- aqui puedes pasar el resultado de tu función que calcula el token
+    },
+    body: JSON.stringify(send)
+  }, function(error, response, body) {
+    if (error) { 
+      console.error(error, response, body); 
+    }
+    else if (response.statusCode >= 400) { 
+      console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
+    }
+    else {
+      console.log(response)
+    }
+  })
 }
