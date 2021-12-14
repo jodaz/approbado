@@ -1,5 +1,4 @@
 import { Schedule,User } from '../models'
-
 import { validateRequest, paginatedQueryResponse,getDateString,getDayWeekString ,getTimeString } from '../utils'
 
 export const index = async (req, res) => {
@@ -82,7 +81,10 @@ export const show_participants = async (req, res) => {
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Schedule.query().findById(id).delete().first();
 
+    const model = await Schedule.query().findById(id);
+    await model.$relatedQuery('participants').unrelate()
+    await Schedule.query().findById(id).delete();
+    
     return res.json(model);
 }
