@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { USER, APP_ENV  } from '@approbado/server/dist/config'
-import { User, Trivia, Category, Level } from '@approbado/server/dist/models'
+import { User, Trivia, Category, Level, Plan } from '@approbado/server/dist/models'
 import bcrypt from 'bcrypt'
 
 export async function seed(knex) {
@@ -35,5 +35,11 @@ export async function seed(knex) {
             'name': 'Subtema',
             'duration': 30
         })
+
+        const plan = await Plan.query().insert({
+            name: 'Approbado free',
+            duration: 0,
+            amount: 0
+        });
     }
 };

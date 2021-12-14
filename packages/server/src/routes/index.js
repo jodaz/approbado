@@ -22,6 +22,7 @@ import reportReasonRoutes from './report-reason.routes';
 import chatsRoutes from './chats.routes';
 import questionsRoutes from './questions.routes';
 import notificationsRoutes from './notifications.routes';
+import fcmsRoutes from './fcms.routes';
 
 const apiRouter = Router();
 
@@ -46,6 +47,7 @@ apiRouter.use('/profile', isAuthorizedMiddleware, profileRoutes)
 apiRouter.use('/users', isAuthorizedMiddleware, usersRoutes)
 apiRouter.use('/trivias', isAuthorizedMiddleware, triviasRoutes)
 apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
+apiRouter.use('/fcms', isAuthorizedMiddleware, fcmsRoutes)
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
 
