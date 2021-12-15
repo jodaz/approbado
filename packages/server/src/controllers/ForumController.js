@@ -38,13 +38,8 @@ export const index = async (req, res) => {
 
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
-<<<<<<< HEAD
 
     const { filter,page, perPage } = req.query
-=======
-
-    const { filter, page, perPage } = req.query
->>>>>>> cb98df41f6a37bb0c6dfe4d936c4b9ff1c622bd1
 
     const user = await  User.query().findById(user_id)
 
@@ -96,8 +91,10 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     const model = await Post.query().findById(id)
-    .withGraphFetched('categories')
-    .withGraphFetched('trivia')
+        .withGraphFetched('trivia')
+        .withGraphFetched('categories')
+        .withGraphFetched('owner')
+
 
     return res.status(201).json(model)
 }

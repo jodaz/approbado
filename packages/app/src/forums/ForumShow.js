@@ -1,83 +1,55 @@
 import * as React from 'react';
 import {
-    useRedirect,
     useShowController
 } from 'react-admin'
 import { makeStyles } from '@material-ui/core'
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
+import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
-import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
-import DeleteButton from '@approbado/lib/components/DeleteButton'
-import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
+import { useMediaQuery } from '@material-ui/core'
+import PopularPosts from './PopularPosts'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(props => ({
     root: {
-        margin: '1em',
-        borderRadius: '8px !important',
-        background: '#F9F9F9',
-        height: '8rem'
-    },
-    cardHeader: {
-        padding: '1em !important'
-    },
-    cardContent: {
-        padding: '1em',
         display: 'flex',
-        justifyContent: 'space-between',
-        width: '4rem',
-        alignItems: 'center'
-    }
+        paddingTop: '2rem',
+    },
+    container: {
+        width: props.isXSmall ? '100%' : '79%'
+    },
+    header: {
+        margin: '2em 0',
+        fontWeight: '600'
+    },
 }))
-
-const OptionsMenu = props => {
-    const redirect = useRedirect();
-
-    return (
-        <OptionsCardMenu>
-            <DeleteButton
-                basePath='trivias'
-                confirmColor='warning'
-                confirmTitle='Eliminar trivia'
-                confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
-                label={'Eliminar'}
-                customAction={() => redirect('/trivias')}
-                {...props}
-            />
-        </OptionsCardMenu>
-    )
-};
-
-const ForumShowHeader = ({ record }) => {
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.root}>
-            <CardHeader
-                action={<OptionsMenu record={record} />}
-                title={record.name}
-                className={classes.cardHeader}
-            />
-            <CardContent className={classes.cardContent}>
-                <BalanceIcon />
-                <Typography variant='subtitle1'>Forum</Typography>
-            </CardContent>
-        </Card>
-    );
-}
 
 const ForumShow = props => {
     const showControllerProps = useShowController(props)
+    const isXSmall = useMediaQuery(theme =>
+        theme.breakpoints.down('xs')
+    )
+    const classes = useStyles({
+        isXSmall: isXSmall
+    });
 
     const { record, loaded } = showControllerProps
 
     if (!loaded) return null;
 
     return (
-        <React.Fragment>
-            <ForumShowHeader record={record} />
-        </React.Fragment>
+        <Box className={classes.root}>
+            <Box className={classes.container}>
+                <BackButton />
+                <Box className={classes.header}>
+                    <Typography component="div">
+                        <Box>
+                            {record.message}
+                        </Box>
+                    </Typography>
+                </Box>
+            </Box>
+            <PopularPosts isXSmall={isXSmall} />
+        </Box>
     )
 }
 

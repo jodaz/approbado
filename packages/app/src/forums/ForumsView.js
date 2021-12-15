@@ -10,7 +10,7 @@ import ForumCreate from './ForumCreate'
 import { ListBase, useListContext } from 'react-admin'
 import ForumCard from './ForumCard'
 import ForumWarning from './ForumWarning'
-import AsideBar from './AsideBar'
+import TopContributors from './TopContributors'
 
 const ForumList = props => (
     <ListBase
@@ -88,7 +88,7 @@ const ForumsView = () => {
                 </Box>
                 <TabbedList tags={tags} />
             </Box>
-            <AsideBar isXSmall={isXSmall} />
+            <TopContributors isXSmall={isXSmall} />
             <ForumCreate />
         </Box>
     )
