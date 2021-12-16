@@ -1,5 +1,5 @@
 import { Post } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { validateRequest } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -17,7 +17,6 @@ export const index = async (req, res) => {
         }
     }
 
-    
     const { page, perPage } = req.query
 
     const {
