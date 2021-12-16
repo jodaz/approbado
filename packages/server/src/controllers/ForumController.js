@@ -1,4 +1,5 @@
 import { Post, User} from '../models'
+import isEmpty from 'is-empty'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -21,6 +22,7 @@ export const index = async (req, res) => {
             query.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
         }
     }
+
     if (sort && order) {
         switch (sort) {
             case 'comments':
@@ -39,7 +41,7 @@ export const index = async (req, res) => {
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
 
-    const { filter,page, perPage } = req.query
+    const { filter, page, perPage } = req.query
 
     const user = await  User.query().findById(user_id)
 
@@ -86,7 +88,6 @@ export const store = async (req, res) => {
     }
 }
 
-
 export const show = async (req, res) => {
     const { id } = req.params
 
@@ -94,7 +95,7 @@ export const show = async (req, res) => {
         .withGraphFetched('trivia')
         .withGraphFetched('categories')
         .withGraphFetched('owner')
-
+        .withGraphFetched('comments')
 
     return res.status(201).json(model)
 }

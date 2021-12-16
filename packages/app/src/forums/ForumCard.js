@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import cardStyles from '@approbado/lib/styles/cardStyles'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import { useHistory } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
@@ -104,7 +103,7 @@ const ForumCard = ({ data, id }) => {
                 className={classes.header}
             />
             <CardContent className={classes.content}>
-                <Typography variant="div" >
+                <Typography variant="div">
                     <span className={classes.lightTypography}>
                     {'Por '}
                     </span>

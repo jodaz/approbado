@@ -2,11 +2,10 @@ import * as React from 'react';
 import {
     useShowController
 } from 'react-admin'
-import { makeStyles } from '@material-ui/core'
 import Box from '@material-ui/core/Box';
 import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
-import { useMediaQuery } from '@material-ui/core'
+import { useMediaQuery, makeStyles } from '@material-ui/core'
 import PopularPosts from './PopularPosts'
 
 const useStyles = makeStyles(props => ({
@@ -15,7 +14,7 @@ const useStyles = makeStyles(props => ({
         paddingTop: '2rem',
     },
     container: {
-        width: props.isXSmall ? '100%' : '79%'
+        width: props.isXSmall ? '100%' : '75%'
     },
     header: {
         margin: '2em 0',

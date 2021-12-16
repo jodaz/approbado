@@ -41,7 +41,7 @@ const tags = [
 ]
 
 const ForumListView = () => {
-    const { ids, data } = useListContext();
+    const { ids, data, total } = useListContext();
 
     return (
         <Box display="flex">
@@ -54,6 +54,11 @@ const ForumListView = () => {
                         key={id}
                     />
                 ))}
+                {(total == 0) && (
+                    <Typography component={'p'} variant="body1">
+                        No tenemos debates disponibles, ¿quizás desees volver más tarde?
+                    </Typography>
+                )}
             </Box>
             <ForumWarning />
         </Box>
@@ -68,7 +73,7 @@ const ForumsView = () => {
 
     return (
         <Box display="flex" p={isXSmall ? '0' : '2rem 0'}>
-            <Box width={isXSmall ? '100%' : '79%'} p='0 2rem 0 0'>
+            <Box width='100%' p='0 2rem 0 0'>
                 <Box
                     display="flex"
                     justifyContent="space-between"
