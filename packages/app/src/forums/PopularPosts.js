@@ -59,13 +59,13 @@ const AsideBar = ({ isXSmall }) => {
                 <Box p='0 0 0 2rem'>
                     <Typography component="div">
                         <Box className={classes.title}>
-                            Debates más hots{' '}<Emoji symbol="😰" />
+                            Debates más hots{' '} <Emoji symbol="😰" />
                         </Box>
                     </Typography>
                     <Query type='getList' resource='forums' payload={payload}>
                         {({ data, total, loading, error }) => {
-                            if (loading) { return <Loading />; }
-                            if (error) { return <Error />; }
+                            if (loading) { return null; }
+                            if (error) { return null; }
 
                             return (
                                 <div>

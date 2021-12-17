@@ -10,6 +10,7 @@ import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import { useHistory } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import Avatar from '@material-ui/core/Avatar';
+import PostDescription from './PostDescription'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,14 +20,6 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         marginBottom: '2rem',
         padding: '1rem'
-    },
-    dot: {
-        height: '5px',
-        width: '5px',
-        backgroundColor: '#bbb',
-        borderRadius: '50%',
-        display: 'inline-block',
-        margin: '0.5rem'
     },
     title: {
         fontSize: '1rem',
@@ -67,17 +60,6 @@ const OptionsMenu = props => (
 );
 
 const ForumCard = ({ data, id }) => {
-    const dates = React.useState(() => {
-        const ISODate = new Date(data.created_at.replace(' ', 'T'));
-        const shortOptions = {
-            month: 'long',
-            day: 'numeric'
-        }
-
-        const shortDate = new Intl.DateTimeFormat('es-ES', shortOptions).format(ISODate)
-
-        return shortDate
-    })
     const classes = useStyles();
     const history = useHistory();
 
@@ -103,22 +85,7 @@ const ForumCard = ({ data, id }) => {
                 className={classes.header}
             />
             <CardContent className={classes.content}>
-                <Typography variant="div">
-                    <span className={classes.lightTypography}>
-                    {'Por '}
-                    </span>
-                    <span className={classes.primaryTypography}>
-                        {data.owner.names}
-                    </span>
-                    <span className={classes.dot}></span>
-                    <span className={classes.lightTypography}>
-                        {dates}
-                    </span>
-                    <span className={classes.dot}></span>
-                    <span className={classes.lightTypography}>
-                        {data.commentsCount} respuestas
-                    </span>
-                </Typography>
+                <PostDescription record={data} />
             </CardContent>
         </Card>
     );
