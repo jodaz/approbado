@@ -23,10 +23,12 @@ import chatsRoutes from './chats.routes';
 import questionsRoutes from './questions.routes';
 import notificationsRoutes from './notifications.routes';
 import fcmsRoutes from './fcms.routes';
+import answersRoutes from './answers.routes';
 
 const apiRouter = Router();
 
 apiRouter.use('/questions', isAuthorizedMiddleware, questionsRoutes)
+apiRouter.use('/answers', isAuthorizedMiddleware, answersRoutes)
 apiRouter.use('/chats', isAuthorizedMiddleware, chatsRoutes)
 apiRouter.use('/schedules', isAuthorizedMiddleware, schedulesRoutes)
 apiRouter.use('/files', isAuthorizedMiddleware, filesRoutes)
