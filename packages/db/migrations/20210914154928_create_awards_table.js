@@ -4,6 +4,7 @@ export async function up(knex) {
   return knex.schema.createTable('awards', table => {
       table.increments('id').primary();
       table.string('icon')
+      table.string('icon_winner')
       table.string('title')
       table.integer('min_points')
       table.string('type');

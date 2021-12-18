@@ -29,6 +29,18 @@ export class Subtheme extends BaseClass {
                 from: 'subthemes.id',
                 to: 'files.subtheme_id'
             }
+        },
+        finished: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/User`,
+            join: {
+                from: 'subthemes.id',
+                through: {
+                    from: 'subthemes_finished.subtheme_id',
+                    to: 'subthemes_finished.user_id'
+                },
+                to: 'users.id'
+            }
         }
     })
 }
