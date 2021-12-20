@@ -1,4 +1,4 @@
-import { Report,ReportReason } from '../models'
+import { Report, ReportReason } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

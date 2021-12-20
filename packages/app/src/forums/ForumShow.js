@@ -49,18 +49,6 @@ const ForumShow = props => {
 
     const { record, loaded } = showControllerProps
 
-    const dates = record => {
-        const ISODate = new Date(record.created_at.replace(' ', 'T'));
-        const shortOptions = {
-            month: 'long',
-            day: 'numeric'
-        }
-
-        const shortDate = new Intl.DateTimeFormat('es-ES', shortOptions).format(ISODate)
-
-        return shortDate
-    };
-
     if (!loaded) return null;
 
     return (
