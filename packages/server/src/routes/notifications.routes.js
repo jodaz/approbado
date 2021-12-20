@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { destroy, index, showByUser,showByChat,newNotifications,updateReadAt } from '../controllers/NotificationController'
+import { destroy, index, showByUser, showByChat, newNotifications, updateReadAt } from '../controllers/NotificationController'
 import { checkSchema } from 'express-validator';
 
 const notificationsRouter = Router()

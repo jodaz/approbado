@@ -3,12 +3,13 @@ import { Typography, Box } from '@material-ui/core';
 import {
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import TriviaCard from './TriviaCard'
+import SelectTrivia from './SelectTrivia'
+import { useMediaQuery } from '@material-ui/core'
 
 const ListActions = () => (
     <TopToolbar>
@@ -28,20 +29,29 @@ const TriviaList = (props) => (
     </ListBase>
 );
 
-const TriviaListView = () => (
-    <>
-        <Typography variant='h5'>
-            Trivias
-        </Typography>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <GridList component={<TriviaCard />} />
+const TriviaListView = () => {
+    const isXSmall = useMediaQuery(theme =>
+        theme.breakpoints.down('xs')
+    )
+
+    return (
+        <>
+            <Typography variant='h5'>
+                Trivias
+            </Typography>
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+            <Box display="flex" width={'100%'}>
+                <Box width={'80%'}>
+                    <GridList component={<TriviaCard />} />
+                </Box>
+                <Box width={'20%'}>
+                    <SelectTrivia isXSmall={isXSmall} />
+                </Box>
             </Box>
-        </Box>
-    </>
-);
+        </>
+    );
+}
 
 export default TriviaList;
