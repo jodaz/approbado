@@ -42,9 +42,11 @@ const TriviaListView = () => {
             <FilterContext.Provider>
                 <ListActions />
             </FilterContext.Provider>
-            <Box display="flex">
-                <Box width={'100%'}>
+            <Box display="flex" width={'100%'}>
+                <Box width={'80%'}>
                     <GridList component={<TriviaCard />} />
+                </Box>
+                <Box width={'20%'}>
                     <SelectTrivia isXSmall={isXSmall} />
                 </Box>
             </Box>
