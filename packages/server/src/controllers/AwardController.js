@@ -41,41 +41,46 @@ export const indexAwardSubtheme = async (req, res) => {
 
 export const verifyAward = async (req, res) => {
     
-    const { user_id, subtheme_id,level_id, award_id } = req.body
+    const { user_id, subtheme_id,level_id, award_id, type } = req.body
     
     const subtheme = await Subtheme.query().findById(subtheme_id)
 
     const results = await showResult(subtheme_id, level_id, user_id)
-
-    if (results.win) {
-      await subtheme.$relatedQuery('finished').relate(user_id)  
+    
+    if (type == 'Reto') {
+        await subtheme.$relatedQuery('intents').relate({user_id, finished : results.win })  
+    }else{
+        await subtheme.$relatedQuery('intents').relate({user_id, finished : false })  
     }
     
     const award = await Award.query().findById(award_id)
 
     const count_subthemes = await award.$relatedQuery('subthemes').count().first();
     
-    const count_subthemes_finished = await subtheme.$relatedQuery('finished')
-                                                    .join('subthemes','subthemes.id','subthemes_finished.subtheme_id')
+    const count_subthemes_finished = await subtheme.$relatedQuery('intents')
+                                                    .join('subthemes','subthemes.id','subthemes_intents.subtheme_id')
                                                     .where('user_id',user_id)
                                                     .where('award_id',award_id)
+                                                    .where('finished',true)
                                                     .count()
                                                     .first()
 
-    const response = (count_subthemes_finished.count == count_subthemes.count && results.win) ? {win_award : true,award :award} : {win_award : false}                                     
+    const response = (count_subthemes_finished.count == count_subthemes.count && results.win) ? {win_award : true, award :award} : {win_award : false}                                     
     
-    let points = ((subtheme.points/results.total)*results.rights).toFixed(0)
+    const points = ((subtheme.points/results.total)*results.rights).toFixed(0)
     
     const user = await User.query().findById(user_id)
     
-    let user_profile = await user.$relatedQuery('profile');
+    const user_profile = await user.$relatedQuery('profile');
 
-    if(user_profile === undefined){
-        await user.$relatedQuery('profile').insert({points : points })
-    }else{
-        await user.$relatedQuery('profile').update({points : user_profile.points+points})
-    } 
-   
+    if (type == 'Reto') {
+        if(user_profile === undefined){
+            await user.$relatedQuery('profile').insert({points : points })
+        }else{
+            await user.$relatedQuery('profile').update({points : user_profile.points+points})
+        } 
+    }
+    
     return res.status(200).json({...response,...results,subtheme})
 }
 

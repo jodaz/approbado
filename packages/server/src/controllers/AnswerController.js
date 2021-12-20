@@ -10,6 +10,9 @@ export const index = async (req, res) => {
         if (filter.name) {
             query.where('name', 'ilike', `%${filter.name}%`)
         }
+        if (filter.user_id) {
+            query.where('user_id',`${user_id}`)
+        }
     }
 
     return paginatedQueryResponse(query, req, res)
