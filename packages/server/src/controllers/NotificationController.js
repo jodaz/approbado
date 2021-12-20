@@ -1,15 +1,21 @@
-import { Notification,UserNotification,Chat, User } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { Notification, UserNotification, Chat, User } from '../models'
+import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
+    const { filter, sort, order } = req.query
+    const { user } = req;
 
-    const query = Notification.query()
+    const query = user.$relatedQuery('notifications')
+        .orderBy('notifications.created_at','DESC')
+        .withGraphFetched('user')
 
     if (filter) {
-        if (filter.name) {
-            query.where('name', 'ilike', `%${filter.name}%`)
-        }
+        // if (filter.name) {
+        //     query.where('name', 'ilike', `%${filter.name}%`)
+        // }
+    }
+    if (sort && order) {
+        // query.orderBy(sort, order);
     }
 
     return paginatedQueryResponse(query, req, res)
@@ -23,7 +29,7 @@ export const showByUser = async (req, res) => {
     const query = user.$relatedQuery('notifications')
                       .orderBy('notifications.created_at','DESC')
                       .withGraphFetched('user')
-    
+
     return paginatedQueryResponse(query, req, res)
 }
 
@@ -45,7 +51,7 @@ export const newNotifications = async (req, res) => {
                         .whereRaw('read_at is null')
                         .first()
                         .count()
-   
+
     return res.status(200).json({ new_notifications : new_notifications.count} )
 }
 
@@ -53,13 +59,13 @@ export const updateReadAt = async (req, res) => {
     let id = parseInt(req.params.id)
 
     const notification = await Notification.query().findById(id)
-    
+
     const notification_ids = await Notification.query()
                                 .select('notifications.id')
                                 .join('user_notifications','user_notifications.notification_id','notifications.id')
                                 .whereRaw('read_at is null')
                                 .where('notifications.data',notification.data)
-    
+
     let ids = ''
 
     for (var i = 0; i < notification_ids.length; i++) {
@@ -68,8 +74,8 @@ export const updateReadAt = async (req, res) => {
 
    let user_notification =  ids == '' ? false : await UserNotification.query()
                           .whereRaw('notification_id in('+ids+')')
-                          .update({read_at : new Date() })                 
-    
+                          .update({read_at : new Date() })
+
     return res.status(200).json(user_notification)
 }
 
