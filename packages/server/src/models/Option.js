@@ -14,7 +14,7 @@ export class Option extends BaseClass {
                 to: 'options.id'
             }
         },
-        user: {
+        answers: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Answer`,
             join: {

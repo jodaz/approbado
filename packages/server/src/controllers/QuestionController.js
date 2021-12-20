@@ -1,8 +1,8 @@
-import { Question } from '../models'
+import { Question,Subtheme } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
+    const { filter, options} = req.query
     const query = Question.query()
 
     if (filter) {
@@ -15,9 +15,55 @@ export const index = async (req, res) => {
         if (filter.subtheme_id) {
             query.where('subtheme_id', filter.subtheme_id)
         }
+        if (filter.level_id) {
+            query.where('level_id', filter.level_id)
+        }
+    }
+
+    if (options) {
+        query.withGraphFetched('options')
     }
 
     return paginatedQueryResponse(query, req, res)
+}
+
+export const showResult = async (req, res) => {
+    const { subtheme_id, level_id, user_id } = req.params
+    
+    const results = await Question.query()
+                          .where('subtheme_id', subtheme_id)
+                          .where('level_id', level_id)
+                          .withGraphFetched('options')
+
+    const subtheme = await Subtheme.query().findById(subtheme_id)
+
+    let rights = 0
+    let total = 0
+
+    for (var i = 0; i < results.length; i++) {
+        total++
+        results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
+
+        for (var e = 0; e < results[i].options.length; e++) {
+            
+            let answer = await results[i].options[e]
+                                           .$relatedQuery('answers')
+                                           .select('answers.*','options.statement')
+                                           .join('options','options.id','answers.option_id')
+                                           .where('user_id',user_id)
+                                           .first()
+            if (answer !== undefined) {
+                answer.is_right ? rights++ : null
+                results[i].answer = answer 
+            }
+        }
+    }
+
+    let points = ((subtheme.points/total)*rights).toFixed(0)
+
+    let win = ((rights*100)/total) >= 50 ? true : false;
+
+    return res.status(200).json({results,rights:rights,total:total,win:win,points:points})
 }
 
 export const store = async (req, res) => {

@@ -6,7 +6,7 @@ export class Answer extends BaseClass {
     }
 
     static relationMappings = () => ({
-        chat: {
+        option: {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Option`,
             join: {
