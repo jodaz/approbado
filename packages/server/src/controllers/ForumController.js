@@ -21,6 +21,9 @@ export const index = async (req, res) => {
         if (filter.message) {
             query.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
         }
+        if (filter.user_id) {
+            query.where('user_id', '=', filter.user_id)
+        }
     }
 
     if (sort && order) {
@@ -58,7 +61,6 @@ export const byUserId = async (req, res) => {
     }
 
     const {
-        total,
         results: posts
     } = await data.page(parseInt(page), parseInt(perPage))
 

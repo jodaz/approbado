@@ -7,6 +7,7 @@ import MenuItemLink from '@approbado/lib/components/MenuItemLink'
 
 // Other resources
 import forums from '../forums'
+import notifications from '../notifications'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -18,6 +19,14 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             sidebarIsOpen={open}
             dense={dense}
             exact
+        />
+        <MenuItemLink
+            to='/notifications'
+            primaryText={notifications.options.label}
+            leftIcon={<notifications.icon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
         />
         <MenuItemLink
             to="/trivias"
