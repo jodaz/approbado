@@ -5,7 +5,7 @@ export const sendNotification = async (data,ids) => {
 
   const tokens = await Fcm.query().select('fcms.token').whereIn('user_id',ids)
 
-  if (tokens === null) {
+  if (tokens === undefined ) {
     return false
   }
   
