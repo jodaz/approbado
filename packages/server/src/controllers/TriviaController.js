@@ -1,5 +1,5 @@
-import { Trivia } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { Trivia, TriviaGrupal, Subtheme, Level } from '../models'
+import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -28,6 +28,43 @@ export const store = async (req, res) => {
     }
 }
 
+export const storeGrupal = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+    const {user_ids , ...rest } = req.body;
+    const { names } = req.user;
+
+    if (!reqErrors) {
+
+        const model = await TriviaGrupal.query().insert(rest)
+
+        await model.$relatedQuery('participants').relate(user_ids)
+
+        const subtheme = await Subtheme.query().findById(rest.subtheme_id)
+  
+        const level = await Level.query().findById(rest.level_id)
+  
+        let data_push_notification = {
+            title :  'Nueva solicitud de trivia grupal',
+            body :   `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
+            data : {
+                path : {
+                    name : 'room',
+                    params : {
+                        token : rest.link
+                    },
+                    query : {
+                        emit : true
+                    }
+                }
+            }
+        }
+        
+        await sendNotification(data_push_notification,user_ids) 
+                                         
+        return res.status(201).json(model)
+    }
+}
+
 export const update = async (req, res) => {
     const { id } = req.params
 
@@ -52,6 +89,18 @@ export const show = async (req, res) => {
         Trivia.relatedQuery('files').count().as('filesCount')
     ).findById(id)
 
+    return res.status(201).json(model)
+}
+
+export const showGrupal = async (req, res) => {
+    const { token } = req.params
+
+    const model = await TriviaGrupal.query()
+                                    .where('link',token)
+                                    .withGraphFetched('subtheme')
+                                    .withGraphFetched('participants')
+                                    .first()
+    
     return res.status(201).json(model)
 }
 

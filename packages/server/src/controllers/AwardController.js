@@ -1,5 +1,7 @@
-import { Award, Subtheme, Answer, Question, User } from '../models'
+import { Award, Subtheme, SubthemeFinished, Answer, Question, User } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
+
+const min_approbado = 75
 
 export const index = async (req, res) => {
     const { filter , subtheme } = req.query
@@ -45,29 +47,25 @@ export const verifyAward = async (req, res) => {
     
     const subtheme = await Subtheme.query().findById(subtheme_id)
 
-    const results = await showResult(subtheme_id, level_id, user_id)
+    const results = await showResultAward(subtheme_id, level_id, user_id)
     
-    if (type == 'Reto') {
-        await subtheme.$relatedQuery('intents').relate({user_id, finished : results.win })  
-    }else{
-        await subtheme.$relatedQuery('intents').relate({user_id, finished : false })  
+    if (type == 'Reto' && results.percenteje >= min_approbado) {
+        await SubthemeFinished.query().insert({subtheme_id : subtheme_id, user_id : user_id, finished : true })  
     }
     
     const award = await Award.query().findById(award_id)
 
     const count_subthemes = await award.$relatedQuery('subthemes').count().first();
     
-    const count_subthemes_finished = await subtheme.$relatedQuery('intents')
-                                                    .join('subthemes','subthemes.id','subthemes_intents.subtheme_id')
+    const count_subthemes_finished = await subtheme.$relatedQuery('finished')
+                                                    .join('subthemes','subthemes.id','subthemes_finished.subtheme_id')
                                                     .where('user_id',user_id)
                                                     .where('award_id',award_id)
                                                     .where('finished',true)
                                                     .count()
                                                     .first()
 
-    const response = (count_subthemes_finished.count == count_subthemes.count && results.win) ? {win_award : true, award :award} : {win_award : false}                                     
-    
-    const points = ((subtheme.points/results.total)*results.rights).toFixed(0)
+    const response = (count_subthemes_finished.count == count_subthemes.count && results.percenteje >= min_approbado) ? {win_award : true, award :award} : {win_award : false}                                     
     
     const user = await User.query().findById(user_id)
     
@@ -75,16 +73,16 @@ export const verifyAward = async (req, res) => {
 
     if (type == 'Reto') {
         if(user_profile === undefined){
-            await user.$relatedQuery('profile').insert({points : points })
+            await user.$relatedQuery('profile').insert({points : parseFloat(results.points) })
         }else{
-            await user.$relatedQuery('profile').update({points : user_profile.points+points})
+            await user.$relatedQuery('profile').update({points : parseFloat(user_profile.points)+parseFloat(results.points)})
         } 
     }
     
     return res.status(200).json({...response,...results,subtheme})
 }
 
-export const showResult = async (subtheme_id, level_id, user_id) => {
+export const showResultAward = async (subtheme_id, level_id, user_id) => {
     
     const results = await Question.query()
                           .where('subtheme_id', subtheme_id)
@@ -100,11 +98,11 @@ export const showResult = async (subtheme_id, level_id, user_id) => {
         for (var e = 0; e < results[i].options.length; e++) {
             
             let answer = await results[i].options[e]
-                                           .$relatedQuery('answers')
-                                           .select('answers.*','options.statement')
-                                           .join('options','options.id','answers.option_id')
-                                           .where('user_id',user_id)
-                                           .first()
+                                         .$relatedQuery('answers')
+                                         .select('answers.*','options.statement')
+                                         .join('options','options.id','answers.option_id')
+                                         .where('user_id',user_id)
+                                         .first()
             if (answer !== undefined) {
                 answer.is_right ? rights++ : null
                 results[i].answer = answer 
@@ -112,9 +110,11 @@ export const showResult = async (subtheme_id, level_id, user_id) => {
         }
     }
 
-    let win = ((rights*100)/total) >= 50 ? true : false;
+    const percenteje = ((rights*100)/total);
 
-    return {results,rights:rights,total:total,win:win}
+    const points = (percenteje/10).toFixed(2)
+
+    return {results,rights,total,percenteje,points}
 }
 
 export const store = async (req, res) => {

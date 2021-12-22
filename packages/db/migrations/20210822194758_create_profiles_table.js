@@ -4,7 +4,7 @@ export async function up(knex) {
     return knex.schema.createTable('profiles', table => {
         table.increments('id').primary();
         table.boolean('public_profile').defaultTo(1);
-        table.integer('points').defaultTo(0);
+        table.float('points', 3, 2);
         table.boolean('show_name').defaultTo(1);
         table.boolean('show_terms_privacy').defaultTo(1);
         table.string('names').nullable();
