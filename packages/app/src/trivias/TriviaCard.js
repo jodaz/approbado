@@ -4,8 +4,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import PropTypes from 'prop-types'
 import cardStyles from '@approbado/lib/styles/cardStyles'
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import { useTriviaDispatch } from "@approbado/lib/hooks/useTriviaSelect"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,12 +16,16 @@ const useStyles = makeStyles(theme => ({
         background: '#F9F9F9',
         transition: '0.1s',
         '&:hover': {
-            boxShadow: "4px 4px 90px 0px #00000014",
-            border: `1px solid ${fade(theme.palette.secondary.main, 0.8)}`
+            boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
+            border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
+        },
+        '&:focus': {
+            boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
+            border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
         },
     },
     cardContent: {
-        margin: '2em',
+        margin: '1em',
         textAlign: 'center'
     },
     link: {
@@ -37,15 +42,18 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const TriviaCard = ({ data, id }) => {
+    const { setTrivia } = useTriviaDispatch();
     const classes = { ...cardStyles(), ...useStyles() };
 
     return (
         <Card className={classes.root}>
-            <CardContent className={classes.cardContent}>
-                <Typography variant="h6">
-                    {data.name}
-                </Typography>
-            </CardContent>
+            <CardActionArea onClick={() => setTrivia(data)}>
+                <CardContent className={classes.cardContent}>
+                    <Typography variant="h6">
+                        {data.name}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
         </Card>
     );
 }

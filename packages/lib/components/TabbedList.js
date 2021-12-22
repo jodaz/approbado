@@ -44,7 +44,8 @@ function pathnameInPathnames(tags, pathname) {
 
 const TabbedList = ({
     tags,
-    name
+    name,
+    children
 }) => {
     let query = useQuery();
     const [currentTab, setCurrentTab] = React.useState(() => (
@@ -75,25 +76,28 @@ const TabbedList = ({
         <Box component='div' className={classes.root}>
             {name && <Typography component='h1' variant='h5'>{name}</Typography>}
             <Box component='div' paddingTop='1rem'>
-                <Tabs
-                    value={currentTab}
-                    indicatorColor="primary"
-                    onChange={handleChange}
-                    className={classes.tabs}
-                >
-                    {
-                        tags.map(tag => (
-                            <Tab
-                                key={tag.pathname}
-                                label={tag.name}
-                                value={tag.pathname}
-                                className={classes.tab}
-                                component={Link}
-                                to={tabPath(tag.pathname)}
-                            />
-                        ))
-                    }
-                </Tabs>
+                <Box>
+                    <Tabs
+                        value={currentTab}
+                        indicatorColor="primary"
+                        onChange={handleChange}
+                        className={classes.tabs}
+                    >
+                        {
+                            tags.map(tag => (
+                                <Tab
+                                    key={tag.pathname}
+                                    label={tag.name}
+                                    value={tag.pathname}
+                                    className={classes.tab}
+                                    component={Link}
+                                    to={tabPath(tag.pathname)}
+                                />
+                            ))
+                        }
+                    </Tabs>
+                    { children && React.cloneElement(children, {})}
+                </Box>
                 <Divider />
                 <Box component='div' paddingTop='2rem'>
                     {React.cloneElement(componentToRender(), {})}

@@ -39,7 +39,7 @@ const ForumCreate = () => {
     React.useEffect(() => {
         if (data && loaded) {
             notify('Se ha completado el registro con éxito');
-            redirect(`/forums/${data.id}`);
+            redirect(`/forums/${data.id}/show`);
             unsetDialog();
         }
     }, [data, loaded])
