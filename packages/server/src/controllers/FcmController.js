@@ -10,8 +10,10 @@ export const store = async (req, res) => {
       const validate = await Fcm.query()
                            .where('user_id',user_id)
                            .where('token',token)
+                           .count()
+                           .first()
 
-      if (!validate) await Fcm.query().insert(req.body)
+      if (validate.count == 0) await Fcm.query().insert(req.body)
 
       return res.status(201).json({data: 'OK'})
     }
