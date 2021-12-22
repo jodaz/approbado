@@ -15,6 +15,9 @@ export const index = async (req, res) => {
                 .join('trivias', 'subthemes.trivia_id', 'trivias.id')
                 .where('trivias.id', filter.trivia_id)
         }
+        if (filter.subtheme_id) {
+            query.where('files.subtheme_id', filter.subtheme_id)
+        }
     }
 
     return paginatedQueryResponse(query, req, res)
