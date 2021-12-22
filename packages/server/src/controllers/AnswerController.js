@@ -49,6 +49,15 @@ export const update = async (req, res) => {
     }
 }
 
+export const destroyByUserId = async (req, res) => {
+    let user_id = parseInt(req.params.user_id)
+    const model = await Answer.query().where('user_id',`${user_id}`).delete();
+
+    return res.json(model);
+}
+
+
+
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const model = await Answer.query().findById(id).delete();

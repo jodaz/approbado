@@ -1,7 +1,7 @@
 
 
 export async function up(knex) {
-    return knex.schema.createTable('subthemes_intents', table => {
+    return knex.schema.createTable('subthemes_finished', table => {
         table.increments('id').primary();
         table.integer('user_id').unsigned();
         table.integer('subtheme_id').unsigned();
@@ -14,5 +14,5 @@ export async function up(knex) {
 
 
 export async function down(knex) {
-    return knex.schema.dropTable('subthemes_intents')
+    return knex.schema.dropTable('subthemes_finished')
 }
