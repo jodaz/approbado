@@ -47,7 +47,6 @@ export const authProvider = (packageName) => ({
 
         if (token) {
             const { exp, iat, ...rest } = jwtDecode(token);
-
             return Promise.resolve(rest);
         }
 

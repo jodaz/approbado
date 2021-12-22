@@ -11,45 +11,54 @@ import trivias from './trivias'
 import Login from './layouts/Login'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from "history";
+import customReducers from '@approbado/lib/reducers'
+import { useAuthState } from '@approbado/lib/hooks/useAuthState'
 
 const history = createBrowserHistory();
 
 const App = () => (
     <Provider
         store={createAdminStore({
-                authProvider,
-                dataProvider,
-                history
+            authProvider,
+            dataProvider,
+            history,
+            customReducers
         })}
     >
         <AAdmin />
     </Provider>
 )
 
-const AAdmin = () => (
-	<Admin
-		dashboard={Dashboard}
-		customRoutes={customRoutes}
-		history={history}
-		layout={Layout}
-		dataProvider={dataProvider}
-		loginPage={Login}
-		authProvider={authProvider('admin')}
-	>
-		<Resource {...users} />
-		<Resource {...trivias} />
-		<Resource {...reports} />
-		<Resource name="questions" />
-		<Resource name="awards" />
-		<Resource name="files" />
-		<Resource name="subthemes" />
-		<Resource name="profile" />
-		<Resource name="update-password" />
-		<Resource name="configurations/levels" />
-		<Resource name="configurations/categories" />
-		<Resource name="memberships/plans" />
-		<Resource name="memberships/payments" />
-	</Admin>
-)
+const AAdmin = () => {
+    // const { authenticated } = useAuthState();
+
+    // if (!authenticated) return null;
+
+    return (
+        <Admin
+            dashboard={Dashboard}
+            customRoutes={customRoutes}
+            history={history}
+            layout={Layout}
+            dataProvider={dataProvider}
+            loginPage={Login}
+            authProvider={authProvider('admin')}
+        >
+            <Resource {...users} />
+            <Resource {...trivias} />
+            <Resource {...reports} />
+            <Resource name="questions" />
+            <Resource name="awards" />
+            <Resource name="files" />
+            <Resource name="subthemes" />
+            <Resource name="profile" />
+            <Resource name="update-password" />
+            <Resource name="configurations/levels" />
+            <Resource name="configurations/categories" />
+            <Resource name="memberships/plans" />
+            <Resource name="memberships/payments" />
+        </Admin>
+    )
+}
 
 export default App;
