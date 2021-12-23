@@ -1,48 +1,39 @@
-import { Admin, Resource } from 'react-admin'
-import { dataProvider, authProvider } from '@approbado/lib/providers'
+import * as React from 'react'
+import { AdminUI, Resource } from 'react-admin'
 import Layout from './layouts'
-import customRoutes from './routes'
 import Dashboard from './dashboard'
-import createAdminStore from '@approbado/lib/store'
 // Resources
 import users from './users'
 import reports from './reports'
 import trivias from './trivias'
 import Login from './layouts/Login'
-import { Provider } from 'react-redux'
-import { createBrowserHistory } from "history";
-import customReducers from '@approbado/lib/reducers'
-import { useAuthState } from '@approbado/lib/hooks/useAuthState'
+import { useRedirectIfAuthenticated } from '@approbado/lib/hooks/useRedirectIfAuthenticated'
+import Spinner from '@approbado/lib/components/Spinner';
+import { history } from '@approbado/lib/providers'
+import routes from './routes'
 
-const history = createBrowserHistory();
+const App = () => {
+    const { redirect, isAuthenticated } = useRedirectIfAuthenticated([
+        '/login',
+        '/reset-password',
+        '/update-password',
+        '/error'
+    ])
 
-const App = () => (
-    <Provider
-        store={createAdminStore({
-            authProvider,
-            dataProvider,
-            history,
-            customReducers
-        })}
-    >
-        <AAdmin />
-    </Provider>
-)
+    React.useEffect(() => {
+        if (!isAuthenticated && !redirect) {
+            history.push('/login')
+        }
+    }, [])
 
-const AAdmin = () => {
-    // const { authenticated } = useAuthState();
-
-    // if (!authenticated) return null;
+    if (!isAuthenticated && !redirect) return <Spinner />
 
     return (
-        <Admin
-            dashboard={Dashboard}
-            customRoutes={customRoutes}
-            history={history}
+        <AdminUI
             layout={Layout}
-            dataProvider={dataProvider}
+            dashboard={Dashboard}
             loginPage={Login}
-            authProvider={authProvider('admin')}
+            customRoutes={routes}
         >
             <Resource {...users} />
             <Resource {...trivias} />
@@ -57,7 +48,7 @@ const AAdmin = () => {
             <Resource name="configurations/categories" />
             <Resource name="memberships/plans" />
             <Resource name="memberships/payments" />
-        </Admin>
+        </AdminUI>
     )
 }
 

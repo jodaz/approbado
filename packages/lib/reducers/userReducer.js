@@ -4,7 +4,8 @@ const initialState = {
     isAuth: false,
     token: '',
     exp: '',
-    user: {}
+    user: {},
+    loading: false
 }
 
 const userReducer = (
@@ -14,6 +15,7 @@ const userReducer = (
     switch (action.type) {
         case SET_USER:
             return {
+                loading: !previousState.loading,
                 isAuth: !previousState.isAuth,
                 token: action.payload.token,
                 user: action.payload.data,
