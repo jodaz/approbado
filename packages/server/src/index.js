@@ -27,8 +27,18 @@ const io = require("socket.io")
 });
 
 io.on("connection", function(socket) {
+
   socket.on("room", async function (data) {
     socket.broadcast.emit("room-"+data.token,data)
+  })
+
+  socket.on("user_conected", async function (user) {
+  	socket.broadcast.emit("users_conected",user)
+  })
+
+  socket.on("finished", async function (user) {
+    console.log("finished"+ user.token+" "+user.id)
+    socket.broadcast.emit("user_finished-"+user.token,user)
   })
 });
 
@@ -37,4 +47,3 @@ http.listen(APP_PORT, () => {
 })
 
 app.locals.io = io;
-
