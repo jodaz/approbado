@@ -1,4 +1,4 @@
-import { Trivia, TriviaGrupal, Subtheme, Level } from '../models'
+import { Trivia, TriviaGrupal, Subtheme, Level, Question } from '../models'
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
@@ -102,6 +102,25 @@ export const showGrupal = async (req, res) => {
                                     .first()
     
     return res.status(201).json(model)
+}
+
+export const destroyByUsersId = async (req, res) => {
+    let token = req.params.token
+
+    const model = await TriviaGrupal.query()
+                                    .where('link',token)
+                                    .withGraphFetched('subtheme')
+                                    .withGraphFetched('participants')
+                                    .first()
+
+    const results = await Question.query()
+                          .where('subtheme_id', subtheme_id)
+                          .where('level_id', level_id)
+                          .withGraphFetched('options')
+
+    //const model = await Answer.query().where('user_id',`${user_id}`).delete();
+
+    return res.json(model);
 }
 
 export const destroy = async (req, res) => {
