@@ -3,11 +3,9 @@ import { sendMail } from '../utils'
 export const show = async (req, res) => {
     const { user } = req;
 
-    const profile = await user.$fetchGraph('profile')
+    const model = await user.$fetchGraph('profile')
 
-    return res.status(201).json({
-        data: profile
-    })
+    return res.status(201).json(model)
 }
 
 export const update = async (req, res) => {
