@@ -82,6 +82,18 @@ export class User extends BaseClass {
                 to: 'chats.id'
             }
         },
+        awards: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Award`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'awards_users.user_id',
+                    to: 'awards_users.award_id'
+                },
+                to: 'awards.id'
+            }
+        },
         reports: {
             relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/User`,
