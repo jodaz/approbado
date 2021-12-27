@@ -34,9 +34,17 @@ export const index = async (req, res) => {
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await User.query().findById(id).withGraphFetched('profile')
+    const user = await User.query().findById(id)
+    
+    const profile = await user.$fetchGraph('profile');
+    profile.posts = await user.$relatedQuery('posts');
+    profile.discussion = await user.$relatedQuery('posts').whereRaw('parent_id is null');
+    profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
+    profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
 
-    return res.status(201).json(model)
+    return res.status(201).json({
+        data: profile
+    })
 }
 
 export const store = async (req, res) => {
