@@ -31,7 +31,8 @@ export class Schedule extends BaseClass {
                     from: 'participants.schedule_id',
                     to: 'participants.user_id'
                 },
-                to: 'users.id'
+                to: 'users.id',
+                extra: ['finished']
             }
         },
     })
