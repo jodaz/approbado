@@ -33,7 +33,7 @@ const UpdateProfile = () => {
     }, [provider]);
 
     const fetchProfile = React.useCallback(async () => {
-        const { data } = await axios.get('profile');
+        const { data } = await axios.get('profile')
 
         setRecord(data)
     }, [axios])
