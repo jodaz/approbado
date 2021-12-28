@@ -1,4 +1,4 @@
-import { Award, Subtheme, SubthemeFinished, Answer, Question, User } from '../models'
+import { Award, Subtheme, SubthemeFinished, Answer,TriviaGrupal,Schedule, Question, User } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 const min_approbado = 75
@@ -69,6 +69,10 @@ export const verifyAward = async (req, res) => {
     
     const user = await User.query().findById(user_id)
     
+    if (response.win_award) {
+        await user.$relatedQuery('awards').relate(award.id)
+    }
+    
     const user_profile = await user.$relatedQuery('profile');
 
     if (type == 'Reto') {
@@ -94,7 +98,7 @@ export const showResultAward = async (subtheme_id, level_id, user_id) => {
     for (var i = 0; i < results.length; i++) {
         total++
         results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
-
+        results[i].file =  await results[i].$relatedQuery('file')
         for (var e = 0; e < results[i].options.length; e++) {
             
             let answer = await results[i].options[e]
@@ -115,6 +119,94 @@ export const showResultAward = async (subtheme_id, level_id, user_id) => {
     const points = (percenteje/10).toFixed(2)
 
     return {results,rights,total,percenteje,points}
+}
+
+export const showResultTriviaGrupal = async (req, res) => {
+    const { subtheme_id,level_id, token } = req.params
+    
+    const results = await Question.query()
+                          .where('subtheme_id', subtheme_id)
+                          .where('level_id', level_id)
+                          .withGraphFetched('options')
+    
+    const trivia_grupal = await TriviaGrupal.query().where('link',token).first()
+    
+    const participants = await trivia_grupal.$relatedQuery('participants')
+    
+    for (var l = 0; l < participants.length; l++) {
+        let rights = 0
+        let total = 0
+        
+
+        for (var i = 0; i < results.length; i++) {
+        total++
+        results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
+        results[i].file =  await results[i].$relatedQuery('file')
+            for (var e = 0; e < results[i].options.length; e++) {
+                
+                let answer = await results[i].options[e]
+                                             .$relatedQuery('answers')
+                                             .select('answers.*','options.statement')
+                                             .join('options','options.id','answers.option_id')
+                                             .where('user_id',participants[l].id)
+                                             .first()
+               
+                if (answer !== undefined) {
+                    answer.is_right ? rights++ : null
+                }
+            }
+        }
+        participants[l].percenteje = ((rights*100)/total);
+        participants[l].points = (participants[l].percenteje/10).toFixed(2)
+    }
+    
+    return res.status(200).json(participants.sort(compare))
+}
+
+export const showResultTriviaGrupalSchedule = async (req, res) => {
+    const { subtheme_id, level_id, schedule_id } = req.params
+    
+    const results = await Question.query()
+                          .where('subtheme_id', subtheme_id)
+                          .where('level_id', level_id)
+                          .withGraphFetched('options')
+    
+    const trivia_grupal = await Schedule.query().findById(schedule_id)
+    
+    const participants = await trivia_grupal.$relatedQuery('participants').where('participants.finished',true)
+    
+    for (var l = 0; l < participants.length; l++) {
+        let rights = 0
+        let total = 0
+
+        for (var i = 0; i < results.length; i++) {
+        total++
+        results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
+        
+        results[i].file =  await results[i].$relatedQuery('file')
+
+            for (var e = 0; e < results[i].options.length; e++) {
+                
+                let answer = await results[i].options[e]
+                                             .$relatedQuery('answers')
+                                             .select('answers.*','options.statement')
+                                             .join('options','options.id','answers.option_id')
+                                             .where('user_id',participants[l].id)
+                                             .first()
+               
+                if (answer !== undefined) {
+                    answer.is_right ? rights++ : null
+                }
+            }
+        }
+        
+        participants[l].percenteje = ((rights*100)/total);
+        participants[l].points = (participants[l].percenteje/10).toFixed(2)
+        participants[l].rights = rights
+        participants[l].total = total
+    }
+    
+    return res.status(200).json(participants.sort(compare))
 }
 
 export const store = async (req, res) => {
@@ -152,4 +244,15 @@ export const destroy = async (req, res) => {
     const model = await Award.query().findById(id).delete().first();
 
     return res.json(model);
+}
+
+function compare(a, b) {
+    console.log(a.rights +'<'+ b.rights )
+    if (a.rights < b.rights ) {
+        return 1;
+    }
+    if (a.rights > b.rights) {
+        return -1;
+    }
+    return 0;
 }
