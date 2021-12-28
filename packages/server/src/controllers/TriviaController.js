@@ -1,4 +1,4 @@
-import { Trivia, TriviaGrupal, Subtheme, Level, Question } from '../models'
+import { Trivia, TriviaGrupal, Subtheme, Level, Question, Plan } from '../models'
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
@@ -12,6 +12,42 @@ export const index = async (req, res) => {
     if (filter) {
         if (filter.name) {
             query.where('name', 'ilike', `%${filter.name}%`)
+        }
+    }
+
+    return paginatedQueryResponse(query, req, res)
+}
+
+export const indexByPlan = async (req, res) => {
+    const { filter } = req.query
+    const user = req.user
+
+    const plan = await user.$relatedQuery('plan').where('active',true).first()
+    
+    const query = Trivia.query().select(
+        Trivia.ref('*'),
+        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+        Trivia.relatedQuery('subthemes').join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id').count().as('subthemesFinishedCount'),
+        Trivia.relatedQuery('files').count().as('filesCount')
+    )
+    .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
+    
+
+    if (filter) {
+        if (filter.plan_active) {
+           query.where('plan_id',plan.plan_id) 
+        }
+        if (filter.plan_not_active) {
+           query.where('plan_id','!=',plan.plan_id) 
+        }
+        if (filter.name) {
+            query.where('name', 'ilike', `%${filter.name}%`)
+        }
+        if (filter.top) {
+            query.orderBy('subthemesFinishedCount','DESC')
+        }
+        if (filter.recent) {
+            query.orderBy('id','DESC')
         }
     }
 
