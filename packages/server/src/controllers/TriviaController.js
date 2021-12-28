@@ -1,4 +1,4 @@
-import { Trivia, TriviaGrupal, Subtheme, Level } from '../models'
+import { Trivia, TriviaGrupal, Subtheme, Level, Question, Plan } from '../models'
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
@@ -12,6 +12,42 @@ export const index = async (req, res) => {
     if (filter) {
         if (filter.name) {
             query.where('name', 'ilike', `%${filter.name}%`)
+        }
+    }
+
+    return paginatedQueryResponse(query, req, res)
+}
+
+export const indexByPlan = async (req, res) => {
+    const { filter } = req.query
+    const user = req.user
+
+    const plan = await user.$relatedQuery('plan').where('active',true).first()
+    
+    const query = Trivia.query().select(
+        Trivia.ref('*'),
+        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+        Trivia.relatedQuery('subthemes').join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id').count().as('subthemesFinishedCount'),
+        Trivia.relatedQuery('files').count().as('filesCount')
+    )
+    .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
+    
+
+    if (filter) {
+        if (filter.plan_active) {
+           query.where('plan_id',plan.plan_id) 
+        }
+        if (filter.plan_not_active) {
+           query.where('plan_id','!=',plan.plan_id) 
+        }
+        if (filter.name) {
+            query.where('name', 'ilike', `%${filter.name}%`)
+        }
+        if (filter.top) {
+            query.orderBy('subthemesFinishedCount','DESC')
+        }
+        if (filter.recent) {
+            query.orderBy('id','DESC')
         }
     }
 
@@ -102,6 +138,25 @@ export const showGrupal = async (req, res) => {
                                     .first()
     
     return res.status(201).json(model)
+}
+
+export const destroyByUsersId = async (req, res) => {
+    let token = req.params.token
+
+    const model = await TriviaGrupal.query()
+                                    .where('link',token)
+                                    .withGraphFetched('subtheme')
+                                    .withGraphFetched('participants')
+                                    .first()
+
+    const results = await Question.query()
+                          .where('subtheme_id', subtheme_id)
+                          .where('level_id', level_id)
+                          .withGraphFetched('options')
+
+    //const model = await Answer.query().where('user_id',`${user_id}`).delete();
+
+    return res.json(model);
 }
 
 export const destroy = async (req, res) => {

@@ -5,6 +5,7 @@ import categoriesRoutes from './categories.routes';
 import levelsRoutes from './levels.routes';
 import profileRoutes from './profile.routes';
 import updatePasswordRouter from './update-password.routes';
+import updatePasswordMobileRouter from './update-password-mobile.routes';
 import triviasRoutes from './trivias.routes';
 import plansRoutes from './plans.routes';
 import paymentsRoutes from './payments.routes';
@@ -52,6 +53,7 @@ apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
 apiRouter.use('/fcms', isAuthorizedMiddleware, fcmsRoutes)
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
+apiRouter.use('/update-password-mobile', updatePasswordMobileRouter)
 
 
 // Catch all other routes

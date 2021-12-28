@@ -3,6 +3,7 @@ export async function up(knex) {
     return knex.schema.createTable('participants', table => {
         table.increments('id').primary();
         table.integer('user_id').unsigned();
+        table.boolean('finished').default(0);
         table.integer('schedule_id').unsigned();
         table.integer('trivia_grupal_id').unsigned();
         table.foreign('schedule_id').references('schedules.id').onDelete('cascade');
