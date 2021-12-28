@@ -5,6 +5,8 @@ import { useInput, InputHelperText } from 'react-admin';
 import { useDropzone } from 'react-dropzone';
 import { ReactComponent as UploadIcon } from '@approbado/lib/icons/Upload.svg'
 import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import { ReactComponent as PhotoIcon } from '@approbado/lib/icons/Photo.svg'
 
 const useStyles = makeStyles(
     theme => ({
@@ -12,26 +14,57 @@ const useStyles = makeStyles(
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: theme.palette.background.dark,
+            background: 'transparent',
             cursor: 'pointer',
-            padding: theme.spacing(1),
             textAlign: 'center',
             color: theme.palette.getContrastText(
                 theme.palette.background.default
             ),
             border: `1px solid #B7B7B7`,
-            borderRadius: '3px',
+            borderRadius: '50%',
             '& > *': {
                 marginRight: '0.5rem',
                 marginLeft: '0.5rem'
-            }
+            },
+            height: '7.5rem',
+            width: '7.5rem',
+            transition: '0.5s',
+            '&:hover': {
+                opacity: '0.9'
+            },
+            zIndex: 10,
+            position: 'relative'
         },
-        root: { width: '100%' },
+        thumb: {
+            width: 'inherit',
+            height: 'inherit',
+            zIndex: 0
+        },
+        img: {
+            height: 'inherit',
+            width: 'inherit'
+        },
+        icon: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '1rem',
+            height: '1rem',
+            padding: '0.5rem',
+            borderRadius: '50%',
+            background: theme.palette.info.main,
+            zIndex: 1000,
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            border: '2px solid #fff',
+            color: '#fff'
+        }
     }),
-    { name: 'RaUploadFileButton' }
+    { name: 'RaProfilePhotoInput' }
 );
 
-const UploadFileButton = (props) => {
+const ProfilePhotoInput = (props) => {
     const {
         accept,
         children,
@@ -54,6 +87,7 @@ const UploadFileButton = (props) => {
         ...rest
     } = props;
     const classes = useStyles(props);
+    const [file, setFile] = React.useState('');
 
     // turn a browser dropped file structure into expected structure
     const transformFile = file => {
@@ -68,6 +102,7 @@ const UploadFileButton = (props) => {
             rawFile: file,
             [source]: preview,
         };
+        setFile({ preview: preview })
 
         if (title) {
             transformedFile[title] = file.name;
@@ -76,31 +111,17 @@ const UploadFileButton = (props) => {
         return transformedFile;
     };
 
-    const transformFiles = (files) => {
-        if (!files) {
-            return multiple ? [] : null;
-        }
-
-        if (Array.isArray(files)) {
-            return files.map(transformFile);
-        }
-
-        return transformFile(files);
-    };
-
     const {
         id,
-        input: { onChange, value, ...inputProps },
-        meta
+        input: { onChange, value, ...inputProps }
     } = useInput({
-        format: format || transformFiles,
-        parse: parse || transformFiles,
+        format: format || transformFile,
+        parse: parse || transformFile,
         source,
         type: 'file',
         validate,
         ...rest,
     });
-    const { touched, error, submitError } = meta;
 
     const onDrop = (newFiles, rejectedFiles, event) => {
         const updatedFiles = [...newFiles];
@@ -120,38 +141,41 @@ const UploadFileButton = (props) => {
         onDrop,
     });
 
+    const thumbs = () => (
+        <Avatar
+            className={classes.img}
+            src={file.preview}
+        />
+    );
+
+    React.useEffect(() => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      URL.revokeObjectURL(file.preview)
+    }, [file]);
+
     return (
-        <>
-            <div
-                data-testid="dropzone"
-                className={classes.dropZone}
-                {...getRootProps()}
-            >
-                <UploadIcon />
-                <input
-                    id={id}
-                    {...getInputProps({
-                        ...inputProps,
-                        ...inputPropsOptions,
-                    })}
-                />
-                <Typography variant="subtitle1" component="span">
-                    {'Subir archivo'}
-                </Typography>
+        <div
+            data-testid="dropzone"
+            className={classes.dropZone}
+            {...getRootProps()}
+        >
+            <input
+                id={id}
+                {...getInputProps({
+                    ...inputProps,
+                    ...inputPropsOptions,
+                })}
+            />
+            {thumbs()}
+            <div className={classes.icon}>
+                <PhotoIcon />
             </div>
-            <FormHelperText>
-                <InputHelperText
-                    touched={touched}
-                    error={error || submitError}
-                    helperText={helperText}
-                />
-            </FormHelperText>
-        </>
+        </div>
     );
 };
 
-UploadFileButton.defaultProps = {
+ProfilePhotoInput.defaultProps = {
     children: <></>
 }
 
-export default UploadFileButton;
+export default ProfilePhotoInput;
