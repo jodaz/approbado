@@ -51,6 +51,22 @@ export const show = async (req, res) => {
     return res.status(201).json(model)
 }
 
+export const showRandom = async (req, res) => {
+    const user = req.user
+
+    const plan = await user.$relatedQuery('plan').where('active',true).first()
+    
+    const model = await Subtheme.query()
+                                .join('trivias_plans','trivias_plans.trivia_id','subthemes.trivia_id')
+                                .where('plan_id',plan.plan_id) 
+                                .orderByRaw('random()')
+                                .first();
+    
+    await model.$fetchGraph('trivia')
+
+    return res.status(200).json(model)
+}
+
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const model = await Subtheme.query().findById(id).delete().first();
