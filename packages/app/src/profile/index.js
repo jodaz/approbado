@@ -1,25 +1,32 @@
-import EditProfile from './EditProfile'
-import TabbedList from '@approbado/lib/components/TabbedList'
+import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
-
-const tags = [
-    {
-        name: 'Datos personales',
-        pathname: 'general',
-        component: <EditProfile />
-    }
-]
+import { useParams } from 'react-router-dom'
+import { useDataProvider } from 'react-admin'
 
 const Profile = () => {
+    const dataProvider = useDataProvider();
+    const { username } = useParams();
+    const [state, setState] = React.useState({})
+
+    const fetchProfile = React.useCallback(async () => {
+        const data = await dataProvider.getOne(
+            'users',
+            {
+                filter: { user_name: username },
+            }
+        );
+        console.log(data)
+        setState(state => ({ ...state, data }));
+    }, [useDataProvider]);
+
+    React.useEffect(() => {
+        fetchProfile();
+    }, []);
+
     return (
         <Grid container>
             <Grid item sm='4'>
 
-            </Grid>
-            <Grid item sm='8'>
-                <TabbedList
-                    tags={tags}
-                />
             </Grid>
         </Grid>
     );

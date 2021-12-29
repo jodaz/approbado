@@ -9,7 +9,7 @@ import ErrorLayout from '@approbado/lib/layouts/Error'
 export default [
     <RouteWithoutLayout path='/auth' render={() => <Authenticate />} />,
     <Route exact path="/account" render={() => <Account />} />,
-    <Route exact path="/profile" render={() => <Profile />} />,
+    <Route exact path="/profile/:username" render={() => <Profile />} />,
     <Route exact path="/trivias" render={() => <TriviaList />} />,
     <RouteWithoutLayout
         path="/error"
