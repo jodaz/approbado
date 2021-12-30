@@ -16,7 +16,7 @@ const options = {
  * Sign in using Email and Password.
  */
 passport.use(new JwtStrategy(options, async (req, jwtToken, done) => {
-    const user = await User.query().findById(jwtToken.id);
+    const user = await User.query().findById(jwtToken.user.id);
 
     if (user) {
         req.user = user;
