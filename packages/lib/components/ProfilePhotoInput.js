@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { useInput, InputHelperText } from 'react-admin';
+import { useInput } from 'react-admin';
 import { useDropzone } from 'react-dropzone';
-import { ReactComponent as UploadIcon } from '@approbado/lib/icons/Upload.svg'
-import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import { ReactComponent as PhotoIcon } from '@approbado/lib/icons/Photo.svg'
 
