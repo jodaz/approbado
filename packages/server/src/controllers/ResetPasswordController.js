@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { SECRET, APP_DOMAIN, MailTransporter } from '../config'
 import bcrypt from 'bcrypt'
 import { User, PasswordReset } from '../models'
-import { validateRequest, sendMail } from '../utils'
+import { validateRequest, sendMail, makeToken } from '../utils'
 
 export const resetPassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
@@ -88,6 +88,39 @@ export const updatePassword = async (req, res) => {
 
         return res.status(201).json({
             success: true
+        })
+    }
+}
+
+export const resetPasswordMobile = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+
+        const user  = await User.query().where('email',req.body.email).first()
+        
+        const token = await makeToken(10)
+        
+        await PasswordReset.query().insert({user_id : user.id,token : token})
+        // Send email
+        const mailerData = {
+            to: user.email,
+            template: 'updateMobilePassword',
+            subject: 'Cambio de contraseña',
+            context: {
+                name: user.names,
+                token: token,
+            }
+        };
+
+        await sendMail(mailerData, res)
+
+        return res.status(200).json({
+            data: {
+                id: user.id,
+                success: true,
+                token : token
+            }
         })
     }
 }

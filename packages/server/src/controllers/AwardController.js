@@ -69,6 +69,10 @@ export const verifyAward = async (req, res) => {
     
     const user = await User.query().findById(user_id)
     
+    if (response.win_award) {
+        await user.$relatedQuery('awards').relate(award.id)
+    }
+    
     const user_profile = await user.$relatedQuery('profile');
 
     if (type == 'Reto') {
@@ -94,7 +98,7 @@ export const showResultAward = async (subtheme_id, level_id, user_id) => {
     for (var i = 0; i < results.length; i++) {
         total++
         results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
-
+        results[i].file =  await results[i].$relatedQuery('file')
         for (var e = 0; e < results[i].options.length; e++) {
             
             let answer = await results[i].options[e]
@@ -137,7 +141,7 @@ export const showResultTriviaGrupal = async (req, res) => {
         for (var i = 0; i < results.length; i++) {
         total++
         results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
-
+        results[i].file =  await results[i].$relatedQuery('file')
             for (var e = 0; e < results[i].options.length; e++) {
                 
                 let answer = await results[i].options[e]
@@ -178,6 +182,8 @@ export const showResultTriviaGrupalSchedule = async (req, res) => {
         for (var i = 0; i < results.length; i++) {
         total++
         results[i].option_right = await results[i].$relatedQuery('options').where('is_right',true).first()
+        
+        results[i].file =  await results[i].$relatedQuery('file')
 
             for (var e = 0; e < results[i].options.length; e++) {
                 
@@ -241,10 +247,11 @@ export const destroy = async (req, res) => {
 }
 
 function compare(a, b) {
-    if (a.points < b.points ) {
+    console.log(a.rights +'<'+ b.rights )
+    if (a.rights < b.rights ) {
         return 1;
     }
-    if (a.points > b.points) {
+    if (a.rights > b.rights) {
         return -1;
     }
     return 0;

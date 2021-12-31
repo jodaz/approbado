@@ -14,9 +14,9 @@ export class Question extends BaseClass {
                 to: 'subthemes.id'
             }
         },
-        questions: {
+        file: {
             relation: BaseClass.BelongsToOneRelation,
-            modelClass: `${__dirname}/Question`,
+            modelClass: `${__dirname}/File`,
             join: {
                 from: 'questions.file_id',
                 to: 'files.id'
