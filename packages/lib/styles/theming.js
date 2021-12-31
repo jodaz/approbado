@@ -99,20 +99,17 @@ const theme = {
                 transition: "none",
                 marginBottom: '0.3rem',
                 boxShadow: 'none',
-                '&:focus': {
-                    borderColor: palette.primary.main
-                }
-            },
-            input: {
-                backgroundColor: fade('#fff', 0.8),
-                padding: '0.7rem !important',
-                borderRadius: 6,
-                '&:focus': {
+                '&.Mui-focused': {
                     borderRadius: 6,
                     color: `${palette.primary.main}`,
                     border: `1px solid ${palette.info.main}`,
                     boxShadow: `0px 0px 1px 1px ${fade(palette.info.main, 0.7)}`
                 }
+            },
+            input: {
+                backgroundColor: fade('#fff', 0.8),
+                padding: '0.7rem !important',
+                borderRadius: 6
             }
         },
         MuiInputLabel: {
@@ -144,12 +141,22 @@ const theme = {
         },
         MuiFilledInput: {
             root: {
-                    transition: "none !important",
-                    borderRadius: '5px !important',
-                    '&$disabled': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    }
+                transition: "none !important",
+                borderRadius: '5px !important',
+                '&$disabled': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                }
             },
+            underline: {
+                '&::before': {
+                    content: 'none'
+                },
+                '&::after': {
+                    content: 'none'
+                }
+            }
+        },
+        MuiInput: {
             underline: {
                 '&::before': {
                     content: 'none'
@@ -208,7 +215,8 @@ const theme = {
         },
         MuiInputAdornment: {
             root: {
-                color: '#ced4da'
+                color: '#ced4da',
+                marginLeft: '8px !important'
             }
         },
         MuiDialogTitle: {
@@ -257,7 +265,7 @@ const theme = {
         MuiButtonBase: {
             // disable ripple for perf reasons
             disableRipple: true
-        }
+        },
     },
 }
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field } from 'react-final-form';
 import {
-    Card,
     CardActions,
     Typography,
     Box
@@ -14,7 +13,6 @@ import useStyles from '@approbado/lib/styles/formStyles'
 import { Link } from 'react-router-dom'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
-import AuthHeaderForm from './AuthHeaderForm';
 import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import VpnKeyIcon from '@material-ui/icons/VpnKeyOutlined';
@@ -97,130 +95,126 @@ const Register = () => {
     }, [state]);
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={formInitialValues}>
-            <Card className={classes.card}>
-                <div className={classes.form}>
-                    <AuthHeaderForm title='Crear cuenta' />
-                    <Field
-                        component={renderInput}
-                        name="names"
-                        type="text"
-                        placeholder='Ingresa un nombre'
-                        disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AccountCircle />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Field
-                        name="email"
-                        // @ts-ignore
-                        component={renderInput}
-                        placeholder='Ingresa un correo electrónico'
-                        disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <EmailOutlinedIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Field
-                        name="password"
-                        // @ts-ignore
-                        component={renderInput}
-                        placeholder='Ingresa una contraseña'
-                        type="password"
-                        disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <VpnKeyIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Field
-                        name="phone"
-                        // @ts-ignore
-                        component={renderInput}
-                        placeholder='Teléfono'
-                        type="text"
-                        disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LocalPhoneOutlinedIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Field
-                        name="conditions"
-                        type="checkbox"
-                        value="conditions"
-                        component={Checkbox}
-                    >
-                        <label>
-                            {' '}
-                            He leído y acepto los {' '}
-                            <a
-                                href="http://approbado.alaxatech.com/terminos-y-condiciones/"
-                                target="_blank"
-                                className={classes.link}
-                            >
-                                <strong>términos y condiciones</strong>
-                            </a>
-                        </label>
-                    </Field>
-                    {sendWithCode && (
-                        <Field
-                            component={renderInput}
-                            name="code"
-                            type="text"
-                            placeholder='Ingresa el código de confirmación'
-                            disabled={loading}
-                            className={classes.input}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <ConfirmationNumberIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    )}
-                    <CardActions className={classes.actions}>
-                        <Button
-                            variant='contained'
-                            color='secondary'
-                            type="submit"
-                            className={classes.saveButton}
-                            disabled={loading}
-                            fullWidth
+        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={formInitialValues} title="Crear usuario">
+            <div className={classes.form}>
+                <Field
+                    component={renderInput}
+                    name="names"
+                    type="text"
+                    placeholder='Ingresa un nombre'
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircle />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Field
+                    name="email"
+                    // @ts-ignore
+                    component={renderInput}
+                    placeholder='Ingresa un correo electrónico'
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <EmailOutlinedIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Field
+                    name="password"
+                    // @ts-ignore
+                    component={renderInput}
+                    placeholder='Ingresa una contraseña'
+                    type="password"
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <VpnKeyIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Field
+                    name="phone"
+                    // @ts-ignore
+                    component={renderInput}
+                    placeholder='Teléfono'
+                    type="text"
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LocalPhoneOutlinedIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Field
+                    name="conditions"
+                    type="checkbox"
+                    value="conditions"
+                    component={Checkbox}
+                >
+                    <label>
+                        {' '}
+                        He leído y acepto los {' '}
+                        <a
+                            href="http://approbado.alaxatech.com/terminos-y-condiciones/"
+                            target="_blank"
+                            className={classes.link}
                         >
-                            {'Crear una cuenta'}
-                        </Button>
-                        <Box component="div" marginTop="2rem">
-                            <Typography variant="subtitle1" component="p">
-                                ¿Ya tienes una cuenta?
-                                {' '}
-                                <Link to="/login" className={classes.link}>
-                                    <strong>Ingresa aquí</strong>
-                                </Link>
-                            </Typography>
-                        </Box>
-                    </CardActions>
-                </div>
-            </Card>
+                            <strong>términos y condiciones</strong>
+                        </a>
+                    </label>
+                </Field>
+                {sendWithCode && (
+                    <Field
+                        component={renderInput}
+                        name="code"
+                        type="text"
+                        placeholder='Ingresa el código de confirmación'
+                        disabled={loading}
+                        className={classes.input}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <ConfirmationNumberIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                )}
+                <CardActions className={classes.actions}>
+                    <Button
+                        variant='contained'
+                        color='secondary'
+                        disabled={loading}
+                        fullWidth
+                        unresponsive
+                    >
+                        {'Crear una cuenta'}
+                    </Button>
+                    <Box component="div" marginTop="2rem">
+                        <Typography variant="subtitle1" component="p">
+                            ¿Ya tienes una cuenta?
+                            {' '}
+                            <Link to="/login" className={classes.link}>
+                                <strong>Ingresa aquí</strong>
+                            </Link>
+                        </Typography>
+                    </Box>
+                </CardActions>
+            </div>
         </AuthLayout >
     );
 };

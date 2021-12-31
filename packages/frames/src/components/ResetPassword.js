@@ -58,45 +58,41 @@ const ResetPassword = () => {
 
     return (
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Recuperar contraseña'>
-            <Card className={classes.card}>
-                <div className={classes.form}>
-                    <AuthHeaderForm title='Recuperar contraseña' />
-                    <Field
-                        component={renderInput}
-                        name="email"
-                        type="text"
-                        placeholder='Correo electrónico'
+            <div className={classes.form}>
+                <Field
+                    component={renderInput}
+                    name="email"
+                    type="text"
+                    placeholder='Correo electrónico'
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircle />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <CardActions className={classes.actions}>
+                    <Button
+                        variant='contained'
+                        color='secondary'
                         disabled={loading}
-                        className={classes.input}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AccountCircle />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <CardActions className={classes.actions}>
-                        <Button
-                            variant='contained'
-                            color='secondary'
-                            type="submit"
-                            className={classes.saveButton}
-                            disabled={loading}
-                            fullWidth
-                        >
-                            {'Verificar'}
-                        </Button>
-                        <Box component="div" marginTop="2rem">
-                            <Typography variant="subtitle1" component="p">
-                                ¿Aún no tienes una cuenta?
-                                {' '}
-                                <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
-                            </Typography>
-                        </Box>
-                    </CardActions>
-                </div>
-            </Card>
+                        unresponsive
+                        fullWidth
+                    >
+                        Verificar
+                    </Button>
+                    <Box component="div" marginTop="2rem">
+                        <Typography variant="subtitle1" component="p">
+                            ¿Aún no tienes una cuenta?
+                            {' '}
+                            <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
+                        </Typography>
+                    </Box>
+                </CardActions>
+            </div>
             <Dialog open={open} handleClose={handleClose} classes={classes}>
                 <Typography gutterBottom>
                     ¡Revise su correo electrónico! Le enviamos un código de recuperación.

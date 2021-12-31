@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 const initialMenuState = {
     text: 'Menú',
-    picture: 'default/user.png',
+    picture: 'public/default/user.png',
 }
 
 const UserMenu= props => {
@@ -83,7 +83,7 @@ const UserMenu= props => {
                 >
                         <Avatar
                             className={classes.avatar}
-                            src={`${process.env.REACT_APP_API_DOMAIN}/public/${picture}`}
+                            src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
                             alt={text}
                         />
                         <Typography variant="subtitle1" fontWeight='900'>
