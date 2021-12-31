@@ -9,12 +9,14 @@ import { useMediaQuery, makeStyles } from '@material-ui/core'
 import PopularPosts from './PopularPosts'
 import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
+import NoContent from '@approbado/lib/components/NoContent'
+import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         width: '100%',
-        paddingTop: '2rem',
+        paddingTop: '2rem'
     },
     container: props => ({
         width: props.isXSmall ? '100%' : '75%'
@@ -36,12 +38,15 @@ const useStyles = makeStyles(theme => ({
         fontSize: '1.1rem',
         paddingBottom: '1rem'
     },
+    commentsBox: {
+        minHeight: '20rem'
+    }
 }))
 
 const ForumShow = props => {
     const showControllerProps = useShowController(props)
     const isXSmall = useMediaQuery(theme =>
-        theme.breakpoints.down('xs')
+        theme.breakpoints.down('sm')
     )
     const classes = useStyles({
         isXSmall: isXSmall
@@ -73,6 +78,14 @@ const ForumShow = props => {
                         </Box>
                         <PostDescription record={record} />
                     </Box>
+                </Box>
+                <Box className={classes.commentsBox}>
+                    {(record.commentsCount == 0) && (
+                        <NoContent
+                            icon={<ForumIllustration />}
+                            title='Sé el primero en comentar'
+                        />
+                    )}
                 </Box>
             </Box>
             <PopularPosts isXSmall={isXSmall} />

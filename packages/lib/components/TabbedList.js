@@ -12,6 +12,7 @@ import { useLocation, Link } from 'react-router-dom';
 const useStyles = makeStyles(theme => ({
     root: {
         flexDirection: 'column',
+        minHeight: '15rem'
     },
     boxLayoutStyles: {
         margin: '0 !important',
@@ -31,6 +32,10 @@ const useStyles = makeStyles(theme => ({
             color: `${theme.palette.info.main} !important`,
             borderBottom: `3px solid ${theme.palette.info.main}`
         }
+    },
+    content: {
+        paddingTop: '3rem',
+        minHeight: '15rem'
     }
 }));
 
@@ -99,7 +104,7 @@ const TabbedList = ({
                     { children && React.cloneElement(children, {})}
                 </Box>
                 <Divider />
-                <Box component='div' paddingTop='2rem'>
+                <Box component='div' className={classes.content}>
                     {React.cloneElement(componentToRender(), {})}
                 </Box>
             </Box>

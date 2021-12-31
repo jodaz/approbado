@@ -11,6 +11,8 @@ import { ListBase, useListContext } from 'react-admin'
 import ForumCard from './ForumCard'
 import ForumWarning from './ForumWarning'
 import TopContributors from './TopContributors'
+import NoContent from '@approbado/lib/components/NoContent'
+import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
 
 const ForumList = props => (
     <ListBase
@@ -55,9 +57,10 @@ const ForumListView = () => {
                     />
                 ))}
                 {(total == 0) && (
-                    <Typography component={'p'} variant="body1">
-                        No tenemos debates disponibles, ¿quizás desees volver más tarde?
-                    </Typography>
+                    <NoContent
+                        icon={<ForumIllustration />}
+                        title='Aún no hay debates publicados'
+                    />
                 )}
             </Box>
             <ForumWarning />

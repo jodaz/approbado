@@ -4,6 +4,7 @@ export const UNSET_TRIVIA = 'UNSET_TRIVIA';
 export const SET_TRIVIA = 'SET_TRIVIA';
 export const UNSET_USER = 'UNSET_USER';
 export const SET_USER = 'SET_USER'
+import { axios } from '@approbado/lib/providers'
 
 export const unsetTrivia = () => ({
     type: UNSET_TRIVIA
@@ -32,3 +33,7 @@ export const setDialog = (name) => ({
     type: SET_DIALOG,
     payload: name
 });
+
+export const fetchUser = (data) => {
+
+}

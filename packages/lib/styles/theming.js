@@ -259,6 +259,11 @@ const theme = {
             colorSecondary: {
                 color: `${palette.info.main} !important`
             }
+        },
+        MuiGrid: {
+            item: {
+                width: '100%'
+            }
         }
     },
     props: {

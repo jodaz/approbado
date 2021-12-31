@@ -44,7 +44,7 @@ export default ({
         compose;
 
     let persistedState = loadState()
-    console.log(persistedState)
+
     if (persistedState?.user?.isAuth) {
         persistedState.user = persistedState.user;
     }
