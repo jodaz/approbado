@@ -42,18 +42,6 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.main,
         boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.2)',
         ...socialIconStyles
-    },
-    divisor: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontWeight: 300,
-        marginTop: '2rem',
-        alignItems: 'center'
-    },
-    line: {
-        border: `1px solid rgba(0, 0, 0, 0.2)`,
-        height: '0',
-        width: '44%'
     }
 }));
 
@@ -68,11 +56,6 @@ export default ({ title }) => {
             <Grid container className={classes.social}>
                 <FBLoginButton className={classes.fbButton} />
                 <GoogleLoginButton className={classes.googleButton} />
-            </Grid>
-            <Grid container className={classes.divisor}>
-                <span className={classes.line}></span>
-                {'O'}
-                <span className={classes.line}></span>
             </Grid>
         </Grid>
     )

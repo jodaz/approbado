@@ -82,73 +82,69 @@ const UpdatePassword = () => {
                 ? <Spinner />
                 : (
                     <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Recuperar contraseña'>
-                        <Card className={classes.card}>
-                            <div className={classes.form}>
-                                <AuthHeaderForm title='Recuperar cuenta' />
-                                {(verificationError == undefined)
-                                    ? (
-                                        <>
-                                            <Field
-                                                component={renderInput}
-                                                name="password"
-                                                type="text"
-                                                placeholder='Nueva contraseña'
-                                                disabled={loading}
-                                                className={classes.input}
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AccountCircle />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
-                                            />
-                                            <Field
-                                                component={renderInput}
-                                                name="password_confirmed"
-                                                type="text"
-                                                placeholder='Ingresa de nuevo tu contraseña'
-                                                disabled={loading}
-                                                className={classes.input}
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AccountCircle />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
-                                            />
-                                        </>
-                                    )
-                                    : (
-                                        <Typography variant='subtitle1'>
-                                            Lo siento, {verificationError}.
-                                        </Typography>
-                                    )
-                                }
-                                <CardActions className={classes.actions}>
-                                    {(verificationError == undefined) && (
-                                        <Button
-                                            variant='contained'
-                                            color='secondary'
-                                            type="submit"
-                                            className={classes.saveButton}
+                        <div className={classes.form}>
+                            {(verificationError == undefined)
+                                ? (
+                                    <>
+                                        <Field
+                                            component={renderInput}
+                                            name="password"
+                                            type="text"
+                                            placeholder='Nueva contraseña'
                                             disabled={loading}
-                                            fullWidth
-                                        >
-                                            {'Enviar'}
-                                        </Button>
-                                    )}
-                                    <Box component="div" marginTop="2rem">
-                                        <Typography variant="subtitle1" component="p">
-                                            ¿Aún no tienes una cuenta?
-                                            {' '}
-                                            <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
-                                        </Typography>
-                                    </Box>
-                                </CardActions>
-                            </div>
-                        </Card>
+                                            className={classes.input}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <AccountCircle />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                        <Field
+                                            component={renderInput}
+                                            name="password_confirmed"
+                                            type="text"
+                                            placeholder='Ingresa de nuevo tu contraseña'
+                                            disabled={loading}
+                                            className={classes.input}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <AccountCircle />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                    </>
+                                )
+                                : (
+                                    <Typography variant='subtitle1'>
+                                        Lo siento, {verificationError}.
+                                    </Typography>
+                                )
+                            }
+                            <CardActions className={classes.actions}>
+                                {(verificationError == undefined) && (
+                                    <Button
+                                        variant='contained'
+                                        color='secondary'
+                                        disabled={loading}
+                                        unresponsive
+                                        fullWidth
+                                    >
+                                        Actualizar contraseña
+                                    </Button>
+                                )}
+                                <Box component="div" marginTop="2rem">
+                                    <Typography variant="subtitle1" component="p">
+                                        ¿Aún no tienes una cuenta?
+                                        {' '}
+                                        <Link to="/register" className={classes.link}><strong>Ingresa aquí</strong></Link>
+                                    </Typography>
+                                </Box>
+                            </CardActions>
+                        </div>
                     </AuthLayout >
                 )
             }

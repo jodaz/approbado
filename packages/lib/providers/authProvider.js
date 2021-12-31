@@ -21,7 +21,6 @@ export const authProvider = (packageName) => ({
 
         if (response.status === 401 || response.status === 403) {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-            await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
         }
 
         return Promise.resolve();
@@ -29,11 +28,11 @@ export const authProvider = (packageName) => ({
     checkAuth: async () => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
-        if (!token) {
-            return (packageName == 'app')
-                ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
-                : Promise.reject({ redirectTo: '/login' })
-        }
+        // if (!token) {
+        //     return (packageName == 'app')
+        //         ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
+        //         : Promise.reject({ redirectTo: '/login' })
+        // }
 
         return Promise.resolve()
     },
@@ -47,7 +46,6 @@ export const authProvider = (packageName) => ({
 
         if (token) {
             const { exp, iat, ...rest } = jwtDecode(token);
-
             return Promise.resolve(rest);
         }
 
