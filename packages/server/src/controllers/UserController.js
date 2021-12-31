@@ -9,12 +9,14 @@ export const index = async (req, res) => {
     const query = User.query();
 
     if (filter) {
-
         if (filter.names) {
             query.where('names', 'ilike', `%${filter.names}%`)
         }
         if (filter.email) {
             query.where('email', 'ilike', `%${filter.email}%`)
+        }
+        if (filter.user_name) {
+            query.where('user_name', 'ilike', `%${filter.user_name}%`)
         }
         if (filter.is_registered) {
             query.where('is_registered', filter.is_registered)
@@ -34,9 +36,17 @@ export const index = async (req, res) => {
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await User.query().findById(id).withGraphFetched('profile')
+    const user = await User.query().findById(id)
+    
+    const profile = await user.$fetchGraph('profile');
+    profile.posts = await user.$relatedQuery('posts');
+    profile.discussion = await user.$relatedQuery('posts').whereRaw('parent_id is null');
+    profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
+    profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
 
-    return res.status(201).json(model)
+    return res.status(201).json({
+        data: profile
+    })
 }
 
 export const store = async (req, res) => {
@@ -119,9 +129,9 @@ export const update_mobile = async (req, res) => {
 
     if (current_password) {
         const user = await User.query().findById(id)
-        
+
         const match = await bcrypt.compare(current_password, user.password)
-        
+
         if (match) {
             data = {
                 ...data,
@@ -129,11 +139,11 @@ export const update_mobile = async (req, res) => {
             }
         }else{
             return res.status(422).json({
-                errors: { "current_password" : "Contraseña actual incorrecta"} 
+                errors: { "current_password" : "Contraseña actual incorrecta"}
             })
         }
     }
-    
+
     const model = await User.query().updateAndFetchById(id, {
         ...data,
     })
@@ -144,7 +154,7 @@ export const update_mobile = async (req, res) => {
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
     const user = await User.query().findById(id);
-    
+
     await user.$relatedQuery('memberships').delete()
     await user.$relatedQuery('profile').delete()
     await user.$relatedQuery('authProviders').delete()
@@ -154,8 +164,8 @@ export const destroy = async (req, res) => {
     await user.$relatedQuery('posts').delete()
     await user.$relatedQuery('schedules').delete()
     await user.$relatedQuery('payments').delete()
-    
+
     await User.query().findById(id).delete();
-    
+
     return res.json({data : "Cuenta Eliminada"});
 }

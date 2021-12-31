@@ -7,6 +7,7 @@ import {
     adminSaga,
     USER_LOGOUT,
 } from 'react-admin';
+import { loadState } from './persistedState'
 
 export default ({
     authProvider,
@@ -42,9 +43,15 @@ export default ({
             })) ||
         compose;
 
+    let persistedState = loadState()
+    console.log(persistedState)
+    if (persistedState?.user?.isAuth) {
+        persistedState.user = persistedState.user;
+    }
+
     const store = createStore(
         resettableAppReducer,
-        { /* set your initial state here */ },
+        persistedState,
         composeEnhancers(
             applyMiddleware(
                 sagaMiddleware,

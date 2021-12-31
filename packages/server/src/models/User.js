@@ -14,6 +14,26 @@ export class User extends BaseClass {
                 to: 'memberships.user_id'
             }
         },
+        plan: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Plan`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'memberships.user_id',
+                    to: 'memberships.plan_id'
+                },
+                to: 'plans.id'
+            }
+        },
+        plan: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/Membership`,
+            join: {
+                from: 'users.id',
+                to: 'memberships.user_id'
+            }
+        },
         fcms: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Fcm`,
@@ -80,6 +100,18 @@ export class User extends BaseClass {
                     to: 'chats_users.chat_id'
                 },
                 to: 'chats.id'
+            }
+        },
+        awards: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Award`,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'awards_users.user_id',
+                    to: 'awards_users.award_id'
+                },
+                to: 'awards.id'
             }
         },
         reports: {

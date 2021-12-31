@@ -52,6 +52,7 @@ const GoogleLoginButton = ({ className }) => {
             onSuccess={processResponse}
             onFailure={processResponse}
             cookiePolicy={'single_host_origin'}
+            type="button"
         />
     )
 }

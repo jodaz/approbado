@@ -1,12 +1,13 @@
 import { Router } from "express"
 import { upload } from '../config'
-import { destroy, index, show, storeGrupal,showGrupal, store, update } from '../controllers/TriviaController'
+import { destroy, index, show, storeGrupal,showGrupal,showRamdom,indexByPlan, store, update } from '../controllers/TriviaController'
 import { createTriviaSchema, createTriviaGrupalSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const triviasRouter = Router()
 
 triviasRouter.get('/', index)
+triviasRouter.get('/plans', indexByPlan)
 triviasRouter.get('/:id', show)
 triviasRouter.get('/grupal/:token',showGrupal)
 triviasRouter.post('/grupal',checkSchema(createTriviaGrupalSchema),storeGrupal )
