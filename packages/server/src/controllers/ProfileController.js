@@ -9,7 +9,7 @@ export const show = async (req, res) => {
     profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
     profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
 
-    return res.status(201).json(model)
+    return res.status(201).json(profile)
 }
 
 export const update = async (req, res) => {
