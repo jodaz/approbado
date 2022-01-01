@@ -37,33 +37,17 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const initialMenuState = {
-    text: 'Menú',
-    picture: 'default/user.png',
-}
-
 const UserMenu= props => {
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [state, setState] = React.useState(initialMenuState)
     const classes = useStyles();
     const { children, logout } = props
     const open = Boolean(anchorEl)
     const { user, isAuth } = useUserState();
     const handleMenu = (event) => setAnchorEl(event.currentTarget)
     const handleClose = () => setAnchorEl(null)
-
     if (!logout && !children) return null
 
-    React.useEffect(() => {
-        if (isAuth) {
-            setState({
-                text: user.names,
-                picture: user.picture
-            });
-        }
-    }, [isAuth])
-
-    const { picture, text } = state;
+    let { picture, names } = user;
 
     return (
         <>
@@ -75,11 +59,11 @@ const UserMenu= props => {
                 >
                     <Avatar
                         className={classes.avatar}
-                        src={`${process.env.REACT_APP_API_DOMAIN}/public/${picture}`}
-                        alt={text}
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
+                        alt={names}
                     />
                     <Typography variant="subtitle1" fontWeight='900'>
-                        {text}
+                        {names}
                     </Typography>
                     <ArrowDown />
                 </IconButton>

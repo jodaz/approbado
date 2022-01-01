@@ -51,9 +51,7 @@ const Login = () => {
 
         return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
             .then(res => {
-                const { token } = res.data;
-
-                login(token)
+                login(res.data)
                 history.push('/');
 
                 setLoading(false);

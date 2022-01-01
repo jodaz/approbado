@@ -9,6 +9,7 @@ import ProfilePhotoInput from '@approbado/lib/components/ProfilePhotoInput'
 import Box from '@material-ui/core/Box'
 import Button from '@approbado/lib/components/Button'
 import isEmpty from 'is-empty'
+import { useUserDispatch, useUserState } from '@approbado/lib/hooks/useUserState'
 
 const validate = values => {
     const errors = {};
@@ -24,9 +25,10 @@ const validate = values => {
 }
 
 const UpdateProfile = () => {
-    const [record, setRecord] = React.useState({})
     const [provider, { loading, data }] = useFileProvider(fileProvider);
+    const { user } = useUserState();
     const notify = useNotify();
+    const { fetchUser } = useUserDispatch();
 
     const save = React.useCallback(async values => {
         await provider({
@@ -36,25 +38,16 @@ const UpdateProfile = () => {
         });
     }, [provider]);
 
-    const fetchProfile = React.useCallback(async () => {
-        const { data } = await axios.get('profile')
-
-        setRecord(data)
-    }, [axios])
-
-    React.useEffect(() => {
-        fetchProfile();
-    }, []);
-
     React.useEffect(() => {
         if (!isEmpty(data)) {
             notify('¡Su perfil ha sido actualizado!')
+            fetchUser();
         }
     }, [data])
 
     return (
         <FormWithRedirect
-            record={record}
+            record={user}
             save={save}
             disabled={loading}
             validate={validate}
@@ -62,7 +55,7 @@ const UpdateProfile = () => {
                 <Grid container spacing='5'>
                     <Grid item md='3' xs='12'>
                         <Box width='100%' display='flex' justifyContent="center">
-                            <ProfilePhotoInput source='file' />
+                            <ProfilePhotoInput source='file' preview={user.picture} />
                         </Box>
                     </Grid>
                     <Grid item md='9' xs='12'>
@@ -89,6 +82,7 @@ const UpdateProfile = () => {
                                         handleSubmitWithRedirect();
                                     }
                                 }}
+                                unresponsive
                             >
                                 Actualizar
                             </Button>

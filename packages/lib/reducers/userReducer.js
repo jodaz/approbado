@@ -1,10 +1,11 @@
-import { UNSET_USER, SET_USER } from '../actions';
+import { UNSET_USER, SET_USER, USER_FETCH_SUCCEEDED } from '../actions';
 
 const initialState = {
     isAuth: false,
     token: '',
     exp: '',
     user: {},
+    refreshToken: '',
     loading: false
 }
 
@@ -21,6 +22,11 @@ const userReducer = (
                 user: action.payload.data,
                 exp: action.payload.exp,
                 ...previousState
+            }
+        case USER_FETCH_SUCCEEDED:
+            return {
+                ...previousState,
+                user: action.payload
             }
         case UNSET_USER:
             return initialState;

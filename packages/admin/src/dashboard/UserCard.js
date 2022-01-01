@@ -64,7 +64,7 @@ const UserCard = ({ data, index }) => {
             <CardContent className={classes.cardContent}>
                 <Avatar
                     className={classes.avatar}
-                    src={`${process.env.REACT_APP_API_DOMAIN}/public/${data.picture}`}
+                    src={`${process.env.REACT_APP_API_DOMAIN}/${data.picture}`}
                     alt='photo_profile'
                 />
                 <div className={classes.innerContent}>

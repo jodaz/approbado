@@ -4,7 +4,7 @@ import { FormWithRedirect } from 'react-admin'
 import Button from '@approbado/lib/components/Button'
 import PropTypes from 'prop-types'
 
-const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, ...rest }) => (
+const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, unresponsive, ...rest }) => (
     <Box component='div'>
         { formName && <Typography component='h1' variant='h5'>{formName}</Typography> }
         <Box component='div' paddingTop='2rem'>
@@ -31,6 +31,7 @@ const BaseForm = ({ formName, children, saveButtonLabel, loading, noButton, ...r
                                                     handleSubmitWithRedirect();
                                                 }
                                             }}
+                                            unresponsive
                                         >
                                             {saveButtonLabel}
                                         </Button>
@@ -54,7 +55,8 @@ BaseForm.propTypes = {
 BaseForm.defaultProps = {
     saveButtonLabel: 'Guardar',
     disabled: false,
-    noButton: false
+    noButton: false,
+    unresponsive: false
 }
 
 export default BaseForm;
