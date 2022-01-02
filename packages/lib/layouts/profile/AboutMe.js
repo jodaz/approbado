@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box'
 import { ReactComponent as LinkedinIcon } from '@approbado/lib/icons/Linkedin.svg'
 import { ReactComponent as TwitterIcon } from '@approbado/lib/icons/Twitter.svg'
 
-const AboutMe = ({ bio }) => (
+const AboutMe = ({ bio, email, profile }) => (
     <Grid container>
         <Grid item xs={12}>
             <ProfileContentItem
@@ -18,8 +18,7 @@ const AboutMe = ({ bio }) => (
                 icon={<ProfileIcon />}
             >
                 <Typography variant="subtitle1">
-                    Hola soy Matías y soy estudiante de segundo de Derecho en la Universidad de Chile.
-                    Me gusta el campo de Derecho político, así que... vamos a darle!
+                    {bio}
                 </Typography>
             </ProfileContentItem>
         </Grid>
@@ -30,7 +29,7 @@ const AboutMe = ({ bio }) => (
                     icon={<MessageIcon />}
                 >
                     <Typography variant="subtitle1">
-                        matiashuertas@gmail.com
+                        {email}
                     </Typography>
                 </ProfileContentItem>
             </Grid>
@@ -40,24 +39,30 @@ const AboutMe = ({ bio }) => (
                     icon={<CertificationIcon />}
                 >
                     <Typography variant="subtitle1">
-                        Estudiante de derecho
+                        {profile.ocupation}
                     </Typography>
                 </ProfileContentItem>
             </Grid>
             <Grid item xs={12}>
-                <ProfileContentItem
-                    title='Redes sociales'
-                    icon={<LinkIcon />}
-                >
-                    <Box width='70px' display='flex' justifyContent="space-between">
-                        <a href="#" target="_blank">
-                            <LinkedinIcon />
-                        </a>
-                        <a href="#" target="_blank">
-                            <TwitterIcon />
-                        </a>
-                    </Box>
-                </ProfileContentItem>
+                {(profile.linkedin || profile.twitter) && (
+                    <ProfileContentItem
+                        title='Redes sociales'
+                        icon={<LinkIcon />}
+                    >
+                        <Box width='70px' display='flex' justifyContent="space-between">
+                            {(profile.linkedin) && (
+                                <a href={`https://linkedin.com/in/${profile.linkedin}`} target="_blank">
+                                    <LinkedinIcon />
+                                </a>
+                            )}
+                            {(profile.twitter) && (
+                                <a href={`https://twitter.com/${profile.twitter}`} target="_blank">
+                                    <TwitterIcon />
+                                </a>
+                            )}
+                        </Box>
+                    </ProfileContentItem>
+                )}
             </Grid>
         </Grid>
     </Grid>

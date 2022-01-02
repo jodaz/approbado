@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center'
     },
     content: {
-        width: '100%',
         paddingLeft: '3rem'
     }
 }));

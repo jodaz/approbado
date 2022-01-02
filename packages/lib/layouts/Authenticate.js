@@ -6,16 +6,19 @@ import { theme } from '@approbado/lib/styles';
 import { useLogin } from 'react-admin';
 import queryString from 'query-string'
 import Spinner from '../components/Spinner';
+import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 
 const Authenticate = () => {
     const { search } = useLocation()
     const values = queryString.parse(search)
     const login = useLogin()
     const { token } = values;
+    const { fetchUser } = useUserDispatch();
 
-    React.useEffect(() => {
+    React.useEffect(async () => {
         if (token) {
-            login(token, '/')
+            await login({ token: token, user: {}}, '/')
+            await fetchUser();
         }
     }, [token, login])
 

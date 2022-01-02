@@ -23,6 +23,20 @@ export async function seed(knex) {
             }
         })
 
+        await User.query().insertGraph({
+            names: 'OtroUsuario',
+            user_name: 'otrousuario',
+            password: encryptedPassword,
+            is_registered: true,
+            email: 'user@ejemplo2.com',
+            bio: 'Hola soy otro usuario',
+            profile: {
+                ocupation: 'Estudiante de arte',
+                summary: 'Hola soy otro usuario',
+                twitter: 'username',
+            }
+        })
+
         await Category.query().insert({
             name: 'Comercio',
         })

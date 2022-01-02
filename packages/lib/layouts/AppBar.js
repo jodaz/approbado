@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 // Icons
 import ToggleSidebarButton from './ToggleSidebarButton';
+import GoBackButton from './GoBackButton';
 import { useSelector } from 'react-redux';
 import UserMenu from './UserMenu'
 import { MenuItemLink } from 'react-admin'
@@ -88,7 +89,10 @@ const AppBar = props => {
                 variant={isXSmall ? 'regular' : 'dense'}
                 className={classes.toolbar}
             >
-                <ToggleSidebarButton />
+                <div>
+                    <ToggleSidebarButton />
+                    <GoBackButton />
+                </div>
 
                 <CustomUserMenu />
             </Toolbar>

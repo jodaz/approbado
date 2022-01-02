@@ -45,5 +45,7 @@ export const update = async (req, res) => {
         user_profile === undefined ? await user.$relatedQuery('profile').insert(profile) : await user.$relatedQuery('profile').update(profile)
     }
 
-    return res.status(201).json({ data: await user.$fetchGraph('profile') })
+    const model = await user.$fetchGraph('profile')
+
+    return res.status(201).json(model)
 }

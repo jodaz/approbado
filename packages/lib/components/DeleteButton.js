@@ -1,14 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { ReactComponent as ActionDelete } from '@approbado/lib/icons/Trash.svg';
-import classnames from 'classnames';
 import { useMutation, useNotify, useRefresh } from 'react-admin';
-
+import MenuButton from './MenuButton'
 import Confirm from '@approbado/lib/layouts/Confirm';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 const DeleteButton = (
     props
@@ -16,20 +11,15 @@ const DeleteButton = (
     const {
         basePath,
         classes: classesOverride,
-        className,
         confirmTitle = 'ra.message.delete_title',
         confirmContent = 'ra.message.delete_content',
         icon = defaultIcon,
         label,
-        mutationMode,
-        onClick,
         record,
         confirmColor,
-        customAction,
-        ...rest
+        customAction
     } = props;
     const [mutate, { data, loading, loaded }] = useMutation();
-    const classes = useStyles(props);
     const [open, setOpen] = React.useState(false);
     const notify = useNotify();
     const refresh = useRefresh();
@@ -42,15 +32,15 @@ const DeleteButton = (
                 payload: { id: record.id }
             }, { returnPromise: true })
         } catch (error) {
+            console.log(error)
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
     }, [mutate])
 
-    const handleDialog = e => {
+    const handleDialog = () => {
         setOpen(!open);
-        e.stopPropagation();
     };
 
     React.useEffect(() => {
@@ -69,23 +59,7 @@ const DeleteButton = (
 
     return (
         <React.Fragment>
-            <Button
-                onClick={handleDialog}
-                className={classnames(
-                    'ra-delete-button',
-                    classes.deleteButton,
-                    className
-                )}
-                key="button"
-                {...rest}
-            >
-                {icon}
-                {(label) &&
-                    <Typography variant="subtitle2">
-                        {label}
-                    </Typography>
-                }
-            </Button>
+            <MenuButton icon={icon} label={label} onClick={handleDialog} />
             <Confirm
                 isOpen={open}
                 loading={loading}
@@ -100,24 +74,6 @@ const DeleteButton = (
 };
 
 const defaultIcon = <ActionDelete />;
-
-const useStyles = makeStyles(
-    theme => ({
-        deleteButton: {
-            color: theme.palette.primary.main,
-            textTransform: 'none',
-            '&:hover': {
-                borderRadius: '4px',
-                backgroundColor: fade(theme.palette.primary.light, 0.12),
-                // Reset on mouse devices
-                '@media (hover: none)': {
-                    backgroundColor: 'transparent',
-                },
-            },
-        },
-    }),
-    { name: 'RaDeleteWithConfirmButton' }
-);
 
 DeleteButton.propTypes = {
     basePath: PropTypes.string,

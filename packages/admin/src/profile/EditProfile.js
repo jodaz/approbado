@@ -4,7 +4,6 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
-import { axios } from '@approbado/lib/providers';
 import ProfilePhotoInput from '@approbado/lib/components/ProfilePhotoInput'
 import Box from '@material-ui/core/Box'
 import Button from '@approbado/lib/components/Button'

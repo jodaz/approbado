@@ -2,9 +2,9 @@ import jwtDecode from 'jwt-decode';
 import CONFIG_NAMES from '../configs'
 
 export const authProvider = (packageName) => ({
-    login: async ({ token, user }) => {
-        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, token);
-        await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(user));
+    login: async (data) => {
+        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
+        await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(data.user));
 
         return Promise.resolve();
     },

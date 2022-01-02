@@ -52,9 +52,9 @@ const ForumShow = props => {
         isXSmall: isXSmall
     });
 
-    const { record, loaded } = showControllerProps
+    const { record, loading } = showControllerProps
 
-    if (!loaded) return null;
+    if (loading) return null;
 
     return (
         <Box className={classes.root}>

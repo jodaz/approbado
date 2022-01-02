@@ -2,6 +2,7 @@ import * as React from 'react';
 import { makeStyles, Box } from '@material-ui/core';
 import Dot from '@approbado/lib/components/Dot'
 import { Link } from 'react-router-dom'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
 
 const useStyles = makeStyles(theme => ({
     lightTypography: {
@@ -25,7 +26,12 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+const redirectTo = (record, userId) => (
+    (record.owner.id == userId) ? `/profile` : `/users/${record.owner.id}/show`
+)
+
 export default ({ record }) => {
+    const { user } = useUserState();
     const dates = React.useState(() => {
         const ISODate = new Date(record.created_at.replace(' ', 'T'));
         const shortOptions = {
@@ -47,7 +53,7 @@ export default ({ record }) => {
             </span>
             <Link
                 className={classes.link}
-                to={`/users/${record.owner.id}/show`}
+                to={redirectTo(record, user.id)}
             >
                 {record.owner.names}
             </Link>

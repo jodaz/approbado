@@ -16,8 +16,7 @@ const useStyles = makeStyles(theme => ({
         width: theme.spacing(4),
         height: theme.spacing(4),
         backgroundColor: theme.palette.primary.light,
-        marginRight: '1rem',
-        border: `1px solid ${theme.palette.primary.main}`
+        marginRight: '1rem'
     },
     usernameContainer: {
         whiteSpace: 'nowrap',

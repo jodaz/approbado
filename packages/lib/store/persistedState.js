@@ -15,6 +15,7 @@ export const loadState = () => {
         return {
             user: {
                 token: token,
+                isAuth: (token) ? true : false,
                 exp: decodedToken.exp,
                 user: parsedData,
             }

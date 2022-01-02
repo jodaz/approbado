@@ -16,11 +16,7 @@ const userReducer = (
     switch (action.type) {
         case SET_USER:
             return {
-                loading: !previousState.loading,
-                isAuth: !previousState.isAuth,
-                token: action.payload.token,
-                user: action.payload.data,
-                exp: action.payload.exp,
+                user: action.payload,
                 ...previousState
             }
         case USER_FETCH_SUCCEEDED:

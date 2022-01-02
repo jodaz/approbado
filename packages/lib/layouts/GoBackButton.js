@@ -4,34 +4,32 @@ import {
     IconButton,
     makeStyles
 } from '@material-ui/core';
-import { toggleSidebar } from 'react-admin';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
-import { ReactComponent as MenuIcon } from '@approbado/lib/icons/Menu.svg'
+import { ReactComponent as LeftAngleIcon } from '@approbado/lib/icons/LeftAngle.svg'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     menuButton: {
         color: `${theme.palette.primary.main} !important`,
-        marginLeft: '0.55em'
+        paddingLeft: '0.55em'
     }
 }));
 
 const ToggleSidebarButton = () => {
-    const open = useSelector(state => state.admin.ui.sidebarOpen);
-    const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
 
     return (
         <Tooltip
-            title={open ? 'Cerrar menú' : 'Abrir menú'}
+            title='Regresar'
             enterDelay={500}
         >
             <IconButton
                 color="inherit"
-                onClick={() => dispatch(toggleSidebar())}
+                onClick={() => history.goBack()}
                 className={classNames(classes.menuButton)}
             >
-                <MenuIcon />
+                <LeftAngleIcon />
             </IconButton>
         </Tooltip>
     );

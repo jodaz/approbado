@@ -17,10 +17,12 @@ import SubthemeShow from './subthemes/SubthemeShow';
 import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
 import QuestionsCreate from './questions/QuestionCreate'
+import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
     <Route exact path="/memberships" render={() => <Memberships />} />,
+    <Route exact path="/users/:id/show" render={() => <UserProfile />} />,
     <Route
         path="/memberships/plans/create"
         render={() => <PlanCreate />}

@@ -7,7 +7,7 @@ export const useUserState = () => {
     return store.user;
 };
 
-export const useUserDispatch = (data = {}) => {
+export const useUserDispatch = (data) => {
     const dispatch = useDispatch();
 
     return {

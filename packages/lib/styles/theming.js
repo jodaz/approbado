@@ -1,4 +1,7 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints'
+
+const breakpoints = createBreakpoints({})
 
 const palette = {
     primary: {
@@ -36,7 +39,12 @@ const theme = {
         RaLayout: {
             content: {
                 marginTop: '4em',
-                padding: '0 3em !important'
+                padding: '0 1rem !important',
+                display: 'flex',
+                flexDirection: 'column',
+                [breakpoints.up('sm')]: {
+                    padding: '0 2.5rem !important'
+                }
             },
             appFrame: {
                 marginTop: '0 !important'
@@ -57,11 +65,6 @@ const theme = {
                 "&[aria-label=Create]": {
                     backgroundColor: palette.secondary.main,
                 }
-            }
-        },
-        MuiDrawer: {
-            root: {
-                backgroundColor: palette.primary.main
             }
         },
         MuiMenu: {
@@ -196,11 +199,17 @@ const theme = {
         },
         RaSidebar: {
             root: {
-                height: 'inherit'
+                height: 'inherit',
+                [breakpoints.down('xs')]: {
+                    backgroundColor: 'transparent',
+                },
             },
             fixed: {
                 width: 'inherit',
                 height: 'inherit'
+            },
+            paper: {
+                backgroundColor: `${palette.primary.main} !important`
             }
         },
         PrivateTabIndicator: {
@@ -263,6 +272,14 @@ const theme = {
         MuiGrid: {
             item: {
                 width: '100%'
+            }
+        },
+        RaAppBar: {
+            toolbar: {
+                [breakpoints.down('xs')]: {
+                    backgroundColor: '#fff',
+                    flexDirection: 'row !important'
+                },
             }
         }
     },
