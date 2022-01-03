@@ -18,6 +18,7 @@ import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
 import QuestionsCreate from './questions/QuestionCreate'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
+import QuestionsUpload from './questions/QuestionsUpload'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -78,6 +79,10 @@ export default [
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create"
         render={() => <QuestionsCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload"
+        render={() => <QuestionsUpload />}
     />,
     <RouteWithoutLayout
         path="/update-password"

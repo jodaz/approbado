@@ -1,10 +1,7 @@
 import * as React from 'react'
 import {
-    TextInput,
     useRedirect,
-    useNotify,
-    SelectInput,
-    ReferenceInput
+    useNotify
 } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
@@ -13,6 +10,10 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
 import UploadFileButton from '@approbado/lib/components/UploadFileButton'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Link from '@material-ui/core/Link'
+import configs from '@approbado/lib/configs'
 
 const validate = (values) => {
     const errors = {};
@@ -63,27 +64,19 @@ const FileCreate = () => {
         <BaseForm
             save={save}
             validate={validate}
-            formName='Crear archivo'
             disabled={loading}
         >
-            <InputContainer labelName='Nombre'>
-                <TextInput
-                    source="title"
-                    placeholder="Nombre"
-                    fullWidth
-                />
-            </InputContainer>
-            <InputContainer labelName='Subtema'>
-                <ReferenceInput
-                    source='subtheme_id'
-                    reference='subthemes'
-                    filter={{ trivia_id: trivia_id }}
-                    allowEmpty
-                    fullWidth
-                >
-                    <SelectInput source="title" emptyText="N/A" />
-                </ReferenceInput>
-            </InputContainer>
+            <Box marginBottom="1rem">
+                <Typography variant="h5" component="div" gutterBottom paragraph>
+                    Subir de forma masiva
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom component="div">
+                    Descarga el archivo con el formato en excel y súbelo con los datos que deseas ingresar a la plataforma.
+                </Typography>
+                <Link href={`${configs.SOURCE}/public/default/Preguntas_FORMATO.xlsx`} underline="always" color="info">
+                    Descargar formato
+                </Link>
+            </Box>
             <InputContainer labelName="" xs={12} md={12}>
                 <UploadFileButton name="file" />
             </InputContainer>

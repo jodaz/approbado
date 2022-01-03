@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useShowController } from 'react-admin'
 import ProfileLayout from './ProfileLayout'
 import { useParams } from 'react-router-dom'
+import Spinner from '../../components/Spinner'
 
 const UserProfile = props => {
     const { id } = useParams()
@@ -13,9 +14,7 @@ const UserProfile = props => {
 
     const { record, loading } = showControllerProps
 
-    console.log(record)
-
-    if (loading) return null;
+    if (loading) return <Spinner />;
 
     return <ProfileLayout data={record} />;
 }

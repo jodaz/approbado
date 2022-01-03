@@ -85,11 +85,25 @@ const theme = {
             }
         },
         MuiButton: {
+            root: {
+                borderRadius: '6px',
+                fontWeight: 600
+            },
+            label: {
+                textTransform: 'none',
+                margin: '0 0.2rem'
+            },
             contained: {
                 backgroundColor: '#fff',
                 color: '#4f3cc9',
                 boxShadow: 'none',
             },
+            textPrimary: {
+                backgroundColor: palette.secondary.main,
+                '&:hover': {
+                    backgroundColor: fade(palette.secondary.main, 0.7)
+                }
+            }
         },
         MuiInputBase: {
             root: {
@@ -244,7 +258,8 @@ const theme = {
         },
         MuiDialog: {
             paper: {
-                borderRadius: '6px !important'
+                borderRadius: '6px !important',
+                border: 'none'
             }
         },
         MuiTypography: {
@@ -280,6 +295,12 @@ const theme = {
                     backgroundColor: '#fff',
                     flexDirection: 'row !important'
                 },
+            }
+        },
+        MuiIconButton: {
+            root: {
+                padding: '0.5rem',
+                borderRadius: '25%'
             }
         }
     },

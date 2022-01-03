@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -46,7 +46,7 @@ export default function OptionsCardMenu({ children }) {
 
     return (
         <div>
-            <Button
+            <IconButton
                 ref={anchorRef}
                 id="composition-button"
                 aria-controls={open ? 'composition-menu' : undefined}
@@ -55,7 +55,7 @@ export default function OptionsCardMenu({ children }) {
                 onClick={handleToggle}
             >
                 <MoreMenuIcon />
-            </Button>
+            </IconButton>
             <Popper
                 open={open}
                 anchorEl={anchorRef.current}
