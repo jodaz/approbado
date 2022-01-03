@@ -39,9 +39,11 @@ const useStyles = makeStyles(theme => ({
         padding: '0rem'
     },
     content: {
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '0 3.5rem',
+        padding: '0 0 0 3.5rem',
+        height: '4rem',
+        '&:last-child': {
+            paddingBottom: 'unset !important'
+        }
     }
 }));
 

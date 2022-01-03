@@ -11,8 +11,9 @@ import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
+import Spinner from '@approbado/lib/components/Spinner'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
         width: '100%',
@@ -54,7 +55,7 @@ const ForumShow = props => {
 
     const { record, loading } = showControllerProps
 
-    if (loading) return null;
+    if (loading) return <Spinner />;
 
     return (
         <Box className={classes.root}>
@@ -64,7 +65,7 @@ const ForumShow = props => {
                     {(record.owner) && (
                         <Avatar
                             aria-label="avatar"
-                            src={`${process.env.REACT_APP_API_DOMAIN}/public/${record.owner.picture}`}
+                            src={`${process.env.REACT_APP_API_DOMAIN}/${record.owner.picture}`}
                         />
                     )}
                     <Box className={classes.content}>
