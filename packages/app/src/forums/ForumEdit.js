@@ -3,7 +3,7 @@ import {
     useMutation,
     TextInput,
     useNotify,
-    useRefresh,
+    useRedirect,
     SelectInput,
     ReferenceInput,
     useEditController
@@ -28,7 +28,7 @@ const TriviaEdit = props => {
     const editControllerProps = useEditController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
-    const refresh = useRefresh()
+    const redirect = useRedirect()
 
     const save = React.useCallback(async values => {
         try {
@@ -47,7 +47,7 @@ const TriviaEdit = props => {
     React.useEffect(() => {
         if (data && loaded) {
             notify('Se ha completado la actualización con éxito')
-            refresh()
+            redirect(`/forums/${record.id}/show`)
         }
     }, [data, loaded])
 

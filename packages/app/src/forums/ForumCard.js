@@ -47,12 +47,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ForumCard = ({ data, id, user }) => {
+const ForumCard = ({ data, user }) => {
     const classes = useStyles();
     const history = useHistory();
     const ref = React.createRef();
 
-    const redirect = () => history.push(`/forums/${id}/show`)
+    const redirect = () => history.push(`/forums/${data.id}/show`)
 
     return (
         <Card className={classes.root}>
