@@ -111,7 +111,7 @@ export const externalMobileLogin = async (req, res) => {
                 payment_id : payment.id,
                 active : true
             })
-               
+
         }
 
         const authProviderKey = await user.$relatedQuery('authProviders')
@@ -212,7 +212,7 @@ export const verifySMSCode = async (req, res) => {
                 rol: 'USER',
                 email: email,
                 phone: phone,
-                picture : 'default/user.png'
+                picture : 'public/default/user.png'
             })
 
             await user.$relatedQuery('profile').insert({
@@ -226,14 +226,14 @@ export const verifySMSCode = async (req, res) => {
                 plan_id : 1,
                 user_id : user.id
             })
-  
+
             await user.$relatedQuery('memberships').insert({
                 plan_id: 1,
                 user_id: user.id,
                 payment_id : payment.id,
                 active : true
             })
-              
+
             if (external) {
                 // Save social media profile (auth provider)
                 await user.$relatedQuery('authProviders')

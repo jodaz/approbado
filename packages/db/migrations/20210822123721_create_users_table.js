@@ -6,7 +6,7 @@ export async function up(knex) {
         table.string('last_name');
         table.string('user_name');
         table.text('bio');
-        table.string('picture').defaultsTo('default/user.png')
+        table.string('picture').defaultsTo('public/default/user.png')
         table.string('email').unique();
         table.string('password');
         table.string('rol');
