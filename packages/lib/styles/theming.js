@@ -1,4 +1,7 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints'
+
+const breakpoints = createBreakpoints({})
 
 const palette = {
     primary: {
@@ -36,7 +39,12 @@ const theme = {
         RaLayout: {
             content: {
                 marginTop: '4em',
-                padding: '0 3em !important'
+                padding: '0 1rem !important',
+                display: 'flex',
+                flexDirection: 'column',
+                [breakpoints.up('sm')]: {
+                    padding: '0 2.5rem !important'
+                }
             },
             appFrame: {
                 marginTop: '0 !important'
@@ -59,11 +67,6 @@ const theme = {
                 }
             }
         },
-        MuiDrawer: {
-            root: {
-                backgroundColor: palette.primary.main
-            }
-        },
         MuiMenu: {
             paper: {
                 borderRadius: '6px !important',
@@ -82,11 +85,25 @@ const theme = {
             }
         },
         MuiButton: {
+            root: {
+                borderRadius: '6px',
+                fontWeight: 600
+            },
+            label: {
+                textTransform: 'none',
+                margin: '0 0.2rem'
+            },
             contained: {
                 backgroundColor: '#fff',
                 color: '#4f3cc9',
                 boxShadow: 'none',
             },
+            textPrimary: {
+                backgroundColor: palette.secondary.main,
+                '&:hover': {
+                    backgroundColor: fade(palette.secondary.main, 0.7)
+                }
+            }
         },
         MuiInputBase: {
             root: {
@@ -196,11 +213,17 @@ const theme = {
         },
         RaSidebar: {
             root: {
-                height: 'inherit'
+                height: 'inherit',
+                [breakpoints.down('xs')]: {
+                    backgroundColor: 'transparent',
+                },
             },
             fixed: {
                 width: 'inherit',
                 height: 'inherit'
+            },
+            paper: {
+                backgroundColor: `${palette.primary.main} !important`
             }
         },
         PrivateTabIndicator: {
@@ -235,7 +258,8 @@ const theme = {
         },
         MuiDialog: {
             paper: {
-                borderRadius: '6px !important'
+                borderRadius: '6px !important',
+                border: 'none'
             }
         },
         MuiTypography: {
@@ -258,6 +282,25 @@ const theme = {
         MuiCheckbox: {
             colorSecondary: {
                 color: `${palette.info.main} !important`
+            }
+        },
+        MuiGrid: {
+            item: {
+                width: '100%'
+            }
+        },
+        RaAppBar: {
+            toolbar: {
+                [breakpoints.down('xs')]: {
+                    backgroundColor: '#fff',
+                    flexDirection: 'row !important'
+                },
+            }
+        },
+        MuiIconButton: {
+            root: {
+                padding: '0.5rem',
+                borderRadius: '25%'
             }
         }
     },

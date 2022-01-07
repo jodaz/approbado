@@ -61,6 +61,8 @@ const useStyles = makeStyles(
     { name: 'RaProfilePhotoInput' }
 );
 
+const filePreviewOrigin = filepath => (`${process.env.REACT_APP_API_DOMAIN}/${filepath}`)
+
 const ProfilePhotoInput = (props) => {
     const {
         accept,
@@ -81,10 +83,11 @@ const ProfilePhotoInput = (props) => {
         resource,
         source,
         validate,
+        preview,
         ...rest
     } = props;
     const classes = useStyles(props);
-    const [file, setFile] = React.useState('');
+    const [file, setFile] = React.useState({ preview: filePreviewOrigin(preview) });
 
     // turn a browser dropped file structure into expected structure
     const transformFile = file => {

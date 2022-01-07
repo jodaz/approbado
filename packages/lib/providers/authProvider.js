@@ -3,7 +3,8 @@ import CONFIG_NAMES from '../configs'
 
 export const authProvider = (packageName) => ({
     login: async (data) => {
-        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data);
+        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
+        await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(data.user));
 
         return Promise.resolve();
     },
@@ -25,14 +26,14 @@ export const authProvider = (packageName) => ({
 
         return Promise.resolve();
     },
-    checkAuth: async () => {
+    checkAuth: async (packageName) => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
-        // if (!token) {
-        //     return (packageName == 'app')
-        //         ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
-        //         : Promise.reject({ redirectTo: '/login' })
-        // }
+        if (!token) {
+            return (packageName == 'app')
+                ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
+                : Promise.reject({ redirectTo: '/login' })
+        }
 
         return Promise.resolve()
     },

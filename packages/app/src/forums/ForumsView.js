@@ -11,11 +11,15 @@ import { ListBase, useListContext } from 'react-admin'
 import ForumCard from './ForumCard'
 import ForumWarning from './ForumWarning'
 import TopContributors from './TopContributors'
+import NoContent from '@approbado/lib/components/NoContent'
+import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
 
 const ForumList = props => (
     <ListBase
         resource="forums"
         basePath="/forums"
+        perPage={5}
         {...props}
     >
         <ForumListView />
@@ -42,6 +46,7 @@ const tags = [
 
 const ForumListView = () => {
     const { ids, data, total } = useListContext();
+    const { user } = useUserState();
 
     return (
         <Box display="flex">
@@ -52,12 +57,14 @@ const ForumListView = () => {
                         id={id}
                         index={i}
                         key={id}
+                        user={user}
                     />
                 ))}
                 {(total == 0) && (
-                    <Typography component={'p'} variant="body1">
-                        No tenemos debates disponibles, ¿quizás desees volver más tarde?
-                    </Typography>
+                    <NoContent
+                        icon={<ForumIllustration />}
+                        title='Aún no hay debates publicados'
+                    />
                 )}
             </Box>
             <ForumWarning />

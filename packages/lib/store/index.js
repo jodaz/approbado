@@ -13,7 +13,8 @@ export default ({
     authProvider,
     dataProvider,
     history,
-    customReducers = {}
+    customReducers = {},
+    customSagas = []
 }) => {
     const reducer = combineReducers({
         admin: adminReducer,
@@ -27,7 +28,7 @@ export default ({
         yield all(
             [
                 adminSaga(dataProvider, authProvider),
-                // add your own sagas here
+                ...customSagas
             ].map(fork)
         );
     };
@@ -44,7 +45,7 @@ export default ({
         compose;
 
     let persistedState = loadState()
-    console.log(persistedState)
+
     if (persistedState?.user?.isAuth) {
         persistedState.user = persistedState.user;
     }

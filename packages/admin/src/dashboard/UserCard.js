@@ -6,8 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar';
 import isEmpty from 'is-empty'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        margin: '1em',
+        radius: '8px',
+        background: '#F9F9F9',
+        cursor: 'pointer'
+    },
     avatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
@@ -58,13 +65,16 @@ const PositionIcon = ({ pos }) =>{
 const UserCard = ({ data, index }) => {
     const classes = useStyles();
     const position = index + 1
+    const history = useHistory();
+
+    const handleClick = () => history.push(`/users/${data.id}/show`)
 
     return (
-        <Card style={{ margin: '1em', radius: '8px', background: '#F9F9F9' }}>
+        <Card className={classes.root} onClick={handleClick}>
             <CardContent className={classes.cardContent}>
                 <Avatar
                     className={classes.avatar}
-                    src={`${process.env.REACT_APP_API_DOMAIN}/public/${data.picture}`}
+                    src={`${process.env.REACT_APP_API_DOMAIN}/${data.picture}`}
                     alt='photo_profile'
                 />
                 <div className={classes.innerContent}>
