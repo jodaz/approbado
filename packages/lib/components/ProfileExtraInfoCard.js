@@ -28,8 +28,8 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 600
     },
     text: {
-        fontWeight: 500,
-        color: fade(theme.palette.primary.dark, 0.7)
+        fontWeight: 600,
+        color: theme.palette.info.light
     }
 }));
 
@@ -44,10 +44,10 @@ const ProfileExtraInfoCard = ({ Image, amount, text }) => {
                 })}
             </Box>
             <Box className={classes.content}>
-                <Typography variant='h6' color="primary" className={classes.amount}>
+                <Typography variant='h6' className={classes.amount}>
                     {amount}
                 </Typography>
-                <Typography variant='body2' color="light" className={classes.text}>
+                <Typography variant='body2' className={classes.text}>
                     {text}
                 </Typography>
             </Box>

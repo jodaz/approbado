@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
-import UploadFileButton from './UploadFileButton'
+import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 
 const validate = (values) => {
     const errors = {};

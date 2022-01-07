@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Box } from '@material-ui/core';
 import {
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -10,11 +9,13 @@ import {
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import QuestionCard from './QuestionCard'
+import AddQuestionsDialog from './AddQuestionsDialog'
 
-const ListActions = ({ id, trivia_id }) => (
+const ListActions = props => (
     <TopToolbar>
         <FilterLiveSearch source="name" />
-        <CreateButton basePath={`/trivias/${trivia_id}/subthemes/${id}/questions`} />
+        <AddQuestionsDialog {...props} />
+        {/* <CreateButton basePath={`/trivias/${trivia_id}/subthemes/${id}/questions`} /> */}
     </TopToolbar>
 );
 

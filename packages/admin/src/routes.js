@@ -17,10 +17,13 @@ import SubthemeShow from './subthemes/SubthemeShow';
 import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
 import QuestionsCreate from './questions/QuestionCreate'
+import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
+import QuestionsUpload from './questions/QuestionsUpload'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
     <Route exact path="/memberships" render={() => <Memberships />} />,
+    <Route exact path="/users/:id/show" render={() => <UserProfile />} />,
     <Route
         path="/memberships/plans/create"
         render={() => <PlanCreate />}
@@ -76,6 +79,10 @@ export default [
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create"
         render={() => <QuestionsCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload"
+        render={() => <QuestionsUpload />}
     />,
     <RouteWithoutLayout
         path="/update-password"

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 export const generateAuthToken = async (data) => {
     const signedData = {
-        user: data,
+        user: data.id,
         isAuth: true
     }
 

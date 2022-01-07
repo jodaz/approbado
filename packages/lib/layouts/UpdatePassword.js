@@ -54,6 +54,7 @@ const UpdatePassword = () => {
             validate={validate}
             saveButtonLabel='Actualizar'
             loading={loading}
+            unresponsive
         >
             <InputContainer labelName='Contraseña actual' md={8}>
                 <PasswordInput

@@ -8,6 +8,7 @@ import customRoutes from './routes'
 import { Provider } from 'react-redux'
 import { AdminContext } from 'react-admin'
 import { dataProvider, authProvider, history } from '@approbado/lib/providers'
+import customSagas from '@approbado/lib/sagas'
 
 const Index = () => (
     <Provider
@@ -15,7 +16,8 @@ const Index = () => (
             authProvider,
             dataProvider,
             history,
-            customReducers
+            customReducers,
+            customSagas
         })}
     >
         <AdminContext

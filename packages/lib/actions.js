@@ -4,6 +4,9 @@ export const UNSET_TRIVIA = 'UNSET_TRIVIA';
 export const SET_TRIVIA = 'SET_TRIVIA';
 export const UNSET_USER = 'UNSET_USER';
 export const SET_USER = 'SET_USER'
+export const USER_FETCH_REQUESTED = 'USER_FETCH_REQUESTED'
+export const USER_FETCH_SUCCEEDED = 'USER_FETCH_SUCCEEDED'
+export const USER_FETCH_FAILED = 'USER_FETCH_FAILED'
 
 export const unsetTrivia = () => ({
     type: UNSET_TRIVIA
@@ -31,4 +34,13 @@ export const unsetDialog = (name) => ({
 export const setDialog = (name) => ({
     type: SET_DIALOG,
     payload: name
+});
+
+export const fetchUser = () => ({
+    type: USER_FETCH_REQUESTED
+});
+
+export const fetchUserSuccess = data => ({
+    type: USER_FETCH_SUCCEEDED,
+    payload: data
 });

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useGetIdentity } from 'react-admin'
 import {
   Tooltip,
   IconButton,
@@ -10,15 +9,14 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import isEmpty from 'is-empty';
+import { useUserState } from '@approbado/lib/hooks/useUserState'
 
 const useStyles = makeStyles(theme => ({
     avatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
         backgroundColor: theme.palette.primary.light,
-        marginRight: '1rem',
-        border: `1px solid ${theme.palette.primary.main}`
+        marginRight: '1rem'
     },
     usernameContainer: {
         whiteSpace: 'nowrap',
@@ -38,40 +36,17 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const initialMenuState = {
-    text: 'Menú',
-    picture: 'public/default/user.png',
-}
-
 const UserMenu= props => {
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [state, setState] = React.useState(initialMenuState)
-    const { identity } = useGetIdentity()
     const classes = useStyles();
     const { children, logout } = props
     const open = Boolean(anchorEl)
-
+    const { user, isAuth } = useUserState();
     const handleMenu = (event) => setAnchorEl(event.currentTarget)
     const handleClose = () => setAnchorEl(null)
-
     if (!logout && !children) return null
 
-    React.useEffect(() => {
-        if (!isEmpty(identity)) {
-            const { status, ...rest } = identity;
-            let text = '';
-
-            if (status == 0) {
-                text = 0
-            } else {
-                text = rest.names;
-            }
-
-            setState({ text: text, ...rest })
-        }
-    }, [identity])
-
-    const { picture, text } = state;
+    let { picture, names } = user;
 
     return (
         <>
@@ -81,15 +56,15 @@ const UserMenu= props => {
                     onClick={handleMenu}
                     className={classes.usernameButton}
                 >
-                        <Avatar
-                            className={classes.avatar}
-                            src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
-                            alt={text}
-                        />
-                        <Typography variant="subtitle1" fontWeight='900'>
-                            {text}
-                        </Typography>
-                        <ArrowDown />
+                    <Avatar
+                        className={classes.avatar}
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
+                        alt={names}
+                    />
+                    <Typography variant="subtitle1" fontWeight='900'>
+                        {names}
+                    </Typography>
+                    <ArrowDown />
                 </IconButton>
             </Tooltip>
             <Popover

@@ -13,20 +13,20 @@ import { history } from '@approbado/lib/providers'
 import routes from './routes'
 
 const App = () => {
-    const { redirect, isAuthenticated } = useRedirectIfAuthenticated([
-        '/login',
-        '/reset-password',
-        '/update-password',
-        '/error'
-    ])
+    // const { redirect, isAuthenticated } = useRedirectIfAuthenticated([
+    //     '/login',
+    //     '/reset-password',
+    //     '/update-password',
+    //     '/error'
+    // ])
 
-    React.useEffect(() => {
-        if (!isAuthenticated && !redirect) {
-            history.push('/login')
-        }
-    }, [])
+    // React.useEffect(() => {
+    //     if (!isAuthenticated && !redirect) {
+    //         history.push('/login')
+    //     }
+    // }, [])
 
-    if (!isAuthenticated && !redirect) return <Spinner />
+    // if (!isAuthenticated && !redirect) return <Spinner />
 
     return (
         <AdminUI
