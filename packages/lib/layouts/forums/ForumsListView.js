@@ -26,7 +26,7 @@ const ForumList = () => {
     const { user } = useUserState();
 
 
-    if (loading) return <Spinner />
+    if (loading) return <Box width={'100%'}><Spinner /></Box>
 
     if (!total) {
         return (
