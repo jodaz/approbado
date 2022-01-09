@@ -12,8 +12,12 @@ import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
 import Spinner from '@approbado/lib/components/Spinner'
+import { Link } from 'react-router-dom'
+// Hooks
+import { useUserState } from '@approbado/lib/hooks/useUserState'
+import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         width: '100%',
@@ -41,10 +45,15 @@ const useStyles = makeStyles(() => ({
     },
     commentsBox: {
         minHeight: '20rem'
+    },
+    link: {
+        fontWeight: 600,
+        color: theme.palette.info.main
     }
 }))
 
 const ForumShow = props => {
+    const { user } = useUserState();
     const showControllerProps = useShowController(props)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
@@ -52,6 +61,7 @@ const ForumShow = props => {
     const classes = useStyles({
         isXSmall: isXSmall
     });
+    const { setDialog } = useDialogDispatch('forums.warning')
 
     const { record, loading } = showControllerProps
 
@@ -60,7 +70,14 @@ const ForumShow = props => {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <BackButton />
+                <Box display="flex" justifyContent="space-between" width="100%">
+                    <BackButton />
+                    {!(record.owner.id == user.id) && (
+                        <Link to='/forums' className={classes.link} onClick={() => setDialog()}>
+                            Iniciar un debate
+                        </Link>
+                    )}
+                </Box>
                 <Box className={classes.root}>
                     {(record.owner) && (
                         <Avatar
