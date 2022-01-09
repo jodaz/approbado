@@ -4,9 +4,11 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import Checkbox from '@approbado/lib/components/FinalFormCheckbox'
 import Grid from '@material-ui/core/Grid'
 import { axios } from '@approbado/lib/providers'
+import useFetchProfile from '@approbado/lib/hooks/useFetchProfile'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const PrivacySettings = () => {
-    const [record, setRecord] = React.useState({})
+    const [{ record, isLoading, isError }, doFetch] = useFetchProfile();
     const [loading, setLoading] = React.useState(false)
     const notify = useNotify();
 
@@ -25,14 +27,11 @@ const PrivacySettings = () => {
         }
     }, [axios])
 
-    const fetchProfile = React.useCallback(async () => {
-        const { data } = await axios.get('profile');
-        setRecord(data)
-    }, [axios])
-
     React.useEffect(() => {
-        fetchProfile();
+        doFetch();
     }, []);
+
+    if (isLoading) return <Spinner />;
 
     return (
         <BaseForm
