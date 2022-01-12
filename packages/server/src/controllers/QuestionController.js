@@ -1,6 +1,7 @@
-import { Question,Subtheme } from '../models'
+import { Question } from '../models'
 import { showResultAward } from '../controllers/AwardController'
 import { validateRequest, paginatedQueryResponse } from '../utils'
+import Excel from 'exceljs'
 
 export const index = async (req, res) => {
     const { filter, options} = req.query
@@ -32,7 +33,7 @@ export const showResult = async (req, res) => {
     const { subtheme_id, level_id, user_id } = req.params
 
     const results = await showResultAward(subtheme_id, level_id, user_id)
-    
+
     return res.status(200).json(results)
 }
 
@@ -48,6 +49,35 @@ export const store = async (req, res) => {
 
         return res.status(201).json(model)
     }
+}
+
+export const upload = async (req, res) => {
+    let workbook = new Excel.Workbook();
+    const { path } = req.file;
+    const { subtheme_id, trivia_id } = req.body
+
+    const headers = [
+        { header: 'PREGUNTA', key: 'P' },
+        { header: 'COMENTARIO', key: 'C' },
+    ]
+
+    await workbook.xlsx.readFile(path)
+        .then(() => {
+            let worksheet = workbook.getWorksheet('PREGUNTAS')
+
+            worksheet.colums = headers;
+
+            worksheet.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
+                await Question.query().insert({
+                    'description': row.values[1],
+                    'explanation': row.values[2],
+                    'subtheme_id': subtheme_id,
+                    'trivia_id': trivia_id
+                })
+            })
+        })
+
+    return res.status(201).json({ "ok": "req.file" })
 }
 
 export const update = async (req, res) => {
