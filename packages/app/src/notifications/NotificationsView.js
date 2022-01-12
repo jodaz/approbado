@@ -40,6 +40,7 @@ const NotificationsListView = ({ isXSmall }) => {
                     </Typography>
                 )} */}
                 <NotificationCard />
+                <NotificationCard />
             </Box>
         </Box>
     )
