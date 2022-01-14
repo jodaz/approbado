@@ -18,31 +18,31 @@ import configs from '@approbado/lib/configs'
 const validate = (values) => {
     const errors = {};
 
-    if (!values.title) {
-        errors.title = "Ingrese un nombre para el archivo.";
-    }
-    if (!values.subtheme_id) {
-        errors.subtheme_id = "Seleccione un subtema.";
-    }
-    if (!values.file) {
-        errors.file = "Ingrese un archivo.";
-    }
+    // if (!values.title) {
+    //     errors.title = "Ingrese un nombre para el archivo.";
+    // }
+    // if (!values.subtheme_id) {
+    //     errors.subtheme_id = "Seleccione un subtema.";
+    // }
+    // if (!values.file) {
+    //     errors.file = "Ingrese un archivo.";
+    // }
 
     return errors;
 };
 
 const FileCreate = () => {
-    const { trivia_id } = useParams()
+    const { trivia_id, subtheme_id } = useParams()
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        const data = { trivia_id: trivia_id, ...values };
+        const data = { trivia_id: trivia_id, subtheme_id: subtheme_id, ...values };
 
         try {
             await provider({
-                resource: 'files',
+                resource: 'questions/upload',
                 type: 'create',
                 payload: data
             });
@@ -55,8 +55,8 @@ const FileCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('¡Ha registrado un nuevo archivo!.')
-            redirect(`/trivias/${trivia_id}/show?tab=files`)
+            notify('¡Ha subido nuevas preguntas a la trivia!.')
+            redirect(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show`)
         }
     }, [fileDataResponse])
 
@@ -78,7 +78,11 @@ const FileCreate = () => {
                 </Link>
             </Box>
             <InputContainer labelName="" xs={12} md={12}>
-                <UploadFileButton name="file" />
+                <UploadFileButton
+                    name="file"
+                    accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    loading={loading}
+                />
             </InputContainer>
         </BaseForm>
     )

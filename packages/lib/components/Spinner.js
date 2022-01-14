@@ -17,9 +17,9 @@ const styles = {
     }
 };
 
-const Spinner = ({ classes, className }) => (
+const Spinner = ({ className, classes, spinnerClassName }) => (
     <Box className={clsx(className, classes.root, )}>
-        <CircularProgress className={classes.loader}/>
+        <CircularProgress className={clsx(spinnerClassName, classes.loader )}/>
     </Box>
 );
 

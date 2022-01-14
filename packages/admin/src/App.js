@@ -11,6 +11,7 @@ import { useRedirectIfAuthenticated } from '@approbado/lib/hooks/useRedirectIfAu
 import Spinner from '@approbado/lib/components/Spinner';
 import { history } from '@approbado/lib/providers'
 import routes from './routes'
+import forums from './forums'
 
 const App = () => {
     // const { redirect, isAuthenticated } = useRedirectIfAuthenticated([
@@ -37,6 +38,7 @@ const App = () => {
         >
             <Resource {...users} />
             <Resource {...trivias} />
+            <Resource {...forums} />
             <Resource {...reports} />
             <Resource name="questions" />
             <Resource name="awards" />
@@ -48,6 +50,7 @@ const App = () => {
             <Resource name="configurations/categories" />
             <Resource name="memberships/plans" />
             <Resource name="memberships/payments" />
+
         </AdminUI>
     )
 }

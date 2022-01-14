@@ -5,6 +5,7 @@ import { useInput, InputHelperText } from 'react-admin';
 import { useDropzone } from 'react-dropzone';
 import { ReactComponent as UploadIcon } from '@approbado/lib/icons/Upload.svg'
 import Typography from '@material-ui/core/Typography'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const useStyles = makeStyles(
     theme => ({
@@ -27,6 +28,14 @@ const useStyles = makeStyles(
             }
         },
         root: { width: '100%' },
+        loader: {
+            height: '1.25rem !important',
+            width: '1.25rem !important'
+        },
+        className: {
+            height: 'max-content',
+            padding: '0.25rem 0'
+        }
     }),
     { name: 'RaUploadFileButton' }
 );
@@ -51,9 +60,11 @@ const UploadFileButton = (props) => {
         resource,
         source,
         validate,
+        loading,
         ...rest
     } = props;
     const classes = useStyles(props);
+    const [name, setName] = React.useState('');
 
     // turn a browser dropped file structure into expected structure
     const transformFile = file => {
@@ -105,6 +116,7 @@ const UploadFileButton = (props) => {
     const onDrop = (newFiles, rejectedFiles, event) => {
         const updatedFiles = [...newFiles];
         onChange(updatedFiles[0]);
+        setName(updatedFiles[0].name);
 
         if (options.onDrop) {
             options.onDrop(newFiles, rejectedFiles, event);
@@ -127,17 +139,23 @@ const UploadFileButton = (props) => {
                 className={classes.dropZone}
                 {...getRootProps()}
             >
-                <UploadIcon />
-                <input
-                    id={id}
-                    {...getInputProps({
-                        ...inputProps,
-                        ...inputPropsOptions,
-                    })}
-                />
-                <Typography variant="subtitle1" component="span">
-                    {'Subir archivo'}
-                </Typography>
+                {(!loading) ? (
+                    <>
+                        <UploadIcon />
+                        <input
+                            id={id}
+                            {...getInputProps({
+                                ...inputProps,
+                                ...inputPropsOptions,
+                            })}
+                        />
+                        <Typography variant="subtitle1" component="span">
+                        {'Subir archivo'}
+                        </Typography>
+                    </>
+                ) : (
+                    <Spinner className={classes.className} spinnerClassName={classes.loader} />
+                )}
             </div>
             <FormHelperText>
                 <InputHelperText
@@ -145,6 +163,12 @@ const UploadFileButton = (props) => {
                     error={error || submitError}
                     helperText={helperText}
                 />
+                {(name) && (
+                    <InputHelperText
+                        touched={touched}
+                        helperText={name}
+                    />
+                )}
             </FormHelperText>
         </>
     );

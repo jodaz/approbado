@@ -85,7 +85,10 @@ const FileCreate = () => {
                 </ReferenceInput>
             </InputContainer>
             <InputContainer labelName="" xs={12} md={12}>
-                <UploadFileButton name="file" />
+                <UploadFileButton
+                    name="file"
+                    accept='application/pdf'
+                />
             </InputContainer>
         </BaseForm>
     )
