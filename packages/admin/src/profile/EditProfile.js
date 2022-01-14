@@ -54,7 +54,12 @@ const UpdateProfile = () => {
                 <Grid container spacing='5'>
                     <Grid item md='3' xs='12'>
                         <Box width='100%' display='flex' justifyContent="center">
-                            <ProfilePhotoInput source='file' preview={user.picture} />
+                            <ProfilePhotoInput
+                                source='file'
+                                preview={user.picture}
+                                loading={loading}
+                                accept='image/jpeg, image/png'
+                            />
                         </Box>
                     </Grid>
                     <Grid item md='9' xs='12'>

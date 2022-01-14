@@ -93,15 +93,29 @@ const theme = {
                 textTransform: 'none',
                 margin: '0 0.2rem'
             },
-            contained: {
-                backgroundColor: '#fff',
-                color: '#4f3cc9',
-                boxShadow: 'none',
-            },
             textPrimary: {
                 backgroundColor: palette.secondary.main,
                 '&:hover': {
                     backgroundColor: fade(palette.secondary.main, 0.7)
+                }
+            },
+            outlinedSecondary: {
+                color: palette.primary.main,
+                background: '#fff',
+                border: `1px solid ${palette.primary.light}`,
+                transition: '300ms',
+                '&:hover': {
+                    color: fade(palette.primary.light, 1),
+                    border: `1px solid ${fade(palette.primary.light, 0.99)}`,
+                }
+            },
+            containedPrimary: {
+                color: palette.primary.main,
+                backgroundColor: palette.secondary.main,
+                boxShadow: 'none',
+                transition: '300ms',
+                '&:hover': {
+                    backgroundColor: fade(palette.secondary.main, 0.99)
                 }
             }
         },
@@ -309,7 +323,7 @@ const theme = {
             // disable ripple for perf reasons
             disableRipple: true
         },
-    },
+    }
 }
 
 export default theme;

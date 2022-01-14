@@ -1,12 +1,8 @@
 import * as React from 'react'
-import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
-import NoContent from '@approbado/lib/components/NoContent'
+import ForumsListView from '@approbado/lib/layouts/forums/ForumsListView'
 
-const Publications = () => (
-    <NoContent
-        icon={<ForumIllustration />}
-        title='Aún no hay debates publicados'
-    />
+const Publications = ({ id }) => (
+    <ForumsListView filter={{ user_id: id }} />
 );
 
 export default Publications;

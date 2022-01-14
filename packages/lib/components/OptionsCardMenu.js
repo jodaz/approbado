@@ -13,8 +13,9 @@ export default function OptionsCardMenu({ children }) {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
-    const handleToggle = () => {
+    const handleToggle = event => {
         setOpen((prevOpen) => !prevOpen);
+        event.stopPropagation();
     };
 
     const handleClose = (event) => {
@@ -41,11 +42,11 @@ export default function OptionsCardMenu({ children }) {
             anchorRef.current.focus();
         }
 
-            prevOpen.current = open;
+        prevOpen.current = open;
     }, [open]);
 
     return (
-        <div>
+        <div anchorEl={anchorRef}>
             <IconButton
                 ref={anchorRef}
                 id="composition-button"

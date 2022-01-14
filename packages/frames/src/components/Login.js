@@ -37,7 +37,6 @@ const Login = () => {
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
-        console.log(values)
         return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
             .then(res => {
                 const { token } = res.data;
