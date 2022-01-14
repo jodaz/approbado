@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
     TextInput,
     useRedirect,
     useNotify,
@@ -10,6 +9,13 @@ import {
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import { useFileProvider } from '@jodaz_/file-provider'
+import { fileProvider } from '@approbado/lib/providers'
+import UploadFileButton from '@approbado/lib/components/UploadFileButton'
+import { useFormState } from 'react-final-form'
+import ImageInput from '@approbado/lib/components/ImageInput'
+import Box from '@material-ui/core/Box'
+import isEmpty from 'is-empty'
 
 const validate = (values) => {
     const errors = {};
@@ -29,9 +35,42 @@ const ACCESS_TYPES = [
     { id: 'Certificado', name: 'Certificado' }
 ]
 
+const FileInput = ({ loading }) => {
+    const { values } = useFormState();
+
+    if (!values.type) return null;
+
+    return (
+        <InputContainer labelName={values.type} md='12'>
+            {(values.type == 'Certificado') ? (
+                <Box marginTop='1rem'>
+                    <UploadFileButton
+                        source="file"
+                        loading={loading}
+                        accept="application/pdf"
+                    />
+                </Box>
+            ) : (
+                <Box marginTop='1rem'>
+                    <ImageInput
+                        source="file"
+                        loading={loading}
+                        accept='image/svg, image/png'
+                    />
+                    <Box width='16rem'>
+                        <Box fontSize='14px' fontWeight='400' color='#6D6D6D' margin='1rem 0'>
+                            El ícono debe tener una dimensión de 500 x 500 píxeles. Formato PNG o SVG.
+                        </Box>
+                    </Box>
+                </Box>
+            )}
+        </InputContainer>
+    )
+}
+
 const AwardsCreate = () => {
     const { trivia_id } = useParams()
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [provider, { data, loading, loaded }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
     const notify = useNotify();
 
@@ -39,20 +78,20 @@ const AwardsCreate = () => {
         const data = { trivia_id: trivia_id, ...values };
 
         try {
-            await mutate({
-                type: 'create',
+            await provider({
                 resource: 'awards',
-                payload: { data: data }
-            }, { returnPromise: true })
+                type: 'create',
+                payload: data
+            });
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate, trivia_id])
+    }, [provider, trivia_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (!isEmpty(data)) {
             notify('¡Has creado un nuevo premio!')
             redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
@@ -86,6 +125,7 @@ const AwardsCreate = () => {
                     fullWidth
                 />
             </InputContainer>
+            <FileInput />
         </BaseForm>
     )
 }

@@ -4,13 +4,15 @@ import {
     SelectInput,
     useNotify,
     ReferenceInput,
-    useRefresh,
-    FileInput
+    useRefresh
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
+import ImageInput from '@approbado/lib/components/ImageInput'
+import Box from '@material-ui/core/Box'
+import isEmpty from 'is-empty'
 
 const ACCESS_TYPES = [
     { id: '0', name: 'Gratis' },
@@ -26,9 +28,6 @@ const validate = (values) => {
     if (!values.category_id) {
         errors.category_id = "Seleccione una categoría.";
     }
-    if (!values.level_id) {
-        errors.level_id = "Seleccione un nivel.";
-    }
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
@@ -39,10 +38,9 @@ const validate = (values) => {
 const TriviaEdit = ({ record }) => {
     const notify = useNotify();
     const refresh = useRefresh()
-    const [provider, { data, loaded, loading }] = useFileProvider(fileProvider);
+    const [provider, { data, loading }] = useFileProvider(fileProvider);
 
     const save = React.useCallback(async values => {
-        console.log(values)
         await provider({
             resource: 'trivias',
             type: 'update',
@@ -54,7 +52,7 @@ const TriviaEdit = ({ record }) => {
     }, [provider]);
 
     React.useEffect(() => {
-        if (data) {
+        if (!isEmpty(data)) {
             notify('Se ha completado la actualización con éxito')
             refresh()
         }
@@ -69,21 +67,28 @@ const TriviaEdit = ({ record }) => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Nivel'>
-                <ReferenceInput
-                    source='level_id'
-                    reference='configurations/levels'
-                    fullWidth
-                >
-                    <SelectInput source="name" />
-                </ReferenceInput>
-            </InputContainer>
             <InputContainer labelName='Acceso'>
                 <SelectInput
                     source="is_free"
                     choices={ACCESS_TYPES}
                     fullWidth
                 />
+            </InputContainer>
+            <InputContainer labelName='Imagen de portada'>
+                <Box marginTop='1rem'>
+                    <ImageInput
+                        source="file"
+                        loading={loading}
+                        accept='image/png'
+                        preview={(record.cover) && `${process.env.REACT_APP_API_DOMAIN}/${record.cover}`}
+                        hasPreview={!!record.cover}
+                    />
+                    <Box width='16rem'>
+                        <Box fontSize='14px' fontWeight='400' color='#6D6D6D' margin='1rem 0'>
+                            El ícono debe tener una dimensión de 312 x 178 píxeles. Formato PNG o SVG.
+                        </Box>
+                    </Box>
+                </Box>
             </InputContainer>
             <InputContainer labelName='Categoría'>
                 <ReferenceInput
@@ -93,11 +98,6 @@ const TriviaEdit = ({ record }) => {
                 >
                     <SelectInput source="name" />
                 </ReferenceInput>
-            </InputContainer>
-            <InputContainer labelName='Categoría'>
-                <FileInput source="file">
-                    <></>
-                </FileInput>
             </InputContainer>
         </BaseForm>
     )

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
+import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
-import { ReactComponent as Subtract } from '@approbado/lib/icons/Subtract.svg'
-import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu icon={<More />}>
+    <OptionsCardMenu>
         <DeleteButton
             basePath='files'
             confirmColor='warning'
@@ -28,15 +28,21 @@ const FileCard = ({ data, id }) => {
     return (
         <Card className={classes.root}>
             <CardHeader
-                avatar={<Subtract />}
                 action={<OptionsMenu record={data} />}
-                title={
-                    <Typography variant="subtitle1" component="h1">
-                        {data.title}
-                    </Typography>
-                }
-                subheader={data.size}
+                className={classes.cardHeader}
+                title={data.title}
             />
+            <CardContent className={classes.cardContent}>
+                <div className={classes.innerContent}>
+                    <Typography variant="span" component="span">
+                        PDF
+                    </Typography>
+                    <Divider className={classes.divider} />
+                    <Typography variant="span" component="span">
+                        154 Kb
+                    </Typography>
+                </div>
+            </CardContent>
         </Card>
     );
 }
