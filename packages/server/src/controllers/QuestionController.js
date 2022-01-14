@@ -41,6 +41,7 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
+        console.log(req.body)
         const { options, ...rest } = req.body;
         const model = await Question.query().insertGraphAndFetch({
             ...rest,
@@ -56,28 +57,32 @@ export const upload = async (req, res) => {
     const { path } = req.file;
     const { subtheme_id, trivia_id } = req.body
 
-    const headers = [
-        { header: 'PREGUNTA', key: 'P' },
-        { header: 'COMENTARIO', key: 'C' },
-    ]
-
     await workbook.xlsx.readFile(path)
         .then(() => {
-            let worksheet = workbook.getWorksheet('PREGUNTAS')
+            let questions = workbook.getWorksheet('PREGUNTAS')
+            let answers = workbook.getWorksheet('RESPUESTAS').getSheetValues()
 
-            worksheet.colums = headers;
+            questions.eachRow({ includeEmpty: false }, async (row, rowNumber) => {
+                if (rowNumber > 1) {
+                    let questionNum = rowNumber - 1;
 
-            worksheet.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
-                await Question.query().insert({
-                    'description': row.values[1],
-                    'explanation': row.values[2],
-                    'subtheme_id': subtheme_id,
-                    'trivia_id': trivia_id
-                })
+                    const options = answers.filter(row => row[2] == questionNum).map(i => ({
+                        'is_right': i[3] == 'X',
+                        'statement': i[1]
+                    }))
+
+                    await Question.query().insertGraphAndFetch({
+                        'description': row.values[1],
+                        'explanation': row.values[2],
+                        'subtheme_id': subtheme_id,
+                        'trivia_id': trivia_id,
+                        options: options
+                    });
+                }
             })
         })
 
-    return res.status(201).json({ "ok": "req.file" })
+    return res.status(201).json({ "ok": "upload success" })
 }
 
 export const update = async (req, res) => {
