@@ -23,7 +23,7 @@ export const indexByPlan = async (req, res) => {
     const user = req.user
 
     const plan = await user.$relatedQuery('plan').where('active',true).first()
-    
+
     const query = Trivia.query().select(
         Trivia.ref('*'),
         Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
@@ -31,14 +31,14 @@ export const indexByPlan = async (req, res) => {
         Trivia.relatedQuery('files').count().as('filesCount')
     )
     .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
-    
+
 
     if (filter) {
         if (filter.plan_active) {
-           query.where('plan_id',plan.plan_id) 
+           query.where('plan_id',plan.plan_id)
         }
         if (filter.plan_not_active) {
-           query.where('plan_id','!=',plan.plan_id) 
+           query.where('plan_id','!=',plan.plan_id)
         }
         if (filter.name) {
             query.where('name', 'ilike', `%${filter.name}%`)
@@ -76,9 +76,9 @@ export const storeGrupal = async (req, res) => {
         await model.$relatedQuery('participants').relate(user_ids)
 
         const subtheme = await Subtheme.query().findById(rest.subtheme_id)
-  
+
         const level = await Level.query().findById(rest.level_id)
-  
+
         let data_push_notification = {
             title :  'Nueva solicitud de trivia grupal',
             body :   `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
@@ -94,26 +94,31 @@ export const storeGrupal = async (req, res) => {
                 }
             }
         }
-        
-        await sendNotification(data_push_notification,user_ids) 
-                                         
+
+        await sendNotification(data_push_notification,user_ids)
+
         return res.status(201).json(model)
     }
 }
 
 export const update = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
     const { id } = req.params
 
-    let data = req.body;
+    const { body: data } = req
 
-    if (req.file) {
-        data.cover = req.file.path;
+    if (!reqErrors) {
+        const model = await Trivia.query()
+            .updateAndFetchById(id, {
+                cover: req.file.path,
+                is_free: data.is_free,
+                name: data.name,
+                category_id: data.category_id
+            })
+
+        return res.status(201).json(model)
     }
-
-    const model = await Trivia.query()
-        .updateAndFetchById(id, data)
-
-    return res.status(201).json(model)
 }
 
 export const show = async (req, res) => {
@@ -136,7 +141,7 @@ export const showGrupal = async (req, res) => {
                                     .withGraphFetched('subtheme')
                                     .withGraphFetched('participants')
                                     .first()
-    
+
     return res.status(201).json(model)
 }
 
