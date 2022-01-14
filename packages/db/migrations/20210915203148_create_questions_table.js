@@ -2,6 +2,7 @@
 export async function up(knex) {
     return knex.schema.createTable('questions', table => {
         table.increments('id').primary();
+        table.integer('num');
         table.string('description');
         table.string('explanation');
         table.boolean('explanation_type').defaultsTo(1);
