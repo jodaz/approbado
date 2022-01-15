@@ -79,7 +79,7 @@ const TriviaEdit = ({ record }) => {
                     <ImageInput
                         source="file"
                         loading={loading}
-                        accept='image/png'
+                        accept='image/svg+xml,image/png'
                         preview={(record.cover) && `${process.env.REACT_APP_API_DOMAIN}/${record.cover}`}
                         hasPreview={!!record.cover}
                     />

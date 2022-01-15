@@ -12,8 +12,8 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 const validate = (values) => {
     const errors = {};
 
-    if (!values.title) {
-        errors.title = "Ingrese el nombre.";
+    if (!values.name) {
+        errors.name = "Ingrese el nombre.";
     }
     if (!values.duration) {
         errors.duration = "Ingrese un tiempo límite.";
@@ -60,7 +60,7 @@ const SubthemeCreate = () => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="title"
+                    source="name"
                     placeholder="Nombre"
                     fullWidth
                 />

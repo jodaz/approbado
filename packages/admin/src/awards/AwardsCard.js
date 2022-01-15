@@ -9,9 +9,10 @@ import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import Avatar from '@material-ui/core/Avatar';
 import Dot from '@approbado/lib/components/Dot';
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu>
+    <OptionsCardMenu icon={<More />}>
         <DeleteButton
             basePath='awards'
             confirmColor='warning'
@@ -27,7 +28,7 @@ const TriviaCard = ({ data, id }) => {
     const classes = cardStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id}>
             <CardHeader
                 avatar={
                     <Avatar

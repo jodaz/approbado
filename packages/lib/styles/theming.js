@@ -316,6 +316,12 @@ const theme = {
                 padding: '0.5rem',
                 borderRadius: '25%'
             }
+        },
+        MuiLink: {
+            root: {
+                color: palette.info.main,
+                fontSize: '0.9rem'
+            }
         }
     },
     props: {

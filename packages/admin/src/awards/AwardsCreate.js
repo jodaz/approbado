@@ -55,7 +55,7 @@ const FileInput = ({ loading }) => {
                     <ImageInput
                         source="file"
                         loading={loading}
-                        accept='image/svg, image/png'
+                        accept='image/svg+xml,image/png'
                     />
                     <Box width='16rem'>
                         <Box fontSize='14px' fontWeight='400' color='#6D6D6D' margin='1rem 0'>

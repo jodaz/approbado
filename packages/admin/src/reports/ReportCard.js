@@ -2,54 +2,74 @@ import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import Typography from '@material-ui/core/Typography';
+import Dot from '@approbado/lib/components/Dot';
+import Box from '@material-ui/core/Box';
+import Tag from '@approbado/lib/components/Tag';
+import { ReactComponent as TagIcon } from '@approbado/lib/icons/Tag.svg'
+import DeleteButton from '@approbado/lib/components/DeleteButton'
+import { useHistory } from 'react-router-dom'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu>
+    <OptionsCardMenu icon={<More />}>
         <DeleteButton
-            basePath='files'
+            basePath='reports'
             confirmColor='warning'
-            confirmTitle='Eliminar archivo'
-            confirmContent={'¿Está seguro que desea eliminar este archivo?'}
+            confirmTitle='Eliminar reporte'
+            confirmContent={'¿Está seguro que desea eliminar este reporte?'}
             label={'Eliminar'}
             {...props}
         />
     </OptionsCardMenu>
 );
 
-const FileCard = ({ data, id }) => {
+const ReportCard = ({ data, id }) => {
     const classes = cardStyles();
+    const history = useHistory();
+
+    const handleRedirect = () => history.push(`/reports/1/show`)
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id} onClick={handleRedirect}>
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 className={classes.cardHeader}
-                title={data.title}
+                title={
+                    <Typography variant="subtitle1">
+                        ¿Por qué los estudiantes de derecho son imbéciles?
+                    </Typography>
+                }
+                subheader={
+                    <Box display="flex" alignItems='center'>
+                        <Typography variant="subtitle1">
+                            @andresitosua
+                        </Typography>
+                        <Dot />
+                        <Typography variant="subtitle1">
+                            Reportado 5 veces
+                        </Typography>
+                    </Box>
+                }
             />
-            <CardContent className={classes.cardContent}>
-                <div className={classes.innerContent}>
-                    <Typography variant="span" component="span">
-                        PDF
+            <CardContent>
+                <Box display="flex" justifyContent="space-between">
+                    <Tag name='Foros' icon={<TagIcon />} />
+                    <Typography variant="body2" component="span">
+                        15, Jul 2021
                     </Typography>
-                    <Divider className={classes.divider} />
-                    <Typography variant="span" component="span">
-                        154 Kb
-                    </Typography>
-                </div>
+                </Box>
             </CardContent>
         </Card>
     );
 }
 
-FileCard.propTypes = {
+ReportCard.propTypes = {
     data: PropTypes.object,
     id: PropTypes.number
 }
 
-export default FileCard
+export default ReportCard
