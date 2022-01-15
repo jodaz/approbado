@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { makeStyles, fade } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { useTriviaDispatch } from "@approbado/lib/hooks/useTriviaSelect"
+import PadLockIcon from '@approbado/lib/icons/PadLock'
 
 const useStyles = makeStyles(theme => ({
     root: {
-        margin: '1em',
+        margin: '0 1rem 1rem 0',
         cursor: 'pointer !important',
         borderRadius: '8px !important',
         background: '#F9F9F9',
@@ -23,37 +24,64 @@ const useStyles = makeStyles(theme => ({
             boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
             border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
         },
-    },
-    cardContent: {
-        margin: '1em',
-        textAlign: 'center'
-    },
-    link: {
-        textDecoration: 'none',
-        color: theme.palette.primary.main,
-        '&:hover': {
-            textDecoration: 'underline',
-            cursor: 'pointer'
-        },
-        '&visited': {
-            color: theme.palette.primary.main,
+        position: 'relative',
+        '&::before': {
+            content: "''",
+            backgroundImage: props => `url(${process.env.REACT_APP_API_DOMAIN}/${props.cover})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: '100% 100%',
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            right: '0px',
+            bottom: '0px',
+            zIndex: 0,
         }
+    },
+    content: {
+        textAlign: 'center',
+        padding: '2rem 0'
+    },
+    blockedContent: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: 'content-max',
+        height: 'content-max',
+        padding: '0.5rem',
+        background: 'transparent',
+        zIndex: 1000,
+        position: 'absolute',
+        fontSize: '0.9rem',
+        top: 0,
+        left: 0,
+        border: 'none',
+        color: theme.palette.info.light
+    },
+    icon: {
+        fontSize: 'inherit',
+        marginRight: '0.25rem'
     }
 }))
 
 const TriviaCard = ({ data, id }) => {
     const { setTrivia } = useTriviaDispatch();
-    const classes = { ...cardStyles(), ...useStyles() };
+    const classes = { ...cardStyles(), ...useStyles({ cover: data.cover }) };
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id}>
             <CardActionArea onClick={() => setTrivia(data)}>
-                <CardContent className={classes.cardContent}>
+                <Box className={classes.content}>
                     <Typography variant="h6">
                         {data.name}
                     </Typography>
-                </CardContent>
+                </Box>
             </CardActionArea>
+            {(!data.is_free) && (
+                <Box className={classes.blockedContent}>
+                    <PadLockIcon className={classes.icon} /> Contenido bloqueado
+                </Box>
+            )}
         </Card>
     );
 }

@@ -15,8 +15,8 @@ import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
 
 const ACCESS_TYPES = [
-    { id: '0', name: 'Gratis' },
-    { id: '1', name: 'De pago' }
+    { id: '1', name: 'Gratis' },
+    { id: '0', name: 'De pago' }
 ]
 
 const validate = (values) => {

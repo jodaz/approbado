@@ -13,8 +13,8 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
 const ACCESS_TYPES = [
-    { id: '0', name: 'Gratis' },
-    { id: '1', name: 'De pago' }
+    { id: '1', name: 'Gratis' },
+    { id: '0', name: 'De pago' }
 ]
 
 const validate = (values) => {

@@ -111,7 +111,7 @@ export const update = async (req, res) => {
     if (!reqErrors) {
         const model = await Trivia.query()
             .updateAndFetchById(id, {
-                cover: req.file.path,
+                cover: (req.file) ? req.file.path : '',
                 is_free: data.is_free,
                 name: data.name,
                 category_id: data.category_id

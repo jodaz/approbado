@@ -26,9 +26,10 @@ const ForumListView = ({ sort, filter, perPage, page: initialPage }) => {
     const targetRef = React.useRef();
 
     const handleScroll = e => {
-        if ((window.innerHeight >= targetRef.current.getBoundingClientRect().bottom) && loadMore) {
-            handleLoadMore();
-        }
+        // console.log(targetRef)
+        // if ((window.innerHeight >= targetRef.current.getBoundingClientRect().bottom) && loadMore) {
+        //     handleLoadMore();
+        // }
         e.stopPropagation();
     }
 
@@ -78,7 +79,6 @@ const ForumListView = ({ sort, filter, perPage, page: initialPage }) => {
                     user={user}
                 />
             ))}
-            <ForumWarning />
         </Box>
     )
 }
