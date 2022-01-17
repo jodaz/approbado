@@ -61,7 +61,7 @@ const ReportShow = () => {
                         15, Julio 2021
                     </Typography>
                 </Box>
-                <Link to='/forums/1/show' component={LinkBehavior}>
+                <Link to='/forums/1/show' color='info' underline='hover' component={LinkBehavior}>
                     Abrir publicación
                 </Link>
             </Box>

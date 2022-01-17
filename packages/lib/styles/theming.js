@@ -317,12 +317,6 @@ const theme = {
                 borderRadius: '25%'
             }
         },
-        MuiLink: {
-            root: {
-                color: palette.info.main,
-                fontSize: '0.9rem'
-            }
-        }
     },
     props: {
         MuiButtonBase: {
