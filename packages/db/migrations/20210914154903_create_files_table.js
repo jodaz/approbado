@@ -5,6 +5,7 @@ export async function up(knex) {
       table.increments('id').primary();
       table.string('title');
       table.string('file');
+      table.string('size');
       table.integer('subtheme_id').unsigned();
       table.foreign('subtheme_id').references('subthemes.id').onDelete('cascade');
       table.timestamps();

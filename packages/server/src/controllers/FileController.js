@@ -1,5 +1,5 @@
-import { File, Subtheme } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { File } from '../models'
+import { validateRequest, paginatedQueryResponse, formatBytes } from '../utils'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -32,6 +32,7 @@ export const store = async (req, res) => {
 
         if (req.file) {
             data.file = req.file.path;
+            data.size = formatBytes(req.file.size)
         }
 
         const model = await File.query().insert(data)
