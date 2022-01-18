@@ -5,13 +5,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     tag: {
@@ -47,16 +45,15 @@ const OptionsMenu = props => (
 
 const TriviaCard = ({ data, id }) => {
     const classes = { ...cardStyles(), ...useStyles() };
+    const history = useHistory();
+
+    const handleRedirect = () => history.push(`/trivias/${id}/show`)
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} onClick={handleRedirect}>
             <CardHeader
                 action={<OptionsMenu record={data} />}
-                title={
-                    <Link to={`trivias/${data.id}/show`} className={classes.link}>
-                        {data.name}
-                    </Link>
-                }
+                title={data.name}
                 className={classes.cardHeader}
             />
             <CardContent className={classes.cardContent}>
@@ -69,12 +66,6 @@ const TriviaCard = ({ data, id }) => {
                         {data.filesCount} archivos
                     </Typography>
                 </div>
-                <Box component='div' className={classes.tag}>
-                    <LocalOfferIcon fontSize="small" />
-                    <Typography variant="span" component="span" style={{ paddingLeft: '5px' }}>
-                        Intermedio
-                    </Typography>
-                </Box>
             </CardContent>
         </Card>
     );

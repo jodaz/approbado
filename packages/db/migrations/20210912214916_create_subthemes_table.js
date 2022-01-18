@@ -4,7 +4,7 @@ export async function up(knex) {
     return knex.schema.createTable('subthemes', table => {
         table.increments('id').primary();
         table.integer('points')
-        table.string('title');
+        table.string('name');
         table.integer('duration');
         table.integer('trivia_id').unsigned();
         table.foreign('trivia_id').references('trivias.id').onDelete('cascade');

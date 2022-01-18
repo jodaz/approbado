@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core'
@@ -7,6 +6,7 @@ import { ReactComponent as SelectionIllustration } from '@approbado/lib/illustra
 import { useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import { ReactComponent as BannerIllustration } from '@approbado/lib/illustrations/Banner.svg';
 import NoContent from '@approbado/lib/components/NoContent'
+import Temary from '../components/temary'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,6 +34,8 @@ const SelectTrivia = ({ isXSmall }) => {
                                 title='Seleccione una trivia'
                             />
                         )}
+                        <BannerIllustration />
+                        <Temary />
                     </Box>
                 </Box>
             )}
