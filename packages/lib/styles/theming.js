@@ -316,7 +316,7 @@ const theme = {
                 padding: '0.5rem',
                 borderRadius: '25%'
             }
-        }
+        },
     },
     props: {
         MuiButtonBase: {

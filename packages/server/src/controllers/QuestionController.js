@@ -4,7 +4,7 @@ import { validateRequest, paginatedQueryResponse } from '../utils'
 import Excel from 'exceljs'
 
 export const index = async (req, res) => {
-    const { filter, options} = req.query
+    const { filter, sort, order } = req.query
     const query = Question.query()
 
     if (filter) {
@@ -20,10 +20,21 @@ export const index = async (req, res) => {
         if (filter.level_id) {
             query.where('level_id', filter.level_id)
         }
+        if (filter.options) {
+            query
+                .withGraphFetched('options')
+                .modifyGraph('options', builder => {
+                    builder.where('is_right', '=', true)
+                })
+        }
     }
 
-    if (options) {
-        query.withGraphFetched('options')
+    if (sort && order) {
+        switch (sort) {
+            default:
+                query.orderBy(sort, order);
+                break;
+        }
     }
 
     return paginatedQueryResponse(query, req, res)

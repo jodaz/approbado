@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core'
 
 const cardStyles = makeStyles(theme => ({
     root: {
-        margin: '1em',
+        margin: '0 1rem 1rem 0',
         borderRadius: '8px !important',
         background: '#F9F9F9',
         cursor: 'pointer !important',

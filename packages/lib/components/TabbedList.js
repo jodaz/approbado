@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 import Tabs from '@material-ui/core/Tabs'
-import Divider from '@material-ui/core/Divider'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -104,7 +103,6 @@ const TabbedList = ({
                     </Tabs>
                     { children && React.cloneElement(children, {})}
                 </Box>
-                <Divider />
             </Box>
             <Box component='div' className={classes.content}>
                 <Component {...tag} />

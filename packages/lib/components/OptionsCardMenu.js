@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { ReactComponent as MoreMenuIcon } from '@approbado/lib/icons/MoreMenu.svg'
 
-export default function OptionsCardMenu({ children }) {
+const OptionsCardMenu = ({ children, icon }) => {
     const arrayChildren = React.Children.toArray(children)
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -55,7 +55,7 @@ export default function OptionsCardMenu({ children }) {
                 aria-haspopup="true"
                 onClick={handleToggle}
             >
-                <MoreMenuIcon />
+                {React.cloneElement(icon, {})}
             </IconButton>
             <Popper
                 open={open}
@@ -95,3 +95,9 @@ export default function OptionsCardMenu({ children }) {
         </div>
     );
 }
+
+OptionsCardMenu.defaultProps = {
+    icon: <MoreMenuIcon />
+}
+
+export default OptionsCardMenu;

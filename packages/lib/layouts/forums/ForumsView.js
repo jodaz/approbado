@@ -9,6 +9,7 @@ import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 import ForumCreate from './ForumCreate'
 import TopContributors from './TopContributors'
 import ForumsListView from '@approbado/lib/layouts/forums/ForumsListView'
+import ForumWarning from './ForumWarning'
 
 const tags = [
     {
@@ -58,6 +59,7 @@ const ForumsView = () => {
             </Box>
             <TopContributors isXSmall={isXSmall} />
             <ForumCreate />
+            <ForumWarning />
         </Box>
     )
 }

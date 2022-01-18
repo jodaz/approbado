@@ -4,43 +4,22 @@ import {
     useShowController
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import LayerIcon from '@approbado/lib/icons/LayerIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import SubthemeEdit from './SubthemeEdit'
 import TabbedList from '@approbado/lib/components/TabbedList'
 import QuestionsList from '../questions/QuestionsList'
-
-const useStyles = makeStyles(() => ({
-    root: {
-        margin: '1em',
-        borderRadius: '8px !important',
-        background: '#F9F9F9',
-        height: '8rem'
-    },
-    cardHeader: {
-        padding: '1em !important'
-    },
-    cardContent: {
-        padding: '1em',
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '4rem',
-        alignItems: 'center'
-    }
-}))
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import Header from '../components/Header'
+import Box from '@material-ui/core/Box'
 
 const OptionsMenu = props => {
     const redirect = useRedirect();
     const { trivia_id } = props;
 
     return (
-        <OptionsCardMenu>
+        <OptionsCardMenu icon={<More />}>
             <DeleteButton
                 basePath='subthemes'
                 confirmColor='warning'
@@ -54,29 +33,11 @@ const OptionsMenu = props => {
     )
 };
 
-const SubthemeShowHeader = ({ record, trivia_id }) => {
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.root}>
-            <CardHeader
-                action={<OptionsMenu record={record} trivia_id={trivia_id} />}
-                title={record.title}
-                className={classes.cardHeader}
-            />
-            <CardContent className={classes.cardContent}>
-                <LayerIcon />
-                <Typography variant='subtitle1'>Subtema</Typography>
-            </CardContent>
-        </Card>
-    );
-}
-
 const tags = record => ([
     {
         name: 'Preguntas',
         pathname: 'questions',
-        component: <QuestionsList record={record} />
+        component: <QuestionsList record={record} filter={{ subtheme_id: record.id }} />
     },
     {
         name: 'General',
@@ -98,13 +59,18 @@ const SubthemeShow = () => {
     if (!loaded) return null;
 
     return (
-        <React.Fragment>
-            <SubthemeShowHeader record={record} trivia_id={trivia_id} />
+        <Box marginTop='2rem'>
+            <Header
+                record={record}
+                icon={<LayerIcon />}
+                name='Subtema'
+                menu={<OptionsMenu record={record} trivia_id={trivia_id} />}
+            />
 
             <TabbedList
                 tags={tags(record)}
             />
-        </React.Fragment>
+        </Box>
     )
 }
 

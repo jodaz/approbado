@@ -10,11 +10,14 @@ export const index = async (req, res) => {
         if (filter.active) {
             query.where('active', filter.active)
         }
+        if (filter.user_id) {
+            query.where('user_id', filter.user_id)
+                .withGraphFetched('plans');
+        }
     }
 
     return paginatedQueryResponse(query, req, res)
 }
-
 
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
