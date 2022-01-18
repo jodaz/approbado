@@ -38,11 +38,11 @@ export async function seed(knex) {
         })
 
         await Category.query().insert({
-            name: 'Comercio',
+            name: 'Derecho comercial',
         })
 
         await Level.query().insert({
-            name: 'Ambiente',
+            name: 'Básico',
         })
 
         const trivia = await Trivia.query().insert({

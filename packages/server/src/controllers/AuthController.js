@@ -212,7 +212,8 @@ export const verifySMSCode = async (req, res) => {
                 rol: 'USER',
                 email: email,
                 phone: phone,
-                picture : 'public/default/user.png'
+                picture : 'public/default/user.png',
+                user_name : email.split('@')[0],
             })
 
             await user.$relatedQuery('profile').insert({
