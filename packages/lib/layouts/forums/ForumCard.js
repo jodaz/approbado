@@ -6,11 +6,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import { useHistory } from 'react-router-dom';
-import DeleteButton from '@approbado/lib/components/DeleteButton'
-import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
+import ForumCardMenuOptions from './ForumCardMenuOptions';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -40,37 +39,27 @@ const useStyles = makeStyles(theme => ({
         padding: '0rem'
     },
     content: {
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '0 3.5rem',
+        padding: '0 0 0 3.5rem',
+        height: '4rem',
+        '&:last-child': {
+            paddingBottom: 'unset !important'
+        }
     }
 }));
 
-const OptionsMenu = props => (
-    <OptionsCardMenu>
-        <DeleteButton
-            basePath='forums'
-            confirmColor='warning'
-            confirmTitle='Eliminar foro'
-            confirmContent={'¿Está seguro que desea eliminar esta foro?'}
-            label={'Eliminar'}
-            {...props}
-        />
-    </OptionsCardMenu>
-);
-
-const ForumCard = ({ data, id }) => {
+const ForumCard = ({ data, user }) => {
     const classes = useStyles();
     const history = useHistory();
+    const ref = React.createRef();
 
-    const redirect = () => history.push(`/forums/${id}/show`)
+    const redirect = () => history.push(`/forums/${data.id}/show`)
 
     return (
-        <Card className={classes.root} onClick={redirect}>
+        <Card className={classes.root}>
             <CardHeader
-                action={<OptionsMenu record={data} />}
+                action={<ForumCardMenuOptions record={data} user={user} ref={ref} history={history} />}
                 title={
-                    <Typography component="div">
+                    <Typography component="div" onClick={redirect}>
                         <Box className={classes.title} sx={{ fontSize: '1rem'}}>
                             {data.message}
                         </Box>
@@ -79,12 +68,12 @@ const ForumCard = ({ data, id }) => {
                 avatar={
                     <Avatar
                         aria-label="recipe"
-                        src={`${process.env.REACT_APP_API_DOMAIN}/public/${data.owner.picture}`}
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.owner.picture}`}
                     />
                 }
                 className={classes.header}
             />
-            <CardContent className={classes.content}>
+            <CardContent className={classes.content} onClick={redirect}>
                 <PostDescription record={data} />
             </CardContent>
         </Card>

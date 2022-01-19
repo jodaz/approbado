@@ -10,6 +10,4 @@ const Dot = styled('span')({
     margin: '0.5rem'
 });
 
-export default () => (
-    <Dot></Dot>
-);
+export default () => <Dot />

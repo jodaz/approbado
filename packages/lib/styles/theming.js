@@ -1,4 +1,7 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints'
+
+const breakpoints = createBreakpoints({})
 
 const palette = {
     primary: {
@@ -36,7 +39,12 @@ const theme = {
         RaLayout: {
             content: {
                 marginTop: '4em',
-                padding: '0 3em !important'
+                padding: '0 1rem !important',
+                display: 'flex',
+                flexDirection: 'column',
+                [breakpoints.up('sm')]: {
+                    padding: '0 2.5rem !important'
+                }
             },
             appFrame: {
                 marginTop: '0 !important'
@@ -59,11 +67,6 @@ const theme = {
                 }
             }
         },
-        MuiDrawer: {
-            root: {
-                backgroundColor: palette.primary.main
-            }
-        },
         MuiMenu: {
             paper: {
                 borderRadius: '6px !important',
@@ -82,11 +85,39 @@ const theme = {
             }
         },
         MuiButton: {
-            contained: {
-                backgroundColor: '#fff',
-                color: '#4f3cc9',
-                boxShadow: 'none',
+            root: {
+                borderRadius: '6px',
+                fontWeight: 600
             },
+            label: {
+                textTransform: 'none',
+                margin: '0 0.2rem'
+            },
+            textPrimary: {
+                backgroundColor: palette.secondary.main,
+                '&:hover': {
+                    backgroundColor: fade(palette.secondary.main, 0.7)
+                }
+            },
+            outlinedSecondary: {
+                color: palette.primary.main,
+                background: '#fff',
+                border: `1px solid ${palette.primary.light}`,
+                transition: '300ms',
+                '&:hover': {
+                    color: fade(palette.primary.light, 1),
+                    border: `1px solid ${fade(palette.primary.light, 0.99)}`,
+                }
+            },
+            containedPrimary: {
+                color: palette.primary.main,
+                backgroundColor: palette.secondary.main,
+                boxShadow: 'none',
+                transition: '300ms',
+                '&:hover': {
+                    backgroundColor: fade(palette.secondary.main, 0.99)
+                }
+            }
         },
         MuiInputBase: {
             root: {
@@ -99,20 +130,17 @@ const theme = {
                 transition: "none",
                 marginBottom: '0.3rem',
                 boxShadow: 'none',
-                '&:focus': {
-                    borderColor: palette.primary.main
-                }
-            },
-            input: {
-                backgroundColor: fade('#fff', 0.8),
-                padding: '0.7rem !important',
-                borderRadius: 6,
-                '&:focus': {
+                '&.Mui-focused': {
                     borderRadius: 6,
                     color: `${palette.primary.main}`,
                     border: `1px solid ${palette.info.main}`,
                     boxShadow: `0px 0px 1px 1px ${fade(palette.info.main, 0.7)}`
                 }
+            },
+            input: {
+                backgroundColor: fade('#fff', 0.8),
+                padding: '0.7rem !important',
+                borderRadius: 6
             }
         },
         MuiInputLabel: {
@@ -144,12 +172,22 @@ const theme = {
         },
         MuiFilledInput: {
             root: {
-                    transition: "none !important",
-                    borderRadius: '5px !important',
-                    '&$disabled': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    }
+                transition: "none !important",
+                borderRadius: '5px !important',
+                '&$disabled': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                }
             },
+            underline: {
+                '&::before': {
+                    content: 'none'
+                },
+                '&::after': {
+                    content: 'none'
+                }
+            }
+        },
+        MuiInput: {
             underline: {
                 '&::before': {
                     content: 'none'
@@ -189,11 +227,17 @@ const theme = {
         },
         RaSidebar: {
             root: {
-                height: 'inherit'
+                height: 'inherit',
+                [breakpoints.down('xs')]: {
+                    backgroundColor: 'transparent',
+                },
             },
             fixed: {
                 width: 'inherit',
                 height: 'inherit'
+            },
+            paper: {
+                backgroundColor: `${palette.primary.main} !important`
             }
         },
         PrivateTabIndicator: {
@@ -208,7 +252,8 @@ const theme = {
         },
         MuiInputAdornment: {
             root: {
-                color: '#ced4da'
+                color: '#ced4da',
+                marginLeft: '8px !important'
             }
         },
         MuiDialogTitle: {
@@ -227,7 +272,8 @@ const theme = {
         },
         MuiDialog: {
             paper: {
-                borderRadius: '6px !important'
+                borderRadius: '6px !important',
+                border: 'none'
             }
         },
         MuiTypography: {
@@ -251,14 +297,33 @@ const theme = {
             colorSecondary: {
                 color: `${palette.info.main} !important`
             }
-        }
+        },
+        MuiGrid: {
+            item: {
+                width: '100%'
+            }
+        },
+        RaAppBar: {
+            toolbar: {
+                [breakpoints.down('xs')]: {
+                    backgroundColor: '#fff',
+                    flexDirection: 'row !important'
+                },
+            }
+        },
+        MuiIconButton: {
+            root: {
+                padding: '0.5rem',
+                borderRadius: '25%'
+            }
+        },
     },
     props: {
         MuiButtonBase: {
             // disable ripple for perf reasons
             disableRipple: true
-        }
-    },
+        },
+    }
 }
 
 export default theme;

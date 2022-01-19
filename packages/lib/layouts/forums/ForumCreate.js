@@ -14,6 +14,7 @@ import {
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
+import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 
 const ForumCreate = () => {
     const status = useDialogState('forums.create');
@@ -21,6 +22,7 @@ const ForumCreate = () => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
+    const { fetchUser } = useUserDispatch();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -41,6 +43,7 @@ const ForumCreate = () => {
             notify('Se ha completado el registro con éxito');
             redirect(`/forums/${data.id}/show`);
             unsetDialog();
+            fetchUser();
         }
     }, [data, loaded])
 

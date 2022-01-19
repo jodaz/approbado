@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 import Tabs from '@material-ui/core/Tabs'
-import Divider from '@material-ui/core/Divider'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -12,6 +11,7 @@ import { useLocation, Link } from 'react-router-dom';
 const useStyles = makeStyles(theme => ({
     root: {
         flexDirection: 'column',
+        minHeight: '15rem'
     },
     boxLayoutStyles: {
         margin: '0 !important',
@@ -31,6 +31,10 @@ const useStyles = makeStyles(theme => ({
             color: `${theme.palette.info.main} !important`,
             borderBottom: `3px solid ${theme.palette.info.main}`
         }
+    },
+    content: {
+        minHeight: '15rem',
+        paddingTop: '3rem'
     }
 }));
 
@@ -40,6 +44,13 @@ function useQuery() {
 
 function pathnameInPathnames(tags, pathname) {
     return tags.map(({ pathname }) => pathname).includes(pathname)
+}
+
+const Component = props => {
+    const { component } = props
+    const Component = component;
+
+    return Component;
 }
 
 const TabbedList = ({
@@ -53,6 +64,7 @@ const TabbedList = ({
         ? (pathnameInPathnames(tags, query.get('tab')) ? query.get('tab') : null)
         : tags[0].pathname
     ));
+    const tag = tags.filter(tag => tag.pathname === currentTab)[0]
     const classes = useStyles();
 
     const handleChange = (event, newValue) => {
@@ -62,13 +74,6 @@ const TabbedList = ({
     const tabPath = (tabname) => (
         `${window.location.pathname}?tab=${tabname}`
     )
-
-    const componentToRender = () => {
-        const tag = tags.filter(tag => tag.pathname === currentTab)
-        const { component } = tag[0];
-
-        return component
-    }
 
     if (currentTab == null) return null
 
@@ -98,10 +103,9 @@ const TabbedList = ({
                     </Tabs>
                     { children && React.cloneElement(children, {})}
                 </Box>
-                <Divider />
-                <Box component='div' paddingTop='2rem'>
-                    {React.cloneElement(componentToRender(), {})}
-                </Box>
+            </Box>
+            <Box component='div' className={classes.content}>
+                <Component {...tag} />
             </Box>
         </Box>
     )

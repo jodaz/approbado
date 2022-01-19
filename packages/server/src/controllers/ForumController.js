@@ -22,7 +22,7 @@ export const index = async (req, res) => {
             query.where('message', 'ilike', `%${filter.message}%`).orWhere('summary', 'ilike', `%${filter.message}%`)
         }
         if (filter.user_id) {
-            query.where('user_id', '=', filter.user_id)
+            query.where('created_by', '=', filter.user_id)
         }
     }
 

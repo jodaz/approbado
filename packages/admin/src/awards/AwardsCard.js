@@ -1,16 +1,18 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
+import Avatar from '@material-ui/core/Avatar';
+import Dot from '@approbado/lib/components/Dot';
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu>
+    <OptionsCardMenu icon={<More />}>
         <DeleteButton
             basePath='awards'
             confirmColor='warning'
@@ -26,27 +28,28 @@ const TriviaCard = ({ data, id }) => {
     const classes = cardStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id}>
             <CardHeader
+                avatar={
+                    <Avatar
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.icon}`}
+                        alt='icon'
+                    />
+                }
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Typography variant="h6">
+                    <Typography variant="subtitle1" component="h1">
                         {data.title}
                     </Typography>
                 }
-                className={classes.cardHeader}
+                subheader={
+                    <Box display="flex">
+                        <Typography variant="body2">{data.type}</Typography>
+                        <Dot />
+                        <Typography variant="body2">{data.min_points} puntos</Typography>
+                    </Box>
+                }
             />
-            <CardContent className={classes.cardContent}>
-                <div className={classes.innerContent}>
-                    <Typography variant="span" component="span">
-                        {data.type}
-                    </Typography>
-                    <Divider className={classes.divider} />
-                    <Typography variant="span" component="span">
-                        {data.points}
-                    </Typography>
-                </div>
-            </CardContent>
         </Card>
     );
 }

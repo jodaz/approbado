@@ -4,6 +4,7 @@ import { useMediaQuery } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import { ListBase, useListContext } from 'react-admin'
 import Banner from './Banner'
+import NotificationCard from './NotificationCard'
 
 const NotificationsList = ({ isXSmall, ...rest }) => (
     <ListBase
@@ -38,6 +39,8 @@ const NotificationsListView = ({ isXSmall }) => {
                         No tenemos debates disponibles, ¿quizás desees volver más tarde?
                     </Typography>
                 )} */}
+                <NotificationCard />
+                <NotificationCard />
             </Box>
         </Box>
     )

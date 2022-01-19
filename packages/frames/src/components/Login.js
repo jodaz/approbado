@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field } from 'react-final-form';
 import {
-    Card,
     CardActions,
     Typography,
     Box
@@ -10,7 +9,6 @@ import axios from 'axios'
 import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
 import useStyles from '@approbado/lib/styles/formStyles'
-import AuthHeaderForm from './AuthHeaderForm';
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
@@ -39,7 +37,6 @@ const Login = () => {
 
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
-
         return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
             .then(res => {
                 const { token } = res.data;
@@ -58,10 +55,12 @@ const Login = () => {
     }, [])
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
-            <Card className={classes.card}>
+        <AuthLayout
+            validate={validate}
+            handleSubmit={handleSubmit}
+            title='Iniciar sesión'
+        >
                 <div className={classes.form}>
-                    <AuthHeaderForm title='Iniciar sesión' />
                     <Field
                         component={renderInput}
                         name="email"
@@ -100,9 +99,9 @@ const Login = () => {
                         <Button
                             variant='contained'
                             color='secondary'
-                            type="submit"
-                            className={classes.saveButton}
                             disabled={loading}
+                            type='submit'
+                            unresponsive
                             fullWidth
                         >
                             {'Iniciar sesión'}
@@ -116,7 +115,6 @@ const Login = () => {
                         </Box>
                     </CardActions>
                 </div>
-            </Card>
         </AuthLayout >
     );
 };

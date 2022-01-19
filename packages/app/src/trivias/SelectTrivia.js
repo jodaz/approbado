@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core'
 import { ReactComponent as SelectionIllustration } from '@approbado/lib/illustrations/Selection.svg';
 import { useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import { ReactComponent as BannerIllustration } from '@approbado/lib/illustrations/Banner.svg';
+import NoContent from '@approbado/lib/components/NoContent'
+import Temary from '../components/temary'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,13 +29,13 @@ const SelectTrivia = ({ isXSmall }) => {
                 <Box p='0 0 0 2rem'>
                     <Box className={classes.root}>
                         {(!selected) && (
-                            <>
-                                <SelectionIllustration />
-                                <Typography variant="subtitle2">
-                                    Seleccione una trivia
-                                </Typography>
-                            </>
+                            <NoContent
+                                icon={<SelectionIllustration />}
+                                title='Seleccione una trivia'
+                            />
                         )}
+                        <BannerIllustration />
+                        <Temary />
                     </Box>
                 </Box>
             )}

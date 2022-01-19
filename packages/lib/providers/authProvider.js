@@ -3,7 +3,8 @@ import CONFIG_NAMES from '../configs'
 
 export const authProvider = (packageName) => ({
     login: async (data) => {
-        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data);
+        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
+        await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(data.user));
 
         return Promise.resolve();
     },
@@ -21,12 +22,11 @@ export const authProvider = (packageName) => ({
 
         if (response.status === 401 || response.status === 403) {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-            await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
         }
 
         return Promise.resolve();
     },
-    checkAuth: async () => {
+    checkAuth: async (packageName) => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
         if (!token) {
@@ -47,7 +47,6 @@ export const authProvider = (packageName) => ({
 
         if (token) {
             const { exp, iat, ...rest } = jwtDecode(token);
-
             return Promise.resolve(rest);
         }
 

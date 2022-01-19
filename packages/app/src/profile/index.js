@@ -1,28 +1,13 @@
-import EditProfile from './EditProfile'
-import TabbedList from '@approbado/lib/components/TabbedList'
-import Grid from '@material-ui/core/Grid'
-
-const tags = [
-    {
-        name: 'Datos personales',
-        pathname: 'general',
-        component: <EditProfile />
-    }
-]
+import * as React from 'react'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
+import ProfileLayout from '@approbado/lib/layouts/profile/ProfileLayout'
 
 const Profile = () => {
-    return (
-        <Grid container>
-            <Grid item sm='4'>
+    const { user, isAuth } = useUserState();
 
-            </Grid>
-            <Grid item sm='8'>
-                <TabbedList
-                    tags={tags}
-                />
-            </Grid>
-        </Grid>
-    );
+    if (!isAuth) return null;
+
+    return <ProfileLayout data={user} />;
 }
 
 export default Profile

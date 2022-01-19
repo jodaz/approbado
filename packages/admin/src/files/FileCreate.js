@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
-import UploadFileButton from './UploadFileButton'
+import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 
 const validate = (values) => {
     const errors = {};
@@ -81,11 +81,14 @@ const FileCreate = () => {
                     allowEmpty
                     fullWidth
                 >
-                    <SelectInput source="title" emptyText="N/A" />
+                    <SelectInput source="title" emptyText="N/A" optionText="title" />
                 </ReferenceInput>
             </InputContainer>
             <InputContainer labelName="" xs={12} md={12}>
-                <UploadFileButton name="file"><></></UploadFileButton>
+                <UploadFileButton
+                    name="file"
+                    accept='application/pdf'
+                />
             </InputContainer>
         </BaseForm>
     )

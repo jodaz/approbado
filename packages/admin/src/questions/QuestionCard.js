@@ -1,17 +1,16 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu>
+    <OptionsCardMenu icon={<More />}>
         <DeleteButton
             basePath='questions'
             confirmColor='warning'
@@ -27,17 +26,20 @@ const QuestionCard = ({ data, id }) => {
     const classes = cardStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id}>
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Link to={`questions/${data.id}/show`} className={classes.link}>
-                        {data.description}
-                    </Link>
+                    <Typography variant="subtitle1" component="h1">
+                        {`${id}. ${data.description}`}
+                    </Typography>
                 }
-                className={classes.cardHeader}
+                subheader={
+                    <Box marginTop='1rem'>
+                        {data.options[0].statement}
+                    </Box>
+                }
             />
-            <CardContent className={classes.cardContent}></CardContent>
         </Card>
     );
 }

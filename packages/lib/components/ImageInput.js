@@ -1,44 +1,63 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import { useInput, InputHelperText } from 'react-admin';
 import { useDropzone } from 'react-dropzone';
 import { ReactComponent as UploadIcon } from '@approbado/lib/icons/Upload.svg'
 import Typography from '@material-ui/core/Typography'
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles(
     theme => ({
         dropZone: {
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: theme.palette.background.dark,
+            background: '#F9F9F9',
             cursor: 'pointer',
-            padding: theme.spacing(1),
             textAlign: 'center',
             color: theme.palette.getContrastText(
                 theme.palette.background.default
             ),
             border: `1px solid #B7B7B7`,
             borderRadius: '3px',
+            width: '16rem',
+            height: '16rem',
+            border: 'none',
+            opacity: (props) => props.loading ? 0.7 : 1,
             '& > *': {
                 marginRight: '0.5rem',
                 marginLeft: '0.5rem'
             }
         },
-        root: { width: '100%' },
+        thumb: {
+            width: 'inherit',
+            height: 'inherit',
+            zIndex: 0
+        },
+        img: {
+            height: 'inherit',
+            width: 'inherit'
+        },
+        loader: {
+            height: '1.25rem !important',
+            width: '1.25rem !important'
+        },
+        className: {
+            height: 'max-content',
+            padding: '0.25rem 0'
+        }
     }),
-    { name: 'RaFileInput' }
+    { name: 'RaProfilePhotoInput' }
 );
 
-const FileInput = (props) => {
+const ProfilePhotoInput = (props) => {
     const {
         accept,
         children,
         className,
         classes: classesOverride,
         format,
-        helperText,
         maxSize,
         minSize,
         multiple = false,
@@ -51,9 +70,14 @@ const FileInput = (props) => {
         resource,
         source,
         validate,
+        preview,
+        loading,
+        helperText,
+        hasPreview = false,
         ...rest
     } = props;
     const classes = useStyles(props);
+    const [file, setFile] = React.useState({ preview: preview, hasPreview: hasPreview });
 
     // turn a browser dropped file structure into expected structure
     const transformFile = file => {
@@ -68,6 +92,7 @@ const FileInput = (props) => {
             rawFile: file,
             [source]: preview,
         };
+        setFile({ preview: preview, hasPreview: true })
 
         if (title) {
             transformedFile[title] = file.name;
@@ -76,25 +101,13 @@ const FileInput = (props) => {
         return transformedFile;
     };
 
-    const transformFiles = (files) => {
-        if (!files) {
-            return multiple ? [] : null;
-        }
-
-        if (Array.isArray(files)) {
-            return files.map(transformFile);
-        }
-
-        return transformFile(files);
-    };
-
     const {
         id,
         input: { onChange, value, ...inputProps },
         meta
     } = useInput({
-        format: format || transformFiles,
-        parse: parse || transformFiles,
+        format: format || transformFile,
+        parse: parse || transformFile,
         source,
         type: 'file',
         validate,
@@ -120,6 +133,11 @@ const FileInput = (props) => {
         onDrop,
     });
 
+    React.useEffect(() => () => {
+        // Make sure to revoke the data uris to avoid memory leaks
+        URL.revokeObjectURL(file.preview)
+    }, [file]);
+
     return (
         <>
             <div
@@ -127,27 +145,33 @@ const FileInput = (props) => {
                 className={classes.dropZone}
                 {...getRootProps()}
             >
-                <UploadIcon />
-                <input
-                    id={id}
-                    {...getInputProps({
-                        ...inputProps,
-                        ...inputPropsOptions,
-                    })}
-                />
-                <Typography variant="subtitle1" component="span">
-                    {'Subir archivo'}
-                </Typography>
+                {(!file.hasPreview) ? (
+                    <>
+                        <UploadIcon />
+                        <input
+                            id={id}
+                            {...getInputProps({
+                                ...inputProps,
+                                ...inputPropsOptions,
+                            })}
+                        />
+                        <Typography variant="subtitle1" component="span">
+                        {'Selecciona una foto desde tu dispositivo'}
+                        </Typography>
+                    </>
+                ) : (
+                    <img
+                        className={classes.img}
+                        src={file.preview}
+                    />
+                )}
             </div>
-            <FormHelperText>
-                <InputHelperText
-                    touched={touched}
-                    error={error || submitError}
-                    helperText={helperText}
-                />
-            </FormHelperText>
         </>
     );
 };
 
-export default FileInput;
+ProfilePhotoInput.defaultProps = {
+    children: <></>
+}
+
+export default ProfilePhotoInput;

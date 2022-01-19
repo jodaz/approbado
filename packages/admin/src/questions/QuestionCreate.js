@@ -63,6 +63,22 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+// // custom Mutator to write into formState.errors object
+// const setError = ([name, value], state, { setIn }) =>
+//   setIn(state, `formState.errors.${name}`, value);
+
+const uncheck = (args, state, { setIn, changeValue }) => {
+    if (args) {
+        console.log(state.fields)
+    }
+    // alert("hi");
+    // changeValue(state, "lastName", () => "xxx");
+    // const field = state.fields["lastName"];
+    // field.change("bob");
+    // state.formState.submitFailed = true;
+    // field.data = {...field.data, initialError: 'x0x0x'};
+};
+
 const QuestionCreate = () => {
     const { subtheme_id } = useParams()
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -100,14 +116,14 @@ const QuestionCreate = () => {
             <Form
                 onSubmit={save}
                 mutators={{
-                    ...arrayMutators
+                    ...arrayMutators, uncheck
                 }}
                 validate={validate}
                 initialValues={initialFormState}
                 render={({
                     handleSubmit,
                     form: {
-                        mutators: { push, pop }
+                        mutators: { push, uncheck }
                     },
                     values
             }) => {
@@ -144,6 +160,7 @@ const QuestionCreate = () => {
                                                             <BooleanInput
                                                                 source={`${name}.is_right`}
                                                                 label="Opción correcta"
+                                                                onClick={() => uncheck(`${name}`)}
                                                             />
                                                             <Grid item>
                                                                 <Button

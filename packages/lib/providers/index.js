@@ -1,4 +1,4 @@
 export * from "./authProvider";
 export * from "./dataProvider";
-export * from "./browserHistory";
+export * from "./history";
 export * from './fileProvider'

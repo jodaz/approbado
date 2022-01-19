@@ -9,7 +9,7 @@ const styles = {
         height: '100vh',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FFE835'
+        backgroundColor: 'transparent'
     },
     loader: {
         height: '5em !important',
@@ -17,9 +17,9 @@ const styles = {
     }
 };
 
-const Spinner = ({ classes, className }) => (
-    <Box className={clsx(classes.root, className)}>
-        <CircularProgress className={classes.loader}/>
+const Spinner = ({ className, classes, spinnerClassName }) => (
+    <Box className={clsx(className, classes.root, )}>
+        <CircularProgress className={clsx(spinnerClassName, classes.loader )}/>
     </Box>
 );
 

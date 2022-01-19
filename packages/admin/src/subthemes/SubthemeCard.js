@@ -1,17 +1,18 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
-import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import { Link } from 'react-router-dom';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
+import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import Dot from '@approbado/lib/components/Dot';
+import { useHistory } from 'react-router-dom'
 
 const OptionsMenu = props => (
-    <OptionsCardMenu>
+    <OptionsCardMenu icon={<More />}>
         <DeleteButton
             basePath='subthemes'
             confirmColor='warning'
@@ -25,29 +26,31 @@ const OptionsMenu = props => (
 
 const SubthemeCard = ({ data, id }) => {
     const classes = cardStyles();
+    const history = useHistory();
+
+    const handleRedirect = () => history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}/show`)
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={id} onClick={handleRedirect}>
             <CardHeader
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Link to={`subthemes/${data.id}/show`} className={classes.link}>
-                        {data.title}
-                    </Link>
+                    <Typography variant="subtitle1" component="h1">
+                        {`${id}. ${data.name}`}
+                    </Typography>
                 }
-                className={classes.cardHeader}
+                subheader={
+                    <Box display="flex" marginTop='1rem'>
+                        <Typography variant="body2" component="span">
+                            {data.questionsCount} preguntas
+                        </Typography>
+                        <Dot />
+                        <Typography variant="body2" component="span">
+                            {data.filesCount} archivos
+                        </Typography>
+                    </Box>
+                }
             />
-            <CardContent className={classes.cardContent}>
-                <div className={classes.innerContent}>
-                    <Typography variant="span" component="span">
-                        {data.questionsCount} preguntas
-                    </Typography>
-                    <Divider className={classes.divider} />
-                    <Typography variant="span" component="span">
-                        {data.filesCount} archivos
-                    </Typography>
-                </div>
-            </CardContent>
         </Card>
     );
 }

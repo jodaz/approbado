@@ -7,12 +7,14 @@ import {
     adminSaga,
     USER_LOGOUT,
 } from 'react-admin';
+import { loadState } from './persistedState'
 
 export default ({
     authProvider,
     dataProvider,
     history,
-    customReducers = {}
+    customReducers = {},
+    customSagas = []
 }) => {
     const reducer = combineReducers({
         admin: adminReducer,
@@ -26,7 +28,7 @@ export default ({
         yield all(
             [
                 adminSaga(dataProvider, authProvider),
-                // add your own sagas here
+                ...customSagas
             ].map(fork)
         );
     };
@@ -42,9 +44,15 @@ export default ({
             })) ||
         compose;
 
+    let persistedState = loadState()
+
+    if (persistedState?.user?.isAuth) {
+        persistedState.user = persistedState.user;
+    }
+
     const store = createStore(
         resettableAppReducer,
-        { /* set your initial state here */ },
+        persistedState,
         composeEnhancers(
             applyMiddleware(
                 sagaMiddleware,
