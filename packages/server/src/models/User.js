@@ -26,14 +26,6 @@ export class User extends BaseClass {
                 to: 'plans.id'
             }
         },
-        plan: {
-            relation: BaseClass.HasManyRelation,
-            modelClass: `${__dirname}/Membership`,
-            join: {
-                from: 'users.id',
-                to: 'memberships.user_id'
-            }
-        },
         fcms: {
             relation: BaseClass.HasManyRelation,
             modelClass: `${__dirname}/Fcm`,
