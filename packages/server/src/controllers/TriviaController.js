@@ -24,6 +24,7 @@ export const indexByPlan = async (req, res) => {
 
     const plan = await user.$relatedQuery('plan').where('active',true).first()
     console.log(plan)
+    console.log("aqui")
     const query = Trivia.query().select(
         Trivia.ref('*'),
         Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
