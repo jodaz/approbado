@@ -14,15 +14,35 @@ export async function seed(knex) {
             password: encryptedPassword,
             is_registered: true,
             email: 'user@ejemplo.com',
-            profile: {}
+            bio: 'Hola soy Matías y soy estudiante de segundo de Derecho en la Universidad de Chile. Me gusta el campo de Derecho político, así que... vamos a darle!',
+            profile: {
+                ocupation: 'Estudiante de derecho',
+                summary: 'Hola soy Matías y soy estudiante de segundo de Derecho en la Universidad de Chile. Me gusta el campo de Derecho político, así que... vamos a darle!',
+                linkedin: 'username',
+                twitter: 'username'
+            }
+        })
+
+        await User.query().insertGraph({
+            names: 'OtroUsuario',
+            user_name: 'otrousuario',
+            password: encryptedPassword,
+            is_registered: true,
+            email: 'user@ejemplo2.com',
+            bio: 'Hola soy otro usuario',
+            profile: {
+                ocupation: 'Estudiante de arte',
+                summary: 'Hola soy otro usuario',
+                twitter: 'username',
+            }
         })
 
         await Category.query().insert({
-            name: 'Comercio',
+            name: 'Derecho comercial',
         })
 
         await Level.query().insert({
-            name: 'Ambiente',
+            name: 'Básico',
         })
 
         const trivia = await Trivia.query().insert({
