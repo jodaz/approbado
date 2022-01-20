@@ -33,13 +33,13 @@ export const indexByPlan = async (req, res) => {
         )
         .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
 
-
+        console.log(plan)
         if (filter) {
             if (filter.plan_active) {
-               query.where('plan_id',plan.plan_id)
+               query.where('plan_id',plan.id)
             }
             if (filter.plan_not_active) {
-               query.where('plan_id','!=',plan.plan_id)
+               query.where('plan_id','!=',plan.id)
             }
             if (filter.name) {
                 query.where('name', 'ilike', `%${filter.name}%`)
@@ -52,13 +52,12 @@ export const indexByPlan = async (req, res) => {
             }
         }
 
+        return paginatedQueryResponse(query, req, res)
+    
     }catch(error){
         console.log(error)
         return res.status(500).json(error)
     }
-    
-
-    return paginatedQueryResponse(query, req, res)
 }
 
 export const store = async (req, res) => {
