@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
+import configs from '@approbado/lib/configs'
 import CardHeader from '@material-ui/core/CardHeader';
 import PropTypes from 'prop-types'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
@@ -8,6 +8,7 @@ import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import { ReactComponent as Subtract } from '@approbado/lib/icons/Subtract.svg'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import Link from '@material-ui/core/Link'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
@@ -31,9 +32,14 @@ const FileCard = ({ data, id }) => {
                 avatar={<Subtract />}
                 action={<OptionsMenu record={data} />}
                 title={
-                    <Typography variant="subtitle1" component="h1">
+                    <Link
+                        href={`${configs.SOURCE}/${data.file}`}
+                        underline="hover"
+                        target="_blank"
+                        color="primary"
+                    >
                         {data.title}
-                    </Typography>
+                    </Link>
                 }
                 subheader={data.size}
             />
