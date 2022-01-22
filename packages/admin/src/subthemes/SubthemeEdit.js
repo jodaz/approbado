@@ -56,7 +56,7 @@ const TriviaEdit = ({ record }) => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="title"
+                    source="name"
                     placeholder="Nombre"
                     fullWidth
                 />
