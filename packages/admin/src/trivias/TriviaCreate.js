@@ -7,10 +7,13 @@ import {
     CreateContextProvider,
     useRedirect,
     useNotify,
-    ReferenceInput
+    ReferenceInput,
+    ReferenceArrayInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
+import { Field } from 'react-final-form';
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -29,6 +32,11 @@ const validate = (values) => {
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
+    if (!values.plans_ids) {
+        errors.plans_ids = "Seleccione al menos un plan.";
+    }
+
+    console.log(values)
 
     return errors;
 };
@@ -91,6 +99,24 @@ const TriviaCreate = (props) => {
                     >
                         <SelectInput source="name" emptyText="N/A" />
                     </ReferenceInput>
+                </InputContainer>
+                <InputContainer labelName='Planes'>
+                    <ReferenceArrayInput
+                        source='plans_ids'
+                        reference='memberships/plans'
+                        allowEmpty
+                        fullWidth
+                    >
+                        <Field>
+                            {props => (
+                                <MultipleSelectTag
+                                    name={props.input.name}
+                                    value={[...props.input.value]}
+                                    onChange={props.input.onChange}
+                                />
+                            )}
+                        </Field>
+                    </ReferenceArrayInput>
                 </InputContainer>
             </BaseForm>
         </CreateContextProvider>

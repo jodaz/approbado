@@ -1,9 +1,11 @@
 export const validatePlan = (values) => {
-  const errors = {};
+    const errors = {};
 
-  if (!values.name) {
-    errors.name = "Ingrese un nombre para el plan.";
-  }
+    if (!values.name) {
+        errors.name = "Ingrese un nombre para el plan.";
+    }
 
-  return errors;
+    console.log(values)
+
+    return errors;
 };
