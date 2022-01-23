@@ -2,20 +2,35 @@ import { Trivia, TriviaGrupal, Subtheme, Level, Question, Plan } from '../models
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
-    const query = Trivia.query().select(
-        Trivia.ref('*'),
-        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
-        Trivia.relatedQuery('files').count().as('filesCount')
-    )
+    const { filter, sort, order } = req.query
 
-    if (filter) {
-        if (filter.name) {
-            query.where('name', 'ilike', `%${filter.name}%`)
+    try {
+        const query = Trivia.query().select(
+            Trivia.ref('*'),
+            Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+            Trivia.relatedQuery('files').count().as('filesCount')
+        )
+
+        if (filter) {
+            if (filter.name) {
+                query.where('name', 'ilike', `%${filter.name}%`)
+            }
         }
-    }
 
-    return paginatedQueryResponse(query, req, res)
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
+            }
+        }
+
+        return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json(error)
+    }
 }
 
 export const indexByPlan = async (req, res) => {
@@ -33,7 +48,6 @@ export const indexByPlan = async (req, res) => {
         )
         .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
 
-        console.log(plan)
         if (filter) {
             if (filter.plan_active) {
                query.where('plan_id',plan.id)
@@ -54,7 +68,7 @@ export const indexByPlan = async (req, res) => {
 
         return paginatedQueryResponse(query, req, res)
 
-    }catch(error){
+    } catch(error) {
         console.log(error)
         return res.status(500).json(error)
     }
