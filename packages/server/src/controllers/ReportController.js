@@ -73,8 +73,6 @@ export const store = async (req, res) => {
 
                 return res.status(201).json(report)
             }
-
-            return res.status(201).json(post)
         } catch (error) {
             console.log(error)
 
