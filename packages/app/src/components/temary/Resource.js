@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-export default function Resource({ name, size, key, file }) {
+export default function Resource({ title, size, key, file }) {
     const classes = useStyles();
 
     return (
@@ -36,7 +36,7 @@ export default function Resource({ name, size, key, file }) {
                         target="_blank"
                         color="primary"
                     >
-                        {name}
+                        {title}
                     </Link>
                 }
                 subheader={size}

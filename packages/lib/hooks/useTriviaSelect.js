@@ -9,9 +9,10 @@ export const useTriviaState = () => {
 
 export const useTriviaDispatch = () => {
     const dispatch = useDispatch();
+    const store = useSelector(state => state);
 
     return {
-        setTrivia: data => dispatch(setTrivia(data)),
-        unsetTrivia: data => dispatch(unsetTrivia(data))
+        setTrivia: data => dispatch((data.id != store.trivia.trivia.id) ? setTrivia(data) : unsetTrivia()),
+        unsetTrivia: () => dispatch(unsetTrivia())
     }
 }

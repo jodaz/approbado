@@ -19,6 +19,7 @@ const AppLayout = () => (
         <Resource {...forums} />
         <Resource {...notifications} />
         <Resource name='trivias' />
+        <Resource name='files' />
         <Resource name='users' />
         <Resource name="configurations/categories" />
         <Resource name="configurations/levels" />

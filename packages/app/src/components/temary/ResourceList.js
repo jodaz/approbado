@@ -1,48 +1,42 @@
 import * as React from 'react'
-import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import Resource from './Resource'
+import { Query } from 'react-admin';
+import Spinner from '@approbado/lib/components/Spinner'
 
-const useStyles = makeStyles(() => ({
-    root: {
-        margin: '0 1rem 1rem 0',
-        borderRadius: '6px !important',
-        background: '#F9F9F9',
-        cursor: 'pointer !important',
-        width: '100%',
-        '&:hover': {
-            boxShadow: "4px 4px 90px 0px #00000014"
-        },
-        transition: '1s',
-    },
-}))
+const payload = id => ({
+    pagination: { page: 1, perPage: 100 },
+    sort: { field: 'created_at', order: 'DESC'},
+    filter: { trivia_id: id }
+});
 
-const items = [
-    {
-        id: 1,
-        name: 'Recurso 1',
-        size: '22 k',
-        file: 'public/uploads/1642131027851-reporte-contribuyentes.pdf'
-    },
-    {
-        id: 2,
-        name: 'Recurso 2',
-        size: '22 k',
-        file: 'public/uploads/1642131027851-reporte-contribuyentes.pdf'
-    },
-]
+const ResourceList = ({ id }) => (
+    <Query type='getList' resource='files' payload={payload(id)}>
+        {({ data, total, loading, error }) => {
+            if (loading) return <Spinner />;
 
-export default function ResourceList() {
-    const classes = useStyles();
+            if (error) return null;
 
-    return (
-        <Box className={classes.root}>
-            {items.map((item, key) => (
-                <Resource
-                    key={key}
-                    {...item}
-                />
-            ))}
-        </Box>
-    )
-}
+            if (!total) {
+                return (
+                    <Typography variant="subtitle1">
+                        Sin recursos
+                    </Typography>
+                )
+            }
+
+            return (
+                <div>
+                    {data.map((item, key) => (
+                        <Resource
+                            key={key}
+                            {...item}
+                        />
+                    ))}
+                </div>
+            );
+        }}
+    </Query>
+)
+
+export default ResourceList;

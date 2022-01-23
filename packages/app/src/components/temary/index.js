@@ -9,7 +9,8 @@ import SubthemeList from './SubthemeList'
 
 const useStyles = makeStyles(theme => ({
     root: {
-        width: '100%'
+        width: '100%',
+        height: '100%'
     },
     content: {
         marginTop: '2rem'
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function Temary() {
+export default function Temary(props) {
     const [selected, setSelected] = React.useState('Temas');
     const classes = useStyles();
 
@@ -59,9 +60,9 @@ export default function Temary() {
             </Box>
             <Box className={classes.content}>
                 {(selected == 'Temas') ? (
-                    <SubthemeList />
+                    <SubthemeList {...props} />
                 ) : (
-                    <ResourceList />
+                    <ResourceList {...props} />
                 )}
             </Box>
         </Box>
