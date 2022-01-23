@@ -6,6 +6,7 @@ export async function up(knex) {
         table.string('message');
         table.string('summary').nullable();
         table.integer('trivia_id').unsigned().nullable();
+        table.string('type');
         table.integer('created_by').unsigned();
         table.foreign('created_by').references('users.id').onDelete('cascade');
         table.foreign('trivia_id').references('trivias.id').onDelete('cascade');

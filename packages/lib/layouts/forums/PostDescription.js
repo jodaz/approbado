@@ -4,6 +4,7 @@ import Dot from '@approbado/lib/components/Dot'
 import { Link } from 'react-router-dom'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import ItemCollection from '@approbado/lib/components/ItemCollection'
+import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -45,18 +46,7 @@ const redirectTo = (record, userId) => (
 export default ({ record }) => {
     const { categories } = record
     const { user } = useUserState();
-    const dates = React.useState(() => {
-        const ISODate = new Date(record.created_at.replace(' ', 'T'));
-        const shortOptions = {
-            month: 'long',
-            day: 'numeric'
-        }
-
-        const shortDate = new Intl.DateTimeFormat('es-ES', shortOptions).format(ISODate)
-        const year = new Intl.DateTimeFormat('es-ES', { year: 'numeric' }).format(ISODate)
-
-        return `${shortDate}, ${year}`
-    })
+    const date = useConvertPostgresDate(record.created_at)
     const classes = useStyles();
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
@@ -76,7 +66,7 @@ export default ({ record }) => {
                 </Link>
                     <Dot />
                 <span className={classes.lightTypography}>
-                    {dates}
+                    {date}
                 </span>
                 {(!isXSmall) && (
                     <>

@@ -77,16 +77,23 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { categories_ids, ...rest } = req.body;
+        try {
+            const { categories_ids, ...rest } = req.body;
 
-        const model = await Post.query().insert({
-            created_by: req.user.id,
-            ...rest
-        });
+            const model = await Post.query().insert({
+                created_by: req.user.id,
+                type: 'Foro',
+                ...rest
+            });
 
-        await model.$relatedQuery('categories').relate(categories_ids)
+            await model.$relatedQuery('categories').relate(categories_ids)
 
-        return res.status(201).json(model)
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json({ error: error })
+        }
     }
 }
 

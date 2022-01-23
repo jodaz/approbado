@@ -1,28 +1,26 @@
 import {
-    Datagrid,
-    TextField,
     Pagination,
-    FilterLiveSearch,
-    ListBase,
-    FilterContext,
-    TopToolbar
+    ListBase
 } from 'react-admin'
 import { Box } from '@material-ui/core';
 import ReportCard from './ReportCard'
+import GridList from '@approbado/lib/components/GridList';
 
-// const RegisteredUsersList = (props) => (
-//     <ListBase
-//         perPage={20}
-//         sort={{ field: 'reference', order: 'ASC' }}
-//         filter={{ is_registered: true }}
-//         {...props}
-//     >
-//         <RegisteredUsersListView />
-//     </ListBase>
-// );
+const RecentReports = (props) => (
+    <ListBase
+        perPage={5}
+        sort={{ field: 'created_at', order: 'DESC' }}
+        {...props}
+    >
+        <RecentReportListView />
+    </ListBase>
+);
 
-const RecentReports = () => (
-    <ReportCard />
+const RecentReportListView = () => (
+    <Box display="flex" flexDirection="column" width='100%'>
+        <GridList component={<ReportCard />} />
+        <Pagination rowsPerPageOptions={[5, 10, 20]} />
+    </Box>
 );
 
 RecentReports.defaultProps = {

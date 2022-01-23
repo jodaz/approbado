@@ -213,12 +213,20 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await Award.query().insert({
-            ...req.body,
-            icon: req.file.path
-        })
+        try {
+            const { subthemes, ...rest } = req.body;
+            const model = await Award.query().insert({
+                ...rest,
+                icon: req.file.path
+            })
 
-        return res.status(201).json(model)
+            await model.$relatedQuery('awards').relate(subthemes)
+
+            return res.status(201).json(model)
+        } catch(error){
+            console.log(error)
+            return res.status(500).json(error)
+        }
     }
 }
 
@@ -226,11 +234,20 @@ export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { id } = req.params
-        const model = await Award.query()
-            .updateAndFetchById(id, req.body)
+        try {
+            const { id } = req.params
+            const { subthemes, ...rest } = req.body;
 
-        return res.status(201).json(model)
+            const model = await Award.query()
+                .updateAndFetchById(id, rest)
+
+            await model.$relatedQuery('awards').relate(subthemes)
+
+            return res.status(201).json(model)
+        } catch(error){
+            console.log(error)
+            return res.status(500).json(error)
+        }
     }
 }
 

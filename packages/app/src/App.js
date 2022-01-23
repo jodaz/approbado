@@ -21,6 +21,7 @@ const AppLayout = () => (
         <Resource name='trivias' />
         <Resource name='files' />
         <Resource name='users' />
+        <Resource name='report-reasons' />
         <Resource name="configurations/categories" />
         <Resource name="configurations/levels" />
     </AdminUI>

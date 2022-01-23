@@ -7,7 +7,6 @@ import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import Spinner from '../../components/Spinner'
-import ForumWarning from './ForumWarning'
 
 const ForumListView = ({ sort, filter, perPage, page: initialPage }) => {
     const { user } = useUserState();

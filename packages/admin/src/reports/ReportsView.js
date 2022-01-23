@@ -26,7 +26,7 @@ const tags = [
 const ReportsList = () => (
     <TabbedList
         tags={tags}
-        name='Reportes'
+        name='Reportes del foro'
     />
 )
 

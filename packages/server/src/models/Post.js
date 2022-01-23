@@ -58,5 +58,13 @@ export class Post extends BaseClass {
                 to: 'posts.parent_id'
             }
         },
+        report: {
+            relation: BaseClass.HasOneRelation,
+            modelClass: `${__dirname}/Report`,
+            join: {
+                from: 'posts.id',
+                to: 'reports.post_id'
+            }
+        }
     })
 }
