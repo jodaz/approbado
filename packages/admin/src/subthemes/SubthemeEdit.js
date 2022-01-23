@@ -3,7 +3,9 @@ import {
     useMutation,
     TextInput,
     useNotify,
-    useRefresh
+    useRefresh,
+    ReferenceInput,
+    SelectInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -17,11 +19,14 @@ const validate = (values) => {
     if (!values.duration) {
         errors.duration = "Ingrese un tiempo límite.";
     }
+    if (!values.award_id) {
+        errors.award_id = "Seleccione un premio.";
+    }
 
     return errors;
 };
 
-const TriviaEdit = ({ record }) => {
+const SubthemeEdit = ({ record }) => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
     const refresh = useRefresh()
@@ -68,8 +73,18 @@ const TriviaEdit = ({ record }) => {
                     fullWidth
                 />
             </InputContainer>
+            <InputContainer labelName='Premio'>
+                <ReferenceInput
+                    source='award_id'
+                    reference='awards'
+                    filter={{ trivia_id: record.trivia_id }}
+                    fullWidth
+                >
+                    <SelectInput  emptyText="N/A" source="name" optionText='title' />
+                </ReferenceInput>
+            </InputContainer>
         </BaseForm>
     )
 }
 
-export default TriviaEdit
+export default SubthemeEdit

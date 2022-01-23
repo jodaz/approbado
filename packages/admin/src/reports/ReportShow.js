@@ -74,14 +74,16 @@ const ReportShow = props => {
                     <Tag name={record.post.type} icon={<TagIcon />} />
                     <Date {...record} />
                 </Box>
-                <Link
-                    to={`/forums/${record.post_id}/show`}
-                    color='info'
-                    underline='hover'
-                    component={LinkBehavior}
-                >
-                    Abrir publicación
-                </Link>
+                <Box width='content-box'>
+                    <Link
+                        to={`/forums/${record.post_id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                    >
+                        Abrir publicación
+                    </Link>
+                </Box>
             </Box>
             <TabbedList tags={tags(record)} />
         </Box>

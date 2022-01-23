@@ -41,6 +41,14 @@ export class Subtheme extends BaseClass {
                 },
                 to: 'users.id'
             }
-        }
+        },
+        award: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Award`,
+            join: {
+                from: 'subthemes.award_id',
+                to: 'awards.id'
+            }
+        },
     })
 }

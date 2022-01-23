@@ -3,7 +3,9 @@ import {
     useMutation,
     TextInput,
     useRedirect,
-    useNotify
+    useNotify,
+    ReferenceInput,
+    SelectInput
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -17,6 +19,9 @@ const validate = (values) => {
     }
     if (!values.duration) {
         errors.duration = "Ingrese un tiempo límite.";
+    }
+    if (!values.award_id) {
+        errors.award_id = "Seleccione un premio.";
     }
 
     return errors;
@@ -71,6 +76,16 @@ const SubthemeCreate = () => {
                     placeholder="Tiempo límite"
                     fullWidth
                 />
+            </InputContainer>
+            <InputContainer labelName='Premio'>
+                <ReferenceInput
+                    source='award_id'
+                    reference='awards'
+                    filter={{ trivia_id: trivia_id }}
+                    fullWidth
+                >
+                    <SelectInput  emptyText="N/A" source="name" optionText='title' />
+                </ReferenceInput>
             </InputContainer>
         </BaseForm>
     )

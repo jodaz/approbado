@@ -24,7 +24,7 @@ const SubthemeList = ({ record, ...rest }) => (
         basePath='subthemes'
         perPage={20}
         filter={{ trivia_id: record.id }}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         {...rest}
     >
         <SubthemeListView trivia_id={record.id} />
