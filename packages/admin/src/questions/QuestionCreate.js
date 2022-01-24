@@ -141,6 +141,7 @@ const QuestionCreate = () => {
                                         <TextInput
                                             source="description"
                                             placeholder="Ingresa el enunciado"
+                                            disabled={loading}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -155,6 +156,7 @@ const QuestionCreate = () => {
                                                             placeholder="Ingrese la respuesta"
                                                             fullWidth
                                                             label=""
+                                                            disabled={loading}
                                                         />
                                                         <Box width="100%" display="flex" justifyContent="space-between">
                                                             <BooleanInput
@@ -198,6 +200,7 @@ const QuestionCreate = () => {
                                         <SelectInput
                                             source="explanation_type"
                                             choices={OPTIONS}
+                                            disabled={loading}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -205,6 +208,7 @@ const QuestionCreate = () => {
                                         <TextInput
                                             source="explanation"
                                             placeholder="Ingrese el texto de la aclaratoria"
+                                            disabled={loading}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -212,6 +216,7 @@ const QuestionCreate = () => {
                                         <ReferenceInput
                                             source="file_id"
                                             reference="files"
+                                            disabled={loading}
                                             fullWidth
                                             allowEmpty
                                         >

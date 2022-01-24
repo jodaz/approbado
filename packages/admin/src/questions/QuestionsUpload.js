@@ -64,7 +64,7 @@ const FileCreate = () => {
         <BaseForm
             save={save}
             validate={validate}
-            disabled={loading}
+            loading={loading}
         >
             <Box marginBottom="1rem">
                 <Typography variant="h5" component="div" gutterBottom paragraph>

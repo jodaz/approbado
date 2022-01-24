@@ -1,9 +1,7 @@
 import * as React from 'react'
 import {
     TextInput,
-    useCreateController,
     useMutation,
-    CreateContextProvider,
     NumberInput,
     ReferenceArrayInput,
     SelectArrayInput,
@@ -15,8 +13,7 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
 const PlanCreate = (props) => {
-    const createControllerProps = useCreateController(props);
-    const [mutate, { data, loaded }] = useMutation();
+    const [mutate, { data, loaded, loading }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
 
@@ -42,43 +39,42 @@ const PlanCreate = (props) => {
     }, [data, loaded])
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <BaseForm
-                save={save}
-                validate={validatePlan}
-                formName='Crear plan'
+        <BaseForm
+            save={save}
+            validate={validatePlan}
+            formName='Crear plan'
+            loading={loading}
+        >
+            <InputContainer
+                labelName='Nombre'
             >
-                <InputContainer
-                    labelName='Nombre'
+                <TextInput
+                    source="name"
+                    placeholder="Nombre"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer
+                labelName='Monto'
+            >
+                <NumberInput
+                    source="amount"
+                    placeholder="0.00"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer
+                labelName='Trivias'
+            >
+                <ReferenceArrayInput
+                    source="trivia_ids"
+                    reference="trivias"
+                    fullWidth
                 >
-                    <TextInput
-                        source="name"
-                        placeholder="Nombre"
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer
-                    labelName='Monto'
-                >
-                    <NumberInput
-                        source="amount"
-                        placeholder="0.00"
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer
-                    labelName='Trivias'
-                >
-                    <ReferenceArrayInput
-                        source="trivia_ids"
-                        reference="trivias"
-                        fullWidth
-                    >
-                        <SelectArrayInput />
-                    </ReferenceArrayInput>
-                </InputContainer>
-            </BaseForm>
-        </CreateContextProvider>
+                    <SelectArrayInput />
+                </ReferenceArrayInput>
+            </InputContainer>
+        </BaseForm>
     )
 }
 

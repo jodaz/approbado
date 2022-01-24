@@ -102,7 +102,7 @@ const AwardsEdit = () => {
             save={save}
             validate={validate}
             formName='Crear premio'
-            disabled={loading}
+            loading={loading}
         >
             <InputContainer labelName='Nombre'>
                 <TextInput

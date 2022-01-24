@@ -61,7 +61,7 @@ const SubthemeCreate = () => {
             save={save}
             validate={validate}
             formName='Crear subtema'
-            disabled={loading}
+            loading={loading}
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
@@ -84,7 +84,7 @@ const SubthemeCreate = () => {
                     filter={{ trivia_id: trivia_id }}
                     fullWidth
                 >
-                    <SelectInput  emptyText="N/A" source="name" optionText='title' />
+                    <SelectInput source="title" emptyText="N/A" optionText="title" />
                 </ReferenceInput>
             </InputContainer>
         </BaseForm>

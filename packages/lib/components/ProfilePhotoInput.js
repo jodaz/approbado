@@ -31,7 +31,7 @@ const useStyles = makeStyles(
             },
             zIndex: 10,
             position: 'relative',
-            opacity: (props) => props.loading ? 0.7 : 1
+            opacity: (props) => props.disabled ? 0.7 : 1
         },
         thumb: {
             width: 'inherit',
@@ -85,7 +85,7 @@ const ProfilePhotoInput = (props) => {
         source,
         validate,
         preview,
-        loading,
+        disabled,
         ...rest
     } = props;
     const classes = useStyles(props);

@@ -55,7 +55,7 @@ const SubthemeEdit = ({ record }) => {
     return (
         <BaseForm
             save={save}
-            disabled={loading}
+            loading={loading}
             record={record}
             validate={validate}
         >
