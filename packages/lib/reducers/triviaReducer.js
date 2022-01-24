@@ -12,7 +12,7 @@ const dialogReducer = (
     switch (action.type) {
         case SET_TRIVIA:
             return {
-                selected: !previousState.selected,
+                selected: true,
                 trivia: action.payload
             }
         case UNSET_TRIVIA:

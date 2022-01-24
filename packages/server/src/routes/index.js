@@ -25,6 +25,7 @@ import questionsRoutes from './questions.routes';
 import notificationsRoutes from './notifications.routes';
 import fcmsRoutes from './fcms.routes';
 import answersRoutes from './answers.routes';
+import reportsRoutes from './reports.routes';
 
 const apiRouter = Router();
 
@@ -37,7 +38,7 @@ apiRouter.use('/comments', isAuthorizedMiddleware, commentsRoutes)
 apiRouter.use('/forums', isAuthorizedMiddleware, forumsRoutes)
 apiRouter.use('/like-posts', isAuthorizedMiddleware, likePostRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
-apiRouter.use('/report-reason', isAuthorizedMiddleware, reportReasonRoutes)
+apiRouter.use('/report-reasons', isAuthorizedMiddleware, reportReasonRoutes)
 apiRouter.use('/notifications', isAuthorizedMiddleware, notificationsRoutes)
 apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
 apiRouter.use('/memberships/plans', isAuthorizedMiddleware, plansRoutes)
@@ -53,7 +54,7 @@ apiRouter.use('/fcms', isAuthorizedMiddleware, fcmsRoutes)
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
 apiRouter.use('/update-password-mobile', updatePasswordMobileRouter)
-
+apiRouter.use('/reports', isAuthorizedMiddleware, reportsRoutes)
 
 // Catch all other routes
 apiRouter.use('/*', (req, res) => {

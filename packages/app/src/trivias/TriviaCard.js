@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { useTriviaDispatch } from "@approbado/lib/hooks/useTriviaSelect"
+import { useTriviaDispatch, useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import PadLockIcon from '@approbado/lib/icons/PadLock'
 
 const useStyles = makeStyles(theme => ({
@@ -20,14 +20,10 @@ const useStyles = makeStyles(theme => ({
             boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
             border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
         },
-        '&:focus': {
-            boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
-            border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
-        },
         position: 'relative',
         '&::before': {
             content: "''",
-            backgroundImage: props => `url(${process.env.REACT_APP_API_DOMAIN}/${props.cover})`,
+            backgroundImage: props => (props.cover) ? `url(${process.env.REACT_APP_API_DOMAIN}/${props.cover})` : '',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '100% 100%',
             position: 'absolute',
@@ -36,7 +32,9 @@ const useStyles = makeStyles(theme => ({
             right: '0px',
             bottom: '0px',
             zIndex: 0,
-        }
+        },
+        boxShadow: props => props.isSelected && "0px 1px 8px rgba(0, 0, 0, 0.12)",
+        border: props => props.isSelected && `3px solid ${fade(theme.palette.secondary.main, 0.8)}`,
     },
     content: {
         textAlign: 'center',
@@ -66,7 +64,14 @@ const useStyles = makeStyles(theme => ({
 
 const TriviaCard = ({ data, id }) => {
     const { setTrivia } = useTriviaDispatch();
-    const classes = { ...cardStyles(), ...useStyles({ cover: data.cover }) };
+    const { trivia } = useTriviaState();
+    const classes = {
+        ...cardStyles(),
+        ...useStyles({
+            cover: data.cover,
+            isSelected: data.id == trivia.id
+        })
+    };
 
     return (
         <Card className={classes.root} key={id}>

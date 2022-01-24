@@ -5,64 +5,62 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import FolderIcon from '@material-ui/icons/Folder';
-import DeleteIcon from '@material-ui/icons/Delete';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-      maxWidth: 752,
-    },
-    demo: {
-      backgroundColor: theme.palette.background.paper,
-    },
-    title: {
-      margin: theme.spacing(4, 0, 2),
-    },
-}));
-
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-        key: value,
-        }),
-    );
-}
+import Box from '@material-ui/core/Box';
+import configs from '@approbado/lib/configs'
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function CheckboxListSecondary() {
-    const classes = useStyles();
-    const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
+    const [checked, setChecked] = React.useState([1]);
+
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+    };
 
     return (
-        <Grid item xs={12} md={6}>
-            <Typography variant="h6" className={classes.title}>
-            Avatar with text and icon
-            </Typography>
-            <div className={classes.demo}>
-            <List dense={dense}>
-                {generate(
+        <Box>
+            <List component="nav" aria-label="secondary mailbox folder">
                 <ListItem>
                     <ListItemAvatar>
-                        <FolderIcon />
+                        <img src={`${configs.SOURCE}/public/default/insignia_bronce.svg`} />
                     </ListItemAvatar>
                     <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
+                        primary="Approbado bronce"
                     />
-                    <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>,
-                )}
+                        <ListItemSecondaryAction>
+                            <Typography variant="body2">
+                                100 puntos
+                            </Typography>
+                        </ListItemSecondaryAction>
+                </ListItem>
+                {[0, 1, 2, 3].map((value) => {
+                    const labelId = `checkbox-list-secondary-label-${value}`;
+
+                    return (
+                    <ListItem key={value} button>
+                        <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                        <ListItemSecondaryAction>
+                        <Checkbox
+                            edge="end"
+                            onChange={handleToggle(value)}
+                            checked={checked.indexOf(value) !== -1}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    );
+                })}
             </List>
-            </div>
-        </Grid>
+        </Box>
     );
 }

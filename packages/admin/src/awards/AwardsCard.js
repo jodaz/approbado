@@ -32,7 +32,7 @@ const TriviaCard = ({ data, id }) => {
             <CardHeader
                 avatar={
                     <Avatar
-                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.icon}`}
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.file}`}
                         alt='icon'
                     />
                 }

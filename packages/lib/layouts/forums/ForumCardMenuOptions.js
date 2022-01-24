@@ -5,8 +5,8 @@ import MenuButton from '@approbado/lib/components/MenuButton'
 
 // Icons
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon'
-import { ReactComponent as InformationIcon } from '@approbado/lib/icons/Information.svg'
 import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import ReportDialog from './ReportDialog'
 
 const ForumCardMenuOptions = React.forwardRef((props, ref) => {
     const { record, user, history } = props;
@@ -39,10 +39,7 @@ const ForumCardMenuOptions = React.forwardRef((props, ref) => {
                 />
             )}
             {(user.id != record.owner.id) && (
-                <MenuButton
-                    label="Reportar"
-                    icon={<InformationIcon />}
-                />
+                <ReportDialog />
             )}
         </OptionsCardMenu>
     )

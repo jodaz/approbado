@@ -4,7 +4,8 @@ import {
     SelectInput,
     useNotify,
     ReferenceInput,
-    useRefresh
+    useRefresh,
+    ReferenceArrayInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -13,6 +14,8 @@ import { useFileProvider } from '@jodaz_/file-provider'
 import ImageInput from '@approbado/lib/components/ImageInput'
 import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
+import { Field } from 'react-final-form';
+import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -21,6 +24,8 @@ const ACCESS_TYPES = [
 
 const validate = (values) => {
     const errors = {};
+
+    console.log("values: ", values)
 
     if (!values.name) {
         errors.name = "Ingrese el nombre.";
@@ -98,6 +103,24 @@ const TriviaEdit = ({ record }) => {
                 >
                     <SelectInput source="name" />
                 </ReferenceInput>
+            </InputContainer>
+            <InputContainer labelName='Planes'>
+                <ReferenceArrayInput
+                    source='plans'
+                    reference='memberships/plans'
+                    allowEmpty
+                    fullWidth
+                >
+                    <Field>
+                        {props => (
+                            <MultipleSelectTag
+                                name={props.input.name}
+                                value={[...record.plans]}
+                                onChange={props.input.onChange}
+                            />
+                        )}
+                    </Field>
+                </ReferenceArrayInput>
             </InputContainer>
         </BaseForm>
     )

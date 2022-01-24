@@ -7,37 +7,46 @@ import { useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import { ReactComponent as BannerIllustration } from '@approbado/lib/illustrations/Banner.svg';
 import NoContent from '@approbado/lib/components/NoContent'
 import Temary from '../components/temary'
+import { useUserState } from "@approbado/lib/hooks/useUserState"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
         height: '100%',
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column'
     }
 }))
 
+const SelectTriviaContent = trivia => (
+    <Box>
+        {(!trivia.is_free) ? (
+            <BannerIllustration />
+        ) : (
+            <Temary {...trivia} />
+        )}
+    </Box>
+)
+
 const SelectTrivia = ({ isXSmall }) => {
     const classes = useStyles();
     const { trivia, selected } = useTriviaState();
+    const { user } = useUserState();
 
     return (
-        <Box>
+        <Box className={classes.root}>
             {!isXSmall && (
-                <Box p='0 0 0 2rem'>
-                    <Box className={classes.root}>
-                        {(!selected) && (
+                <>
+                    {(!selected) ? (
+                        <Box className={classes.root} justifyContent="center">
                             <NoContent
                                 icon={<SelectionIllustration />}
                                 title='Seleccione una trivia'
                             />
-                        )}
-                        <BannerIllustration />
-                        <Temary />
-                    </Box>
-                </Box>
+                        </Box>
+                    ) : <SelectTriviaContent {...trivia} />}
+                </>
             )}
         </Box>
     );

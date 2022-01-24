@@ -6,164 +6,201 @@ import { validateRequest, sendMail, paginatedQueryResponse, getRandomPass } from
 export const index = async (req, res) => {
     const { filter } = req.query
 
-    const query = User.query();
+    try {
+        const query = User.query();
 
-    if (filter) {
-        if (filter.names) {
-            query.where('names', 'ilike', `%${filter.names}%`)
+        if (filter) {
+            if (filter.names) {
+                query.where('names', 'ilike', `%${filter.names}%`)
+            }
+            if (filter.email) {
+                query.where('email', 'ilike', `%${filter.email}%`)
+            }
+            if (filter.user_name) {
+                query.where('user_name', 'ilike', `%${filter.user_name}%`)
+            }
+            if (filter.is_registered) {
+                query.where('is_registered', filter.is_registered)
+            }
+            if (filter.top) {
+                query
+                    .withGraphFetched('profile')
+                    .modifiers({
+                        filterTop: query => query.modify('orderByPoints', 'desc')
+                    })
+            }
         }
-        if (filter.email) {
-            query.where('email', 'ilike', `%${filter.email}%`)
-        }
-        if (filter.user_name) {
-            query.where('user_name', 'ilike', `%${filter.user_name}%`)
-        }
-        if (filter.is_registered) {
-            query.where('is_registered', filter.is_registered)
-        }
-        if (filter.top) {
-            query
-                .withGraphFetched('profile')
-                .modifiers({
-                    filterTop: query => query.modify('orderByPoints', 'desc')
-                })
-        }
+
+        return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
     }
-
-    return paginatedQueryResponse(query, req, res)
 }
 
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const user = await User.query().findById(id)
+    try {
+        const user = await User.query().findById(id)
 
-    const profile = await user.$fetchGraph('profile');
-    profile.posts = await user.$relatedQuery('posts');
-    profile.discussion = await user.$relatedQuery('posts').whereRaw('parent_id is null');
-    profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
-    profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
+        const profile = await user.$fetchGraph('profile');
+        profile.posts = await user.$relatedQuery('posts');
+        profile.discussion = await user.$relatedQuery('posts').whereRaw('parent_id is null');
+        profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
+        profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
 
-    return res.status(201).json(user)
+        return res.status(201).json(user)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { random_pass, password, names, email, ...rest } = req.body;
+        try {
+            const { random_pass, password, names, email, ...rest } = req.body;
 
-        let newPassword = random_pass ? getRandomPass() : password;
-        const encryptedPassword = await bcrypt.hash(newPassword, 10)
+            let newPassword = random_pass ? getRandomPass() : password;
+            const encryptedPassword = await bcrypt.hash(newPassword, 10)
 
-        if (random_pass) {
-            // Send email
-            const mailerData = {
-                to: email,
-                template: 'welcomeAdmin',
-                subject: '¡Bienvendo a Approbado!',
-                context: {
-                    name: names,
-                    password: newPassword
-                }
-            };
+            if (random_pass) {
+                // Send email
+                const mailerData = {
+                    to: email,
+                    template: 'welcomeAdmin',
+                    subject: '¡Bienvendo a Approbado!',
+                    context: {
+                        name: names,
+                        password: newPassword
+                    }
+                };
 
-            sendMail(mailerData, res)
+                sendMail(mailerData, res)
+            }
+
+            const model = await User.query().insert({
+                ...rest,
+                email: email,
+                names: names,
+                password: encryptedPassword,
+                is_registered: false
+            })
+
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json({ error: error })
         }
-
-        const model = await User.query().insert({
-            ...rest,
-            email: email,
-            names: names,
-            password: encryptedPassword,
-            is_registered: false
-        })
-
-        return res.status(201).json(model)
     }
 }
 
 export const update = async (req, res) => {
     const { id } = req.params
 
-    const { random_pass, password, ...rest } = req.body;
+    try {
+        const { random_pass, password, ...rest } = req.body;
 
-    let newPassword = random_pass ? getRandomPass() : password;
-    const encryptedPassword = await bcrypt.hash(newPassword, 10)
+        let newPassword = random_pass ? getRandomPass() : password;
+        const encryptedPassword = await bcrypt.hash(newPassword, 10)
 
-    const model = await User.query().updateAndFetchById(id, {
-        ...rest,
-        password: encryptedPassword
-    })
-
-    if (random_pass) {
-        await MailTransporter.sendMail({
-            to: BaseClass.email,
-            subject: 'Aviso: contraseña actualizada',
-            text: `Su nueva contraseña es ${newPassword}`
+        const model = await User.query().updateAndFetchById(id, {
+            ...rest,
+            password: encryptedPassword
         })
-    }
 
-    return res.status(201).json(model)
+        if (random_pass) {
+            await MailTransporter.sendMail({
+                to: BaseClass.email,
+                subject: 'Aviso: contraseña actualizada',
+                text: `Su nueva contraseña es ${newPassword}`
+            })
+        }
+
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const update_mobile = async (req, res) => {
     const { id } = req.params
-    const { current_password , new_password,...rest } = req.body;
-    let filename;
-    let data;
+    try {
+        const { current_password , new_password,...rest } = req.body;
+        let filename;
+        let data;
 
-    if(req.file){
-        filename = req.file.filename;
-        data = {
-            ...rest,
-            picture : filename
-        }
-    }else{
-        data = {
-            ...rest,
-        }
-    }
-
-    if (current_password) {
-        const user = await User.query().findById(id)
-
-        const match = await bcrypt.compare(current_password, user.password)
-
-        if (match) {
+        if(req.file){
+            filename = req.file.filename;
             data = {
-                ...data,
-                password : await bcrypt.hash(new_password, 10)
+                ...rest,
+                picture : filename
             }
         }else{
-            return res.status(422).json({
-                errors: { "current_password" : "Contraseña actual incorrecta"}
-            })
+            data = {
+                ...rest,
+            }
         }
+
+        if (current_password) {
+            const user = await User.query().findById(id)
+
+            const match = await bcrypt.compare(current_password, user.password)
+
+            if (match) {
+                data = {
+                    ...data,
+                    password : await bcrypt.hash(new_password, 10)
+                }
+            }else{
+                return res.status(422).json({
+                    errors: { "current_password" : "Contraseña actual incorrecta"}
+                })
+            }
+        }
+
+        const model = await User.query().updateAndFetchById(id, {
+            ...data,
+        })
+
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
     }
-
-    const model = await User.query().updateAndFetchById(id, {
-        ...data,
-    })
-
-    return res.status(201).json(model)
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const user = await User.query().findById(id);
 
-    await user.$relatedQuery('memberships').delete()
-    await user.$relatedQuery('profile').delete()
-    await user.$relatedQuery('authProviders').delete()
-    //await user.$relatedQuery('blacklisted').delete()
-    await user.$relatedQuery('messages').delete()
-   // await user.$relatedQuery('reports').delete()
-    await user.$relatedQuery('posts').delete()
-    await user.$relatedQuery('schedules').delete()
-    await user.$relatedQuery('payments').delete()
+    try {
+        const user = await User.query().findById(id);
 
-    await User.query().findById(id).delete();
+        await user.$relatedQuery('memberships').delete()
+        await user.$relatedQuery('profile').delete()
+        await user.$relatedQuery('authProviders').delete()
+        // await user.$relatedQuery('blacklisted').delete()
+        await user.$relatedQuery('messages').delete()
+        // await user.$relatedQuery('reports').delete()
+        await user.$relatedQuery('posts').delete()
+        await user.$relatedQuery('schedules').delete()
+        await user.$relatedQuery('payments').delete()
 
-    return res.json({data : "Cuenta Eliminada"});
+        await User.query().findById(id).delete();
+
+        return res.json({ data : "Cuenta Eliminada" });
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }

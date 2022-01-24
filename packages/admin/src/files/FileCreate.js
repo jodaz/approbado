@@ -81,7 +81,7 @@ const FileCreate = () => {
                     allowEmpty
                     fullWidth
                 >
-                    <SelectInput source="title" emptyText="N/A" optionText="title" />
+                    <SelectInput source="title" emptyText="N/A" optionText="name" />
                 </ReferenceInput>
             </InputContainer>
             <InputContainer labelName="" xs={12} md={12}>

@@ -16,7 +16,7 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 
 const PlanCreate = (props) => {
     const createControllerProps = useCreateController(props);
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [mutate, { data, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
 

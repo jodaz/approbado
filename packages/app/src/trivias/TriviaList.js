@@ -36,14 +36,14 @@ const TriviaListView = () => {
 
     return (
         <>
-            <Typography variant='h5'>
-                Trivias
-            </Typography>
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-            <Box display="flex" width={'100%'}>
+            <Box display="flex" height='100%' width='100%'>
                 <Box width={'80%'}>
+                    <Typography variant='h5'>
+                        Trivias
+                    </Typography>
+                    <FilterContext.Provider>
+                        <ListActions />
+                    </FilterContext.Provider>
                     <GridList component={<TriviaCard />} />
                 </Box>
                 <Box width={'20%'}>

@@ -5,21 +5,25 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactComponent as TagIcon } from '@approbado/lib/icons/Tag.svg'
-import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import { useShowController } from 'react-admin'
+import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
+import Spinner from '@approbado/lib/components/Spinner'
+import Overview from './Overview'
+import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 
-const tags = [
+const tags = record => ([
     {
         name: 'Informe general',
         pathname: 'general',
-        component: <></>
+        component: <Overview {...record.post} />
     },
     {
         name: 'Estadística',
         pathname: 'statistics',
         component: <></>
     }
-]
+])
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -39,33 +43,49 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const LinkBehavior = React.forwardRef((props, ref) => (
-    <RouterLink ref={ref} to="/getting-started/installation/" {...props} />
-));
+const Date = ({ created_at }) => {
+    const date = useConvertPostgresDate(created_at)
 
-const ReportShow = () => {
+    return (
+        <Typography variant="subtitle1">
+            {date}
+        </Typography>
+    )
+}
+
+const ReportShow = props => {
     const classes = useStyles();
+    const showControllerProps = useShowController(props)
+
+    const { record, loaded } = showControllerProps
+
+    if (!loaded) return <Spinner />;
 
     return (
         <Box>
             <Box marginBottom='2rem'>
-                <Typography variant="h5">Reporte #000001</Typography>
+                <Typography variant="h5">Reporte #{record.num}</Typography>
             </Box>
             <Box className={classes.root}>
                 <Typography variant="subtitle1">
-                    ¿Por qué los estudiantes de derecho son imbéciles?
+                    {record.post.message}
                 </Typography>
                 <Box className={classes.content}>
-                    <Tag name='Foros' icon={<TagIcon />} />
-                    <Typography variant="subtitle1">
-                        15, Julio 2021
-                    </Typography>
+                    <Tag name={record.post.type} icon={<TagIcon />} />
+                    <Date {...record} />
                 </Box>
-                <Link to='/forums/1/show' color='info' underline='hover' component={LinkBehavior}>
-                    Abrir publicación
-                </Link>
+                <Box width='content-box'>
+                    <Link
+                        to={`/forums/${record.post_id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                    >
+                        Abrir publicación
+                    </Link>
+                </Box>
             </Box>
-            <TabbedList tags={tags} />
+            <TabbedList tags={tags(record)} />
         </Box>
     )
 }

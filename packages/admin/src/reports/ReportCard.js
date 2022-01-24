@@ -13,6 +13,7 @@ import Tag from '@approbado/lib/components/Tag';
 import { ReactComponent as TagIcon } from '@approbado/lib/icons/Tag.svg'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import { useHistory } from 'react-router-dom'
+import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
@@ -30,8 +31,9 @@ const OptionsMenu = props => (
 const ReportCard = ({ data, id }) => {
     const classes = cardStyles();
     const history = useHistory();
+    const date = useConvertPostgresDate(data.created_at)
 
-    const handleRedirect = () => history.push(`/reports/1/show`)
+    const handleRedirect = () => history.push(`/reports/${id}/show`)
 
     return (
         <Card className={classes.root} key={id} onClick={handleRedirect}>
@@ -40,26 +42,26 @@ const ReportCard = ({ data, id }) => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="subtitle1">
-                        ¿Por qué los estudiantes de derecho son imbéciles?
+                        {data.post.message}
                     </Typography>
                 }
                 subheader={
                     <Box display="flex" alignItems='center'>
                         <Typography variant="subtitle1">
-                            @andresitosua
+                            {data.post.owner.user_name}
                         </Typography>
                         <Dot />
                         <Typography variant="subtitle1">
-                            Reportado 5 veces
+                            Reportado {data.reportsCount} veces
                         </Typography>
                     </Box>
                 }
             />
             <CardContent>
                 <Box display="flex" justifyContent="space-between">
-                    <Tag name='Foros' icon={<TagIcon />} />
+                    <Tag name={data.post.type} icon={<TagIcon />} />
                     <Typography variant="body2" component="span">
-                        15, Jul 2021
+                        {date}
                     </Typography>
                 </Box>
             </CardContent>

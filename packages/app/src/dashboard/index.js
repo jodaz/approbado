@@ -8,6 +8,21 @@ const tags = [
         name: 'Pruebas',
         pathname: 'tests',
         component: <TestList />
+    },
+    {
+        name: 'Agenda',
+        pathname: 'calendar',
+        component: <TestList />
+    },
+    {
+        name: 'Puntajes',
+        pathname: 'ranking',
+        component: <TestList />
+    },
+    {
+        name: 'Pruebas realizadas',
+        pathname: 'tests-made',
+        component: <TestList />
     }
 ]
 

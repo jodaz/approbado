@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core'
 import { ReactComponent as PDFIcon } from '@approbado/lib/icons/PDF.svg'
 import configs from '@approbado/lib/configs'
 import Link from '@material-ui/core/Link'
+import { ReactComponent as DownloadIcon } from '@approbado/lib/icons/download.svg'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -19,10 +20,13 @@ const useStyles = makeStyles(() => ({
     },
     content: {
         padding: '8px 16px'
+    },
+    action: {
+        alignSelf: 'unset'
     }
 }))
 
-export default function Resource({ name, size, key, file }) {
+export default function Resource({ title, size, key, file }) {
     const classes = useStyles();
 
     return (
@@ -36,11 +40,13 @@ export default function Resource({ name, size, key, file }) {
                         target="_blank"
                         color="primary"
                     >
-                        {name}
+                        {title}
                     </Link>
                 }
                 subheader={size}
                 className={classes.content}
+                action={<DownloadIcon />}
+                classes={{ action: classes.action }}
             />
         </Card>
     )
