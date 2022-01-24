@@ -1,5 +1,3 @@
-import { checkArray } from '../utils'
-
 export const createSubthemeSchema = {
     name: {
         isLength: {
@@ -22,20 +20,9 @@ export const createSubthemeSchema = {
             errorMessage: 'Seleccione una trivia'
         }
     },
-    trivia_id: {
+    award_id: {
         notEmpty: {
             errorMessage: 'Seleccione un premio'
-        }
-    },
-    plans: {
-        custom: {
-            options: async (value) => {
-                const isValid = await checkArray(value);
-
-                if (!isValid) {
-                    throw new Error("Seleccione al menos un plans");
-                }
-            }
         }
     }
 };

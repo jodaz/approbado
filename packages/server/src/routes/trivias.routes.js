@@ -1,6 +1,15 @@
 import { Router } from "express"
 import { upload } from '../config'
-import { destroy, index, show, storeGrupal,showGrupal,showRamdom,indexByPlan, store, update } from '../controllers/TriviaController'
+import {
+    destroy,
+    index,
+    show,
+    storeGrupal,
+    showGrupal,
+    indexByPlan,
+    store,
+    update
+} from '../controllers/TriviaController'
 import { createTriviaSchema, createTriviaGrupalSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
@@ -12,7 +21,7 @@ triviasRouter.get('/:id', show)
 triviasRouter.get('/grupal/:token',showGrupal)
 triviasRouter.post('/grupal',checkSchema(createTriviaGrupalSchema),storeGrupal )
 triviasRouter.post('/', checkSchema(createTriviaSchema), store)
-triviasRouter.put('/:id', upload.single('file'), update)
+triviasRouter.put('/:id', upload.single('file'), checkSchema(createTriviaSchema), update)
 triviasRouter.delete('/:id', destroy)
 
 export default triviasRouter;

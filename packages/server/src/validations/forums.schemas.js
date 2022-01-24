@@ -17,11 +17,9 @@ export const createForumSchema = {
                 const isValid = await checkArray(value);
 
                 if (!isValid) {
-                    throw new Error("Seleccione al menos una categorias");
+                    throw new Error("Seleccione al menos una categoria");
                 }
             }
         }
     }
 };
-
-

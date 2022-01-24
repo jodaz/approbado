@@ -1,8 +1,8 @@
 import * as React from 'react'
 // Components
 import RecentReports from './RecentReports'
-import RestrictedUsers from './RestrictedUsers'
-import BlacklistedUsers from './BlacklistedUsers'
+import RestrictedUsers from '../restrictedUsers'
+import BlacklistedUsers from '../blacklistedUsers'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [
