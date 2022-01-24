@@ -4,7 +4,7 @@ import { MailTransporter } from '../config'
 import { validateRequest, sendMail, paginatedQueryResponse, getRandomPass } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
+    const { filter, sort, order } = req.query
 
     try {
         const query = User.query();
@@ -28,6 +28,14 @@ export const index = async (req, res) => {
                     .modifiers({
                         filterTop: query => query.modify('orderByPoints', 'desc')
                     })
+            }
+        }
+
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
             }
         }
 
