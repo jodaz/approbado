@@ -91,16 +91,19 @@ export const upload = async (req, res) => {
                     if (rowNumber > 1) {
                         let questionNum = rowNumber - 1;
 
-                        const options = answers.filter(row => row[2] == questionNum).map(i => ({
-                            'is_right': i[3] == 'X',
-                            'statement': i[1]
-                        }))
+                        const options = answers
+                            .filter(row => row[2] == questionNum)
+                            .map(i => ({
+                                'is_right': i[3] == 'X',
+                                'statement': i[1]
+                            }))
 
                         await Question.query().insertGraphAndFetch({
                             'description': row.values[1],
                             'explanation': row.values[2],
                             'subtheme_id': subtheme_id,
                             'trivia_id': trivia_id,
+                            'level_id': row.values[3],
                             options: options
                         });
                     }
@@ -153,7 +156,10 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
-        const model = await Question.query().findById(id).delete().first();
+        const model = await Question.query()
+            .findById(id)
+            .delete()
+            .first();
 
         return res.json(model);
     } catch (error) {
