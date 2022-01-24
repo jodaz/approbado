@@ -1,26 +1,83 @@
-import { Report } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { Report, Post, UserReport } from '../models'
+import { validateRequest, paginatedQueryResponse, getReportNumber } from '../utils'
+import isEmpty from 'is-empty'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
-    const query = Report.query()
+    const { filter, sort, order } = req.query
 
-    if (filter) {
-        if (filter.item) {
-            query.where('item', 'ilike', `%${filter.item}%`)
+    try {
+        const query = Report.query().select(
+            Report.ref('*'),
+            Report.relatedQuery('userReports').count().as('reportsCount')
+        )
+        .withGraphFetched('post.owner')
+
+        if (filter) {
+            if (filter.num) {
+                query.where('num', 'ilike', `%${filter.num}%`)
+            }
+            if (filter.type) {
+                query.where('type', 'ilike', `%${filter.type}%`)
+            }
         }
-    }
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
+            }
+        }
 
-    return paginatedQueryResponse(query, req, res)
+        return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await Report.query().insert(req.body)
+        try {
+            const { user } = req;
+            const { post_id, reason_id } = req.body;
 
-        return res.status(201).json(model)
+            // Si el post ya tiene un reporte, crea
+            // un nuevo reporte de usuario
+            // Si no, crear un reporte con un reporte de usuario
+            const post = await Post.query()
+                .where('id', post_id)
+                .withGraphFetched('report')
+                .first()
+
+            if (!isEmpty(post.report)) {
+                await UserReport.query().insert({
+                    report_id: post.report.id,
+                    user_id: user.id
+                })
+
+                return res.status(201).json(post.report)
+            } else {
+                const number = await getReportNumber()
+
+                const report = await Report.query().insertGraph({
+                    num: number,
+                    post_id: post_id,
+                    userReports: {
+                        user_id: user.id,
+                        report_reason_id: reason_id
+                    }
+                })
+
+                return res.status(201).json(report)
+            }
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json(error)
+        }
     }
 }
 
@@ -28,25 +85,45 @@ export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { id } = req.params
-        const model = await Report.query()
-            .updateAndFetchById(id, req.body)
+        try {
+            const { id } = req.params
+            const model = await Report.query()
+                .findById(id)
+                .withGraphFetched('[userReports,post.owner]')
 
-        return res.status(201).json(model)
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json(error)
+        }
     }
 }
 
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await Report.query().findById(id)
+    try {
+        const model = await Report.query()
+            .findById(id)
+            .withGraphFetched('[userReports,post.owner]')
 
-    return res.status(201).json(model)
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
+    }
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Report.query().findById(id).delete().first();
 
-    return res.json(model);
+    try {
+        const model = await Report.query().findById(id).delete().first();
+
+        return res.json(model);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
+    }
 }

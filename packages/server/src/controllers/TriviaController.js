@@ -2,20 +2,35 @@ import { Trivia, TriviaGrupal, Subtheme, Level, Question, Plan } from '../models
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
-    const query = Trivia.query().select(
-        Trivia.ref('*'),
-        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
-        Trivia.relatedQuery('files').count().as('filesCount')
-    )
+    const { filter, sort, order } = req.query
 
-    if (filter) {
-        if (filter.name) {
-            query.where('name', 'ilike', `%${filter.name}%`)
+    try {
+        const query = Trivia.query().select(
+            Trivia.ref('*'),
+            Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+            Trivia.relatedQuery('files').count().as('filesCount')
+        )
+
+        if (filter) {
+            if (filter.name) {
+                query.where('name', 'ilike', `%${filter.name}%`)
+            }
         }
-    }
 
-    return paginatedQueryResponse(query, req, res)
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
+            }
+        }
+
+        return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json(error)
+    }
 }
 
 export const indexByPlan = async (req, res) => {
@@ -24,7 +39,7 @@ export const indexByPlan = async (req, res) => {
 
     try{
         const plan = await user.$relatedQuery('plan').where('active',true).first()
-    
+
         const query = Trivia.query().select(
             Trivia.ref('*'),
             Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
@@ -33,7 +48,6 @@ export const indexByPlan = async (req, res) => {
         )
         .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
 
-        console.log(plan)
         if (filter) {
             if (filter.plan_active) {
                query.where('plan_id',plan.id)
@@ -53,8 +67,8 @@ export const indexByPlan = async (req, res) => {
         }
 
         return paginatedQueryResponse(query, req, res)
-    
-    }catch(error){
+
+    } catch(error) {
         console.log(error)
         return res.status(500).json(error)
     }
@@ -63,10 +77,20 @@ export const indexByPlan = async (req, res) => {
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
-    if (!reqErrors) {
-        const model = await Trivia.query().insert(req.body)
+    const { plans_ids, ...rest } = req.body
 
-        return res.status(201).json(model)
+    if (!reqErrors) {
+        try {
+            const model = await Trivia.query().insert(rest)
+
+            await model.$relatedQuery('plans').relate(plans_ids)
+
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error);
+
+            return res.status(500).json(error)
+        }
     }
 }
 
@@ -76,34 +100,39 @@ export const storeGrupal = async (req, res) => {
     const { names } = req.user;
 
     if (!reqErrors) {
+        try {
+            const model = await TriviaGrupal.query().insert(rest)
 
-        const model = await TriviaGrupal.query().insert(rest)
+            await model.$relatedQuery('participants').relate(user_ids)
 
-        await model.$relatedQuery('participants').relate(user_ids)
+            const subtheme = await Subtheme.query().findById(rest.subtheme_id)
 
-        const subtheme = await Subtheme.query().findById(rest.subtheme_id)
+            const level = await Level.query().findById(rest.level_id)
 
-        const level = await Level.query().findById(rest.level_id)
-
-        let data_push_notification = {
-            title :  'Nueva solicitud de trivia grupal',
-            body :   `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
-            data : {
-                path : {
-                    name : 'room',
-                    params : {
-                        token : rest.link
-                    },
-                    query : {
-                        emit : true
+            let data_push_notification = {
+                title :  'Nueva solicitud de trivia grupal',
+                body :   `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
+                data : {
+                    path : {
+                        name : 'room',
+                        params : {
+                            token : rest.link
+                        },
+                        query : {
+                            emit : true
+                        }
                     }
                 }
             }
+
+            await sendNotification(data_push_notification,user_ids)
+
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error);
+
+            return res.status(500).json(error)
         }
-
-        await sendNotification(data_push_notification,user_ids)
-
-        return res.status(201).json(model)
     }
 }
 
@@ -112,29 +141,40 @@ export const update = async (req, res) => {
 
     const { id } = req.params
 
-    const { body: data } = req
+    const { plans_ids, ...rest } = req
 
     if (!reqErrors) {
-        const model = await Trivia.query()
-            .updateAndFetchById(id, {
-                cover: (req.file) ? req.file.path : '',
-                is_free: data.is_free,
-                name: data.name,
-                category_id: data.category_id
-            })
+        try {
+            const model = await Trivia.query()
+                .updateAndFetchById(id, {
+                    cover: (req.file) ? req.file.path : '',
+                    is_free: rest.is_free,
+                    name: rest.name,
+                    category_id: rest.category_id
+                })
 
-        return res.status(201).json(model)
+            await model.$relatedQuery('plans').relate(plans_ids)
+
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error);
+
+            return res.status(500).json(error)
+        }
     }
 }
 
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await Trivia.query().select(
-        Trivia.ref('*'),
-        Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
-        Trivia.relatedQuery('files').count().as('filesCount')
-    ).findById(id)
+    const model = await Trivia.query()
+        .select(
+            Trivia.ref('*'),
+            Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
+            Trivia.relatedQuery('files').count().as('filesCount')
+        ).where('id', id)
+        .withGraphFetched('plans')
+        .first();
 
     return res.status(201).json(model)
 }

@@ -6,7 +6,7 @@ export class Report extends BaseClass {
     }
 
     static relationMappings = () => ({
-        reason: {
+        post: {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/Post`,
             join: {
@@ -14,16 +14,12 @@ export class Report extends BaseClass {
                 to: 'posts.id'
             }
         },
-        reportedBy: {
-            relation: BaseClass.ManyToManyRelation,
-            modelClass: `${__dirname}/User`,
+        userReports: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/UserReport`,
             join: {
                 from: 'reports.id',
-                through: {
-                    from: 'user_reports.report_id',
-                    to: 'user_reports.user_id'
-                },
-                to: 'users.id'
+                to: 'users_reports.report_id'
             }
         }
     })

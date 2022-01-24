@@ -1,3 +1,5 @@
+import { checkArray } from '../utils'
+
 export const createTriviaSchema = {
     name: {
         isLength: {
@@ -14,11 +16,22 @@ export const createTriviaSchema = {
         notEmpty: {
             errorMessage: 'Seleccione una opción'
         }
+    },
+    plans: {
+        custom: {
+            options: async (value) => {
+                const isValid = await checkArray(value);
+
+                if (!isValid) {
+                    throw new Error("Seleccione al menos un plan");
+                }
+            }
+        }
     }
 };
 
 export const createTriviaGrupalSchema = {
-   
+
     link: {
         notEmpty: {
             errorMessage: 'Ingrese un link'
@@ -46,4 +59,4 @@ export const createTriviaGrupalSchema = {
     }
 };
 
- 
+
