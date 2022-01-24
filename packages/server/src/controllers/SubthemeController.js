@@ -91,7 +91,7 @@ export const showRandom = async (req, res) => {
 
         const model = await Subtheme.query()
                                     .join('trivias_plans','trivias_plans.trivia_id','subthemes.trivia_id')
-                                    .where('plan_id',plan.plan_id)
+                                    .where('plan_id',plan.id)
                                     .orderByRaw('random()')
                                     .first();
 
