@@ -3,7 +3,6 @@
 export async function up(knex) {
     return knex.schema.createTable('subthemes', table => {
         table.increments('id').primary();
-        table.integer('points')
         table.string('name');
         table.integer('duration');
         table.integer('trivia_id').unsigned();

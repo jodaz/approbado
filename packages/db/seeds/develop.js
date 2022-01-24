@@ -61,5 +61,7 @@ export async function seed(knex) {
             duration: 0,
             amount: 0
         });
+
+        trivia.$relatedQuery('plans').relate(plan)
     }
 };
