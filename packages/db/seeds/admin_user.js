@@ -12,6 +12,7 @@ export async function seed(knex) {
             // Inserts seed entries
             await User.query().insert({
                 ...USER,
+                user_name: 'admin',
                 password: encryptedPassword,
                 rol: 'Administrador',
                 is_registered: false
