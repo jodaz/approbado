@@ -20,7 +20,7 @@ const ListActions = () => (
 const PlansList = (props) => (
     <ListBase
         perPage={20}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'amount', order: 'DESC' }}
         {...props}
     >
         <PlansListView />

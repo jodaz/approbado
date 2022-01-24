@@ -52,7 +52,7 @@ const CategoryEdit = (props) => {
                 validate={validateCategory}
                 record={record}
                 saveButtonLabel='Actualizar'
-                disabled={loading}
+                loading={loading}
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput

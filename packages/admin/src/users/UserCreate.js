@@ -85,7 +85,12 @@ const UserCreate = (props) => {
 
     return (
         <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validate} loading={loading} formName='Agregar nuevo usuario'>
+            <BaseForm
+                save={save}
+                validate={validate}
+                loading={loading}
+                formName='Agregar nuevo usuario'
+            >
                 <InputContainer
                     labelName='Nombres'
                 >

@@ -43,7 +43,7 @@ const CategoryCreate = (props) => {
             <BaseForm
                 save={save}
                 validate={validateCategory}
-                disabled={loading}
+                loading={loading}
                 formName='Nueva categoría'
             >
                 <InputContainer labelName='Nombre'>

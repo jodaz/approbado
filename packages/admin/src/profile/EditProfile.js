@@ -57,7 +57,7 @@ const UpdateProfile = () => {
                             <ProfilePhotoInput
                                 source='file'
                                 preview={user.picture}
-                                loading={loading}
+                                disabled={loading}
                                 accept='image/jpeg, image/png'
                             />
                         </Box>
@@ -67,6 +67,7 @@ const UpdateProfile = () => {
                             <TextInput
                                 label={false}
                                 source='names'
+                                disabled={loading}
                                 fullWidth
                             />
                         </InputContainer>
@@ -74,6 +75,7 @@ const UpdateProfile = () => {
                             <TextInput
                                 label={false}
                                 source='email'
+                                disabled={loading}
                                 fullWidth
                             />
                         </InputContainer>

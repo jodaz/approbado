@@ -64,7 +64,7 @@ const FileCreate = () => {
             save={save}
             validate={validate}
             formName='Crear archivo'
-            disabled={loading}
+            loading={loading}
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
