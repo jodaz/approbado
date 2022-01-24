@@ -20,6 +20,7 @@ import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
+import isEmpty from 'is-empty'
 
 const validate = (values) => {
     const errors = {};
@@ -68,9 +69,9 @@ const useStyles = makeStyles(theme => ({
 //   setIn(state, `formState.errors.${name}`, value);
 
 const uncheck = (args, state, { setIn, changeValue }) => {
-    if (args) {
-        console.log(state.fields)
-    }
+    // if (args) {
+    //     console.log(state.fields)
+    // }
     // alert("hi");
     // changeValue(state, "lastName", () => "xxx");
     // const field = state.fields["lastName"];
@@ -104,7 +105,6 @@ const QuestionCreate = () => {
     }, [mutate, subtheme_id])
 
     React.useEffect(() => {
-        console.log(data)
         if (data && loaded) {
             notify('¡Has creado una nueva pregunta!')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
@@ -116,14 +116,14 @@ const QuestionCreate = () => {
             <Form
                 onSubmit={save}
                 mutators={{
-                    ...arrayMutators, uncheck
+                    ...arrayMutators
                 }}
                 validate={validate}
                 initialValues={initialFormState}
                 render={({
                     handleSubmit,
                     form: {
-                        mutators: { push, uncheck }
+                        mutators: { push }
                     },
                     values
             }) => {
@@ -162,7 +162,6 @@ const QuestionCreate = () => {
                                                             <BooleanInput
                                                                 source={`${name}.is_right`}
                                                                 label="Opción correcta"
-                                                                onClick={() => uncheck(`${name}`)}
                                                             />
                                                             <Grid item>
                                                                 <Button

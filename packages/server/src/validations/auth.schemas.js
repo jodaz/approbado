@@ -8,7 +8,7 @@ const emailRule = {
         custom: {
             options: async (value) => {
                 const user = await User.query().findOne({
-                    email: value
+                    user_name: value
                 });
 
                 if (!user) {

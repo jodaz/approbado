@@ -87,13 +87,15 @@ export const showRandom = async (req, res) => {
     const user = req.user
 
     try {
-        const plan = await user.$relatedQuery('plan').where('active',true).first()
+        const plan = await user.$relatedQuery('plan')
+            .where('active', true)
+            .first()
 
         const model = await Subtheme.query()
-                                    .join('trivias_plans','trivias_plans.trivia_id','subthemes.trivia_id')
-                                    .where('plan_id',plan.id)
-                                    .orderByRaw('random()')
-                                    .first();
+            .join('trivias_plans','trivias_plans.trivia_id','subthemes.trivia_id')
+            .where('plan_id', plan.id)
+            .orderByRaw('random()')
+            .first();
 
         await model.$fetchGraph('trivia')
 
@@ -108,7 +110,10 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
-        const model = await Subtheme.query().findById(id).delete().first();
+        const model = await Subtheme.query()
+            .findById(id)
+            .delete()
+            .first();
 
         return res.json(model);
     } catch(error) {

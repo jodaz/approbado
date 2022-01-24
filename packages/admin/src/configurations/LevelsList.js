@@ -11,8 +11,9 @@ import {
 import Box from '@material-ui/core/Box'
 import DatagridOptions from '../components/DatagridOptions';
 
-const CategoriesDatagrid = () => (
+const LevelsDatagrid = () => (
     <Datagrid optimized>
+        <TextField label='#ID' source="id" />
         <TextField label='Nombre' source="name" />
         <DatagridOptions
             basePath='configurations/levels'
@@ -32,7 +33,7 @@ const ListActions = () => (
 const LevelList = (props) => (
     <ListBase
         perPage={20}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
         <LevelListView />
@@ -46,7 +47,7 @@ const LevelListView = () => (
         </FilterContext.Provider>
         <Box display="flex">
             <Box width={'100%'}>
-                <CategoriesDatagrid />
+                <LevelsDatagrid />
                 <Pagination rowsPerPageOptions={[5, 10, 25]} />
             </Box>
         </Box>
