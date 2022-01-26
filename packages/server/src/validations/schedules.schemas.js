@@ -9,12 +9,12 @@ export const createScheduleSchema = {
     },
     level_id: {
         notEmpty: {
-            errorMessage: 'Seleccione una opción'
+            errorMessage: 'Seleccione un nivel'
         }
     },
     subtheme_id: {
         notEmpty: {
-            errorMessage: 'Seleccione una opción'
+            errorMessage: 'Seleccione un subtema'
         }
     },
     users_ids: {
