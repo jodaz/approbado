@@ -135,6 +135,7 @@ const CommentContainer = () => {
                                     {...inputProps}
                                     {...props}
                                     multiline
+                                    disabled={loading}
                                 />
                                 {(error && touched) && (
                                     <FormHelperText error style={{ paddingLeft: '0.7rem' }}>
@@ -148,6 +149,7 @@ const CommentContainer = () => {
                         className={classes.sendIcon}
                         aria-label="send"
                         onClick={handleSubmit}
+                        disabled={loading}
                     >
                         <SendIcon />
                     </IconButton>
