@@ -22,7 +22,7 @@ const TriviaList = (props) => (
         basePath='trivias'
         resource='trivias'
         perPage={20}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'DESC' }}
         {...props}
     >
         <TriviaListView />
