@@ -62,7 +62,14 @@ export async function seed(knex) {
             amount: 0
         });
 
-        await user.$relatedQuery('payments').insert({
+        const payment1 = await user.$relatedQuery('payments').insert({
+            payment_method: 'none',
+            amount: 0,
+            plan_id : 1,
+            user_id : user.id
+        })
+
+        const payment = await user1.$relatedQuery('payments').insert({
             payment_method: 'none',
             amount: 0,
             plan_id : 1,
@@ -76,17 +83,10 @@ export async function seed(knex) {
             active : true
         })
 
-        await user1.$relatedQuery('payments').insert({
-            payment_method: 'none',
-            amount: 0,
-            plan_id : 1,
-            user_id : user1.id
-        })
-
         await user1.$relatedQuery('memberships').insert({
             plan_id: 1,
             user_id: user1.id,
-            payment_id : payment.id,
+            payment_id : payment1.id,
             active : true
         })
 
