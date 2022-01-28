@@ -30,7 +30,7 @@ export const sendNotification = async (data,ids) => {
     method: 'POST',
     headers: {
       'Content-Type' :' application/json',
-      'Authorization': 'key=AAAAnGbnFjQ:APA91bEWjTs4SwVAgHvvU5kOWn3TpUDyT-QZ7DQKUjMhYdrXMaL3cJK9u_o8ihkOUQFGkLFgKd2XD5kPaCwXppBpEGdGDVGJH6pHp5VZUdDTv_QEuW5qQry62myDZfjMQjybZ78Ei7Lo', // <- aqui puedes pasar el resultado de tu función que calcula el token
+      'Authorization': 'key=AAAAnGbnFjQ:APA91bHlUFbFA5f0ELSf9Qe5OYiWBg4RwMYhbZ20NmA6NdVPYr4Sahr2benC62xRMV0MuBDJHHH4ivOcFV_yJL0EgPv5IAdLqxyPdS_ACoICqwC2s9Er0-vAvaFm7dbqtl98UrWS5q3E', // <- aqui puedes pasar el resultado de tu función que calcula el token
     },
     body: JSON.stringify(send)
   }, function(error, response, body) {
