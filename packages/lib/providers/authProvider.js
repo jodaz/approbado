@@ -1,14 +1,15 @@
 import jwtDecode from 'jwt-decode';
 import CONFIG_NAMES from '../configs'
-
-export const authProvider = (packageName) => ({
+console.log(CONFIG_NAMES)
+export const authProvider = () => ({
     login: async (data) => {
         await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
         await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(data.user));
 
         return Promise.resolve();
     },
-    logout: async () => {
+    logout: async (packageName) => {
+        console.log('logout');
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
 
         if (packageName == 'app') {

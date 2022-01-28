@@ -8,6 +8,25 @@ const emailRule = {
         custom: {
             options: async (value) => {
                 const user = await User.query().findOne({
+                    email: value
+                });
+
+                if (!user) {
+                    throw new Error("Usuario no encontrado");
+                }
+            }
+        }
+    }
+}
+
+const userNameRule = {
+    email: {
+        notEmpty: {
+            errorMessage: 'Ingrese su correo electrónico'
+        },
+        custom: {
+            options: async (value) => {
+                const user = await User.query().findOne({
                     user_name: value
                 });
 
@@ -41,6 +60,15 @@ const providerRules = {
 }
 
 export const validateLoginSchema = {
+    ...userNameRule,
+    password: {
+        notEmpty: {
+            errorMessage: 'Ingrese su contraseña'
+        }
+    }
+};
+
+export const validateAdminLoginSchema = {
     ...emailRule,
     password: {
         notEmpty: {
@@ -75,11 +103,6 @@ export const validateSendSMSCode = {
             errorMessage: 'Ingrese su contraseña'
         }
     },
-    /*external: {
-        notEmpty: {
-            errorMessage: 'Ingrese si es o no una autenticación con cuenta externa (Facebook, Google).'
-        }
-    },*/
     phone: {
         notEmpty: {
             errorMessage: 'Ingrese su número de teléfono'

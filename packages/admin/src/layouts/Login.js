@@ -49,7 +49,7 @@ const Login = () => {
     const handleSubmit = React.useCallback(values => {
         setLoading(true)
 
-        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
+        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/admin-login`, values)
             .then(res => {
                 login(res.data)
                 history.push('/');
