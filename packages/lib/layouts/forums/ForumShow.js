@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom'
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
+import CommentInput from './CommentInput'
+import CommentList from './CommentList'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,7 +46,9 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: '1rem'
     },
     commentsBox: {
-        minHeight: '20rem'
+        minHeight: '20rem',
+        width: '100%',
+        marginTop: '2rem'
     },
     link: {
         fontWeight: 600,
@@ -98,11 +102,14 @@ const ForumShow = props => {
                     </Box>
                 </Box>
                 <Box className={classes.commentsBox}>
-                    {(record.commentsCount == 0) && (
+                    <CommentInput />
+                    {(record.commentsCount == 0) ? (
                         <NoContent
                             icon={<ForumIllustration />}
                             title='Sé el primero en comentar'
                         />
+                    ) : (
+                        <CommentList parent_id={record.id} />
                     )}
                 </Box>
             </Box>

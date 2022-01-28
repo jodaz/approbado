@@ -1,77 +1,102 @@
 import { Post } from '../models'
-import { validateRequest } from '../utils'
+import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
-    const { filter } = req.query
+    const { filter, sort, order } = req.query
 
-    const query = Post.query().select(
-        Post.ref('*'),
-        Post.relatedQuery('comments').count().as('commentsCount'),
-        Post.relatedQuery('likes').count().as('likesCount'),
-        Post.relatedQuery('likes').where('user_id',req.user.id).count().as('likeUser'),
-    )
+    try {
+        const query = Post.query().select(
+            Post.ref('*'),
+            Post.relatedQuery('comments').count().as('commentsCount'),
+            Post.relatedQuery('likes').count().as('likesCount'),
+            Post.relatedQuery('likes').where('user_id',req.user.id).count().as('likeUser'),
+        ).withGraphFetched('owner')
 
-    if (filter) {
-        if (filter.id) {
-            query.where('parent_id', filter.id)
+        if (filter) {
+            if (filter.id) {
+                query.where('parent_id', filter.id)
+            }
         }
+
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
+            }
+        }
+
+        return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
     }
-
-    const { page, perPage } = req.query
-
-    const {
-        total,
-        results: data
-    } = await query.page(parseInt(page), parseInt(perPage))
-
-    for (var i = 0; i < data.length; i++) {
-        data[i].user =  await data[i].$relatedQuery('owner')
-    }
-
-    return res.status(200).json({
-        data,
-        total
-    })
 }
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { ...rest } = req.body;
+        try {
+            const { ...rest } = req.body;
 
-        const model = await Post.query().insert({
-            created_by: req.user.id,
-            ...rest
-        });
+            const model = await Post.query().insert({
+                created_by: req.user.id,
+                ...rest
+            });
 
-        return res.status(200).json(model)
+            return res.status(200).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json({ error: error })
+        }
     }
 }
 
 export const show = async (req, res) => {
     const { id } = req.params
 
-    const model = await Post.query().findById(id)
+    try {
+        const model = await Post.query().findById(id)
 
-    return res.status(201).json(model)
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { id } = req.params
+        try {
+            const { id } = req.params
 
-        const model = await Post.query().updateAndFetchById(id, req.body)
+            const model = await Post.query().updateAndFetchById(id, req.body)
 
-        return res.status(201).json(model)
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json({ error: error })
+        }
     }
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Post.query().findById(id).delete();
 
-    return res.json(model);
+    try {
+        const model = await Post.query().findById(id).delete();
+
+        return res.json(model);
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }

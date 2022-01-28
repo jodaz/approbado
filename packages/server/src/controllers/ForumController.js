@@ -1,5 +1,4 @@
 import { Post, User} from '../models'
-import isEmpty from 'is-empty'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {

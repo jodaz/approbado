@@ -2,10 +2,11 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query, Loading, Error } from 'react-admin';
+import { Query } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -43,6 +44,13 @@ const useStyles = makeStyles(theme => ({
             textDecoration: 'underline'
         }
     },
+    rootSpinner: {
+        height: '25vh'
+    },
+    loader: {
+        height: '2rem !important',
+        width: '2rem !important'
+    },
     description: {
         paddingTop: '1rem',
         display: 'flex',
@@ -64,7 +72,14 @@ const AsideBar = ({ isXSmall }) => {
                     </Typography>
                     <Query type='getList' resource='forums' payload={payload}>
                         {({ data, total, loading, error }) => {
-                            if (loading) { return null; }
+                            if (loading) {
+                                return (
+                                    <Spinner classes={{
+                                        root: classes.rootSpinner,
+                                        loader: classes.loader
+                                    }}/>
+                                );
+                            }
                             if (error) { return null; }
 
                             return (
