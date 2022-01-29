@@ -51,6 +51,14 @@ export async function seed(knex) {
             is_free: 1
         });
 
+        await trivia.$relatedQuery('awards').insert({
+            'file' : 'public/insignia_bronce.svg',
+            'icon_winner'  : 'public/insignia_bronce.svg',
+            'title'   : 'Bronce',
+            'min_points' : 300,
+            'type' : 'insignia'
+        })
+
         await trivia.$relatedQuery('subthemes').insert({
             'name': 'Subtema',
             'duration': 30

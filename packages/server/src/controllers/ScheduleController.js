@@ -45,6 +45,7 @@ export const byUserId = async (req, res) => {
             if (filter.current) {
                 schedules = await user.$relatedQuery('schedules')
                     .whereRaw('extract(hour from starts_at) = '+parseInt(new Date().getHours()))
+                    .where('schedules.starts_at', '<=', new Date())
             }
         } else {
             schedules = await user.$relatedQuery('schedules')
