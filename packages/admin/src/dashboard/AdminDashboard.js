@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid'
-import UnsetDataComponent from '../components/UnsetDataComponent';
 import Typography from '@material-ui/core/Typography'
-import GridList from '@approbado/lib/components/GridList'
 import CardButton from './CardButton'
 import UserCard from './UserCard'
-import { useDataProvider, ListBase } from 'react-admin'
+import { useDataProvider, Query } from 'react-admin'
+import Spinner from '@approbado/lib/components/Spinner'
+import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 
 const initialState = {
     'users': {
@@ -31,9 +31,16 @@ const initialState = {
     },
 };
 
+const payload = {
+    pagination: { page: 1, perPage: 9 },
+    sort: { field: 'top', order: 'DESC'},
+    filter: { is_registered: true }
+};
+
 const AdminDashboard = () => {
     const [state, setState] = React.useState(initialState);
     const dataProvider = useDataProvider();
+    const spinnerClasses = useSpinnerStyles();
 
     const fetchUsers = React.useCallback(async () => {
         const { total } = await dataProvider.getList(
@@ -103,7 +110,7 @@ const AdminDashboard = () => {
         <Grid container>
             <Grid item xs={12}>
                 <Grid item sm={12}>
-                    <Typography component='h3' variant={'h5'}>
+                    <Typography component='h3' variant={'h6'}>
                         Resumen
                     </Typography>
                 </Grid>
@@ -120,27 +127,44 @@ const AdminDashboard = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <ListBase
-                    resource='users'
-                    basePath='users'
-                    filterDefaultValues={{ is_registered: true, top: true }}
-                >
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography variant="h5">
-                                {'Usuarios destacados'}
-                            </Typography>
-                        </Grid>
-                        <GridList
-                            emptyListMessage={
-                                <UnsetDataComponent
-                                    message="¡Lo siento! Aún no tenemos usuarios destacados"
-                                />
-                            }
-                            component={<UserCard />}
-                        />
+                <Grid container>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Typography component='h3' variant={'h6'}>
+                            Usuarios destacados
+                        </Typography>
                     </Grid>
-                </ListBase>
+                    <Query type='getList' resource='users' payload={payload}>
+                        {({ data, total, loading, error }) => {
+                            if (error) { return null; }
+
+                            if (loading) {
+                                return (
+                                    <Spinner classes={{
+                                        root: spinnerClasses.rootSpinner,
+                                        loader: spinnerClasses.loader
+                                    }} />
+                                );
+                            }
+
+                            return (
+                                <Grid container>
+                                    {data.map(user =>
+                                        <Grid item xs={12} sm={6} md={4}>
+                                            <UserCard data={user} />
+                                        </Grid>
+                                    )}
+                                    {(total == 0) && (
+                                        <Grid item xs={12} sm={6} md={4}>
+                                            <Typography component={'p'} variant="body1">
+                                                No tenemos debates disponibles
+                                            </Typography>
+                                        </Grid>
+                                    )}
+                                </Grid>
+                            );
+                        }}
+                    </Query>
+                </Grid>
             </Grid>
         </Grid>
     )

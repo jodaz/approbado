@@ -30,7 +30,7 @@ const ListActions = () => (
 const RegisteredUsersList = (props) => (
     <ListBase
         perPage={20}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         filter={{ is_registered: true }}
         {...props}
     >

@@ -24,7 +24,7 @@ const AwardsList = ({ record, ...rest }) => (
         basePath='awards'
         perPage={20}
         filter={{ trivia_id: record.id }}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         {...rest}
     >
         <AwardsListView trivia_id={record.id} />

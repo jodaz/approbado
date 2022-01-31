@@ -6,6 +6,8 @@ import { Query, Loading, Error } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import Spinner from '@approbado/lib/components/Spinner'
+import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -47,11 +49,19 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1rem',
         display: 'flex',
         fontSize: '0.9rem'
-    }
+    },
+    rootSpinner: {
+        height: '25vh'
+    },
+    loader: {
+        height: '2rem !important',
+        width: '2rem !important'
+    },
 }))
 
 const AsideBar = ({ isXSmall }) => {
     const classes = useStyles();
+    const spinnerClasses = useSpinnerStyles();
 
     return (
         <Box>
@@ -69,7 +79,14 @@ const AsideBar = ({ isXSmall }) => {
                     </Typography>
                     <Query type='getList' resource='forums' payload={payload}>
                         {({ data, total, loading, error }) => {
-                            if (loading) { return null; }
+                            if (loading) {
+                                return (
+                                    <Spinner classes={{
+                                        root: spinnerClasses.rootSpinner,
+                                        loader: spinnerClasses.loader
+                                    }}/>
+                                );
+                            }
                             if (error) { return null; }
 
                             return (

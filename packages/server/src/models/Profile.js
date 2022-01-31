@@ -8,7 +8,7 @@ export class Profile extends BaseClass {
     static modifiers = {
         orderByPoints(query, order) {
             query
-                .where('points', '<', 0)
+                .where('points', '>', 0)
                 .orderBy('points', order)
         }
     };
