@@ -1,6 +1,6 @@
 import { put, takeLatest, all } from 'redux-saga/effects'
 import { axios } from '@approbado/lib/providers'
-import { USER_FETCH_REQUESTED, fetchUserSuccess, SET_USER } from '../actions';
+import { USER_FETCH_REQUESTED, fetchUserSuccess, SET_USER, UNSET_USER } from '../actions';
 import CONFIG_NAMES from '../configs'
 
 function* fetchUser () {
@@ -16,7 +16,19 @@ function* fetchUser () {
 
 function* setUser(action) {
     try {
-        yield localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(action.payload))
+	    const { user, token } = action.payload;
+
+        yield localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(user))
+        yield localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, token)
+    } catch (e) {
+        yield put({ type: "USER_FETCH_FAILED", message: e.message });
+    }
+}
+
+function* unsetUser() {
+    try {
+        yield localStorage.removeItem(CONFIG_NAMES.USER)
+        yield localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN)
     } catch (e) {
         yield put({ type: "USER_FETCH_FAILED", message: e.message });
     }
@@ -25,6 +37,7 @@ function* setUser(action) {
 export default function* rootSaga() {
     yield all([
         takeLatest(USER_FETCH_REQUESTED, fetchUser),
-        takeLatest(SET_USER, setUser)
+        takeLatest(SET_USER, setUser),
+        takeLatest(UNSET_USER, unsetUser)
     ])
 }

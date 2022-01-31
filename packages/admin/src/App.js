@@ -50,7 +50,6 @@ const App = () => {
             <Resource name="configurations/categories" />
             <Resource name="memberships/plans" />
             <Resource name="memberships/payments" />
-
         </AdminUI>
     )
 }

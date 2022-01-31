@@ -1,23 +1,9 @@
 import jwtDecode from 'jwt-decode';
 import CONFIG_NAMES from '../configs'
-console.log(CONFIG_NAMES)
+
 export const authProvider = () => ({
-    login: async (data) => {
-        await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
-        await localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(data.user));
-
-        return Promise.resolve();
-    },
-    logout: async (packageName) => {
-        console.log('logout');
-        await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-
-        if (packageName == 'app') {
-            return Promise.resolve(window.location.assign(`${CONFIG_NAMES.REDIRECT_TO}`));
-        } else {
-            return Promise.resolve();
-        }
-    },
+    login: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
     checkError: async (error) => {
         const { response } = error;
 

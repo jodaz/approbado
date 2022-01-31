@@ -1,7 +1,8 @@
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 import LogoutIcon from '@approbado/lib/icons/LogoutIcon'
-import { useLogout } from 'ra-core';
+import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -14,19 +15,23 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const LogoutButton = props => {
+const LogoutButton = ({ children }) => {
     const classes = useStyles();
-    const logout = useLogout();
+    const { unsetUser: logout } = useUserDispatch();
+    const history = useHistory()
 
-    const handleClick = () => logout();
+    const handleClick = async () => {
+        await logout();
+        await history.push('/login')
+    }
 
     return (
         <Button
             startIcon={<LogoutIcon />}
             className={classes.button}
-            onClick={handleClick}
+            onClick={() => handleClick()}
         >
-            {props.children}
+            {children}
         </Button>
     )
 }

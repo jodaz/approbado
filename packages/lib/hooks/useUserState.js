@@ -7,12 +7,12 @@ export const useUserState = () => {
     return store.user;
 };
 
-export const useUserDispatch = (data) => {
+export const useUserDispatch = () => {
     const dispatch = useDispatch();
 
     return {
-        setUser: () => dispatch(setUser(data)),
-        unsetUser: () => dispatch(unsetUser(data)),
+        setUser: data => dispatch(setUser(data)),
+        unsetUser: () => dispatch(unsetUser()),
         fetchUser: () => dispatch(fetchUser())
     }
 }
