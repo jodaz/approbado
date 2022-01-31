@@ -4,12 +4,12 @@ import {
     Pagination,
     FilterLiveSearch,
     ListBase,
-    CreateButton,
     FilterContext,
     TopToolbar
 } from 'react-admin'
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import DatagridOptions from '../components/DatagridOptions';
+import CreateButton from '../components/CreateButton'
 
 const UsersDatagrid = props => (
     <Datagrid optimized>
