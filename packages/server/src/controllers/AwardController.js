@@ -81,14 +81,14 @@ export const verifyAward = async (req, res) => {
 
         const count_subthemes = await award.$relatedQuery('subthemes').count().first();
 
-        const count_subthemes_finished = await subtheme.$relatedQuery('finished')
-                .join('subthemes','subthemes.id','subthemes_finished.subtheme_id')
+        const count_subthemes_finished = await Subtheme.query()
+                .join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id')
                 .where('user_id',user_id)
                 .where('award_id',award_id)
                 .where('finished',true)
                 .count()
                 .first()
-
+        
         const response = (count_subthemes_finished.count == count_subthemes.count && results.percenteje >= min_approbado) ? {win_award : true, award :award} : {win_award : false}
 
         const user = await User.query().findById(user_id)
@@ -108,7 +108,7 @@ export const verifyAward = async (req, res) => {
             }else{
                 await user.$relatedQuery('profile')
                     .update({
-                        points: parseFloat(user_profile.points)+parseFloat(results.points)
+                        points: parseFloat(user_profile.points == null ? 0 : user_profile.points)+parseFloat(results.points)
                     })
             }
         }

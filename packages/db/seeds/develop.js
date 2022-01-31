@@ -8,7 +8,7 @@ export async function seed(knex) {
         const encryptedPassword = await bcrypt.hash(USER.password, 10);
 
         // Create user test
-        await User.query().insertGraph({
+        const user1 = await User.query().insertGraph({
             names: 'Test User',
             user_name: 'test',
             password: encryptedPassword,
@@ -23,7 +23,7 @@ export async function seed(knex) {
             }
         })
 
-        await User.query().insertGraph({
+        const user = await User.query().insertGraph({
             names: 'OtroUsuario',
             user_name: 'otrousuario',
             password: encryptedPassword,
@@ -51,7 +51,15 @@ export async function seed(knex) {
             is_free: 1
         });
 
-        trivia.$relatedQuery('subthemes').insert({
+        await trivia.$relatedQuery('awards').insert({
+            'file' : 'public/insignia_bronce.svg',
+            'icon_winner'  : 'public/insignia_bronce.svg',
+            'title'   : 'Bronce',
+            'min_points' : 300,
+            'type' : 'insignia'
+        })
+
+        await trivia.$relatedQuery('subthemes').insert({
             'name': 'Subtema',
             'duration': 30
         })
@@ -62,6 +70,34 @@ export async function seed(knex) {
             amount: 0
         });
 
-        trivia.$relatedQuery('plans').relate(plan)
+        const payment1 = await user.$relatedQuery('payments').insert({
+            payment_method: 'none',
+            amount: 0,
+            plan_id : 1,
+            user_id : user.id
+        })
+
+        const payment = await user1.$relatedQuery('payments').insert({
+            payment_method: 'none',
+            amount: 0,
+            plan_id : 1,
+            user_id : user.id
+        })
+
+        await user.$relatedQuery('memberships').insert({
+            plan_id: 1,
+            user_id: user.id,
+            payment_id : payment.id,
+            active : true
+        })
+
+        await user1.$relatedQuery('memberships').insert({
+            plan_id: 1,
+            user_id: user1.id,
+            payment_id : payment1.id,
+            active : true
+        })
+
+        await trivia.$relatedQuery('plans').relate(plan)
     }
 };
