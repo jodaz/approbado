@@ -2,7 +2,13 @@ import * as React from 'react'
 import { linkToRecord, useResourceContext } from 'ra-core';
 import { Link } from 'react-router-dom';
 import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import styled from '@material-ui/styles/styled';
+
+const CustomizedIconButton = styled(IconButton)(({ theme }) => ({
+    color: `${theme.palette.primary.main} !important`,
+    margin: '0 0.5rem'
+}));
 
 const EditButton = ({
     basePath,
@@ -13,7 +19,7 @@ const EditButton = ({
     const resource = useResourceContext();
 
     return (
-        <Button
+        <CustomizedIconButton
             component={Link}
             to={React.useMemo(
                 () => ({
@@ -29,7 +35,7 @@ const EditButton = ({
             {...rest}
         >
             <EditIcon />
-        </Button>
+        </CustomizedIconButton>
     );
 };
 
