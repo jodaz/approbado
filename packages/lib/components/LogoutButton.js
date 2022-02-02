@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import LogoutIcon from '@approbado/lib/icons/LogoutIcon'
 import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 import { useHistory } from 'react-router-dom'
+import configs from '@approbado/lib/configs'
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -19,10 +20,16 @@ const LogoutButton = ({ children }) => {
     const classes = useStyles();
     const { unsetUser: logout } = useUserDispatch();
     const history = useHistory()
+    const { NAME, REDIRECT_TO } = configs;
 
     const handleClick = async () => {
         await logout();
-        await history.push('/login')
+
+        if (NAME == 'admin') {
+            await history.push('/login')
+        } else {
+            return window.location.href = `${REDIRECT_TO}`
+        }
     }
 
     return (

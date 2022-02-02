@@ -7,7 +7,7 @@ import {
     FilterContext,
     TopToolbar
 } from 'react-admin'
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import DatagridOptions from '../components/DatagridOptions';
 
 const UsersDatagrid = props => (
@@ -21,6 +21,7 @@ const UsersDatagrid = props => (
         />
     </Datagrid>
 )
+
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" />

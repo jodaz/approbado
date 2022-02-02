@@ -3,6 +3,9 @@ import { axios } from '@approbado/lib/providers'
 import { USER_FETCH_REQUESTED, fetchUserSuccess, SET_USER, UNSET_USER } from '../actions';
 import CONFIG_NAMES from '../configs'
 
+/**
+ * Get currently authenticated user
+ */
 function* fetchUser () {
     try {
         const response = yield axios.get('/profile');

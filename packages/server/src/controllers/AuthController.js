@@ -2,10 +2,9 @@ import { sendCode, verifyCode } from '../config';
 import bcrypt from 'bcrypt'
 import { User } from '../models'
 import { validateRequest } from '../utils'
-import { generateAuthToken, sendMail } from '../utils';
+import { generateAuthToken, sendMail, getAuthenticatedUser } from '../utils';
 
 const loginAuthFlow = async (field, email, password) => {
-    console.log(Object.assign({}, { [field]: email }))
     const user = await User.query().findOne(
         Object.assign({}, { [field]: email })
     );
@@ -23,11 +22,11 @@ const loginAuthFlow = async (field, email, password) => {
 
     if (match) {
         const token = await generateAuthToken(user);
+        const data = await getAuthenticatedUser(user);
 
         return {
-            success: true,
             token: token,
-            user : user,
+            user : data,
             status: 200
         }
     } else {
@@ -40,6 +39,10 @@ const loginAuthFlow = async (field, email, password) => {
     }
 }
 
+/**
+ * Login para usuarios (web/movil)
+ * { username, password }
+ */
 export const login = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
@@ -52,6 +55,10 @@ export const login = async (req, res) => {
     }
 }
 
+/**
+ * Login para usuarios admin
+ * { email, password }
+ */
 export const adminLogin = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
