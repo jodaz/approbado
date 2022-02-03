@@ -49,7 +49,7 @@ const useStyles = makeStyles(
     { name: 'RaDialog' }
 );
 
-export default function ReportDialog({ trivia_id, id }) {
+export default function ReportDialog({ post_id }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(null);
@@ -76,7 +76,7 @@ export default function ReportDialog({ trivia_id, id }) {
             await mutate({
                 type: 'create',
                 resource: 'reports',
-                payload: { data: { reason_id: selectedIndex, post_id: 1 } }
+                payload: { data: { reason_id: selectedIndex, post_id: post_id } }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {

@@ -39,7 +39,7 @@ const ForumCardMenuOptions = React.forwardRef((props, ref) => {
                 />
             )}
             {(user.id != record.owner.id) && (
-                <ReportDialog />
+                <ReportDialog post_id={record.id} />
             )}
         </OptionsCardMenu>
     )
