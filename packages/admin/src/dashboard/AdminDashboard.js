@@ -139,10 +139,7 @@ const AdminDashboard = () => {
 
                             if (loading) {
                                 return (
-                                    <Spinner classes={{
-                                        root: spinnerClasses.rootSpinner,
-                                        loader: spinnerClasses.loader
-                                    }} />
+                                    <Spinner classes={spinnerClasses} />
                                 );
                             }
 

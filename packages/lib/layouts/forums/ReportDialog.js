@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Query } from 'react-admin';
+import { Query, useMutation, useNotify, useRefresh } from 'react-admin';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,6 +13,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuButton from '@approbado/lib/components/MenuButton'
 import { ReactComponent as InformationIcon } from '@approbado/lib/icons/Information.svg'
 import { makeStyles } from '@material-ui/core/styles';
+import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
+import Button from '@approbado/lib/components/Button'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -51,17 +53,45 @@ export default function ReportDialog({ trivia_id, id }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(null);
+    const spinnerStyles = useSpinnerStyles();
+    const [mutate, { loading, data, loaded }] = useMutation();
+    const notify = useNotify();
+    const refresh = useRefresh();
 
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
+        event.stopPropagation();
     };
 
     const handleClickOpen = () => {
         setOpen(true);
     };
-    const handleClose = () => {
+    const handleClose = e => {
         setOpen(false);
+        setSelectedIndex(null);
     };
+
+    const handleSubmit = React.useCallback(async () => {
+        try {
+            await mutate({
+                type: 'create',
+                resource: 'reports',
+                payload: { data: { reason_id: selectedIndex, post_id: 1 } }
+            }, { returnPromise: true })
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [mutate, selectedIndex]);
+
+    React.useEffect(() => {
+        if (data && loaded) {
+            notify('¡Ha reportado la publicación exitosamente!');
+            refresh();
+            handleClose();
+        }
+    }, [data, loaded])
 
     return (
         <div>
@@ -93,26 +123,31 @@ export default function ReportDialog({ trivia_id, id }) {
                     </Typography>
                     <Query type='getList' resource='report-reasons' payload={payload}>
                         {({ data, total, loading, error }) => {
-                            if (loading) { return <Spinner /> }
+                            if (loading) { return <Spinner classes={spinnerStyles} /> }
                             if (error) { return null; }
 
                             return (
-                                <List component="nav" aria-label="secondary mailbox folder">
-                                    {data.map(d => (
+                                <List component="nav" aria-label="secondary mailbox folder" style={{ width: '100%', marginBottom: '1rem' }}>
+                                    {data.map(reason => (
                                         <ListItem
                                             button
-                                            selected={selectedIndex === d.id}
-                                            onClick={(event) => handleListItemClick(event, d.id)}
+                                            selected={selectedIndex === reason.id}
+                                            onClick={(event) => handleListItemClick(event, reason.id)}
                                             disableGutters
                                             className={classes.padding}
                                         >
-                                            <ListItemText primary={d.item} />
+                                            <ListItemText primary={reason.item} />
                                         </ListItem>
                                     ))}
                                 </List>
                             );
                         }}
                     </Query>
+                    {(selectedIndex) && (
+                        <Button disabled={loading} onClick={handleSubmit} unresponsive>
+                            {'Enviar'}
+                        </Button>
+                    )}
                     <Typography variant="body2"  className={classes.padding}>
                         Para más infomación sobre advertencia y sanciones, click aquí
                     </Typography>

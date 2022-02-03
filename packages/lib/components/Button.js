@@ -61,9 +61,6 @@ const CustomButton = ({ disabled, children, unresponsive, ...rest }) => {
 
     const FullWidthButton = () => (
         <Button
-            variant='contained'
-            color='secondary'
-            type="submit"
             className={classes.button}
             disabled={disabled}
             {...rest}
@@ -83,7 +80,10 @@ const CustomButton = ({ disabled, children, unresponsive, ...rest }) => {
 CustomButton.defaultProps = {
     fullWidth: true,
     disabled: false,
-    unresponsive: false
+    unresponsive: false,
+    variant: 'contained',
+    color: 'secondary',
+    type: 'submit'
 }
 
 export default CustomButton

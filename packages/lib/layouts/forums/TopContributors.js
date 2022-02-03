@@ -49,14 +49,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1rem',
         display: 'flex',
         fontSize: '0.9rem'
-    },
-    rootSpinner: {
-        height: '25vh'
-    },
-    loader: {
-        height: '2rem !important',
-        width: '2rem !important'
-    },
+    }
 }))
 
 const AsideBar = ({ isXSmall }) => {
@@ -81,10 +74,7 @@ const AsideBar = ({ isXSmall }) => {
                         {({ data, total, loading, error }) => {
                             if (loading) {
                                 return (
-                                    <Spinner classes={{
-                                        root: spinnerClasses.rootSpinner,
-                                        loader: spinnerClasses.loader
-                                    }}/>
+                                    <Spinner classes={spinnerClasses}/>
                                 );
                             }
                             if (error) { return null; }

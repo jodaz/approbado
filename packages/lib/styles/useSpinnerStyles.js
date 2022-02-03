@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
-    rootSpinner: {
-        height: '25vh'
+    root: {
+        height: '25vh',
+        width: '100%'
     },
     loader: {
         height: '2rem !important',

@@ -2,11 +2,12 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query, Loading, Error } from 'react-admin';
+import { Query } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
+import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -39,13 +40,6 @@ const useStyles = makeStyles(theme => ({
             textDecoration: 'underline'
         }
     },
-    rootSpinner: {
-        height: '25vh'
-    },
-    loader: {
-        height: '2rem !important',
-        width: '2rem !important'
-    },
     description: {
         paddingTop: '1rem',
         display: 'flex',
@@ -55,6 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 const CommentList = ({ parent_id }) => {
     const classes = useStyles();
+    const spinnerStyles = useSpinnerStyles();
 
     return (
         <Box p='0 0 0 2rem'>
@@ -66,10 +61,7 @@ const CommentList = ({ parent_id }) => {
                 {({ data, total, loading, error }) => {
                     if (loading) {
                         return (
-                            <Spinner classes={{
-                                root: classes.rootSpinner,
-                                loader: classes.loader
-                            }}/>
+                            <Spinner classes={spinnerStyles}/>
                         );
                     }
 
