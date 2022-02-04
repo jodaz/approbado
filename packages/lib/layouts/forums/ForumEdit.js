@@ -46,7 +46,7 @@ const TriviaEdit = props => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado la actualización con éxito')
+            notify('Se ha completado la actualización con éxito', 'success')
             redirect(`/forums/${record.id}/show`)
         }
     }, [data, loaded])

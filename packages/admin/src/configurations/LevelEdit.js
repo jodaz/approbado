@@ -38,7 +38,7 @@ const LevelEdit = (props) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado la actualización con éxito')
+            notify('Se ha completado la actualización con éxito', 'success')
             redirect('/configurations?tab=levels')
         }
     }, [data, loaded])

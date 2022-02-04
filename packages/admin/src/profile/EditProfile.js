@@ -39,7 +39,7 @@ const UpdateProfile = () => {
 
     React.useEffect(() => {
         if (!isEmpty(data)) {
-            notify('¡Su perfil ha sido actualizado!')
+            notify('¡Su perfil ha sido actualizado!', 'success')
             fetchUser();
         }
     }, [data])

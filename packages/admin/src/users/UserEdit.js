@@ -78,7 +78,7 @@ const UserEdit = props => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado la actualización con éxito')
+            notify('Se ha completado la actualización con éxito', 'success')
             redirect('/users?tab=admins')
         }
     }, [data, loaded])

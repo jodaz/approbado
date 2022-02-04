@@ -1,5 +1,4 @@
 import * as React from 'react'
-// import { validateCategory } from './configurationsValidations';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
@@ -10,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import Confirm from '@approbado/lib/layouts/Confirm';
 import Button from '@material-ui/core/Button';
 import { axios } from '@approbado/lib/providers'
+import configs from '@approbado/lib/configs'
 
 const DeleteAccount = () => {
     const [loading, setLoading] = React.useState(false)
@@ -20,6 +20,9 @@ const DeleteAccount = () => {
         setLoading(!loading)
         try {
             await axios.get('auth/delete-account');
+
+            window.location.href =
+                `${configs.REDIRECT_TO}`;
         } catch (err) {
             console.log(err)
         }
@@ -81,6 +84,7 @@ const DeleteAccount = () => {
         </Grid>
     )
 }
+
 const useStyles = makeStyles(
     theme => ({
         deleteButton: {

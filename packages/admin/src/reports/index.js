@@ -1,5 +1,5 @@
 import ReportsView from './ReportsView'
-import { ReactComponent as InformationIcon } from '@approbado/lib/icons/Information.svg'
+import InformationIcon from '@approbado/lib/icons/InformationIcon'
 import ReportShow from './ReportShow'
 
 export default {

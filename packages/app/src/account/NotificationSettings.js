@@ -19,7 +19,7 @@ const NotificationSettings = () => {
 
         try {
             await axios.post('profile', values);
-            notify('Hemos actualizado tus configuraciones de notificaciones con éxito.')
+            notify('Hemos actualizado tus configuraciones de notificaciones con éxito.', 'success')
             setLoading(false)
         } catch (error) {
             setLoading(false)
@@ -30,7 +30,7 @@ const NotificationSettings = () => {
     }, [axios])
 
     React.useEffect(() => {
-        doFetch();
+        doFetch('/profile');
     }, []);
 
     if (isLoading) return <Spinner />;
