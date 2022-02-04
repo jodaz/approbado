@@ -10,7 +10,7 @@ import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
-import ChatBubbleIcon from '@approbado/lib/icons/ChatBubbleIcon'
+import ReplyIcon from './ReplyIcon';
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
         }
     },
     icon: {
-        backgroundColor: theme.palette.primary.light,
         marginRight: '1rem',
         height: theme.spacing(6),
         width: theme.spacing(6)
@@ -46,11 +45,6 @@ const useStyles = makeStyles(theme => ({
         display: 'inherit',
         marginTop: '0.25rem',
         color: theme.palette.info.light
-    },
-    commentsIcon: {
-        marginRight: '0.5rem',
-        fontSize: '1rem',
-        color: 'inherit'
     }
 }))
 
@@ -93,12 +87,12 @@ const AsideBar = ({ isXSmall }) => {
                                             <Box className={classes.description}>
                                                 <Link
                                                     className={classes.username}
-                                                    to={`/users/${user.id}`}
+                                                    to={`/users/${user.id}/show`}
                                                 >
                                                     {user.names}
                                                 </Link>
                                                 <Box className={classes.contributionsCount}>
-                                                    <ChatBubbleIcon className={classes.commentsIcon} />
+                                                    <ReplyIcon />
                                                     {user.contributionsCount} discusiones
                                                 </Box>
                                             </Box>

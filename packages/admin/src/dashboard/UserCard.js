@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        backgroundColor: theme.palette.primary.light,
         marginRight: '1rem'
     },
     cardContent: {

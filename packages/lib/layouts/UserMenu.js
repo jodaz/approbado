@@ -15,7 +15,6 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        backgroundColor: theme.palette.primary.light,
         marginRight: '1rem'
     },
     usernameContainer: {
@@ -31,7 +30,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         fontWeight: '700',
         borderRadius: '6px',
-        marginTop: '0.2rem',
         padding: '0.5rem !important'
     }
 }))

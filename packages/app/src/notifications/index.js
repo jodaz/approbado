@@ -1,5 +1,5 @@
 import NotificationsView from './NotificationsView'
-import { ReactComponent as NotificationIcon } from '@approbado/lib/icons/notification.svg'
+import NotificationIcon from '@approbado/lib/icons/NotificationIcon'
 
 export default {
     name: 'notifications',

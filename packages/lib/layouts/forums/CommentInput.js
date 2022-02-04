@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
             (`0px 0px 1px 1px ${fade(theme.palette.info.main, 0.7)}`)
     },
     input: {
-        border: 'none',
         width: '100%',
         border: 'none',
         flex: 1,

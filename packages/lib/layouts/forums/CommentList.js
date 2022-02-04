@@ -3,13 +3,18 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
 import { Query } from 'react-admin';
-import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
+import CommentShow from './CommentShow';
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        padding: '0 0 0 2rem',
+        // [theme.breakpoints.up('sm')]: {
+        //     padding: '0 0 0 2rem'
+        // }
+    },
     title: {
         fontWeight: '700',
         fontSize: '1.5rem',
@@ -52,7 +57,7 @@ const CommentList = ({ parent_id }) => {
     const spinnerStyles = useSpinnerStyles();
 
     return (
-        <Box p='0 0 0 2rem'>
+        <Box className={classes.root}>
             <Query type='getList' resource='comments' payload={{
                 pagination: { page: 1, perPage: 5 },
                 sort: { field: 'created_at', order: 'DESC'},
@@ -74,6 +79,9 @@ const CommentList = ({ parent_id }) => {
                                     {total} Respuestas
                                 </Typography>
                             </Box>
+                            {data.map(comment => (
+                                <CommentShow {...comment} />
+                            ))}
                         </div>
                     );
                 }}

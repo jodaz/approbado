@@ -21,12 +21,12 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route exact path='/login'>
-                        <LazyLoader >
+                        <LazyLoader loader={true}>
                             <Login />
                         </LazyLoader>
                     </Route>
                     <Route path='/register'>
-                        <LazyLoader >
+                        <LazyLoader loader={true}>
                             <Register />
                         </LazyLoader>
                     </Route>
@@ -39,7 +39,7 @@ const App = () => {
                     <Route exact path='/' render={() => (<Redirect to="/login" />)} />
                 </Switch>
                 <Switch>
-                    <LazyLoader >
+                    <LazyLoader loader={true}>
                         <Route path='/plans' render={() => <PlansList />} />
                     </LazyLoader>
                 </Switch>
