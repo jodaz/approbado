@@ -15,6 +15,7 @@ const AppLayout = () => (
         customRoutes={customRoutes}
         dataProvider={dataProvider}
         loginPage={false}
+        disableTelemetry
     >
         <Resource {...forums} />
         <Resource {...notifications} />

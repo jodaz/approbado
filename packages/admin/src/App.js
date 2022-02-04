@@ -17,6 +17,7 @@ const App = () => {
             dashboard={Dashboard}
             loginPage={Login}
             customRoutes={routes}
+            disableTelemetry
         >
             <Resource {...users} />
             <Resource {...trivias} />
