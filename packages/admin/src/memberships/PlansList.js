@@ -1,5 +1,4 @@
 import {
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -9,6 +8,7 @@ import {
 import Box from '@material-ui/core/Box'
 import GridList from '@approbado/lib/components/GridList';
 import MembershipCard from './MembershipCard'
+import CreateButton from '../components/CreateButton'
 
 const ListActions = () => (
     <TopToolbar>

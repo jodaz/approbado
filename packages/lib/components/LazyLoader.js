@@ -3,10 +3,10 @@ import Spinner from './Spinner';
 
 class LazyLoader extends React.PureComponent {
     render() {
-        const { children } = this.props;
+        const { children, loader } = this.props;
 
         return (
-        <React.Suspense fallback={<Spinner />}>
+        <React.Suspense fallback={(loader) ? <Spinner /> : <></>}>
             {children}
         </React.Suspense>
         )

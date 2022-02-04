@@ -1,7 +1,6 @@
 import {
     Datagrid,
     TextField,
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -10,6 +9,7 @@ import {
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
 import DatagridOptions from '../components/DatagridOptions';
+import CreateButton from '../components/CreateButton'
 
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
@@ -25,7 +25,7 @@ const CategoriesDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" />
-        <CreateButton basePath="/configurations/categories" />
+        <CreateButton label="Crear" basePath="/configurations/categories" />
     </TopToolbar>
 );
 

@@ -87,9 +87,11 @@ const TabbedList = ({
                         indicatorColor="primary"
                         onChange={handleChange}
                         className={classes.tabs}
+                        variant="scrollable"
+                        scrollButtons="auto"
                     >
                         {
-                            tags.map(tag => (
+                            tags.map((tag, index) => (
                                 <Tab
                                     key={tag.pathname}
                                     label={tag.name}

@@ -65,7 +65,7 @@ const Login = () => {
                         component={renderInput}
                         name="email"
                         type="text"
-                        placeholder='Correo electrónico'
+                        placeholder='Usuario'
                         disabled={loading}
                         className={classes.input}
                         InputProps={{

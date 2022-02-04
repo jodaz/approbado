@@ -4,7 +4,8 @@ const CONFIG_NAMES = {
     PERMISSIONS: `${process.env.REACT_APP_PERMISSIONS_NAME}`,
     REDIRECT_TO: `${process.env.REACT_APP_REDIRECT_DOMAIN}`,
     SOURCE: `${process.env.REACT_APP_API_DOMAIN}`,
-    USER: `${process.env.REACT_APP_AUTH_USER_INFO}`
+    USER: `${process.env.REACT_APP_AUTH_USER_INFO}`,
+    NAME: `${process.env.REACT_APP_NAME}`
 }
 
 export default CONFIG_NAMES

@@ -7,28 +7,10 @@ import users from './users'
 import reports from './reports'
 import trivias from './trivias'
 import Login from './layouts/Login'
-import { useRedirectIfAuthenticated } from '@approbado/lib/hooks/useRedirectIfAuthenticated'
-import Spinner from '@approbado/lib/components/Spinner';
-import { history } from '@approbado/lib/providers'
 import routes from './routes'
 import forums from './forums'
 
 const App = () => {
-    // const { redirect, isAuthenticated } = useRedirectIfAuthenticated([
-    //     '/login',
-    //     '/reset-password',
-    //     '/update-password',
-    //     '/error'
-    // ])
-
-    // React.useEffect(() => {
-    //     if (!isAuthenticated && !redirect) {
-    //         history.push('/login')
-    //     }
-    // }, [])
-
-    // if (!isAuthenticated && !redirect) return <Spinner />
-
     return (
         <AdminUI
             layout={Layout}
@@ -50,7 +32,6 @@ const App = () => {
             <Resource name="configurations/categories" />
             <Resource name="memberships/plans" />
             <Resource name="memberships/payments" />
-
         </AdminUI>
     )
 }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Box } from '@material-ui/core';
 import {
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -10,6 +9,7 @@ import {
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import FileCard from './FileCard'
+import CreateButton from '../components/CreateButton'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>

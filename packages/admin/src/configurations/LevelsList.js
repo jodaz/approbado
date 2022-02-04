@@ -1,7 +1,6 @@
 import {
     Datagrid,
     TextField,
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -10,6 +9,7 @@ import {
 } from 'react-admin'
 import Box from '@material-ui/core/Box'
 import DatagridOptions from '../components/DatagridOptions';
+import CreateButton from '../components/CreateButton'
 
 const LevelsDatagrid = () => (
     <Datagrid optimized>

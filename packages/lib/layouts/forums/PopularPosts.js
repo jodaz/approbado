@@ -7,6 +7,7 @@ import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
+import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -44,13 +45,6 @@ const useStyles = makeStyles(theme => ({
             textDecoration: 'underline'
         }
     },
-    rootSpinner: {
-        height: '25vh'
-    },
-    loader: {
-        height: '2rem !important',
-        width: '2rem !important'
-    },
     description: {
         paddingTop: '1rem',
         display: 'flex',
@@ -60,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 const AsideBar = ({ isXSmall }) => {
     const classes = useStyles();
+    const spinnerClasses = useSpinnerStyles();
 
     return (
         <Box>
@@ -74,10 +69,7 @@ const AsideBar = ({ isXSmall }) => {
                         {({ data, total, loading, error }) => {
                             if (loading) {
                                 return (
-                                    <Spinner classes={{
-                                        root: classes.rootSpinner,
-                                        loader: classes.loader
-                                    }}/>
+                                    <Spinner classes={spinnerClasses} />
                                 );
                             }
                             if (error) { return null; }

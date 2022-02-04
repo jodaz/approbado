@@ -16,8 +16,8 @@ const userReducer = (
     switch (action.type) {
         case SET_USER:
             return {
-                user: action.payload,
-                ...previousState
+                ...previousState,
+		...action.payload
             }
         case USER_FETCH_SUCCEEDED:
             return {

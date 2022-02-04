@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar';
 import isEmpty from 'is-empty'
 import { useHistory } from 'react-router-dom'
+import configs from '@approbado/lib/configs'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        backgroundColor: theme.palette.primary.light,
         marginRight: '1rem'
     },
     cardContent: {
@@ -74,7 +74,7 @@ const UserCard = ({ data, index }) => {
             <CardContent className={classes.cardContent}>
                 <Avatar
                     className={classes.avatar}
-                    src={`${process.env.REACT_APP_API_DOMAIN}/${data.picture}`}
+                    src={`${configs.SOURCE}/${data.picture}`}
                     alt='photo_profile'
                 />
                 <div className={classes.innerContent}>

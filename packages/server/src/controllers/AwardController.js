@@ -88,7 +88,7 @@ export const verifyAward = async (req, res) => {
                 .where('finished',true)
                 .count()
                 .first()
-        
+
         const response = (count_subthemes_finished.count == count_subthemes.count && results.percenteje >= min_approbado) ? {win_award : true, award :award} : {win_award : false}
 
         const user = await User.query().findById(user_id)
@@ -105,7 +105,7 @@ export const verifyAward = async (req, res) => {
                     .insert({
                         points : parseFloat(results.points)
                     })
-            }else{
+            } else {
                 await user.$relatedQuery('profile')
                     .update({
                         points: parseFloat(user_profile.points == null ? 0 : user_profile.points)+parseFloat(results.points)

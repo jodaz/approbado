@@ -317,6 +317,14 @@ const theme = {
                 borderRadius: '25%'
             }
         },
+        MuiFab: {
+            root: {
+                backgroundColor: 'unset',
+                '&:hover': {
+                    backgroundColor: `${fade(palette.secondary.main, 0.8)} !important`
+                }
+            }
+        }
     },
     props: {
         MuiButtonBase: {

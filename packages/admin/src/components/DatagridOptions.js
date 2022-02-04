@@ -1,17 +1,12 @@
 import * as React from 'react'
-import { EditButton } from 'react-admin'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
-import { Box } from '@material-ui/core'
+import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
-import { ReactComponent as Edit } from '@approbado/lib/icons/Edit.svg'
+import EditButton from './EditButton'
 
 const DatagridOptions = ({ children, confirmTitle, confirmContent, deleteButtonLabel, ...rest }) => (
     <Box component='div' display='flex' justifyContent='end'>
-        <EditButton
-            icon={<Edit />}
-            label=''
-            {...rest}
-        />
+        <EditButton size="small" {...rest} />
         <DeleteButton
             confirmColor='warning'
             confirmTitle={confirmTitle}

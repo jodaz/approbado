@@ -7,7 +7,7 @@ import {
     FilterContext,
     TopToolbar
 } from 'react-admin'
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import DatagridOptions from '../components/DatagridOptions';
 
 const UsersDatagrid = props => (
@@ -21,6 +21,7 @@ const UsersDatagrid = props => (
         />
     </Datagrid>
 )
+
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" />
@@ -30,7 +31,7 @@ const ListActions = () => (
 const RegisteredUsersList = (props) => (
     <ListBase
         perPage={20}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         filter={{ is_registered: true }}
         {...props}
     >

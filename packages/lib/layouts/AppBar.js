@@ -15,6 +15,10 @@ import { MenuItemLink } from 'react-admin'
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import LogoutButton from '@approbado/lib/components/LogoutButton'
 import Typography from '@material-ui/core/Typography'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
+import LazyLoader from '@approbado/lib/components/LazyLoader'
+
+const NotificationsButton = React.lazy(() => import('./NotificationsButton'))
 
 const useStyles = makeStyles(theme => ({
         root: {
@@ -81,6 +85,7 @@ const AppBar = props => {
         isOpenSidebar: open,
         isXSmall: isXSmall
     });
+    const { user, isAuth } = useUserState();
 
     return (
         <MuiAppBar className={classes.root} position='absolute' {...props} title=''>
@@ -94,7 +99,14 @@ const AppBar = props => {
                     <GoBackButton />
                 </div>
 
-                <CustomUserMenu />
+                <div style={{ display: 'flex' }}>
+                    {(user.is_registered) && (
+                        <LazyLoader loader={false}>
+                            <NotificationsButton />
+                        </LazyLoader>
+                    )}
+                    <CustomUserMenu />
+                </div>
             </Toolbar>
         </MuiAppBar>
     );

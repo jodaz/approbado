@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Box } from '@material-ui/core';
 import {
-    CreateButton,
     FilterContext,
     ListBase,
     Pagination,
@@ -10,6 +9,7 @@ import {
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import AwardsCard from './AwardsCard'
+import CreateButton from '../components/CreateButton'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
@@ -24,7 +24,7 @@ const AwardsList = ({ record, ...rest }) => (
         basePath='awards'
         perPage={20}
         filter={{ trivia_id: record.id }}
-        sort={{ field: 'reference', order: 'ASC' }}
+        sort={{ field: 'created_at', order: 'ASC' }}
         {...rest}
     >
         <AwardsListView trivia_id={record.id} />

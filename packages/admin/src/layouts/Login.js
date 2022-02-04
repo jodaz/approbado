@@ -6,14 +6,15 @@ import {
     makeStyles
 } from '@material-ui/core';
 import Button from '@approbado/lib/components/Button'
-import axios from 'axios'
+import { axios } from '@approbado/lib/providers/dataProvider'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import AuthLayout from './AuthLayout'
 import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
-import { TextInput, useLogin, PasswordInput } from 'react-admin'
+import { TextInput, PasswordInput } from 'react-admin'
+import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 
 const validate = (values) => {
     const errors = {};
@@ -29,7 +30,7 @@ const validate = (values) => {
     return errors;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     form: {
         width: '100%',
         padding: '0 1.5rem'
@@ -43,16 +44,19 @@ const useStyles = makeStyles(theme => ({
 const Login = () => {
     const [loading, setLoading] = React.useState(false);
     const classes = { ...formStyles(), ...useStyles() };
-    const login = useLogin();
     const history = useHistory()
+    const { setUser } = useUserDispatch();
 
-    const handleSubmit = React.useCallback(values => {
+    const handleSubmit = React.useCallback(async (values) => {
         setLoading(true)
 
-        return axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/login`, values)
-            .then(res => {
-                login(res.data)
-                history.push('/');
+        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/auth/admin-login`, values)
+            .then(async (res) => {
+                await setUser({
+                    user: res.data.user,
+                    token: res.data.token
+                });
+                await history.push('/');
 
                 setLoading(false);
             }).catch(err => {
