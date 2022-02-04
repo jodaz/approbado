@@ -1,34 +1,52 @@
 import { Post,LikePost } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { validateRequest } from '../utils'
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await LikePost.query().insert(req.body)
+        try {
+            const model = await LikePost.query().insert(req.body)
 
-        return res.status(201).json(model)
+            return res.status(201).json(model)
+        } catch (error) {
+            console.log(error)
+
+            return res.status(500).json(error)
+        }
     }
 }
 
 export const byPostId = async (req, res) => {
     const { post_id } = req.params
 
-    const post = await  Post.query().findById(post_id)
+    try {
+        const post = await  Post.query().findById(post_id)
 
-    const likes = await post.$relatedQuery('likes')
+        const likes = await post.$relatedQuery('likes')
 
-    return res.status(200).json(likes)
+        return res.status(200).json(likes)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json(error)
+    }
 }
 
 export const destroy = async (req, res) => {
-    let post_id = parseInt(req.params.post_id)
-    let user_id = parseInt(req.params.user_id)
+    try {
+        let post_id = parseInt(req.params.post_id)
+        let user_id = parseInt(req.params.user_id)
 
-    const model = await LikePost.query()
-                                .where('post_id',post_id)
-                                .where('user_id',user_id)
-                                .delete();
+        const model = await LikePost.query()
+            .where('post_id',post_id)
+            .where('user_id',user_id)
+            .delete();
 
-    return res.json(model);
+        return res.json(model);
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json(error)
+    }
 }
