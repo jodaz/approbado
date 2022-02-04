@@ -17,7 +17,7 @@ const PrivacySettings = () => {
 
         try {
             await axios.post('profile', values);
-            notify('Hemos actualizado tus configuraciones de privacidad con éxito.')
+            notify('Hemos actualizado tus configuraciones de privacidad con éxito.', 'success')
             setLoading(false)
         } catch (error) {
             setLoading(false)

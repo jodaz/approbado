@@ -38,7 +38,7 @@ const UpdatePassword = () => {
 
         try {
             await axios.post('update-password', values);
-            notify('Hemos cambiado tu contraseña con éxito')
+            notify('Hemos cambiado tu contraseña con éxito', 'success')
             setLoading(false)
         } catch (error) {
             setLoading(false)

@@ -51,7 +51,7 @@ const SubthemeCreate = () => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('¡Has creado un nuevo subtema!')
+            notify('¡Has creado un nuevo subtema!', 'success')
             redirect(`/trivias/${trivia_id}/subthemes/${data.id}/show`)
         }
     }, [data, loaded])

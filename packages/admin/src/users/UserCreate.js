@@ -78,7 +78,7 @@ const UserCreate = (props) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado el registro con éxito')
+            notify('Se ha completado el registro con éxito', 'success');
             redirect('/users?tab=admins')
         }
     }, [data, loaded])

@@ -47,7 +47,7 @@ const SubthemeEdit = ({ record }) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado la actualización con éxito')
+            notify('Se ha completado la actualización con éxito', 'success')
             refresh()
         }
     }, [data, loaded])

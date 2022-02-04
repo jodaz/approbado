@@ -38,7 +38,7 @@ const CategoryEdit = (props) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado la actualización con éxito')
+            notify('Se ha completado la actualización con éxito', 'success')
             redirect('/configurations?tab=categories')
         }
     }, [data, loaded])

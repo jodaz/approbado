@@ -92,7 +92,7 @@ const AwardsEdit = () => {
 
     React.useEffect(() => {
         if (!isEmpty(data)) {
-            notify('¡Has editado el premio!')
+            notify('¡Has editado el premio!', 'success')
             redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
     }, [data, loaded])

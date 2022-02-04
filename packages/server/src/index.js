@@ -15,20 +15,18 @@ app.use(express.json())
 app.use('/public', express.static(path.resolve(__dirname, '../public')))
 app.use(routes);
 
-
 let http = require("http").Server(app);
 
 const io = require("socket.io")
-(http,{ 
-  cors: {    
-    origin: "*",    
-   methods: ["GET", "POST"]  
+(http,{
+  cors: {
+    origin: "*",
+   methods: ["GET", "POST"]
   },
-  allowEIO3: true 
+  allowEIO3: true
 });
 
 io.on("connection", function(socket) {
-
   socket.on("room", async function (data) {
     socket.broadcast.emit("room-"+data.token,data)
   })

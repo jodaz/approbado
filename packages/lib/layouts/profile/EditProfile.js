@@ -31,7 +31,7 @@ const UpdateProfile = () => {
         try {
             await axios.post('profile', values);
 
-            notify('Hemos actualizado tu perfil con éxito.')
+            notify('Hemos actualizado tu perfil con éxito.', 'success')
             setLoading(false)
         } catch (error) {
             setLoading(false)

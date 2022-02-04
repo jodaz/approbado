@@ -35,6 +35,8 @@ const ReportCard = ({ data, id }) => {
 
     const handleRedirect = () => history.push(`/reports/${id}/show`)
 
+    const { message, summary, type, owner } = data.post
+
     return (
         <Card className={classes.root} key={id} onClick={handleRedirect}>
             <CardHeader
@@ -42,13 +44,13 @@ const ReportCard = ({ data, id }) => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="subtitle1">
-                        {data.post.message}
+                        {(type == 'Comentario') ? summary : message}
                     </Typography>
                 }
                 subheader={
                     <Box display="flex" alignItems='center'>
                         <Typography variant="subtitle1">
-                            {data.post.owner.user_name}
+                            {owner.user_name}
                         </Typography>
                         <Dot />
                         <Typography variant="subtitle1">
@@ -59,7 +61,7 @@ const ReportCard = ({ data, id }) => {
             />
             <CardContent>
                 <Box display="flex" justifyContent="space-between">
-                    <Tag name={data.post.type} icon={<TagIcon />} />
+                    <Tag name={type} icon={<TagIcon />} />
                     <Typography variant="body2" component="span">
                         {date}
                     </Typography>
