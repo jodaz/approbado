@@ -2,43 +2,72 @@ import { sendCode, verifyCode } from '../config';
 import bcrypt from 'bcrypt'
 import { User } from '../models'
 import { validateRequest } from '../utils'
-import { generateAuthToken, sendMail } from '../utils';
+import { generateAuthToken, sendMail, getAuthenticatedUser } from '../utils';
 
+const loginAuthFlow = async (field, email, password) => {
+    const user = await User.query().findOne(
+        Object.assign({}, { [field]: email })
+    );
+
+    if(!user) {
+        return {
+            'errors': {
+                "user": "Usuario no encontrado"
+            },
+            status: 422
+        }
+    }
+
+    const match = await bcrypt.compare(password, user.password ?? '' )
+
+    if (match) {
+        const token = await generateAuthToken(user);
+        const data = await getAuthenticatedUser(user);
+
+        return {
+            token: token,
+            user : data,
+            status: 200
+        }
+    } else {
+        return {
+            'errors': {
+                "password": "Contraseña incorrecta"
+            },
+            status: 422
+        }
+    }
+}
+
+/**
+ * Login para usuarios (web/movil)
+ * { username, password }
+ */
 export const login = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
         const { email, password } = req.body;
 
-        const user = await User.query().findOne({
-            user_name: email
-        });
+        const { status, ...rest } = await loginAuthFlow('user_name', email, password)
 
-        if(!user) {
-            return res.status(422).json({
-                'errors': {
-                    "user": "Usuario no encontrado"
-                }
-            })
-        }
+        return res.status(status).json(rest)
+    }
+}
 
-        const match = await bcrypt.compare(password, user.password ?? '' )
+/**
+ * Login para usuarios admin
+ * { email, password }
+ */
+export const adminLogin = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
 
-        if (match) {
-            const token = await generateAuthToken(user);
+    if (!reqErrors) {
+        const { email, password } = req.body;
 
-            return res.json({
-                success: true,
-                token: token,
-                user : user
-            })
-        } else {
-            return res.status(422).json({
-                'errors': {
-                    "password": "Contraseña incorrecta"
-                }
-            })
-        }
+        const { status, ...rest } = await loginAuthFlow('email', email, password)
+
+        return res.status(status).json(rest)
     }
 }
 

@@ -21,18 +21,25 @@ export const index = async (req, res) => {
             }
             if (filter.is_registered) {
                 query.where('is_registered', filter.is_registered)
-            }
-            if (filter.top) {
-                query
-                    .withGraphFetched('profile')
-                    .modifiers({
-                        filterTop: query => query.modify('orderByPoints', 'desc')
-                    })
+                    .withGraphFetched('posts')
             }
         }
 
         if (sort && order) {
             switch (sort) {
+                case 'top':
+                    query.modifiers({
+                        filterTop: query => query.modify('orderByPoints', order)
+                    })
+                    break;
+                case 'contributionsCount':
+                    query.select(
+                            User.ref('*'),
+                            User.relatedQuery('posts').where('parent_id', null).count().as(sort)
+                        )
+                        .whereExists(User.relatedQuery('posts').where('parent_id', null))
+                        .orderBy(sort, order);
+                    break;
                 default:
                     query.orderBy(sort, order);
                     break;

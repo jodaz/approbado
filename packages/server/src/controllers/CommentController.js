@@ -43,6 +43,7 @@ export const store = async (req, res) => {
 
             const model = await Post.query().insert({
                 created_by: req.user.id,
+                type: 'Comentario',
                 ...rest
             });
 

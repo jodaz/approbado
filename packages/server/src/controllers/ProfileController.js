@@ -1,16 +1,13 @@
-import { sendMail } from '../utils'
+import { sendMail, getAuthenticatedUser } from '../utils'
 
+/**
+ * Get user profile
+ */
 export const show = async (req, res) => {
-    const { user } = req;
-
     try {
-        const profile = await user.$fetchGraph('profile');
-        profile.posts = await user.$relatedQuery('posts');
-        profile.discussion = await user.$relatedQuery('posts').whereRaw('parent_id is null');
-        profile.comments = await user.$relatedQuery('posts').whereRaw('parent_id is not null');
-        profile.awards = await user.$relatedQuery('awards').withGraphFetched('trivia');
+        const data = await getAuthenticatedUser(req.user)
 
-        return res.status(201).json(profile)
+        return res.status(201).json(data)
     } catch (error) {
         console.log(error)
 
