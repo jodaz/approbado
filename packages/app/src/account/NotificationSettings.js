@@ -30,7 +30,7 @@ const NotificationSettings = () => {
     }, [axios])
 
     React.useEffect(() => {
-        doFetch();
+        doFetch('/profile');
     }, []);
 
     if (isLoading) return <Spinner />;
