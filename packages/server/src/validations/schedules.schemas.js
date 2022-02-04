@@ -3,8 +3,8 @@ import { checkArray } from '../utils'
 export const createScheduleSchema = {
     title: {
         isLength: {
-            options: { min: 6 },
-            errorMessage: 'El nombre debe tener al menos 5 caracteres'
+            options: { min: 5 },
+            errorMessage: 'El nombre de evento debe tener al menos 5 caracteres'
         }
     },
     level_id: {
