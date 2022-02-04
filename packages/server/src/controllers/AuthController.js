@@ -297,7 +297,7 @@ export const deleteAccount = async (req, res) => {
         subject: '¡Adiós!',
         template: 'welcome',
         context: {
-            name: names,
+            name: user.names,
         }
     };
 
