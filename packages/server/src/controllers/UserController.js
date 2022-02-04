@@ -21,7 +21,7 @@ export const index = async (req, res) => {
             }
             if (filter.is_registered) {
                 query.where('is_registered', filter.is_registered)
-                    .withGraphFetched('profile')
+                    .withGraphFetched('posts')
             }
         }
 
@@ -31,6 +31,14 @@ export const index = async (req, res) => {
                     query.modifiers({
                         filterTop: query => query.modify('orderByPoints', order)
                     })
+                    break;
+                case 'contributionsCount':
+                    query.select(
+                            User.ref('*'),
+                            User.relatedQuery('posts').where('parent_id', null).count().as(sort)
+                        )
+                        .whereExists(User.relatedQuery('posts').where('parent_id', null))
+                        .orderBy(sort, order);
                     break;
                 default:
                     query.orderBy(sort, order);
