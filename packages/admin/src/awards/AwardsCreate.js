@@ -92,7 +92,7 @@ const AwardsCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(data)) {
-            notify('¡Has creado un nuevo premio!')
+            notify('¡Has creado un nuevo premio!', 'success')
             redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
     }, [data, loaded])

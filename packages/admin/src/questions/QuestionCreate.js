@@ -106,7 +106,7 @@ const QuestionCreate = () => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('¡Has creado una nueva pregunta!')
+            notify('¡Has creado una nueva pregunta!', 'success')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
         }
     }, [data, loaded])

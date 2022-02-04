@@ -33,7 +33,7 @@ const CategoryCreate = (props) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Se ha completado el registro con éxito')
+            notify('Se ha completado el registro con éxito', 'success');
             redirect('/configurations?tab=categories')
         }
     }, [data, loaded])

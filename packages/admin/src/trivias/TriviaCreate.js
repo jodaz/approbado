@@ -62,7 +62,7 @@ const TriviaCreate = (props) => {
 
     React.useEffect(() => {
         if (data && loaded) {
-            notify('Has creado una nueva trivia')
+            notify('Has creado una nueva trivia', 'success')
             redirect(`/trivias/${data.id}/show`)
         }
     }, [data, loaded])

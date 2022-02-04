@@ -55,7 +55,7 @@ const FileCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('¡Ha subido nuevas preguntas a la trivia!.')
+            notify('¡Ha subido nuevas preguntas a la trivia!', 'success')
             redirect(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show`)
         }
     }, [fileDataResponse])
