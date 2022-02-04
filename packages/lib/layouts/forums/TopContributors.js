@@ -2,38 +2,25 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query, Loading, Error } from 'react-admin';
+import { Query } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
+import Avatar from '@material-ui/core/Avatar';
+import configs from '@approbado/lib/configs'
+import ChatBubbleIcon from '@approbado/lib/icons/ChatBubbleIcon'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
-    sort: { field: 'comments', order: 'DESC'}
+    sort: { field: 'contributionsCount', order: 'DESC'}
 };
 
 const useStyles = makeStyles(theme => ({
-    title: {
-        fontWeight: '700',
-        fontSize: '1.5rem',
-        marginBottom: '2rem'
-    },
-    container: {
-        padding: '1.6rem 0.4rem',
-        color: theme.palette.info.light,
-        borderTop: '1px solid rgba(0, 0, 0, 0.12)'
-    },
-    postTitle: {
-        color: theme.palette.primary.main,
-        fontWeight: 600,
-        cursor: 'pointer',
-        fontSize: '1rem',
-        textDecoration: 'none',
-        '&:hover': {
-            textDecoration: 'underline'
-        }
+    card: {
+        padding: '1rem 0.4rem',
+        display: 'flex'
     },
     username: {
         marginLeft: '0.2rem',
@@ -45,10 +32,25 @@ const useStyles = makeStyles(theme => ({
             textDecoration: 'underline'
         }
     },
+    icon: {
+        backgroundColor: theme.palette.primary.light,
+        marginRight: '1rem',
+        height: theme.spacing(6),
+        width: theme.spacing(6)
+    },
     description: {
-        paddingTop: '1rem',
-        display: 'flex',
-        fontSize: '0.9rem'
+        display: 'inherit',
+        flexDirection: 'column',
+    },
+    contributionsCount: {
+        display: 'inherit',
+        marginTop: '0.25rem',
+        color: theme.palette.info.light
+    },
+    commentsIcon: {
+        marginRight: '0.5rem',
+        fontSize: '1rem',
+        color: 'inherit'
     }
 }))
 
@@ -62,7 +64,7 @@ const AsideBar = ({ isXSmall }) => {
                 <Box p='0 0 0 2rem'>
                     <Typography component="div">
                         <Box sx={{ fontWeight: '700', fontSize: '1.5rem' }}>
-                            {'Top - Contribuidores'}
+                            Top - Contribuidores
                         </Box>
                     </Typography>
                     <Typography component="div">
@@ -70,7 +72,7 @@ const AsideBar = ({ isXSmall }) => {
                             {'Personas que comentaron debates y compartieron conocimientos en el foro.'}
                         </Box>
                     </Typography>
-                    <Query type='getList' resource='forums' payload={payload}>
+                    <Query type='getList' resource='users' payload={payload}>
                         {({ data, total, loading, error }) => {
                             if (loading) {
                                 return (
@@ -80,24 +82,24 @@ const AsideBar = ({ isXSmall }) => {
                             if (error) { return null; }
 
                             return (
-                                <div>
-                                    {data.map(post =>
-                                        <Box className={classes.container}>
-                                            <Box className={classes.innerContent}>
+                                <Box>
+                                    {data.map(user =>
+                                        <Box className={classes.card}>
+                                            <Avatar
+                                                className={classes.icon}
+                                                src={`${configs.SOURCE}/${user.picture}`}
+                                                alt='photo_profile'
+                                            />
+                                            <Box className={classes.description}>
                                                 <Link
-                                                    className={classes.postTitle}
-                                                    to={`/forums/${post.id}/show`}
+                                                    className={classes.username}
+                                                    to={`/users/${user.id}`}
                                                 >
-                                                    {post.message}
+                                                    {user.names}
                                                 </Link>
-                                                <Box className={classes.description}>
-                                                    Por
-                                                    <Link
-                                                        className={classes.username}
-                                                        to={`/users/${post.owner.id}/show`}
-                                                    >
-                                                        {post.owner.names}
-                                                    </Link>
+                                                <Box className={classes.contributionsCount}>
+                                                    <ChatBubbleIcon className={classes.commentsIcon} />
+                                                    {user.contributionsCount} discusiones
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -111,7 +113,7 @@ const AsideBar = ({ isXSmall }) => {
                                             </Typography>
                                         </Box>
                                     )}
-                                </div>
+                                </Box>
                             );
                         }}
                     </Query>
