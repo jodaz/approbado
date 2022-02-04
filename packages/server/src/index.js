@@ -3,6 +3,7 @@ import { APP_PORT, cors, helmet } from './config'
 import routes from './routes'
 import path from 'path'
 import cors_ from 'cors'
+import cron from 'node-cron'
 // Set up server
 const app = express()
 app.use(cors_())
@@ -44,6 +45,10 @@ io.on("connection", function(socket) {
 
 http.listen(APP_PORT, () => {
     console.log(`Server on http://localhost:${APP_PORT}`);
+})
+
+cron.schedule('* * * * *',function () {
+  console.log("ejecuntando")
 })
 
 app.locals.io = io;
