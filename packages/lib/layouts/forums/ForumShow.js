@@ -18,12 +18,13 @@ import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 import CommentInput from './CommentInput'
 import CommentList from './CommentList'
+import configs from '@approbado/lib/configs'
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         width: '100%',
-        paddingTop: '2rem'
+        paddingTop: '2rem',
     },
     container: props => ({
         width: props.isXSmall ? '100%' : '75%'
@@ -72,7 +73,7 @@ const ForumShow = props => {
     if (loading) return <Spinner />;
 
     return (
-        <Box className={classes.root}>
+        <Box className={classes.root} paddingBottom="5rem">
             <Box className={classes.container}>
                 <Box display="flex" justifyContent="space-between" width="100%">
                     <BackButton />
@@ -86,7 +87,7 @@ const ForumShow = props => {
                     {(record.owner) && (
                         <Avatar
                             aria-label="avatar"
-                            src={`${process.env.REACT_APP_API_DOMAIN}/${record.owner.picture}`}
+                            src={`${configs.SOURCE}/${record.owner.picture}`}
                         />
                     )}
                     <Box className={classes.content}>
@@ -95,7 +96,7 @@ const ForumShow = props => {
                                 {record.message}
                             </Typography>
                         </Box>
-                        <Box className={classes.lightTypography}>
+                        <Box>
                             {record.summary}
                         </Box>
                         <PostDescription record={record} />

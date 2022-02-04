@@ -69,10 +69,7 @@ const AsideBar = ({ isXSmall }) => {
                         {({ data, total, loading, error }) => {
                             if (loading) {
                                 return (
-                                    <Spinner classes={{
-                                        root: spinnerClasses.rootSpinner,
-                                        loader: spinnerClasses.loader
-                                    }} />
+                                    <Spinner classes={spinnerClasses} />
                                 );
                             }
                             if (error) { return null; }

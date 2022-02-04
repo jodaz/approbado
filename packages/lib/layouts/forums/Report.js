@@ -10,7 +10,6 @@ import Spinner from '@approbado/lib/components/Spinner'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import MenuButton from '@approbado/lib/components/MenuButton'
 import InformationIcon from '@approbado/lib/icons/InformationIcon'
 import { makeStyles } from '@material-ui/core/styles';
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
@@ -22,7 +21,7 @@ const payload = {
 };
 
 const useStyles = makeStyles(
-    theme => ({
+    () => ({
         title: {
             display: 'flex',
             justifyContent: 'space-between',
@@ -44,12 +43,20 @@ const useStyles = makeStyles(
         padding: {
             padding: '0.5rem 1rem',
             borderRadius: '6px'
+        },
+        icon: {
+            fontSize: '1.15rem',
+            color: 'inherit',
+            marginRight: '0.5rem',
+            '&:hover': {
+                cursor: 'pointer'
+            }
         }
     }),
     { name: 'RaDialog' }
 );
 
-export default function ReportDialog({ post_id }) {
+export default function ReportDialog({ id }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(null);
@@ -76,7 +83,7 @@ export default function ReportDialog({ post_id }) {
             await mutate({
                 type: 'create',
                 resource: 'reports',
-                payload: { data: { reason_id: selectedIndex, post_id: post_id } }
+                payload: { data: { reason_id: selectedIndex, post_id: id } }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {
@@ -95,9 +102,8 @@ export default function ReportDialog({ post_id }) {
 
     return (
         <div>
-            <MenuButton
-                label="Reportar"
-                icon={<InformationIcon />}
+            <InformationIcon
+                className={classes.icon}
                 onClick={handleClickOpen}
             />
             <Dialog

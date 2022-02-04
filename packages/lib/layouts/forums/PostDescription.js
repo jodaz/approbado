@@ -64,7 +64,7 @@ export default ({ record }) => {
                 >
                     {record.owner.names}
                 </Link>
-                    <Dot />
+                <Dot />
                 <span className={classes.lightTypography}>
                     {date}
                 </span>
