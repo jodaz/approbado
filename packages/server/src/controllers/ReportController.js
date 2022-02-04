@@ -119,6 +119,7 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
+        await UserReport.query().where('report_id', id).delete();
         const model = await Report.query().findById(id).delete().first();
 
         return res.json(model);
