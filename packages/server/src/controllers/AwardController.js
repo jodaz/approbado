@@ -13,13 +13,24 @@ import isEmpty from 'is-empty'
 const min_approbado = 75
 
 export const index = async (req, res) => {
-    const { filter, subtheme } = req.query
+    const { filter, sort, order } = req.query
     const query = Award.query()
 
     try {
         if (filter) {
             if (filter.title) {
                 query.where('title', 'ilike', `%${filter.title}%`)
+            }
+            if (filter.trivia_id) {
+                query.where('trivia_id', filter.trivia_id)
+            }
+        }
+
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
             }
         }
 
@@ -36,18 +47,18 @@ export const indexAwardSubtheme = async (req, res) => {
 
     try {
         const award_subthemes = await Award.query()
-                                    .where('trivia_id', `${trivia_id}`)
-                                    .withGraphFetched('subthemes')
-                                    .orderBy('min_points','ASC')
+            .where('trivia_id', `${trivia_id}`)
+            .withGraphFetched('subthemes')
+            .orderBy('min_points','ASC')
 
         for (var i = 0; i < award_subthemes.length; i++) {
             for (var e = 0; e < award_subthemes[i].subthemes.length; e++) {
 
                 let finished = await award_subthemes[i].subthemes[e]
-                                                    .$relatedQuery('finished')
-                                                    .where('user_id',currUserId)
-                                                    .count()
-                                                    .first();
+                    .$relatedQuery('finished')
+                    .where('user_id',currUserId)
+                    .count()
+                    .first();
 
                 award_subthemes[i].subthemes[e].finished = finished.count == 0 ? false : true;
             }
@@ -215,9 +226,9 @@ export const showResultTriviaGrupalSchedule = async (req, res) => {
 
     try {
         const results = await Question.query()
-                            .where('subtheme_id', subtheme_id)
-                            .where('level_id', level_id)
-                            .withGraphFetched('options')
+            .where('subtheme_id', subtheme_id)
+            .where('level_id', level_id)
+            .withGraphFetched('options')
 
         const trivia_grupal = await Schedule.query()
             .findById(schedule_id)
