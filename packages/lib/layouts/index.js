@@ -4,9 +4,9 @@ import AppBar from './AppBar';
 import Menu from './Menu';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const CustomSidebar = (props) => <Sidebar {...props} size={200} />;
+const CustomSidebar = props => <Sidebar {...props} size={200} />;
 
-export default (props) => {
+export default props => {
   return (
     <Layout
       {...props}

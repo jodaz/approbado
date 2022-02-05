@@ -17,7 +17,7 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const TriviaList = (props) => (
+const TriviaList = props => (
     <ListBase
         basePath='trivias'
         resource='trivias'

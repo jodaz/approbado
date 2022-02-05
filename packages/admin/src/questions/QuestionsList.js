@@ -3,13 +3,13 @@ import { Box } from '@material-ui/core';
 import {
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import QuestionCard from './QuestionCard'
 import AddQuestionsDialog from './AddQuestionsDialog'
+import Pagination from '@approbado/lib/components/Pagination';
 
 const ListActions = props => (
     <TopToolbar>
@@ -26,7 +26,7 @@ const QuestionListView = (record) => (
         <Box display="flex">
             <Box width={'100%'}>
                 <GridList component={<QuestionCard />} />
-                <Pagination rowsPerPageOptions={[5, 10, 20]} />
+                <Pagination />
             </Box>
         </Box>
     </>

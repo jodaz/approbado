@@ -3,19 +3,20 @@ import {
     TextField,
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar,
     NumberField,
     DateField
 } from 'react-admin'
-import Box from '@material-ui/core/Box'
+import ListContainer from '../components/ListContainer'
 
 const PaymentsDatagrid = () => (
     <Datagrid optimized>
         <DateField label='Fecha' source="created_at" />
-        <TextField label='Método' source="payment_method" />
-        <NumberField label="Precio" source="amount" />
+        <TextField label='Tipo de pago' source="payment_method" />
+        <TextField label='Email' source="user.email" />
+        <TextField label='Plan' source="plan.name" />
+        <NumberField label="Monto" source="amount" />
     </Datagrid>
 );
 
@@ -25,28 +26,25 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const PlansList = (props) => (
+const PlansList = props => (
     <ListBase
         perPage={20}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <PlansListView />
+        <PaymentsListView />
     </ListBase>
 );
 
-const PlansListView = () => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <PaymentsDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 25]} />
-            </Box>
-        </Box>
-    </>
+const PaymentsListView = () => (
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={<PaymentsDatagrid />}
+    />
 );
 
 PlansList.defaultProps = {

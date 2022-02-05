@@ -24,7 +24,7 @@ const useStyles = makeStyles(
             width: '16rem',
             height: '16rem',
             border: 'none',
-            opacity: (props) => props.loading ? 0.7 : 1,
+            opacity: props => props.loading ? 0.7 : 1,
             '& > *': {
                 marginRight: '0.5rem',
                 marginLeft: '0.5rem'
@@ -51,7 +51,7 @@ const useStyles = makeStyles(
     { name: 'RaProfilePhotoInput' }
 );
 
-const ProfilePhotoInput = (props) => {
+const ProfilePhotoInput = props => {
     const {
         accept,
         children,

@@ -6,7 +6,7 @@ import MenuItems from './MenuItems';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Notification from '@approbado/lib/components/Notification'
 
-const CustomSidebar = (props) => <Sidebar {...props} size={200} />;
+const CustomSidebar = props => <Sidebar {...props} size={200} />;
 
 const CustomMenu = props => (
     <Menu {...props}>
@@ -14,7 +14,7 @@ const CustomMenu = props => (
     </Menu>
 )
 
-export default (props) => {
+export default props => {
     return (
         <Layout
             {...props}

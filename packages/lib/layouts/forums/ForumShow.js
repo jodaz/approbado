@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
 
 const ForumShow = props => {
     const { user } = useUserState();
-    const showControllerProps = useShowController(props)
+    const showControllerProps = useShowControllerprops
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )

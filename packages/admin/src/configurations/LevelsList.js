@@ -3,13 +3,12 @@ import {
     TextField,
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin'
-import Box from '@material-ui/core/Box'
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
+import ListContainer from '../components/ListContainer'
 
 const LevelsDatagrid = () => (
     <Datagrid optimized>
@@ -30,7 +29,7 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const LevelList = (props) => (
+const LevelList = props => (
     <ListBase
         perPage={20}
         sort={{ field: 'created_at', order: 'ASC' }}
@@ -41,17 +40,14 @@ const LevelList = (props) => (
 );
 
 const LevelListView = () => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <LevelsDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 25]} />
-            </Box>
-        </Box>
-    </>
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={<LevelsDatagrid />}
+    />
 );
 
 LevelList.defaultProps = {

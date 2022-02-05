@@ -6,10 +6,11 @@ import clsx from 'clsx';
 const styles = {
     root: {
         display: 'flex',
-        height: '100vh',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        width: '100%'
     },
     loader: {
         height: '5em !important',

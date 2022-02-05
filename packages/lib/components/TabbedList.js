@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     },
     content: {
         minHeight: '15rem',
-        paddingTop: '3rem'
+        height: '100%'
     }
 }));
 
