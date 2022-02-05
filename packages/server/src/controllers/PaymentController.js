@@ -1,4 +1,4 @@
-import { Payment } from '../models'
+import { Payment, User, Plan } from '../models'
 import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -6,6 +6,7 @@ export const index = async (req, res) => {
 
     try {
         const query = Payment.query()
+            .withGraphFetched('[user,plan]')
 
         if (filter) {
             if (filter.name) {
@@ -15,6 +16,10 @@ export const index = async (req, res) => {
 
         if (sort && order) {
             switch (sort) {
+                case 'user.email':
+                    break;
+                case 'plan.name':
+                    break;
                 default:
                     query.orderBy(sort, order);
                     break;
