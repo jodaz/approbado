@@ -22,10 +22,10 @@ const NotificationsButton = React.lazy(() => import('./NotificationsButton'))
 
 const useStyles = makeStyles(theme => ({
         root: {
-            backgroundColor: (props) =>
+            backgroundColor: props =>
                 props.isXSmall ? theme.palette.primary.main
                 : theme.palette.background.default,
-            width: (props) =>
+            width: props =>
                 !props.isOpenSidebar && (!props.isXSmall) // Large screens
                     ? `calc(100% - 55px)`
                 : (props.isXSmall) // Small screen
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
             justifyContent: 'space-between',
             paddingRight: 24,
             backgroundColor: 'transparent',
-            flexDirection: (props) =>
+            flexDirection: props =>
                 props.isXSmall
                     ? 'row-reverse'
                     : 'row',

@@ -37,7 +37,7 @@ const validate = (values) => {
     return errors;
 };
 
-const PasswordInput = (props) => {
+const PasswordInput = props => {
     const { values } = useFormState();
 
     if (!values.random_pass) {
@@ -56,7 +56,7 @@ const PasswordInput = (props) => {
     return null;
 }
 
-const UserCreate = (props) => {
+const UserCreate = props => {
     const createControllerProps = useCreateController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()

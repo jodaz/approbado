@@ -11,17 +11,18 @@ import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresD
 import Spinner from '@approbado/lib/components/Spinner'
 import Overview from './Overview'
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
+import Analytics from './Analytics'
 
 const tags = record => ([
     {
         name: 'Informe general',
         pathname: 'general',
-        component: <Overview {...record.post} />
+        component: <Overview {...record} />
     },
     {
         name: 'Estadística',
         pathname: 'statistics',
-        component: <></>
+        component: <Analytics {...record} />
     }
 ])
 

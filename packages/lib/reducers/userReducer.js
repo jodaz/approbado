@@ -17,12 +17,13 @@ const userReducer = (
         case SET_USER:
             return {
                 ...previousState,
-		...action.payload
+		        ...action.payload
             }
         case USER_FETCH_SUCCEEDED:
             return {
                 ...previousState,
-                user: action.payload
+                user: action.payload,
+                isAuth: true
             }
         case UNSET_USER:
             return initialState;

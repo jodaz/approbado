@@ -28,7 +28,7 @@ const PrivacySettings = () => {
     }, [axios])
 
     React.useEffect(() => {
-        doFetch();
+        doFetch('/profile');
     }, []);
 
     if (isLoading) return <Spinner />;

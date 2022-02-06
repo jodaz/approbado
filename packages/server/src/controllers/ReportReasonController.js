@@ -11,10 +11,22 @@ export const index = async (req, res) => {
             if (filter.item) {
                 query.where('item', 'ilike', `%${filter.item}%`)
             }
+            if (filter.report_id) {
+                query.join('users_reports', 'users_reports.report_reason_id', 'report_reasons.id')
+                    .select(
+                        ReportReason.ref('*'),
+                        ReportReason.relatedQuery('userReports').count().as('reportsCount')
+                    )
+                    .where('report_id', filter.report_id)
+            }
         }
 
         if (sort && order) {
             switch (sort) {
+                case 'reportsCount':
+                    query.whereExists(ReportReason.relatedQuery('userReports'))
+                        .orderBy(ReportReason.relatedQuery('userReports').count(), order);
+                    break;
                 default:
                     query.orderBy(sort, order);
                     break;

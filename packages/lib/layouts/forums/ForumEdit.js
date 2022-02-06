@@ -25,7 +25,7 @@ const validate = (values) => {
 };
 
 const TriviaEdit = props => {
-    const editControllerProps = useEditController(props);
+    const editControllerProps = useEditControllerprops;
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
     const redirect = useRedirect()

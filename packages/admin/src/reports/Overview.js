@@ -8,6 +8,8 @@ import configs from '@approbado/lib/configs'
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import Button from '@material-ui/core/Button';
+import DeleteReportButton from './DeleteReportButton'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -39,11 +41,17 @@ const useStyles = makeStyles(theme => ({
     },
     action: {
         margin: 'unset'
+    },
+    restrict: {
+        backgroundColor: theme.palette.background.dark,
+        border: '1px solid #B7B7B7 !important'
     }
 }))
 
-export default function({ owner }) {
+export default function({ id, post }) {
     const classes = useStyles();
+
+    const { owner } = post
 
     return (
         <>
@@ -76,6 +84,12 @@ export default function({ owner }) {
                         action: classes.action
                     }}
                 />
+                <Box paddingTop='1rem'>
+                    <Button size='large' className={classes.restrict}>
+                        Restringir usuario
+                    </Button>
+                    <DeleteReportButton id={id} />
+                </Box>
             </Card>
         </>
     )

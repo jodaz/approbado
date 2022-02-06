@@ -8,6 +8,7 @@ import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
+// Components
 import TriviaEdit from './TriviaEdit'
 import SubthemesList from '../subthemes/SubthemesList'
 import AwardsList from '../awards/AwardsList'

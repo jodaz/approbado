@@ -40,7 +40,7 @@ const validate = (values) => {
     return errors;
 };
 
-const TriviaCreate = (props) => {
+const TriviaCreate = props => {
     const createControllerProps = useCreateController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
