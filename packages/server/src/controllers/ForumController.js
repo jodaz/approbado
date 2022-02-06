@@ -116,9 +116,8 @@ export const show = async (req, res) => {
                 Post.ref('*'),
                 Post.relatedQuery('comments').count().as('commentsCount')
             )
-            .withGraphFetched('trivia')
-            .withGraphFetched('categories')
-            .withGraphFetched('owner')
+            .where('type', 'Foro')
+            .withGraphFetched('[owner,categories,trivia]')
 
         return res.status(201).json(model)
     } catch (error) {
