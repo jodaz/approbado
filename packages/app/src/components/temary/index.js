@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function Temaryprops {
+export default function Temary(props) {
     const [selected, setSelected] = React.useState('Temas');
     const classes = useStyles();
 
