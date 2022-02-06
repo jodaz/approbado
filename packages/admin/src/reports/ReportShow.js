@@ -57,7 +57,7 @@ const ReportShow = props => {
     const classes = useStyles();
     const showControllerProps = useShowController(props)
 
-    const { record, loaded } = showControllerProps(props)
+    const { record, loaded } = showControllerProps
 
     if (!loaded) return <Spinner />;
 

@@ -6,18 +6,20 @@ import Box from '@material-ui/core/Box';
 import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
 import { useMediaQuery, makeStyles } from '@material-ui/core'
-import PopularPosts from './PopularPosts'
+import PopularPosts from '@approbado/lib/components/PopularPosts'
 import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
 import Spinner from '@approbado/lib/components/Spinner'
-import { Link } from 'react-router-dom'
+import Link from '@material-ui/core/Link';
+import LinkBehavior from '@approbado/lib/components/LinkBehavior'
+import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
+import CommentList from '@approbado/lib/layouts/comments/CommentList'
+
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
-import CommentInput from './CommentInput'
-import CommentList from './CommentList'
 import configs from '@approbado/lib/configs'
 
 const useStyles = makeStyles(theme => ({
@@ -57,9 +59,13 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+const emptyTitle = ({ is_registered }) => (
+    (!is_registered) ? 'Sin comentarios' : 'Sé el primero en comentar'
+)
+
 const ForumShow = props => {
     const { user } = useUserState();
-    const showControllerProps = useShowControllerprops
+    const showControllerProps = useShowController(props)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -75,20 +81,36 @@ const ForumShow = props => {
     return (
         <Box className={classes.root} paddingBottom="5rem">
             <Box className={classes.container}>
-                <Box display="flex" justifyContent="space-between" width="100%">
-                    <BackButton />
-                    {!(record.owner.id == user.id) && (
-                        <Link to='/forums' className={classes.link} onClick={() => setDialog()}>
-                            Iniciar un debate
-                        </Link>
-                    )}
-                </Box>
+                {(user.is_registered) && (
+                    <Box display="flex" justifyContent="space-between" width="100%">
+                        <BackButton />
+                        {(record.owner.id != user.id) && (
+                            <Link
+                                to='/forums'
+                                color='info'
+                                underline='hover'
+                                component={LinkBehavior}
+                                className={classes.link}
+                                onClick={() => setDialog()}
+                            >
+                                Iniciar un debate
+                            </Link>
+                        )}
+                    </Box>
+                )}
                 <Box className={classes.root}>
                     {(record.owner) && (
-                        <Avatar
-                            aria-label="avatar"
-                            src={`${configs.SOURCE}/${record.owner.picture}`}
-                        />
+                        <Link
+                            to={`/users/${record.owner.id}/show`}
+                            color='info'
+                            underline='none'
+                            component={LinkBehavior}
+                        >
+                            <Avatar
+                                aria-label="avatar"
+                                src={`${configs.SOURCE}/${record.owner.picture}`}
+                            />
+                        </Link>
                     )}
                     <Box className={classes.content}>
                         <Box component="div">
@@ -103,11 +125,11 @@ const ForumShow = props => {
                     </Box>
                 </Box>
                 <Box className={classes.commentsBox}>
-                    <CommentInput />
+                    {(user.is_registered) && <CommentInput />}
                     {(record.commentsCount == 0) ? (
                         <NoContent
                             icon={<ForumIllustration />}
-                            title='Sé el primero en comentar'
+                            title={emptyTitle(user)}
                         />
                     ) : (
                         <CommentList parent_id={record.id} />

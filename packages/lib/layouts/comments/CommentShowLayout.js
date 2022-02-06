@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import configs from '@approbado/lib/configs'
 import Avatar from '@material-ui/core/Avatar';
 import ReplyIcon from './ReplyIcon';
@@ -10,6 +9,10 @@ import LikeButton from './LikeButton';
 import Dot from '@approbado/lib/components/Dot'
 import Report from './Report';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Button from '@material-ui/core/Button'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
+import Link from '@material-ui/core/Link';
+import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -89,7 +92,10 @@ const useStyles = makeStyles(theme => ({
     },
     actionButton: {
         display: 'inherit',
-        marginRight: '1rem'
+        marginRight: '1rem',
+        padding: '6px 0',
+        color: theme.palette.info.light,
+        fontWeight: 400
     }
 }))
 
@@ -99,41 +105,65 @@ const CommentShow = comment => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
+    const { user } = useUserState();
+
+    let { is_registered } = user;
 
     return (
         <Box className={classes.root} key={comment.id}>
-            <Avatar
-                aria-label="avatar"
-                src={`${configs.SOURCE}/${comment.owner.picture}`}
-            />
+            <Link
+                to={`/users/${comment.owner.id}/show`}
+                color='info'
+                underline='none'
+                component={LinkBehavior}
+            >
+                <Avatar
+                    aria-label="avatar"
+                    src={`${configs.SOURCE}/${comment.owner.picture}`}
+                />
+            </Link>
             <Box className={classes.content}>
                 <Box component="div" className={classes.header}>
-                    <Link to={`/users/${comment.owner.id}/show`} className={classes.username}>
+                    <Link
+                        to={`/users/${comment.owner.id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                        className={classes.username}
+                    >
                         {comment.owner.names}
                     </Link>
                     {!(isXSmall) && <Dot />}
-                    <Box className={classes.date}>
+                    <Link
+                        to={`/comments/${comment.id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                        className={classes.date}
+                    >
                         {date}
-                    </Box>
+                    </Link>
                 </Box>
                 <Box>
                     {comment.summary}
                 </Box>
                 <Box className={classes.actions}>
-                    <Box className={classes.actionButton}>
+                    <Button className={classes.actionButton}>
                         <ReplyIcon />
                         {comment.commentsCount}
                         {(!isXSmall) && <> respuestas </> }
-                    </Box>
-                    <Box className={classes.actionButton}>
+                    </Button>
+                    <Box display="flex" justifyContent="center" alignItems="center">
                         <LikeButton {...comment} />
                         {comment.likesCount}
                         {(!isXSmall) && <> likes </> }
                     </Box>
-                    <Box className={classes.actionButton}>
-                        <Report {...comment} />
-                        {(!isXSmall) && <> reportar </> }
-                    </Box>
+                    {(is_registered) && (
+                        <Button className={classes.actionButton}>
+                            <Report {...comment} />
+                            {(!isXSmall) && <> reportar </> }
+                        </Button>
+                    )}
                 </Box>
             </Box>
         </Box>

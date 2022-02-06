@@ -9,6 +9,7 @@ import trivias from './trivias'
 import Login from './layouts/Login'
 import routes from './routes'
 import forums from './forums'
+import comments from './comments'
 
 const App = () => {
     return (
@@ -23,6 +24,7 @@ const App = () => {
             <Resource {...trivias} />
             <Resource {...forums} />
             <Resource {...reports} />
+            <Resource {...comments} />
             <Resource name="questions" />
             <Resource name="awards" />
             <Resource name="files" />

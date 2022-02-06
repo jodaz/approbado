@@ -7,6 +7,7 @@ import Dashboard from './dashboard'
 // Other resources
 import forums from './forums'
 import notifications from './notifications'
+import comments from './comments'
 
 const AppLayout = () => (
     <AdminUI
@@ -17,6 +18,7 @@ const AppLayout = () => (
         loginPage={false}
         disableTelemetry
     >
+        <Resource {...comments} />
         <Resource {...forums} />
         <Resource {...notifications} />
         <Resource name='trivias' />

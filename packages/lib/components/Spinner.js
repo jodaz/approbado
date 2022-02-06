@@ -15,6 +15,7 @@ const styles = {
     loader: {
         height: '5em !important',
         width: '5em !important',
+        color: '#2280ED'
     }
 };
 
