@@ -23,6 +23,11 @@ export const index = async (req, res) => {
                 query.where('is_registered', filter.is_registered)
                     .withGraphFetched('posts')
             }
+            if (filter.in_blacklist) {
+                query.whereExists(
+                    User.relatedQuery('blacklisted').where('is_restricted', filter.in_blacklist)
+                ).withGraphFetched('blacklisted')
+            }
         }
 
         if (sort && order) {
