@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core'
 import configs from '@approbado/lib/configs'
 import Avatar from '@material-ui/core/Avatar';
-import ReplyIcon from './ReplyIcon';
+import ReplyIcon from '@approbado/lib/icons/ReplyIcon';
 import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
 import LikeButton from './LikeButton';
 import Dot from '@approbado/lib/components/Dot'

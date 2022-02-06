@@ -10,7 +10,7 @@ import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
-import ReplyIcon from './ReplyIcon';
+import ReplyIcon from '@approbado/lib/icons/ReplyIcon';
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
