@@ -148,11 +148,17 @@ const CommentShow = comment => {
                     {comment.summary}
                 </Box>
                 <Box className={classes.actions}>
-                    <Button className={classes.actionButton}>
+                    <Link
+                        to={`/comments/${comment.id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                        className={classes.actionButton}
+                    >
                         <ReplyIcon />
                         {comment.commentsCount}
                         {(!isXSmall) && <> respuestas </> }
-                    </Button>
+                    </Link>
                     <Box display="flex" justifyContent="center" alignItems="center">
                         <LikeButton {...comment} />
                         {comment.likesCount}

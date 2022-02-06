@@ -11,7 +11,7 @@ import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import PopularPosts from '@approbado/lib/components/PopularPosts'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
         width: '100%',

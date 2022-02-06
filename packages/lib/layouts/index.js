@@ -7,13 +7,13 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const CustomSidebar = props => <Sidebar {...props} size={200} />;
 
 export default props => {
-  return (
-    <Layout
-      {...props}
-      appBar={AppBar}
-      sidebar={CustomSidebar}
-      menu={Menu}
-      theme={createMuiTheme(theme)}
-    />
-  );
+    return (
+        <Layout
+        {...props}
+        appBar={AppBar}
+        sidebar={CustomSidebar}
+        menu={Menu}
+        theme={createMuiTheme(theme)}
+        />
+    );
 };
