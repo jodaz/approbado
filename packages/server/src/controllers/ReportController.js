@@ -19,6 +19,10 @@ export const index = async (req, res) => {
             if (filter.type) {
                 query.where('type', 'ilike', `%${filter.type}%`)
             }
+            if (filter.reported_user_id) {
+                query.join('posts', 'posts.id', 'reports.post_id')
+                    .where('posts.created_by', filter.reported_user_id)
+            }
         }
         if (sort && order) {
             switch (sort) {

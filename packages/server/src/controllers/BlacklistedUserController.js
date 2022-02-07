@@ -1,4 +1,4 @@
-import { BlacklistedUser } from '../models'
+import { BlacklistedUser, User } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -58,8 +58,15 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
-        const model = await BlacklistedUser.query().findById(id)
-            .withGraphFetched('user')
+        const model = await User.query().findById(id)
+            .whereExists(
+                BlacklistedUser.query()
+                    .select(1)
+                    .whereColumn('users.id', 'blacklisted_users.user_id')
+                    .where('is_restricted', false)
+            ).withGraphFetched('blacklisted')
+
+        if (!model) return res.status(404).json({ error: 'not found' })
 
         return res.status(201).json(model)
     } catch (error) {
@@ -71,7 +78,6 @@ export const show = async (req, res) => {
 
 export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-
 
     if (!reqErrors) {
         const { user_id, is_restricted } = req.body;

@@ -31,6 +31,7 @@ const App = () => {
             <Resource name="subthemes" />
             <Resource name="profile" />
             <Resource name="update-password" />
+            <Resource name="blacklisted-users" />
             <Resource name="configurations/levels" />
             <Resource name="configurations/categories" />
             <Resource name="memberships/plans" />

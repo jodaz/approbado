@@ -8,13 +8,6 @@ import {
 import GridList from '@approbado/lib/components/GridList';
 import ListContainer from '../components/ListContainer'
 
-const user = {
-    id: 1,
-    user_name: '@test',
-    names: 'Test user',
-    picture: 'public/default/user.png'
-}
-
 const BlacklistedUsersList = ({ record, ...rest }) => (
     <ListBase
         resource='users'
@@ -33,7 +26,7 @@ const BlacklistedUsersListView = () => (
         actions={
             <FilterContext.Provider>
                 <TopToolbar>
-                    <FilterLiveSearch source="title" />
+                    <FilterLiveSearch source="user_name" />
                 </TopToolbar>
             </FilterContext.Provider>
         }
