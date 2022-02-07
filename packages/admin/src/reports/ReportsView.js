@@ -1,6 +1,6 @@
 import * as React from 'react'
 // Components
-import RecentReports from './RecentReports'
+import RecentReports from '../components/RecentReports'
 import RestrictedUsers from '../restrictedUsers'
 import BlacklistedUsers from '../blacklistedUsers'
 import TabbedList from '@approbado/lib/components/TabbedList'

@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import { FieldTitle, useInput } from 'ra-core';
 import { InputHelperText, InputPropTypes, sanitizeInputRestProps } from 'react-admin';
 
-const CustomCheckbox = (props) => {
+const CustomCheckbox = props => {
     const {
         format,
         label,

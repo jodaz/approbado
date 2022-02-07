@@ -1,48 +1,32 @@
 import * as React from 'react'
-import Box from '@material-ui/core/Box';
-import Tag from '@approbado/lib/components/Tag';
-import TabbedList from '@approbado/lib/components/TabbedList'
-import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/styles/makeStyles';
-import { ReactComponent as TagIcon } from '@approbado/lib/icons/Tag.svg'
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
-import { useShowController } from 'react-admin'
-import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
+import AnalyticsCard from './AnalyticsCard';
+import Grid from '@material-ui/core/Grid';
 import Spinner from '@approbado/lib/components/Spinner'
+import { Query } from 'react-admin';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        width: '100%',
-        height: 'max-content',
-        backgroundColor: theme.palette.background.dark,
-        borderRadius: '6px',
-        padding: '1rem',
-        flexDirection: 'column'
-    },
-    content: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '100%',
-        padding: '1rem 0'
-    }
-}))
+const payload = id => ({
+    pagination: { page: 1, perPage: 100 },
+    sort: { field: 'reportsCount', order: 'DESC'},
+    filter: { report_id: id }
+});
 
-const LinkBehavior = React.forwardRef((props, ref) => (
-    <RouterLink ref={ref} to="/getting-started/installation/" {...props} />
-));
+const Analytics = ({ id }) => (
+    <Query type='getList' resource='report-reasons' payload={payload(id)}>
+        {({ data, total, loading, error }) => {
+            if (loading) return <Spinner />
+            if (error) { return null; }
 
-const General = ({ owner }) => {
-    const classes = useStyles();
+            return (
+                <Grid container>
+                    {data.map(post =>
+                        <Grid item xs={12} sm={6} md={4}>
+                            <AnalyticsCard {...post} />
+                        </Grid>
+                    )}
+                </Grid>
+            );
+        }}
+    </Query>
+);
 
-    return (
-        <Box>
-            <Box marginBottom='2rem'>
-                <Typography variant="h6">Publicado por</Typography>
-            </Box>
-        </Box>
-    )
-}
-
-export default General
+export default Analytics

@@ -3,13 +3,13 @@ import { Box } from '@material-ui/core';
 import {
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import AwardsCard from './AwardsCard'
 import CreateButton from '../components/CreateButton'
+import ListContainer from '../components/ListContainer'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
@@ -32,17 +32,14 @@ const AwardsList = ({ record, ...rest }) => (
 );
 
 const AwardsListView = ({ trivia_id }) => (
-    <>
-        <FilterContext.Provider>
-            <ListActions trivia_id={trivia_id} />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <GridList component={<AwardsCard />} />
-                <Pagination rowsPerPageOptions={[5, 10, 20]} />
-            </Box>
-        </Box>
-    </>
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions trivia_id={trivia_id} />
+            </FilterContext.Provider>
+        }
+        list={<GridList component={<AwardsCard />} />}
+    />
 );
 
 export default AwardsList;

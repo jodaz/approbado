@@ -12,7 +12,7 @@ import { validatePlan } from './plansValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
-const PlanCreate = (props) => {
+const PlanCreate = props => {
     const [mutate, { data, loaded, loading }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();

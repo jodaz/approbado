@@ -12,7 +12,7 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
-const PlanEdit = (props) => {
+const PlanEdit = props => {
     const { id } = useParams();
     const editControllerProps = useEditController({
         ...props,

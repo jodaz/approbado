@@ -1,9 +1,7 @@
 import * as React from 'react'
 import {
     TextInput,
-    useCreateController,
     useMutation,
-    CreateContextProvider,
     useRedirect,
     useNotify,
 } from 'react-admin'
@@ -11,8 +9,7 @@ import { validateLevel } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 
-const LevelCreate = (props) => {
-    const createControllerProps = useCreateController(props);
+const LevelCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
@@ -39,19 +36,17 @@ const LevelCreate = (props) => {
     }, [data, loaded])
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
-                <InputContainer
-                    labelName='Nombre'
-                >
-                    <TextInput
-                        source="name"
-                        placeholder="Nombre"
-                        fullWidth
-                    />
-                </InputContainer>
-            </BaseForm>
-        </CreateContextProvider>
+        <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
+            <InputContainer
+                labelName='Nombre'
+            >
+                <TextInput
+                    source="name"
+                    placeholder="Nombre"
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

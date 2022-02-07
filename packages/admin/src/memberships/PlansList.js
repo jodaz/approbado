@@ -1,14 +1,13 @@
 import {
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar
 } from 'react-admin'
-import Box from '@material-ui/core/Box'
 import GridList from '@approbado/lib/components/GridList';
 import MembershipCard from './MembershipCard'
 import CreateButton from '../components/CreateButton'
+import ListContainer from '../components/ListContainer'
 
 const ListActions = () => (
     <TopToolbar>
@@ -17,7 +16,7 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const PlansList = (props) => (
+const PlansList = props => (
     <ListBase
         perPage={20}
         sort={{ field: 'amount', order: 'DESC' }}
@@ -28,17 +27,14 @@ const PlansList = (props) => (
 );
 
 const PlansListView = () => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <GridList component={<MembershipCard />} />
-                <Pagination rowsPerPageOptions={[5, 10, 20]} />
-            </Box>
-        </Box>
-    </>
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={<GridList component={<MembershipCard />} />}
+    />
 );
 
 PlansList.defaultProps = {

@@ -3,13 +3,12 @@ import {
     TextField,
     FilterContext,
     ListBase,
-    Pagination,
     FilterLiveSearch,
     TopToolbar
 } from 'react-admin'
-import Box from '@material-ui/core/Box'
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
+import ListContainer from '../components/ListContainer'
 
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
@@ -39,18 +38,15 @@ const CategoryList = props => (
     </ListBase>
 );
 
-const CategoryListView = props => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <CategoriesDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 25]} />
-            </Box>
-        </Box>
-    </>
+const CategoryListView = () => (
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={<CategoriesDatagrid />}
+    />
 );
 
 CategoryList.defaultProps = {
