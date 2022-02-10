@@ -5,7 +5,7 @@ export async function up(knex) {
         table.increments('id').primary();
         table.string('num');
         table.integer('post_id').unsigned();
-        table.foreign('post_id').references('id').on('posts');
+        table.foreign('post_id').references('id').on('posts').onDelete('cascade');
         table.timestamps();
     });
 }

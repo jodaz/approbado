@@ -33,6 +33,13 @@ const userNameRule = {
                 if (!user) {
                     throw new Error("Usuario no encontrado");
                 }
+
+                const blacklisted = await user.$relatedQuery('blacklisted')
+                    .where('is_restricted', true);
+
+                if (blacklisted) {
+                    throw new Error("Su acceso ha sido restringido.");
+                }
             }
         }
     }
