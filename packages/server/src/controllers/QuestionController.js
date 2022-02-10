@@ -10,8 +10,8 @@ export const index = async (req, res) => {
         const query = Question.query()
 
         if (filter) {
-            if (filter.title) {
-                query.where('title', 'ilike', `%${filter.title}%`)
+            if (filter.global_search) {
+                query.where('description', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.trivia_id) {
                 query.where('trivia_id', filter.trivia_id)

@@ -10,17 +10,19 @@ export const index = async (req, res) => {
         const query = User.query();
 
         if (filter) {
-            if (filter.names) {
-                query.where('names', 'ilike', filter.names)
+            if (filter.global_search) {
+                query.where('names', 'ilike', `%${filter.global_search}%`)
+                    .orWhere('email', 'ilike', `%${filter.global_search}%`)
+                    .orWhere('rol', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.email) {
-                query.where('email', 'ilike', filter.email)
+                query.orWhere('email', 'ilike', `%${filter.email}%`)
             }
             if (filter.user_name) {
-                query.where('user_name', 'ilike', filter.user_name)
+                query.orWhere('user_name', 'ilike', `%${filter.user_name}%`)
             }
             if (filter.is_registered) {
-                query.where('is_registered', filter.is_registered)
+                query.orWhere('is_registered', filter.is_registered)
                     .withGraphFetched('posts')
             }
             if (filter.in_blacklist) {

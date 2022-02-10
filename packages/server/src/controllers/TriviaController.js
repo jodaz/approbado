@@ -43,23 +43,26 @@ export const indexByPlan = async (req, res) => {
         const query = Trivia.query().select(
             Trivia.ref('*'),
             Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
-            Trivia.relatedQuery('subthemes').join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id').count().as('subthemesFinishedCount'),
+            Trivia.relatedQuery('subthemes')
+                .join('subthemes_finished', 'subthemes.id', 'subthemes_finished.subtheme_id')
+                .count()
+                .as('subthemesFinishedCount'),
             Trivia.relatedQuery('files').count().as('filesCount')
         )
         .join('trivias_plans','trivias_plans.trivia_id','trivias.id')
 
         if (filter) {
             if (filter.plan_active) {
-               query.where('plan_id',plan.id)
+               query.where('plan_id', plan.id)
             }
             if (filter.plan_not_active) {
-               query.where('plan_id','!=',plan.id)
+               query.where('plan_id', '!=', plan.id)
             }
             if (filter.name) {
                 query.where('name', 'ilike', `%${filter.name}%`)
             }
             if (filter.top) {
-                query.orderBy('subthemesFinishedCount','DESC')
+                query.orderBy('subthemesFinishedCount', 'DESC')
             }
             if (filter.recent) {
                 query.orderBy('id','DESC')
