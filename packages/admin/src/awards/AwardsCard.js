@@ -10,6 +10,7 @@ import cardStyles from '@approbado/lib/styles/cardStyles'
 import Avatar from '@material-ui/core/Avatar';
 import Dot from '@approbado/lib/components/Dot';
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import { ReactComponent as Certificate } from '@approbado/lib/icons/Certificate.svg'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
@@ -24,17 +25,21 @@ const OptionsMenu = props => (
     </OptionsCardMenu>
 );
 
-const TriviaCard = ({ data, id }) => {
+const AwardCard = ({ data, id }) => {
     const classes = cardStyles();
 
     return (
         <Card className={classes.root} key={id}>
             <CardHeader
                 avatar={
-                    <Avatar
-                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.file}`}
-                        alt='icon'
-                    />
+                    (data.type == 'Insignia') ? (
+                        <Avatar
+                            src={`${process.env.REACT_APP_API_DOMAIN}/${data.file}`}
+                            alt='icon'
+                        />
+                    ) : (
+                        <Certificate />
+                    )
                 }
                 action={<OptionsMenu record={data} />}
                 title={
@@ -54,9 +59,9 @@ const TriviaCard = ({ data, id }) => {
     );
 }
 
-TriviaCard.propTypes = {
+AwardCard.propTypes = {
     data: PropTypes.object,
     id: PropTypes.number
 }
 
-export default TriviaCard
+export default AwardCard
