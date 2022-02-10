@@ -3,7 +3,7 @@ import {
     FilterContext,
     ListBase,
     FilterLiveSearch,
-    TopToolbar,
+    TopToolbar
 } from 'react-admin';
 import GridList from '@approbado/lib/components/GridList';
 import ListContainer from '../components/ListContainer'
@@ -26,7 +26,7 @@ const BlacklistedUsersListView = () => (
         actions={
             <FilterContext.Provider>
                 <TopToolbar>
-                    <FilterLiveSearch source="user_name" />
+                    <FilterLiveSearch source="global_search" />
                 </TopToolbar>
             </FilterContext.Provider>
         }

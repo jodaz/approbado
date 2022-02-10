@@ -110,7 +110,7 @@ export const show = async (req, res) => {
     try {
         const model = await Report.query()
             .findById(id)
-            .withGraphFetched('[userReports,post.owner]')
+            .withGraphFetched('[userReports,post.owner.blacklisted]')
 
         return res.status(201).json(model)
     } catch (error) {

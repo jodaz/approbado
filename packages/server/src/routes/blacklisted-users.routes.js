@@ -1,13 +1,14 @@
 import { Router } from "express"
-import { index, store, update, show } from '../controllers/BlacklistedUserController'
+import { index, store, update, show, destroy } from '../controllers/BlacklistedUserController'
 import { createBlacklistedUserSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
-const levelsRouter = Router()
+const blacklistedRoutes = Router()
 
-levelsRouter.get('/', index)
-levelsRouter.get('/:id', show)
-levelsRouter.post('/', checkSchema(createBlacklistedUserSchema), store)
-levelsRouter.put('/:id', checkSchema(createBlacklistedUserSchema), update)
+blacklistedRoutes.get('/', index)
+blacklistedRoutes.get('/:id', show)
+blacklistedRoutes.post('/', checkSchema(createBlacklistedUserSchema), store)
+blacklistedRoutes.put('/:id', checkSchema(createBlacklistedUserSchema), update)
+blacklistedRoutes.delete('/:id', destroy)
 
-export default levelsRouter;
+export default blacklistedRoutes;

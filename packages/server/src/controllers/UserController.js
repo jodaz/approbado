@@ -13,6 +13,7 @@ export const index = async (req, res) => {
             if (filter.global_search) {
                 query.where('names', 'ilike', `%${filter.global_search}%`)
                     .orWhere('email', 'ilike', `%${filter.global_search}%`)
+                    .orWhere('user_name', 'ilike', `%${filter.global_search}%`)
                     .orWhere('rol', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.email) {

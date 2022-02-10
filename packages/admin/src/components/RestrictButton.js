@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { fade } from '@material-ui/core'
 import styled from '@material-ui/styles/styled';
-import { useMutation, useNotify, useRefresh } from 'react-admin'
+import { useMutation, useNotify, useRedirect } from 'react-admin'
 import Button from '@material-ui/core/Button';
 import Confirm from '@approbado/lib/layouts/Confirm';
 
@@ -14,7 +14,7 @@ const CustomizedButton = styled(Button)(({ theme }) => ({
 }));
 
 const RestrictButton = user => {
-    const refresh = useRefresh();
+    const redirect = useRedirect();
     const notify = useNotify()
     const [open, setOpen] = React.useState(false);
     const [mutate, { loaded, loading }] = useMutation();
@@ -35,7 +35,7 @@ const RestrictButton = user => {
 
     React.useEffect(() => {
         if (loaded) {
-            refresh()
+            redirect(`reports?tab=blacklisted`)
             notify(`¡El usuario @${user.user_name} ahora está en la lista negra!`, 'success')
         }
     }, [loaded])

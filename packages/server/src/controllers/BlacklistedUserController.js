@@ -85,7 +85,7 @@ export const update = async (req, res) => {
         try {
             const model = await BlacklistedUser.query()
                 .where('user_id', user_id)
-                .updateAndFetch({
+                .update({
                     is_restricted: is_restricted,
                     user_id: user_id
                 })
@@ -96,5 +96,19 @@ export const update = async (req, res) => {
 
             return res.status(500).json({ error: error })
         }
+    }
+}
+
+export const destroy = async (req, res) => {
+    let id = parseInt(req.params.id)
+
+    try {
+        const model = await BlacklistedUser.query().where('user_id', id).delete();
+
+        return res.json(model);
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
     }
 }

@@ -10,6 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import DeleteReportButton from './DeleteReportButton'
 import BlacklistButton from './BlacklistButton'
+import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -81,7 +82,7 @@ export default function({ id, post }) {
                     }}
                 />
                 <Box paddingTop='1rem' display="flex">
-                    <BlacklistButton {...post} />
+                    {isEmpty(owner.blacklisted) && <BlacklistButton {...post} />}
                     <DeleteReportButton id={post.id} />
                 </Box>
             </Card>
