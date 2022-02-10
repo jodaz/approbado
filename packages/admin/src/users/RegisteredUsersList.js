@@ -19,7 +19,7 @@ const UsersDatagrid = props => (
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="global_search" />
     </TopToolbar>
 );
 

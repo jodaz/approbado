@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Box } from '@material-ui/core';
 import {
     FilterContext,
     ListBase,
@@ -13,7 +12,7 @@ import ListContainer from '../components/ListContainer'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="global_search" />
         <CreateButton basePath={`/trivias/${trivia_id}/awards`} />
     </TopToolbar>
 );

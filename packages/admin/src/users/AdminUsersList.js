@@ -23,12 +23,16 @@ const UsersDatagrid = () => (
     </Datagrid>
 )
 
-const ListActions = () => (
-    <TopToolbar>
-        <FilterLiveSearch source="name" />
-        <CreateButton basePath="/users" />
-    </TopToolbar>
-);
+const ListActions = props => {
+    console.log(props);
+
+    return (
+        <TopToolbar>
+            <FilterLiveSearch source="global_search" {...props} />
+            <CreateButton basePath="/users" />
+        </TopToolbar>
+    );
+}
 
 const ModeratorsList = props => (
     <ListBase

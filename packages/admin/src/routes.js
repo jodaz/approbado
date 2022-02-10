@@ -19,11 +19,13 @@ import FileCreate from './files/FileCreate'
 import QuestionsCreate from './questions/QuestionCreate'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import QuestionsUpload from './questions/QuestionsUpload'
+import BlacklistedUserShow from './blacklistedUsers/BlacklistedUserShow'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
     <Route exact path="/memberships" render={() => <Memberships />} />,
     <Route exact path="/users/:id/show" render={() => <UserProfile />} />,
+    <Route exact path="/reports/users/:id/show" render={() => <BlacklistedUserShow />} />,
     <Route
         path="/memberships/plans/create"
         render={() => <PlanCreate />}

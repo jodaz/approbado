@@ -20,14 +20,14 @@ const DeleteReportButton = ({ id }) => {
     const [open, setOpen] = React.useState(false);
     const [handleDelete, { loaded, loading }] = useMutation({
         type: 'delete',
-        resource: 'reports',
+        resource: 'forums',
         payload: { id: id }
     });
 
     React.useEffect(() => {
         if (loaded) {
             redirect('/reports')
-            notify('¡Ha eliminado el reporte!', 'success')
+            notify('¡La publicación ha sido eliminada!', 'success')
         }
     }, [loaded])
 
@@ -40,7 +40,7 @@ const DeleteReportButton = ({ id }) => {
                 isOpen={open}
                 loading={loading}
                 title='Eliminar reporte'
-                content='¿Está seguro que desea eliminar el reporte?'
+                content='¿Está seguro que desea eliminar la publicación?'
                 onConfirm={handleDelete}
                 onClose={() => setOpen(!open)}
                 confirmColor='primary'

@@ -23,7 +23,7 @@ const DeleteButton = (
     const [open, setOpen] = React.useState(false);
     const notify = useNotify();
     const refresh = useRefresh();
-
+    console.log(basePath)
     const handleDelete = React.useCallback(async () => {
         try {
             await mutate({

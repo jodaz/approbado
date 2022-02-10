@@ -1,92 +1,65 @@
 import * as React from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
-import { useHistory } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
-import makeStyles from '@material-ui/styles/makeStyles';
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
-        width: '100%',
-        height: 'max-content',
-        backgroundColor: theme.palette.background.dark,
         borderRadius: '8px !important',
-        padding: '1rem',
-        flexDirection: 'column'
-    },
-    card: {
-        background: theme.palette.background.dark,
-        border: 'none',
-        height: 'content-height',
-        alignItems: 'start',
-        padding: '0.5rem 1rem 1rem 1rem'
-    },
-    headerRoot: {
-        padding: '0 !important',
-        height: '3rem',
-        alignItems: 'start',
-    },
-    content: {
+        padding: '8px 9px 16px 16px',
+        backgroundColor: theme.palette.background.dark,
         display: 'flex',
-        height: '100%',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '16rem'
     },
-    action: {
-        margin: 'unset'
+    reason: {
+        fontSize: '1rem',
+        fontWeight: 400,
+        color: theme.palette.primary.main,
+        margin: '6px 0',
+        flexGrow: 1,
+        lineHeight: '26px',
+        display: 'flex'
+    },
+    count: {
+        paddingLeft: '1rem',
+        textAlign: 'center',
+        color: theme.palette.info.light,
     }
-}))
+}));
 
-const RestrictedUserCard = ({ data }) => {
-    const classes = useStyles();
-    const history = useHistory();
+const BlacklistedUserCard = ({ data }) => {
+    const { id, names, picture, usersReportsCount } = data
+    const classes = useStyles()
 
     return (
-        <Card className={classes.root} key={data.id}>
-            <CardHeader
-                className={classes.cardHeader}
-                title={
-                    <Typography variant="subtitle1">
-                        {data.names}
-                    </Typography>
-                }
-                avatar={
-                    <Avatar
-                        aria-label="recipe"
-                        src={`${configs.SOURCE}/${data.picture}`}
-                    />
-                }
-                subheader={
-                    <Box width='content-box'>
-                        <Link
-                            to={`/blacklisted-users/${data.id}/show`}
-                            color='info'
-                            underline='hover'
-                            component={LinkBehavior}
-                        >
-                            Ver publicaciones
-                        </Link>
-                    </Box>
-                }
-                classes={{
-                    root: classes.headerRoot,
-                    content: classes.content,
-                    action: classes.action
-                }}
-            />
-        </Card>
+        <Box className={classes.root}>
+            <Box className={classes.reason}>
+                <Avatar
+                    aria-label="recipe"
+                    src={`${configs.SOURCE}/${picture}`}
+                />
+                <Box display="flex" flexDirection="column">
+                    <Box component="span">{names}</Box>
+                    <Link
+                        to={`/reports/users/${id}/show`}
+                        color='info'
+                        underline='hover'
+                        component={LinkBehavior}
+                    >
+                        Ver publicaciones
+                    </Link>
+                </Box>
+            </Box>
+            <Box className={classes.count}>
+                {usersReportsCount}<br />reportes
+            </Box>
+        </Box>
     );
 }
 
-RestrictedUserCard.propTypes = {
-    data: PropTypes.object
-}
-
-export default RestrictedUserCard
+export default BlacklistedUserCard
