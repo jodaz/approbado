@@ -105,7 +105,7 @@ export const new_schedules = async (req, res) => {
 
 export const get_schedules = async () => {
     const schedules = await Schedule.query()
-                                    .whereRaw("cast(starts_at-now() as varchar) like '00:29%'")
+                                    .whereRaw("cast(starts_at-now() as varchar) like '00:30%'")
 
     try{
 
@@ -123,12 +123,19 @@ export const get_schedules = async () => {
                     body :   `Dentro de 30 minutos comenzará el evento: `+schedules[i].title,
                     data : {
                         path : {
-                            name : 'details_trivia',
-                            query : schedules[i]
-                        },
+                            name : 'details_trivia', 
+                            params : { trivia_id : schedules[i].id},
+                            query : {
+                                ...schedules[i] ,
+                                button_enable : true
+                            },
+                        },    
                         message :  `Dentro de 30 minutos comenzará el evento: `+schedules[i].title
                     }
                 }
+                
+
+
         await sendNotification(data_push_notification,ids)
         
         }
