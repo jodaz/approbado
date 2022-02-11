@@ -1,5 +1,5 @@
 import { Schedule,Participant,User,Question } from '../models'
-import { validateRequest, paginatedQueryResponse,getDateString,getDayWeekString ,getTimeString } from '../utils'
+import { validateRequest, paginatedQueryResponse,getDateString,getDayWeekString ,getTimeString,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -102,6 +102,41 @@ export const new_schedules = async (req, res) => {
         return res.status(500).json(error)
     }
 }
+
+export const get_schedules = async () => {
+    const schedules = await Schedule.query()
+                                    .whereRaw("cast(starts_at-now() as varchar) like '00:29%'")
+
+    try{
+
+        for (var i = 0; i < schedules.length; i++) {
+
+            let participants = await schedules[i].$relatedQuery('participants').select('users.id')
+            let ids = [];
+
+            participants.forEach(participant => {
+                ids.push(participant.id)
+            })
+           
+            let data_push_notification = {
+                    title:  'Aviso de Evento',
+                    body :   `Dentro de 30 minutos comenzará el evento: `+schedules[i].title,
+                    data : {
+                        path : {
+                            name : 'details_trivia',
+                            query : schedules[i]
+                        },
+                        message :  `Dentro de 30 minutos comenzará el evento: `+schedules[i].title
+                    }
+                }
+        await sendNotification(data_push_notification,ids)
+        
+        }
+    }catch(error){
+        console.log(error)
+    }   
+}
+
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
