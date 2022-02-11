@@ -9,7 +9,7 @@ export const index = async (req, res) => {
             Post.ref('*'),
             Post.relatedQuery('comments').count().as('commentsCount'),
             Post.relatedQuery('likes').count().as('likesCount'),
-            Post.relatedQuery('likes').where('user_id',req.user.id).count().as('likeUser'),
+            Post.relatedQuery('likes').where('user_id', req.user.id).count().as('likeUser'),
         ).withGraphFetched('owner')
 
         if (filter) {

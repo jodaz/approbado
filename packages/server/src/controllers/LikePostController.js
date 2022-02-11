@@ -1,12 +1,18 @@
-import { Post,LikePost } from '../models'
-import { validateRequest } from '../utils'
+import { LikePost } from '../models'
+import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const store = async (req, res) => {
+    const { user } = req
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
         try {
-            const model = await LikePost.query().insert(req.body)
+            const { post_id } = req.body;
+
+            const model = await LikePost.query().insert({
+                post_id: post_id,
+                user_id: user.id
+            })
 
             return res.status(201).json(model)
         } catch (error) {
@@ -17,15 +23,30 @@ export const store = async (req, res) => {
     }
 }
 
-export const byPostId = async (req, res) => {
-    const { post_id } = req.params
+export const index = async (req, res) => {
+    const { filter, sort, order } = req.query
 
     try {
-        const post = await  Post.query().findById(post_id)
+        const query = LikePost.query()
 
-        const likes = await post.$relatedQuery('likes')
+        if (filter) {
+            if (filter.post_id) {
+                query.where('post_id', filter.post_id)
+            }
+            if (filter.users) {
+                query.withGraphFetched('user')
+            }
+        }
 
-        return res.status(200).json(likes)
+        if (sort && order) {
+            switch (sort) {
+                default:
+                    query.orderBy(sort, order);
+                    break;
+            }
+        }
+
+        return paginatedQueryResponse(query, req, res)
     } catch (error) {
         console.log(error)
 
@@ -33,14 +54,19 @@ export const byPostId = async (req, res) => {
     }
 }
 
+/**
+ * Delete all likes for a given user and post
+ * @param {post_id} req
+ * @param {number of deletions} res
+ * @returns
+ */
 export const destroy = async (req, res) => {
     try {
         let post_id = parseInt(req.params.post_id)
-        let user_id = parseInt(req.params.user_id)
 
         const model = await LikePost.query()
-            .where('post_id',post_id)
-            .where('user_id',user_id)
+            .where('post_id', post_id)
+            .where('user_id', req.user.id)
             .delete();
 
         return res.json(model);
