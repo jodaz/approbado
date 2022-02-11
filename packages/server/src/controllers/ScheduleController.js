@@ -108,17 +108,18 @@ export const get_schedules = async () => {
                                     .whereRaw("cast(starts_at-now() as varchar) like '00:30%'")
 
     try{
-
         for (var i = 0; i < schedules.length; i++) {
+            
+            if (schedules[i].notify_before) {
+                
+                let participants = await schedules[i].$relatedQuery('participants').select('users.id')
+                let ids = [];
 
-            let participants = await schedules[i].$relatedQuery('participants').select('users.id')
-            let ids = [];
-
-            participants.forEach(participant => {
-                ids.push(participant.id)
-            })
-           
-            let data_push_notification = {
+                participants.forEach(participant => {
+                    ids.push(participant.id)
+                })
+               
+                let data_push_notification = {
                     title:  'Aviso de Evento',
                     body :   `Dentro de 30 minutos comenzará el evento: `+schedules[i].title,
                     data : {
@@ -133,11 +134,9 @@ export const get_schedules = async () => {
                         message :  `Dentro de 30 minutos comenzará el evento: `+schedules[i].title
                     }
                 }
-                
-
+            }       
 
         await sendNotification(data_push_notification,ids)
-        
         }
     }catch(error){
         console.log(error)
