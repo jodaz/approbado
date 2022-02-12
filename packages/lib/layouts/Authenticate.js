@@ -31,7 +31,7 @@ Authenticate.propTypes = {
     authProvider: PropTypes.func,
 };
 
-const AuthenticateWithTheme = (props) => (
+const AuthenticateWithTheme = props => (
     <ThemeProvider theme={createMuiTheme(theme)}>
         <Authenticate {...props} />
     </ThemeProvider>

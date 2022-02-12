@@ -40,7 +40,7 @@ const useStyles = makeStyles(
     { name: 'RaUploadFileButton' }
 );
 
-const UploadFileButton = (props) => {
+const UploadFileButton = props => {
     const {
         accept,
         children,

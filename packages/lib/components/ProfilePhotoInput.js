@@ -31,7 +31,7 @@ const useStyles = makeStyles(
             },
             zIndex: 10,
             position: 'relative',
-            opacity: (props) => props.disabled ? 0.7 : 1
+            opacity: props => props.disabled ? 0.7 : 1
         },
         thumb: {
             width: 'inherit',
@@ -64,7 +64,7 @@ const useStyles = makeStyles(
 
 const filePreviewOrigin = filepath => (`${process.env.REACT_APP_API_DOMAIN}/${filepath}`)
 
-const ProfilePhotoInput = (props) => {
+const ProfilePhotoInput = props => {
     const {
         accept,
         children,

@@ -1,17 +1,16 @@
 import {
     Datagrid,
     TextField,
-    Pagination,
     FilterLiveSearch,
     ListBase,
     FilterContext,
     TopToolbar
 } from 'react-admin'
-import Box from '@material-ui/core/Box';
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
+import ListContainer from '../components/ListContainer'
 
-const UsersDatagrid = props => (
+const UsersDatagrid = () => (
     <Datagrid optimized>
         <TextField source="rol" label="Acceso" />
         <TextField source="names" label='Nombre' />
@@ -23,16 +22,21 @@ const UsersDatagrid = props => (
         />
     </Datagrid>
 )
-const ListActions = () => (
-    <TopToolbar>
-        <FilterLiveSearch source="name" />
-        <CreateButton basePath="/users" />
-    </TopToolbar>
-);
 
-const ModeratorsList = (props) => (
+const ListActions = props => {
+    console.log(props);
+
+    return (
+        <TopToolbar>
+            <FilterLiveSearch source="global_search" {...props} />
+            <CreateButton basePath="/users" />
+        </TopToolbar>
+    );
+}
+
+const ModeratorsList = props => (
     <ListBase
-        perPage={20}
+        perPage={15}
         sort={{ field: 'created_at', order: 'ASC' }}
         filter={{ is_registered: false }}
         {...props}
@@ -42,17 +46,16 @@ const ModeratorsList = (props) => (
 );
 
 const ModeratorsListView = () => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <UsersDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 20]} />
-            </Box>
-        </Box>
-    </>
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={
+            <UsersDatagrid />
+        }
+    />
 );
 
 ModeratorsList.defaultProps = {

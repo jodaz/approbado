@@ -13,6 +13,6 @@ export class BlacklistedUser extends BaseClass {
                 from: 'blacklisted_users.user_id',
                 to: 'users.id'
             }
-        }
+        },
     })
 }

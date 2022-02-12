@@ -8,6 +8,9 @@ import configs from '@approbado/lib/configs'
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import DeleteReportButton from './DeleteReportButton'
+import BlacklistButton from './BlacklistButton'
+import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -39,11 +42,13 @@ const useStyles = makeStyles(theme => ({
     },
     action: {
         margin: 'unset'
-    }
+    },
 }))
 
-export default function({ owner }) {
+export default function({ id, post }) {
     const classes = useStyles();
+
+    const { owner } = post
 
     return (
         <>
@@ -76,6 +81,10 @@ export default function({ owner }) {
                         action: classes.action
                     }}
                 />
+                <Box paddingTop='1rem' display="flex">
+                    {isEmpty(owner.blacklisted) && <BlacklistButton {...post} />}
+                    <DeleteReportButton id={post.id} />
+                </Box>
             </Card>
         </>
     )

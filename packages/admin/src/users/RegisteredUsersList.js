@@ -1,36 +1,31 @@
 import {
     Datagrid,
     TextField,
-    Pagination,
     FilterLiveSearch,
     ListBase,
     FilterContext,
     TopToolbar
 } from 'react-admin'
-import Box from '@material-ui/core/Box';
-import DatagridOptions from '../components/DatagridOptions';
+import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
+import ListContainer from '../components/ListContainer'
 
 const UsersDatagrid = props => (
     <Datagrid optimized>
         <TextField source="names" label='Nombre' />
         <TextField source="email" label='Correo electrónico' />
-        <DatagridOptions
-            basePath='users'
-            confirmTitle='Eliminar usuario'
-            confirmContent='¿Está seguro que desea eliminar este usuario?'
-        />
+        <GoToProfileButtonLink {...props} />
     </Datagrid>
 )
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="global_search" />
     </TopToolbar>
 );
 
-const RegisteredUsersList = (props) => (
+const RegisteredUsersList = props => (
     <ListBase
-        perPage={20}
+        perPage={15}
         sort={{ field: 'created_at', order: 'ASC' }}
         filter={{ is_registered: true }}
         {...props}
@@ -40,17 +35,16 @@ const RegisteredUsersList = (props) => (
 );
 
 const RegisteredUsersListView = () => (
-    <>
-        <FilterContext.Provider>
-            <ListActions />
-        </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <UsersDatagrid />
-                <Pagination rowsPerPageOptions={[5, 10, 20]} />
-            </Box>
-        </Box>
-    </>
+    <ListContainer
+        actions={
+            <FilterContext.Provider>
+                <ListActions />
+            </FilterContext.Provider>
+        }
+        list={
+            <UsersDatagrid />
+        }
+    />
 );
 
 RegisteredUsersList.defaultProps = {

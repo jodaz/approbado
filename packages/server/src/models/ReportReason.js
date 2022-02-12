@@ -6,12 +6,12 @@ export class ReportReason extends BaseClass {
     }
 
     static relationMappings = () => ({
-        reports: {
+        userReports: {
             relation: BaseClass.HasManyRelation,
-            modelClass: `${__dirname}/Report`,
+            modelClass: `${__dirname}/UserReport`,
             join: {
                 from: 'report_reasons.id',
-                to: 'reports.report_reason_id'
+                to: 'users_reports.report_reason_id'
             }
         }
     })

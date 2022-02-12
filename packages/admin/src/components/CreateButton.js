@@ -21,7 +21,7 @@ import { ReactComponent as PlusIcon } from '@approbado/lib/icons/Plus.svg'
  *     <CreateButton basePath="/comments" label="Create comment" />
  * );
  */
-const CreateButton = (props) => {
+const CreateButton = props => {
     const {
         basePath = '',
         className,

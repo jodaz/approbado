@@ -37,7 +37,7 @@ const validate = (values) => {
   return errors;
 };
 
-const PasswordInput = (props) => {
+const PasswordInput = props => {
     const { values } = useFormState();
 
     if (!values.random_pass) {

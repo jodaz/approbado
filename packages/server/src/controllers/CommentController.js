@@ -60,7 +60,14 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
-        const model = await Post.query().findById(id)
+        const model = await Post.query()
+            .findById(id)
+            .select(
+                Post.ref('*'),
+                Post.relatedQuery('comments').count().as('commentsCount')
+            )
+            .where('type', 'Comentario')
+            .withGraphFetched('owner')
 
         return res.status(201).json(model)
     } catch (error) {

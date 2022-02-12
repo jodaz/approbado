@@ -6,9 +6,9 @@ export async function up(knex) {
         table.integer('report_reason_id').unsigned();
         table.integer('user_id').unsigned();
         table.integer('report_id').unsigned();
-        table.foreign('report_id').references('id').on('reports');
-        table.foreign('report_reason_id').references('id').on('report_reasons');
-        table.foreign('user_id').references('id').on('users');
+        table.foreign('report_id').references('id').on('reports').onDelete('cascade');
+        table.foreign('report_reason_id').references('id').on('report_reasons').onDelete('cascade');
+        table.foreign('user_id').references('id').on('users').onDelete('cascade');
         table.timestamps();
     });
 }

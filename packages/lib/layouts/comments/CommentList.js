@@ -6,7 +6,7 @@ import { Query } from 'react-admin';
 import { makeStyles } from '@material-ui/core'
 import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
-import CommentShow from './CommentShow';
+import CommentShow from '@approbado/lib/layouts/comments/CommentShowLayout';
 
 const useStyles = makeStyles(theme => ({
     root: {

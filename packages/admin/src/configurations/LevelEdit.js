@@ -3,7 +3,6 @@ import {
     useMutation,
     TextInput,
     useEditController,
-    EditContextProvider,
     useRedirect,
     useNotify
 } from 'react-admin'
@@ -12,7 +11,7 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
-const LevelEdit = (props) => {
+const LevelEdit = props => {
     const { id } = useParams();
     const editControllerProps = useEditController({
         ...props,
@@ -46,23 +45,22 @@ const LevelEdit = (props) => {
     const { record } = editControllerProps
 
     return (
-        <EditContextProvider value={editControllerProps}>
-            <BaseForm
-                save={save}
-                validate={validateLevel}
-                record={record}
-                saveButtonLabel='Actualizar'
-                loading={loading}
-            >
-                <InputContainer labelName='Nombre'>
-                    <TextInput
-                        source="name"
-                        placeholder="Nombre"
-                        fullWidth
-                    />
-                </InputContainer>
-            </BaseForm>
-        </EditContextProvider>
+        <BaseForm
+            save={save}
+            validate={validateLevel}
+            record={record}
+            saveButtonLabel='Actualizar'
+            loading={loading}
+            formName='Editar nivel'
+        >
+            <InputContainer labelName='Nombre'>
+                <TextInput
+                    source="name"
+                    placeholder="Nombre"
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

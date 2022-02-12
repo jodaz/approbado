@@ -88,7 +88,7 @@ const useStyles = makeStyles(
  *     onClose={() => { // do something }}
  * />
  */
-const Confirm = (props) => {
+const Confirm = props => {
     const {
         isOpen,
         loading,

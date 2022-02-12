@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { ReactComponent as LinkedinIcon } from '@approbado/lib/icons/Linkedin.svg'
 import { ReactComponent as TwitterIcon } from '@approbado/lib/icons/Twitter.svg'
+import isEmpty from 'is-empty'
 
 const AboutMe = ({ bio, email, profile }) => (
     <Grid container>
@@ -18,7 +19,7 @@ const AboutMe = ({ bio, email, profile }) => (
                 icon={<ProfileIcon />}
             >
                 <Typography variant="subtitle1">
-                    {bio}
+                    {bio ? bio : 'Parece que este usuario prefiere mantener un aire de misterio...'}
                 </Typography>
             </ProfileContentItem>
         </Grid>
@@ -33,37 +34,41 @@ const AboutMe = ({ bio, email, profile }) => (
                     </Typography>
                 </ProfileContentItem>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <ProfileContentItem
-                    title='Ocupación'
-                    icon={<CertificationIcon />}
-                >
-                    <Typography variant="subtitle1">
-                        {profile.ocupation}
-                    </Typography>
-                </ProfileContentItem>
-            </Grid>
-            <Grid item xs={12}>
-                {(profile.linkedin || profile.twitter) && (
-                    <ProfileContentItem
-                        title='Redes sociales'
-                        icon={<LinkIcon />}
-                    >
-                        <Box width='70px' display='flex' justifyContent="space-between">
-                            {(profile.linkedin) && (
-                                <a href={`https://linkedin.com/in/${profile.linkedin}`} target="_blank">
-                                    <LinkedinIcon />
-                                </a>
-                            )}
-                            {(profile.twitter) && (
-                                <a href={`https://twitter.com/${profile.twitter}`} target="_blank">
-                                    <TwitterIcon />
-                                </a>
-                            )}
-                        </Box>
-                    </ProfileContentItem>
-                )}
-            </Grid>
+            {!isEmpty(profile) && (
+                <>
+                    <Grid item xs={12} sm={4}>
+                        <ProfileContentItem
+                            title='Ocupación'
+                            icon={<CertificationIcon />}
+                        >
+                            <Typography variant="subtitle1">
+                                {(profile.ocupation) ? profile.ocupation : 'Ninguna'}
+                            </Typography>
+                        </ProfileContentItem>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {(profile.linkedin || profile.twitter) && (
+                            <ProfileContentItem
+                                title='Redes sociales'
+                                icon={<LinkIcon />}
+                            >
+                                <Box width='70px' display='flex' justifyContent="space-between">
+                                    {(profile.linkedin) && (
+                                        <a href={`https://linkedin.com/in/${profile.linkedin}`} target="_blank">
+                                            <LinkedinIcon />
+                                        </a>
+                                    )}
+                                    {(profile.twitter) && (
+                                        <a href={`https://twitter.com/${profile.twitter}`} target="_blank">
+                                            <TwitterIcon />
+                                        </a>
+                                    )}
+                                </Box>
+                            </ProfileContentItem>
+                        )}
+                    </Grid>
+                </>
+            )}
         </Grid>
     </Grid>
 );

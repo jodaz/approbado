@@ -10,12 +10,21 @@ import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
 import makeStyles from '@material-ui/styles/makeStyles';
+import DeleteButton from '@approbado/lib/components/DeleteButton'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
-        <></>
+        <DeleteButton
+            basePath='blacklisted-users'
+            confirmColor='warning'
+            confirmTitle='Quitar restricción'
+            confirmContent={'¿Está seguro que quitar la restricción al usuario?'}
+            label='Quitar restricción'
+            {...props}
+        />
     </OptionsCardMenu>
 );
+
 
 const useStyles = makeStyles(theme => ({
     root: {
