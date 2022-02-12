@@ -80,7 +80,7 @@ export const upload = async (req, res) => {
     let workbook = new Excel.Workbook();
     const { path } = req.file;
     const { subtheme_id, trivia_id } = req.body
-
+    console.log("testing")
     try {
         await workbook.xlsx.readFile(path)
             .then(() => {
