@@ -10,8 +10,8 @@ export const index = async (req, res) => {
         const query = Question.query()
 
         if (filter) {
-            if (filter.title) {
-                query.where('title', 'ilike', `%${filter.title}%`)
+            if (filter.global_search) {
+                query.where('description', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.trivia_id) {
                 query.where('trivia_id', filter.trivia_id)
@@ -80,7 +80,7 @@ export const upload = async (req, res) => {
     let workbook = new Excel.Workbook();
     const { path } = req.file;
     const { subtheme_id, trivia_id } = req.body
-
+    console.log("testing")
     try {
         await workbook.xlsx.readFile(path)
             .then(() => {

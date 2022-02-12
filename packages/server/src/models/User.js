@@ -63,7 +63,7 @@ export class User extends BaseClass {
             modelClass: `${__dirname}/BlacklistedUser`,
             join: {
                 from: 'users.id',
-                to: 'blacklisted.user_id'
+                to: 'blacklisted_users.user_id'
             }
         },
         password_resets: {

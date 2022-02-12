@@ -19,6 +19,10 @@ export const index = async (req, res) => {
             if (filter.type) {
                 query.where('type', 'ilike', `%${filter.type}%`)
             }
+            if (filter.reported_user_id) {
+                query.join('posts', 'posts.id', 'reports.post_id')
+                    .where('posts.created_by', filter.reported_user_id)
+            }
         }
         if (sort && order) {
             switch (sort) {
@@ -106,7 +110,7 @@ export const show = async (req, res) => {
     try {
         const model = await Report.query()
             .findById(id)
-            .withGraphFetched('[userReports,post.owner]')
+            .withGraphFetched('[userReports,post.owner.blacklisted]')
 
         return res.status(201).json(model)
     } catch (error) {

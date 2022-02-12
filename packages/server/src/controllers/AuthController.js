@@ -7,7 +7,7 @@ import { generateAuthToken, sendMail, getAuthenticatedUser } from '../utils';
 const loginAuthFlow = async (field, email, password) => {
     const user = await User.query().findOne(
         Object.assign({}, { [field]: email })
-    );
+    )
 
     if(!user) {
         return {

@@ -9,8 +9,8 @@ export const index = async (req, res) => {
         const query = File.query()
 
         if (filter) {
-            if (filter.title) {
-                query.where('title', filter.title)
+            if (filter.global_search) {
+                query.where('title', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.trivia_id) {
                 query.select('files.*')

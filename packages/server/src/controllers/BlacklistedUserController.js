@@ -1,20 +1,19 @@
-import { Post } from '../models'
+import { BlacklistedUser, User } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
 
     try {
-        const query = Post.query().select(
-            Post.ref('*'),
-            Post.relatedQuery('comments').count().as('commentsCount'),
-            Post.relatedQuery('likes').count().as('likesCount'),
-            Post.relatedQuery('likes').where('user_id', req.user.id).count().as('likeUser'),
-        ).withGraphFetched('owner')
+        const query = BlacklistedUser.query()
+            .withGraphFetched('user')
 
         if (filter) {
-            if (filter.id) {
-                query.where('parent_id', filter.id)
+            if (filter.name) {
+                query.where('name', 'ilike', filter.name)
+            }
+            if (filter.is_restricted) {
+                query.where('is_restricted', '=', filter.is_restricted)
             }
         }
 
@@ -38,16 +37,15 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
+        const { user_id, is_restricted } = req.body;
+
         try {
-            const { ...rest } = req.body;
+            const model = await BlacklistedUser.query().insert({
+                is_restricted: is_restricted,
+                user_id: user_id
+            })
 
-            const model = await Post.query().insert({
-                created_by: req.user.id,
-                type: 'Comentario',
-                ...rest
-            });
-
-            return res.status(200).json(model)
+            return res.status(201).json(model)
         } catch (error) {
             console.log(error)
 
@@ -60,14 +58,15 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
-        const model = await Post.query()
-            .findById(id)
-            .select(
-                Post.ref('*'),
-                Post.relatedQuery('comments').count().as('commentsCount')
-            )
-            .where('type', 'Comentario')
-            .withGraphFetched('owner')
+        const model = await User.query().findById(id)
+            .whereExists(
+                BlacklistedUser.query()
+                    .select(1)
+                    .whereColumn('users.id', 'blacklisted_users.user_id')
+                    .where('is_restricted', false)
+            ).withGraphFetched('blacklisted')
+
+        if (!model) return res.status(404).json({ error: 'not found' })
 
         return res.status(201).json(model)
     } catch (error) {
@@ -81,10 +80,15 @@ export const update = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        try {
-            const { id } = req.params
+        const { user_id, is_restricted } = req.body;
 
-            const model = await Post.query().updateAndFetchById(id, req.body)
+        try {
+            const model = await BlacklistedUser.query()
+                .where('user_id', user_id)
+                .update({
+                    is_restricted: is_restricted,
+                    user_id: user_id
+                })
 
             return res.status(201).json(model)
         } catch (error) {
@@ -99,7 +103,7 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
-        const model = await Post.query().findById(id).delete();
+        const model = await BlacklistedUser.query().where('user_id', id).delete();
 
         return res.json(model);
     } catch (error) {
