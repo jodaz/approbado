@@ -2,6 +2,7 @@ import express from 'express'
 import { APP_PORT, cors, helmet } from './config'
 import routes from './routes'
 import path from 'path'
+import { get_schedules } from './controllers/ScheduleController'
 import cors_ from 'cors'
 import cron from 'node-cron'
 // Set up server
@@ -45,8 +46,8 @@ http.listen(APP_PORT, () => {
     console.log(`Server on http://localhost:${APP_PORT}`);
 })
 
-cron.schedule('* * * * *',function () {
-  console.log("ejecuntando")
+cron.schedule('* * * * *',async function () {
+  await get_schedules()
 })
 
 app.locals.io = io;
