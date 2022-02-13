@@ -31,7 +31,7 @@ const ListActions = () => (
 
 const LevelList = props => (
     <ListBase
-        perPage={20}
+        perPage={10}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >

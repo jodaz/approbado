@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Box } from '@material-ui/core';
 import {
     FilterContext,
     ListBase,
@@ -23,12 +22,8 @@ const QuestionListView = (record) => (
         <FilterContext.Provider>
             <ListActions {...record} />
         </FilterContext.Provider>
-        <Box display="flex">
-            <Box width={'100%'}>
-                <GridList component={<QuestionCard />} />
-                <Pagination />
-            </Box>
-        </Box>
+        <GridList component={<QuestionCard />} />
+        <Pagination />
     </>
 );
 
@@ -36,8 +31,8 @@ const QuestionList = ({ record, filter, ...rest }) => (
     <ListBase
         resource='questions'
         basePath='questions'
-        perPage={20}
-        filter={{ ...filter, options: true }}
+        perPage={10}
+        filter={{ ...filter, options: true, onlyTrueOptions: true }}
         {...rest}
     >
         <QuestionListView {...record} />

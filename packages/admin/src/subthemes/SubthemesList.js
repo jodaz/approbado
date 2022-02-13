@@ -21,7 +21,7 @@ const SubthemeList = ({ record, ...rest }) => (
     <ListBase
         resource='subthemes'
         basePath='subthemes'
-        perPage={20}
+        perPage={10}
         filter={{ trivia_id: record.id }}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...rest}

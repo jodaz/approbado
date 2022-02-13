@@ -10,8 +10,10 @@ import { useLocation, Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
+        display: 'flex',
         flexDirection: 'column',
-        minHeight: '15rem'
+        minHeight: '15rem',
+        width: '100%'
     },
     boxLayoutStyles: {
         margin: '0 !important',
@@ -36,6 +38,10 @@ const useStyles = makeStyles(theme => ({
         minHeight: '15rem',
         paddingTop: '2rem',
         height: '100%'
+    },
+    header: {
+        paddingTop: '1rem',
+        maxWidth: `calc(100vw - 2rem)`
     }
 }));
 
@@ -81,31 +87,30 @@ const TabbedList = ({
     return (
         <Box component='div' className={classes.root}>
             {name && <Typography component='h1' variant='h5'>{name}</Typography>}
-            <Box component='div' paddingTop='1rem'>
-                <Box>
-                    <Tabs
-                        value={currentTab}
-                        indicatorColor="primary"
-                        onChange={handleChange}
-                        className={classes.tabs}
-                        variant="scrollable"
-                        scrollButtons="auto"
-                    >
-                        {
-                            tags.map((tag, index) => (
-                                <Tab
-                                    key={tag.pathname}
-                                    label={tag.name}
-                                    value={tag.pathname}
-                                    className={classes.tab}
-                                    component={Link}
-                                    to={tabPath(tag.pathname)}
-                                />
-                            ))
-                        }
-                    </Tabs>
-                    { children && React.cloneElement(children, {})}
-                </Box>
+            <Box component='div' className={classes.header}>
+                <Tabs
+                    value={currentTab}
+                    indicatorColor="primary"
+                    onChange={handleChange}
+                    className={classes.tabs}
+                    variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                >
+                    {
+                        tags.map(tag => (
+                            <Tab
+                                key={tag.pathname}
+                                label={tag.name}
+                                value={tag.pathname}
+                                className={classes.tab}
+                                component={Link}
+                                to={tabPath(tag.pathname)}
+                            />
+                        ))
+                    }
+                </Tabs>
+                { children && React.cloneElement(children, {})}
             </Box>
             <Box component='div' className={classes.content}>
                 <Component {...tag} />

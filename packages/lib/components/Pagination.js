@@ -1,6 +1,5 @@
 import { useListContext } from 'react-admin';
 import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
 
 // Icons
@@ -23,26 +22,28 @@ const Pagination = () => {
             <Box>
                 Página {page} de {nbPages}
             </Box>
-            {(page != nbPages) &&
                 <Box>
-                    <Button
-                        color="primary.light"
-                        key="prev"
-                        onClick={() => setPage(page - 1)}
-                        size='small'
-                    >
-                        <LeftAngleIcon />
-                    </Button>
-                    <Button
-                        color="primary.light"
-                        key="next"
-                        onClick={() => setPage(page + 1)}
-                        size='small'
-                    >
-                        <RightAngleIcon />
-                    </Button>
+                    {(page != 1) &&
+                        <Button
+                            color="primary.light"
+                            key="prev"
+                            onClick={() => setPage(page - 1)}
+                            size='small'
+                        >
+                            <LeftAngleIcon />
+                        </Button>
+                    }
+                    {(page != nbPages) &&
+                        <Button
+                            color="primary.light"
+                            key="next"
+                            onClick={() => setPage(page + 1)}
+                            size='small'
+                        >
+                            <RightAngleIcon />
+                        </Button>
+                    }
                 </Box>
-            }
         </Box>
     );
 }

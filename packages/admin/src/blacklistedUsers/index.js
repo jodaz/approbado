@@ -12,7 +12,7 @@ const BlacklistedUsersList = ({ record, ...rest }) => (
     <ListBase
         resource='users'
         basePath='users'
-        perPage={20}
+        perPage={10}
         filter={{ in_blacklist: false }} // false para blacklist, true para restricted
         sort={{ field: 'created_at', order: 'ASC' }}
         {...rest}

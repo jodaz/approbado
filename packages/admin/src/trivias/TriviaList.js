@@ -20,7 +20,7 @@ const ListActions = () => (
 
 const TriviaList = props => (
     <ListBase
-        perPage={20}
+        perPage={10}
         sort={{ field: 'created_at', order: 'DESC' }}
         {...props}
     >

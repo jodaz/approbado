@@ -21,7 +21,7 @@ const TriviaList = props => (
     <ListBase
         basePath='trivias'
         resource='trivias'
-        perPage={20}
+        perPage={10}
         sort={{ field: 'created_at', order: 'DESC' }}
         {...props}
     >
