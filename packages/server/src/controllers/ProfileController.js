@@ -21,10 +21,12 @@ export const update = async (req, res) => {
     try {
         // Send email
         const mailerData = {
-            to: user.email,
+            message: {
+                to: user.email,
+            },
             template: 'accountChange',
             subject: 'Actualizó sus configuraciones de la cuenta',
-            context: {
+            locals: {
                 name: user.names
             }
         };

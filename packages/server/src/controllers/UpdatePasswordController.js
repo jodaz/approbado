@@ -10,10 +10,12 @@ export const update = async (req, res) => {
 
         // Send email
         const mailerData = {
-            to: user.email,
+            message: {
+                to: user.email,
+            },
             template: 'updatePassword',
             subject: 'Su contraseña ha sido actualizada',
-            context: {
+            locals: {
                 name: user.names
             }
         };
@@ -44,10 +46,12 @@ export const updateMobile = async (req, res) => {
         const user = await User.query().findById(password_reset.user_id)
         // Send email
         const mailerData = {
-            to: user.email,
+            message: {
+                to: user.email,
+            },
             template: 'updatePassword',
             subject: 'Su contraseña ha sido actualizada',
-            context: {
+            locals: {
                 name: user.names
             }
         };
