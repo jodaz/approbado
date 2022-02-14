@@ -1,4 +1,4 @@
-import { Membership,User } from '../models'
+import { Membership, User } from '../models'
 import { paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -17,6 +17,16 @@ export const index = async (req, res) => {
     }
 
     return paginatedQueryResponse(query, req, res)
+}
+
+export const download = async (req, res) => {
+    try {
+        return res.status(201).json({ "ok": "upload success" })
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const byUserId = async (req, res) => {
