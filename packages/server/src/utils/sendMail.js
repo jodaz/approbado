@@ -1,20 +1,21 @@
-import { MailTransporter, APP_ENV } from '../config'
+import { EmailTemplate } from '../config'
 
 export const sendMail = async (data, res) => {
-    if (APP_ENV === 'production') {
-        try {
-            await MailTransporter.sendMail(data)
-        } catch (err) {
-            console.log(err)
-        }
+    try {
+        await EmailTemplate.send(data)
+    } catch (err) {
+        console.log(err)
+
+        return res.status(500).json({ error: err })
     }
 }
+
 export const makeToken = async (length) => {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }

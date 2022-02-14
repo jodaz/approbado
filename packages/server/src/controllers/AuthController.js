@@ -222,10 +222,12 @@ export const verifySMSCode = async (req, res) => {
             const encryptedPassword = await bcrypt.hash(password, 10);
 
             const mailerData = {
-                to: email,
+                message: {
+                    to: email
+                },
                 subject: '¡Bienvenido a Approbado!',
                 template: 'welcome',
-                context: {
+                locals: {
                     name: names,
                 }
             };
@@ -293,10 +295,12 @@ export const deleteAccount = async (req, res) => {
     const { user } = req
 
     const mailerData = {
-        to: user.email,
-        subject: '¡Adiós!',
+        message: {
+            to: user.email
+        },
+        subject: '¡Bienvenido a Approbado!',
         template: 'welcome',
-        context: {
+        locals: {
             name: user.names,
         }
     };
