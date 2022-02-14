@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { SECRET, APP_DOMAIN, MailTransporter } from '../config'
+import { SECRET } from '../config'
 import bcrypt from 'bcrypt'
 import { User, PasswordReset } from '../models'
 import { validateRequest, sendMail, makeToken } from '../utils'
@@ -15,23 +15,25 @@ export const resetPassword = async (req, res) => {
             email: email
         });
 
+        const token = await jwt.sign(
+            { id: user.id },
+            SECRET,
+            { expiresIn: 86400 }
+        );
+
         const mailerData = {
-            to: user.email,
+            message: {
+                to: user.email,
+            },
             template: 'resetPassword',
             subject: 'Cambiar contraseña',
-            context: {
+            locals: {
                 name: user.names,
                 url: `${origin}/update-password/?token=${token}`
             }
         };
 
         await sendMail(mailerData, res)
-
-        const token = await jwt.sign(
-            { id: user.id },
-            SECRET,
-            { expiresIn: 86400 }
-        );
 
         await user.$relatedQuery('password_resets').insert({
             token: token
@@ -66,17 +68,19 @@ export const updatePassword = async (req, res) => {
         const user = await model.$relatedQuery('user')
         await user.$query().patch({ password: encryptedPassword })
 
-        const data = {
-            name: user.names
-        };
-
         try {
-            await MailTransporter.sendMail({
-                to: user.email,
-                subject: '¡Su contraseña ha sido actualizada!',
+            const mailerData = {
+                message: {
+                    to: user.email,
+                },
                 template: 'updatePassword',
-                context: data
-            })
+                subject: '¡Su contraseña ha sido actualizada!',
+                locals: {
+                    name: user.names
+                }
+            };
+
+            await sendMail(mailerData, res)
         } catch (err) {
             console.log(err)
             return res.status(500).json({
@@ -96,18 +100,19 @@ export const resetPasswordMobile = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-
         const user  = await User.query().where('email',req.body.email).first()
-        
+
         const token = await makeToken(10)
-        
+
         await PasswordReset.query().insert({user_id : user.id,token : token})
         // Send email
         const mailerData = {
-            to: user.email,
+            message: {
+                to: user.email,
+            },
             template: 'updateMobilePassword',
             subject: 'Cambio de contraseña',
-            context: {
+            locals: {
                 name: user.names,
                 token: token,
             }
