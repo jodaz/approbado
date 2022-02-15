@@ -1,16 +1,15 @@
 import {
     Datagrid,
     TextField,
-    FilterContext,
     ListBase,
     FilterLiveSearch,
     TopToolbar,
 } from 'react-admin'
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
-import ListContainer from '../components/ListContainer'
+import DatagridListView from '@approbado/lib/components/DatagridListView'
 
-const LevelsDatagrid = () => (
+const LevelsDatagrid = props => (
     <Datagrid optimized>
         <TextField label='#ID' source="id" />
         <TextField label='Nombre' source="name" />
@@ -35,19 +34,8 @@ const LevelList = props => (
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <LevelListView />
+        <DatagridListView actions={<ListActions />} datagrid={<LevelsDatagrid />} />
     </ListBase>
-);
-
-const LevelListView = () => (
-    <ListContainer
-        actions={
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-        }
-        list={<LevelsDatagrid />}
-    />
 );
 
 LevelList.defaultProps = {

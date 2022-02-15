@@ -89,7 +89,7 @@ const ResetPassword = () => {
                     />
                 </InputContainer>
                 <CardActions className={classes.actions}>
-                    <Button disabled={loading}>
+                    <Button disabled={loading} type="submit" unresponsive>
                         {'Recuperar contraseña'}
                     </Button>
                 </CardActions>

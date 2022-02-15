@@ -33,9 +33,6 @@ const validate = (values) => {
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
-    if (!values.plans) {
-        errors.plans = "Seleccione al menos un plan.";
-    }
 
     return errors;
 };
@@ -98,16 +95,6 @@ const TriviaCreate = props => {
                     >
                         <SelectInput source="name" emptyText="N/A" />
                     </ReferenceInput>
-                </InputContainer>
-                <InputContainer labelName='Planes'>
-                    <ReferenceArrayInput
-                        source='plans'
-                        reference='memberships/plans'
-                        allowEmpty
-                        fullWidth
-                    >
-                        <SelectArrayInput />
-                    </ReferenceArrayInput>
                 </InputContainer>
             </BaseForm>
         </CreateContextProvider>
