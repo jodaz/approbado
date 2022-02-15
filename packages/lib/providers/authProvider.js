@@ -7,20 +7,20 @@ export const authProvider = () => ({
     checkError: async (error) => {
         const { response } = error;
 
-        // if (response.status === 401 || response.status === 403) {
-        //     await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
-        // }
+        if (response.status === 401 || response.status === 403) {
+            await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+        }
 
         return Promise.resolve();
     },
     checkAuth: async (packageName) => {
         const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
 
-        // if (!token) {
-        //     return (packageName == 'app')
-        //         ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
-        //         : Promise.reject({ redirectTo: '/login' })
-        // }
+        if (!token) {
+            return (packageName == 'app')
+                ? window.location.href = `${CONFIG_NAMES.REDIRECT_TO}`
+                : Promise.reject({ redirectTo: '/login' })
+        }
 
         return Promise.resolve()
     },

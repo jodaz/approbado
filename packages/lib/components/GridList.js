@@ -3,19 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { useListContext } from 'react-admin';
 import Spinner from '@approbado/lib/components/Spinner'
-import Typography from '@material-ui/core/Typography';
-
-const EmptyList = () => (
-    <Typography variant="subtitle1">
-        Sin registros
-    </Typography>
-)
+import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageComponent'
 
 const LoadedGridList = props => {
     const { component } = props
-    const { ids, data, total } = useListContext();
+    const { ids, data, total } = useListContext()
 
-    if (!ids || !data || !total) return <EmptyList />;
+    if (!ids || !data || !total) return <EmptyMessageComponent message='Sin registros' />;
 
     return (
         <Grid container>

@@ -19,16 +19,6 @@ export const index = async (req, res) => {
     return paginatedQueryResponse(query, req, res)
 }
 
-export const download = async (req, res) => {
-    try {
-        return res.status(201).json({ "ok": "upload success" })
-    } catch (error) {
-        console.log(error)
-
-        return res.status(500).json({ error: error })
-    }
-}
-
 export const byUserId = async (req, res) => {
     const { user_id } = req.params
 

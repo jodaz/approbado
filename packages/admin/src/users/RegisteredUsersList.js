@@ -3,11 +3,10 @@ import {
     TextField,
     FilterLiveSearch,
     ListBase,
-    FilterContext,
     TopToolbar
 } from 'react-admin'
 import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
-import ListContainer from '../components/ListContainer'
+import DatagridListView from '@approbado/lib/components/DatagridListView'
 
 const UsersDatagrid = props => (
     <Datagrid optimized>
@@ -30,21 +29,8 @@ const RegisteredUsersList = props => (
         filter={{ is_registered: true }}
         {...props}
     >
-        <RegisteredUsersListView />
+        <DatagridListView actions={<ListActions />} datagrid={<UsersDatagrid />} />
     </ListBase>
-);
-
-const RegisteredUsersListView = () => (
-    <ListContainer
-        actions={
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-        }
-        list={
-            <UsersDatagrid />
-        }
-    />
 );
 
 RegisteredUsersList.defaultProps = {

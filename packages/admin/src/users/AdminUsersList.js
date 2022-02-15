@@ -3,12 +3,11 @@ import {
     TextField,
     FilterLiveSearch,
     ListBase,
-    FilterContext,
     TopToolbar
 } from 'react-admin'
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
-import ListContainer from '../components/ListContainer'
+import DatagridListView from '@approbado/lib/components/DatagridListView'
 
 const UsersDatagrid = () => (
     <Datagrid optimized>
@@ -23,16 +22,12 @@ const UsersDatagrid = () => (
     </Datagrid>
 )
 
-const ListActions = props => {
-    console.log(props);
-
-    return (
-        <TopToolbar>
-            <FilterLiveSearch source="global_search" {...props} />
-            <CreateButton basePath="/users" />
-        </TopToolbar>
-    );
-}
+const ListActions = props => (
+    <TopToolbar>
+        <FilterLiveSearch source="global_search" {...props} />
+        <CreateButton basePath="/users" />
+    </TopToolbar>
+);
 
 const ModeratorsList = props => (
     <ListBase
@@ -41,21 +36,8 @@ const ModeratorsList = props => (
         filter={{ is_registered: false }}
         {...props}
     >
-        <ModeratorsListView />
+        <DatagridListView actions={<ListActions />} datagrid={<UsersDatagrid />} />
     </ListBase>
-);
-
-const ModeratorsListView = () => (
-    <ListContainer
-        actions={
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-        }
-        list={
-            <UsersDatagrid />
-        }
-    />
 );
 
 ModeratorsList.defaultProps = {

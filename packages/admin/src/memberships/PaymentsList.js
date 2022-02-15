@@ -1,14 +1,13 @@
 import {
     Datagrid,
     TextField,
-    FilterContext,
     ListBase,
     FilterLiveSearch,
     TopToolbar,
     NumberField,
     DateField
 } from 'react-admin'
-import ListContainer from '../components/ListContainer'
+import DatagridListView from '@approbado/lib/components/DatagridListView'
 
 const PaymentsDatagrid = () => (
     <Datagrid optimized>
@@ -32,19 +31,8 @@ const PlansList = props => (
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <PaymentsListView />
+        <DatagridListView actions={<ListActions />} datagrid={<PaymentsDatagrid />} />
     </ListBase>
-);
-
-const PaymentsListView = () => (
-    <ListContainer
-        actions={
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-        }
-        list={<PaymentsDatagrid />}
-    />
 );
 
 PlansList.defaultProps = {

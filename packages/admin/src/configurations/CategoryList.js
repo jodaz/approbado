@@ -1,14 +1,13 @@
 import {
     Datagrid,
     TextField,
-    FilterContext,
     ListBase,
     FilterLiveSearch,
     TopToolbar
 } from 'react-admin'
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
-import ListContainer from '../components/ListContainer'
+import DatagridListView from '@approbado/lib/components/DatagridListView'
 
 const CategoriesDatagrid = () => (
     <Datagrid optimized>
@@ -34,19 +33,8 @@ const CategoryList = props => (
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <CategoryListView {...props} />
+        <DatagridListView actions={<ListActions />} datagrid={<CategoriesDatagrid />} />
     </ListBase>
-);
-
-const CategoryListView = () => (
-    <ListContainer
-        actions={
-            <FilterContext.Provider>
-                <ListActions />
-            </FilterContext.Provider>
-        }
-        list={<CategoriesDatagrid />}
-    />
 );
 
 CategoryList.defaultProps = {

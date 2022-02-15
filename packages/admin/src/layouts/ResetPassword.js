@@ -3,7 +3,8 @@ import {
     CardActions,
     Box,
     Typography,
-    makeStyles
+    makeStyles,
+    Link
 } from '@material-ui/core';
 import axios from 'axios'
 import Button from '@approbado/lib/components/Button'
@@ -15,6 +16,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { TextInput } from 'react-admin'
 import Dialog from '@approbado/lib/components/Dialog'
+import LinkBehavior from '@approbado/lib/components/LinkBehavior';
 
 const validate = (values) => {
     const errors = {};
@@ -89,10 +91,18 @@ const ResetPassword = () => {
                     />
                 </InputContainer>
                 <CardActions className={classes.actions}>
-                    <Button disabled={loading}>
+                    <Button disabled={loading} type="submit" unresponsive>
                         {'Recuperar contraseña'}
                     </Button>
                 </CardActions>
+                <Link
+                    to={`/login`}
+                    color='info'
+                    underline='underline'
+                    component={LinkBehavior}
+                >
+                    Volver al inicio
+                </Link>
             </div>
             <Dialog open={open} handleClose={handleClose}>
                 <Typography gutterBottom>
