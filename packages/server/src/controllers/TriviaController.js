@@ -80,13 +80,9 @@ export const indexByPlan = async (req, res) => {
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
-    const { plans, ...rest } = req.body
-
     if (!reqErrors) {
         try {
-            const model = await Trivia.query().insert(rest)
-
-            await model.$relatedQuery('plans').relate(plans)
+            const model = await Trivia.query().insert(req.body)
 
             return res.status(201).json(model)
         } catch (error) {
