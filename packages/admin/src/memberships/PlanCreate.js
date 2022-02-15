@@ -4,7 +4,6 @@ import {
     useMutation,
     NumberInput,
     ReferenceArrayInput,
-    SelectArrayInput,
     useRedirect,
     useNotify,
     SelectInput
@@ -12,6 +11,7 @@ import {
 import { validatePlan } from './plansValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Permitido' },
@@ -92,7 +92,7 @@ const PlanCreate = props => {
                     reference="trivias"
                     fullWidth
                 >
-                    <SelectArrayInput />
+                    <MultipleSelectTag />
                 </ReferenceArrayInput>
             </InputContainer>
         </BaseForm>
