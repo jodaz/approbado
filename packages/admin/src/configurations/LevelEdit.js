@@ -10,6 +10,7 @@ import { validateLevel } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
+import CustomColorPicker from './CustomColorPicker'
 
 const LevelEdit = props => {
     const { id } = useParams();
@@ -59,6 +60,9 @@ const LevelEdit = props => {
                     placeholder="Nombre"
                     fullWidth
                 />
+            </InputContainer>
+            <InputContainer labelName='Color'>
+                <CustomColorPicker />
             </InputContainer>
         </BaseForm>
     )

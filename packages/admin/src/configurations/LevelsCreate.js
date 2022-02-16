@@ -8,6 +8,7 @@ import {
 import { validateLevel } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import CustomColorPicker from './CustomColorPicker'
 
 const LevelCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -37,14 +38,15 @@ const LevelCreate = props => {
 
     return (
         <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
-            <InputContainer
-                labelName='Nombre'
-            >
+            <InputContainer labelName='Nombre'>
                 <TextInput
                     source="name"
                     placeholder="Nombre"
                     fullWidth
                 />
+            </InputContainer>
+            <InputContainer labelName='Color'>
+                <CustomColorPicker />
             </InputContainer>
         </BaseForm>
     )

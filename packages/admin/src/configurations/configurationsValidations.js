@@ -14,6 +14,9 @@ export const validateLevel = (values) => {
     if (!values.name) {
         errors.name = "Ingrese un nombre para el nuevo nivel.";
     }
+    if (!values.color) {
+        errors.color = "Seleccione un color.";
+    }
 
     return errors;
 };

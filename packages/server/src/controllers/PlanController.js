@@ -88,6 +88,7 @@ export const destroy = async (req, res) => {
         const model = await Plan.query()
             .findById(id)
             .delete()
+            .returning('*')
             .first();
 
         return res.json(model);
