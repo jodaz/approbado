@@ -227,7 +227,11 @@ export const destroyByUsersId = async (req, res) => {
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Trivia.query().findById(id).delete().first();
+    const model = await Trivia.query()
+        .findById(id)
+        .delete()
+        .returning('*')
+        .first();
 
     return res.json(model);
 }

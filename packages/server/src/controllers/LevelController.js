@@ -33,12 +33,8 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { name } = req.body;
-
         try {
-            const model = await Level.query().insert({
-                name: name,
-            })
+            const model = await Level.query().insert(req.body)
 
             return res.status(201).json(model)
         } catch (error) {
@@ -88,6 +84,7 @@ export const destroy = async (req, res) => {
         const model = await Level.query()
             .findById(id)
             .delete()
+            .returning('*')
             .first();
 
         return res.json(model);

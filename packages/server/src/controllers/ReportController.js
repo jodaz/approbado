@@ -124,7 +124,11 @@ export const destroy = async (req, res) => {
 
     try {
         await UserReport.query().where('report_id', id).delete();
-        const model = await Report.query().findById(id).delete().first();
+        const model = await Report.query()
+            .findById(id)
+            .delete()
+            .returning('*')
+            .first();
 
         return res.json(model);
     } catch (error) {

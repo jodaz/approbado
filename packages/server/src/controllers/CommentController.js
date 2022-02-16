@@ -102,7 +102,11 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
-        const model = await Post.query().findById(id).delete();
+        const model = await Post.query()
+            .findById(id)
+            .delete()
+            .returning('*')
+            .first();
 
         return res.json(model);
     } catch (error) {

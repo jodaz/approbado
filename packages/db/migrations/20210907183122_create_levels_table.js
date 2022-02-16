@@ -4,6 +4,7 @@ export async function up(knex) {
   return knex.schema.createTable('levels', table => {
     table.increments('id').primary();
     table.string('name');
+    table.string('color');
     table.timestamps();
   });
 }

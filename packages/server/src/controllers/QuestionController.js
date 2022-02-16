@@ -162,6 +162,7 @@ export const destroy = async (req, res) => {
         const model = await Question.query()
             .findById(id)
             .delete()
+            .returning('*')
             .first();
 
         return res.json(model);
