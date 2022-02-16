@@ -95,7 +95,8 @@ const useStyles = makeStyles(theme => ({
         marginRight: '1rem',
         padding: '6px 0',
         color: theme.palette.info.light,
-        fontWeight: 400
+        fontWeight: 400,
+        alignItems: 'center'
     }
 }))
 
