@@ -58,13 +58,16 @@ export const store = async (req, res) => {
 
 export const show = async (req, res) => {
     const { id } = req.params
+    const { user } = req
 
     try {
         const model = await Post.query()
             .findById(id)
             .select(
                 Post.ref('*'),
-                Post.relatedQuery('comments').count().as('commentsCount')
+                Post.relatedQuery('comments').count().as('commentsCount'),
+                Post.relatedQuery('likes').count().as('likesCount'),
+                Post.relatedQuery('likes').where('user_id', user.id).count().as('likeUser'),
             )
             .where('type', 'Comentario')
             .withGraphFetched('owner')
