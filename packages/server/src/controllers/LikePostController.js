@@ -23,6 +23,37 @@ export const store = async (req, res) => {
     }
 }
 
+export const update = async (req, res) => {
+    const { user } = req
+
+    try {
+        const { post_id } = req.params;
+
+        let model = await LikePost.query().findOne({
+            post_id: post_id,
+            user_id: user.id
+        })
+
+        if (model) {
+            model = await model.$query()
+                .delete()
+                .returning('*')
+                .first();
+        } else {
+            model = await LikePost.query().insert({
+                post_id: post_id,
+                user_id: user.id
+            })
+        }
+
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json(error)
+    }
+}
+
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
 

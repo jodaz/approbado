@@ -119,6 +119,10 @@ export const show = async (req, res) => {
             .where('type', 'Foro')
             .withGraphFetched('[owner,categories,trivia]')
 
+        if (model) {
+            model.categories_ids = model.categories.map(item => item.id)
+        }
+
         return res.status(201).json(model)
     } catch (error) {
         console.log(error)
@@ -133,9 +137,13 @@ export const update = async (req, res) => {
     if (!reqErrors) {
         try {
             const { id } = req.params
-            const { categories_ids, ...rest } = req.body;
+            const { categories_ids, message, summary, trivia_id } = req.body;
 
-            const model = await Post.query().updateAndFetchById(id, rest)
+            const model = await Post.query().updateAndFetchById(id, {
+                message: message,
+                summary: summary,
+                trivia_id: trivia_id
+            })
 
             await model.$relatedQuery('categories').unrelate()
             await model.$relatedQuery('categories').relate(categories_ids)

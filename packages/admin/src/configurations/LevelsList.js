@@ -8,11 +8,13 @@ import {
 import DatagridOptions from '../components/DatagridOptions';
 import CreateButton from '../components/CreateButton'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
+import { ColorField } from 'react-admin-color-input';
 
 const LevelsDatagrid = props => (
     <Datagrid optimized>
         <TextField label='#ID' source="id" />
         <TextField label='Nombre' source="name" />
+        <ColorField source='color' record='1' />
         <DatagridOptions
             basePath='configurations/levels'
             confirmTitle='Eliminar nivel'

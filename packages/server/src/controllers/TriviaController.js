@@ -175,43 +175,63 @@ export const show = async (req, res) => {
         .withGraphFetched('plans')
         .first();
 
+    if (model) {
+        model.plans_ids = model.plans.map(item => item.id)
+    }
+
     return res.status(201).json(model)
 }
 
 export const showGrupal = async (req, res) => {
     const { token } = req.params
 
-    const model = await TriviaGrupal.query()
-                                    .where('link',token)
-                                    .withGraphFetched('subtheme')
-                                    .withGraphFetched('participants')
-                                    .first()
+    try {
+        const model = await TriviaGrupal.query()
+            .where('link',token)
+            .withGraphFetched('subtheme')
+            .withGraphFetched('participants')
+            .first()
 
-    return res.status(201).json(model)
+        return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const destroyByUsersId = async (req, res) => {
     let token = req.params.token
 
-    const model = await TriviaGrupal.query()
-                                    .where('link',token)
-                                    .withGraphFetched('subtheme')
-                                    .withGraphFetched('participants')
-                                    .first()
+    try {
+        const model = await TriviaGrupal.query()
+            .where('link',token)
+            .withGraphFetched('subtheme')
+            .withGraphFetched('participants')
+            .first()
 
-    const results = await Question.query()
-                          .where('subtheme_id', subtheme_id)
-                          .where('level_id', level_id)
-                          .withGraphFetched('options')
+        const results = await Question.query()
+            .where('subtheme_id', subtheme_id)
+            .where('level_id', level_id)
+            .withGraphFetched('options')
 
-    //const model = await Answer.query().where('user_id',`${user_id}`).delete();
+        //const model = await Answer.query().where('user_id',`${user_id}`).delete();
 
-    return res.json(model);
+        return res.json(model);
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
 }
 
 export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
-    const model = await Trivia.query().findById(id).delete().first();
+    const model = await Trivia.query()
+        .findById(id)
+        .delete()
+        .returning('*')
+        .first();
 
     return res.json(model);
 }

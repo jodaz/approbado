@@ -11,5 +11,10 @@ export const createLevelSchema = {
         notEmpty: {
             errorMessage: 'Ingrese un nombre para el nivel.'
         }
+    },
+    color: {
+        notEmpty: {
+            errorMessage: 'Seleccione un color.'
+        }
     }
 };

@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import CONFIG_NAMES from '../configs'
 
 export const authProvider = () => ({
@@ -24,19 +23,6 @@ export const authProvider = () => ({
 
         return Promise.resolve()
     },
-    getPermissions: async () => {
-        const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
-
-        return permissions ? Promise.resolve(permissions) : Promise.resolve('guest');
-    },
-    getIdentity: async () => {
-        const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN);
-
-        if (token) {
-            const { exp, iat, ...rest } = jwtDecode(token);
-            return Promise.resolve(rest);
-        }
-
-        return Promise.reject()
-    }
+    getPermissions: () => Promise.resolve(),
+    getIdentity: () => Promise.resolve()
 });

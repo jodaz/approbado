@@ -25,6 +25,7 @@ const AppLayout = () => (
         <Resource name='files' />
         <Resource name='users' />
         <Resource name='comments' />
+        <Resource name='like-posts' />
         <Resource name='report-reasons' />
         <Resource name="configurations/categories" />
         <Resource name="configurations/levels" />

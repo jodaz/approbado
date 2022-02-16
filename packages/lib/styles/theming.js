@@ -43,7 +43,7 @@ const theme = {
                 display: 'flex',
                 flexDirection: 'column',
                 [breakpoints.up('sm')]: {
-                    padding: '0 2.5rem !important'
+                    padding: '0 2.5rem 3rem 2.5rem !important'
                 }
             },
             appFrame: {

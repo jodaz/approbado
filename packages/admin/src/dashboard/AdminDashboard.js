@@ -3,9 +3,10 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CardButton from './CardButton'
 import UserCard from './UserCard'
-import { useDataProvider, Query } from 'react-admin'
+import { Query } from 'react-admin'
 import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
+import { axios } from '@approbado/lib/providers'
 
 const initialState = {
     'users': {
@@ -39,17 +40,10 @@ const payload = {
 
 const AdminDashboard = () => {
     const [state, setState] = React.useState(initialState);
-    const dataProvider = useDataProvider();
     const spinnerClasses = useSpinnerStyles();
 
     const fetchUsers = React.useCallback(async () => {
-        const { total } = await dataProvider.getList(
-            'users',
-            {
-                filter: { is_registered: true },
-                pagination: { page: 1, perPage: 100 },
-            }
-        );
+        const { total } = await axios.get('users?filter%5Bis_registered%5D=true')
 
         setState(state => ({
             ...state,
@@ -59,16 +53,10 @@ const AdminDashboard = () => {
                 total: total
             }
         }));
-    }, [dataProvider]);
+    }, []);
 
     const fetchTrivias = React.useCallback(async () => {
-        const { total } = await dataProvider.getList(
-            'trivias',
-            {
-                pagination: { page: 1, perPage: 100 },
-                filter: { active: true },
-            }
-        );
+        const { total } = await axios.get('trivias');
 
         setState(state => ({
             ...state,
@@ -78,15 +66,10 @@ const AdminDashboard = () => {
                 total: total
             }
         }));
-    }, [dataProvider]);
+    }, []);
 
     const fetchMemberships = React.useCallback(async () => {
-        const { total } = await dataProvider.getList(
-            'memberships',
-            {
-                pagination: { page: 1, perPage: 100 },
-            }
-        );
+        const { total } = await axios.get('memberships')
 
         setState(state => ({
             ...state,
@@ -96,7 +79,7 @@ const AdminDashboard = () => {
                 total: total
             }
         }));
-    }, [dataProvider]);
+    }, []);
 
     React.useEffect(() => {
         fetchUsers();

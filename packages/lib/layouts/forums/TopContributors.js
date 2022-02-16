@@ -75,6 +75,16 @@ const AsideBar = ({ isXSmall }) => {
                             }
                             if (error) { return null; }
 
+                            if (total == 0) return (
+                                <Box className={classes.description} paddingTop='2rem' >
+                                    <Typography component={'p'} variant="body1">
+                                        No tenemos contribuidores disponibles
+                                        {' '}
+                                        <Emoji symbol="😔" />
+                                    </Typography>
+                                </Box>
+                            )
+
                             return (
                                 <Box>
                                     {data.map(user =>
@@ -96,15 +106,6 @@ const AsideBar = ({ isXSmall }) => {
                                                     {user.contributionsCount} discusiones
                                                 </Box>
                                             </Box>
-                                        </Box>
-                                    )}
-                                    {(total == 0) && (
-                                        <Box className={classes.description}>
-                                            <Typography component={'p'} variant="body1">
-                                                No tenemos contribuidores disponibles
-                                                {' '}
-                                                <Emoji symbol="😔" />
-                                            </Typography>
                                         </Box>
                                     )}
                                 </Box>

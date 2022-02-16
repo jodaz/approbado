@@ -88,8 +88,10 @@ export const destroy = async (req, res) => {
     const notification = await Notification.query().findById(id)
 
     const notifications = await user.$relatedQuery('notifications')
-                                    .where('notifications.data',notification.data)
-                                    .delete()
+        .where('notifications.data',notification.data)
+        .delete()
+        .returning('*')
+        .first();
 
     return res.json(notifications);
 }

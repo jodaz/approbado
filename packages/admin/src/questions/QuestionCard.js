@@ -8,9 +8,19 @@ import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import cardStyles from '@approbado/lib/styles/cardStyles'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import MenuButton from '@approbado/lib/components/MenuButton'
+import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import { history } from '@approbado/lib/providers'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
+        <MenuButton
+            label="Editar"
+            onClick={() =>
+                history.push(`/trivias/${props.record.trivia_id}/subthemes/${props.record.subtheme_id}/questions/${props.record.id}`)
+            }
+            icon={<EditIcon />}
+        />
         <DeleteButton
             basePath='questions'
             confirmColor='warning'

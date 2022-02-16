@@ -5,7 +5,6 @@ import {
     useNotify,
     ReferenceInput,
     useRefresh,
-    SelectArrayInput,
     ReferenceArrayInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -15,7 +14,6 @@ import { useFileProvider } from '@jodaz_/file-provider'
 import ImageInput from '@approbado/lib/components/ImageInput'
 import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
-import { Field } from 'react-final-form';
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
 import { checkArray } from '@approbado/lib/utils/checkArray'
 
@@ -36,11 +34,9 @@ const validate = (values) => {
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
-    if (!checkArray(values.plans)) {
-        errors.plans = "Seleccione un plan.";
+    if (values.plans_ids) {
+        errors.plans_ids = "Seleccione un plan.";
     }
-
-    console.log(values)
 
     return errors;
 };
@@ -111,12 +107,12 @@ const TriviaEdit = ({ record }) => {
             </InputContainer>
             <InputContainer labelName='Planes'>
                 <ReferenceArrayInput
-                    source='plans'
+                    source='plans_ids'
                     reference='memberships/plans'
                     allowEmpty
                     fullWidth
                 >
-                    <SelectArrayInput />
+                    <MultipleSelectTag />
                 </ReferenceArrayInput>
             </InputContainer>
         </BaseForm>

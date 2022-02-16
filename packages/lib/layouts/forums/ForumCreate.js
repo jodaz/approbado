@@ -15,6 +15,7 @@ import {
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
+import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
 
 const ForumCreate = () => {
     const status = useDialogState('forums.create');
@@ -89,7 +90,7 @@ const ForumCreate = () => {
                                         reference="configurations/categories"
                                         fullWidth
                                     >
-                                        <SelectArrayInput />
+                                        <MultipleSelectTag />
                                     </ReferenceArrayInput>
                                 </InputContainer>
                             </Grid>

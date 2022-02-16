@@ -7,8 +7,6 @@ import Spinner from '@approbado/lib/components/Spinner'
 const DatagridListView = ({ datagrid, actions }) => {
     const { loading, total, ids, data } = useListContext();
 
-    if (loading) return <Spinner />;
-
     return (
         <ListContainer
             actions={
@@ -16,9 +14,11 @@ const DatagridListView = ({ datagrid, actions }) => {
                     {actions}
                 </FilterContext.Provider>
             }
-            list={(!ids || !data || !total)
-                ? <EmptyMessageComponent message='Sin registros'  />
-                : <>{datagrid}</>
+            list={
+                (loading) ? <Spinner />
+                : (!ids || !data || !total)
+                    ? <EmptyMessageComponent message='Sin registros'  />
+                    : <>{datagrid}</>
             }
         />
     )
