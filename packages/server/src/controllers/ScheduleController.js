@@ -109,38 +109,38 @@ export const get_schedules = async () => {
 
     try{
         for (var i = 0; i < schedules.length; i++) {
-            
+
             if (schedules[i].notify_before) {
-                
+
                 let participants = await schedules[i].$relatedQuery('participants').select('users.id')
                 let ids = [];
 
                 participants.forEach(participant => {
                     ids.push(participant.id)
                 })
-               
+
                 let data_push_notification = {
                     title:  'Aviso de Evento',
                     body :   `Dentro de 30 minutos comenzará el evento: `+schedules[i].title,
                     data : {
                         path : {
-                            name : 'details_trivia', 
+                            name : 'details_trivia',
                             params : { trivia_id : schedules[i].id},
                             query : {
                                 ...schedules[i] ,
                                 button_enable : true
                             },
-                        },    
+                        },
                         message :  `Dentro de 30 minutos comenzará el evento: `+schedules[i].title
                     }
                 }
-            }       
+            }
 
         await sendNotification(data_push_notification,ids)
         }
     }catch(error){
         console.log(error)
-    }   
+    }
 }
 
 
@@ -278,7 +278,7 @@ export const destroy = async (req, res) => {
     try {
         const model = await Schedule.query().findById(id);
         await model.$relatedQuery('participants').unrelate()
-        await Schedule.query().findById(id).delete();
+        await model.$query().delete().returning('*').first();
 
         return res.json(model);
     } catch(error){

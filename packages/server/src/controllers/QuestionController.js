@@ -127,10 +127,13 @@ export const update = async (req, res) => {
     if (!reqErrors) {
         try {
             const { id } = req.params
-            const { options, ...rest } = req.body;
-
+            // const { options, ...rest } = req.body;
+            console.log(req.body)
             const model = await Question.query()
-                .updateAndFetchById(id, rest)
+                .upsertGraphAndFetch({
+                    id: id,
+                    ...req.body
+                })
 
             return res.status(201).json(model)
         } catch (error) {
@@ -146,6 +149,7 @@ export const show = async (req, res) => {
 
     try {
         const model = await Question.query().findById(id)
+            .withGraphFetched('options')
 
         return res.status(201).json(model)
     } catch (error) {
@@ -162,6 +166,7 @@ export const destroy = async (req, res) => {
         const model = await Question.query()
             .findById(id)
             .delete()
+            .returning('*')
             .first();
 
         return res.json(model);
