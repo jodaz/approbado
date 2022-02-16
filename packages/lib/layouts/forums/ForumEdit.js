@@ -13,7 +13,7 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
 
-const validate = (values) => {
+const validate = values => {
     const errors = {};
 
     if (!values.message) {
@@ -22,11 +22,14 @@ const validate = (values) => {
     if (!values.trivia_id) {
         errors.trivia_id = "Seleccione una trivia.";
     }
+    if (!values.categories_ids) {
+        errors.categories_ids = "Seleccione al menos una categoría";
+    }
 
     return errors;
 };
 
-const TriviaEdit = props => {
+const ForumEdit = props => {
     const editControllerProps = useEditController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
@@ -88,7 +91,7 @@ const TriviaEdit = props => {
                     <SelectInput />
                 </ReferenceInput>
             </InputContainer>
-            <InputContainer labelName='Trivia' sx={12} md={6}>
+            <InputContainer labelName='Categorías' sx={12} md={6}>
                 <ReferenceArrayInput
                     source="categories_ids"
                     reference="configurations/categories"
@@ -101,4 +104,4 @@ const TriviaEdit = props => {
     )
 }
 
-export default TriviaEdit
+export default ForumEdit

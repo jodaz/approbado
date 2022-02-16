@@ -126,14 +126,6 @@ const MultipleSelectTag = props => {
         [getChoiceValue, getDisableValue, createItem, input]
     );
 
-    React.useEffect(async () => {
-        if (!isEmpty(value) && !input.value.length) {
-            const values = await value.map(item => item.id)
-
-            input.value = values
-        }
-    }, [value, input]);
-
     if (loading) {
         return (
             <Labeled

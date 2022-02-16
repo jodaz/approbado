@@ -17,6 +17,15 @@ export const createTriviaSchema = {
     }
 };
 
+export const editTriviaSchema = {
+    ...createTriviaSchema,
+    plans_ids: {
+        notEmpty: {
+            errorMessage: 'Seleccione una opción'
+        }
+    }
+};
+
 export const createTriviaGrupalSchema = {
     link: {
         notEmpty: {

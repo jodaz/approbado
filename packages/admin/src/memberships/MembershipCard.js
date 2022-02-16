@@ -8,9 +8,17 @@ import DeleteButton from '@approbado/lib/components/DeleteButton'
 import Divider from '@material-ui/core/Divider';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import cardStyles from '@approbado/lib/styles/cardStyles'
+import MenuButton from '@approbado/lib/components/MenuButton'
+import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import { history } from '@approbado/lib/providers'
 
 const OptionsMenu = props => (
     <OptionsCardMenu>
+        <MenuButton
+            label="Editar"
+            onClick={() => history.push(`/memberships/plans/${props.record.id}`)}
+            icon={<EditIcon />}
+        />
         <DeleteButton
             basePath='memberships/plans'
             confirmColor='warning'

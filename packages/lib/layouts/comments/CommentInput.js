@@ -71,6 +71,8 @@ const validate = (values) => {
         if (values.summary.length > 250) {
             errors.summary = 'Máximo 250 caracteres'
         }
+    } else {
+        errors.summary = 'Escriba una respuesta.'
     }
 
     return errors;

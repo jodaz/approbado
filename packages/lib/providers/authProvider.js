@@ -6,7 +6,6 @@ export const authProvider = () => ({
     checkError: async (error) => {
         const { response } = error;
 
-        console.log("Token in check auth ", localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN))
         if (response.status === 401 || response.status === 403) {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
         }
