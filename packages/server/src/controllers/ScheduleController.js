@@ -151,7 +151,7 @@ export const store = async (req, res) => {
         const { users_ids, ...schedule } = req.body;
 
         try {
-            const model = await Schedule.query().insert(schedule)
+            const model = await Schedule.query().insert({...schedule, starts_at : new Date(schedule.starts_at).toLocaleString() })
             await model.$relatedQuery('participants').relate(users_ids)
 
             let participants = await model.$relatedQuery('participants')
