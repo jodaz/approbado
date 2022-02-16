@@ -20,6 +20,7 @@ import QuestionsCreate from './questions/QuestionCreate'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import QuestionsUpload from './questions/QuestionsUpload'
 import BlacklistedUserShow from './blacklistedUsers/BlacklistedUserShow'
+import QuestionEdit from './questions/QuestionEdit'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -81,6 +82,10 @@ export default [
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create"
         render={() => <QuestionsCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id"
+        render={() => <QuestionEdit />}
     />,
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload"
