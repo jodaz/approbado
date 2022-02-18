@@ -18,20 +18,14 @@ import configs from '@approbado/lib/configs'
 const validate = (values) => {
     const errors = {};
 
-    // if (!values.title) {
-    //     errors.title = "Ingrese un nombre para el archivo.";
-    // }
-    // if (!values.subtheme_id) {
-    //     errors.subtheme_id = "Seleccione un subtema.";
-    // }
-    // if (!values.file) {
-    //     errors.file = "Ingrese un archivo.";
-    // }
+    if (!values.file) {
+        errors.file = "Ingrese un archivo.";
+    }
 
     return errors;
 };
 
-const FileCreate = () => {
+const QuestionsUpload = () => {
     const { trivia_id, subtheme_id } = useParams()
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
@@ -65,6 +59,7 @@ const FileCreate = () => {
             save={save}
             validate={validate}
             loading={loading}
+            unresponsive
         >
             <Box marginBottom="1rem">
                 <Typography variant="h5" component="div" gutterBottom paragraph>
@@ -73,7 +68,11 @@ const FileCreate = () => {
                 <Typography variant="subtitle1" gutterBottom component="div">
                     Descarga el archivo con el formato en excel y súbelo con los datos que deseas ingresar a la plataforma.
                 </Typography>
-                <Link href={`${configs.SOURCE}/public/default/Preguntas_FORMATO.xlsx`} underline="always" color="info">
+                <Link
+                    href={`${configs.SOURCE}/public/default/Preguntas_FORMATO.xlsx`}
+                    underline="always"
+                    color="info"
+                >
                     Descargar formato
                 </Link>
             </Box>
@@ -88,4 +87,4 @@ const FileCreate = () => {
     )
 }
 
-export default FileCreate
+export default QuestionsUpload

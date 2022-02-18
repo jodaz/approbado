@@ -3,10 +3,12 @@ import {
     TextField,
     FilterLiveSearch,
     ListBase,
+    DateInput,
     TopToolbar
 } from 'react-admin'
 import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
+import { Form } from 'react-final-form';
 
 const UsersDatagrid = props => (
     <Datagrid optimized>
@@ -16,9 +18,16 @@ const UsersDatagrid = props => (
     </Datagrid>
 )
 
-const ListActions = () => (
+const ListActions = props => (
     <TopToolbar>
-        <FilterLiveSearch source="global_search" />
+        <Form onSubmit={() => console.log("hello")}
+            render={() => (
+                <>
+                    <FilterLiveSearch source="global_search" />
+                    <DateInput source="created_at" />
+                </>
+            )}
+        />
     </TopToolbar>
 );
 

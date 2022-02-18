@@ -84,12 +84,12 @@ export default [
         render={() => <QuestionsCreate />}
     />,
     <Route
-        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id"
-        render={() => <QuestionEdit />}
-    />,
-    <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload"
         render={() => <QuestionsUpload />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id"
+        render={() => <QuestionEdit />}
     />,
     <RouteWithoutLayout
         path="/update-password"
