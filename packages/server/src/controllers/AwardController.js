@@ -323,7 +323,6 @@ export const show = async (req, res) => {
     try {
         const model = await Award.query()
             .findById(id)
-            .withGraphFetched('awards')
 
         return res.status(201).json(model)
     } catch(error) {

@@ -150,11 +150,11 @@ const UploadFileButton = props => {
                             })}
                         />
                         <Typography variant="subtitle1" component="span">
-                        {'Subir archivo'}
+                        Subir archivo
                         </Typography>
                     </>
                 ) : (
-                    <Spinner className={classes.className} spinnerClassName={classes.loader} />
+                    <Spinner root={classes.className} loader={classes.loader} />
                 )}
             </div>
             <FormHelperText>
@@ -175,7 +175,7 @@ const UploadFileButton = props => {
 };
 
 UploadFileButton.defaultProps = {
-    children: <></>
+    children: <></>,
 }
 
 export default UploadFileButton;

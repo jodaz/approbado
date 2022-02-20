@@ -3,8 +3,9 @@ import {
     TextInput,
     useRedirect,
     useNotify,
+    NumberInput,
     SelectInput,
-    ReferenceInput
+    useEditController
 } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
@@ -12,22 +13,27 @@ import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
-import UploadFileButton from '@approbado/lib/components/UploadFileButton'
-import validate from './validateFileForm'
+import validate from './validateAwardForm'
+import Spinner from '@approbado/lib/components/Spinner'
+import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
 
-const FileCreate = () => {
-    const { trivia_id } = useParams()
+const AwardsEdit = props => {
+    const { award_id, trivia_id } = useParams();
+    const editControllerProps = useEditController({
+        ...props,
+        id: award_id
+    });
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        const data = { trivia_id: trivia_id, ...values };
+        const data = { id: award_id, ...values };
 
         try {
             await provider({
-                resource: 'files',
-                type: 'create',
+                resource: 'awards',
+                type: 'update',
                 payload: data
             });
         } catch (error) {
@@ -39,16 +45,21 @@ const FileCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('¡Ha registrado un nuevo archivo!', 'success')
-            redirect(`/trivias/${trivia_id}/show?tab=files`)
+            notify('Se ha completado la actualización con éxito', 'success')
+            redirect('/configurations?tab=levels')
         }
     }, [fileDataResponse])
+
+    const { record, loading: isRecordFetched } = editControllerProps
+
+    if (isRecordFetched) return <Spinner />
 
     return (
         <BaseForm
             save={save}
             validate={validate}
-            formName='Crear archivo'
+            formName='Editar premio'
+            record={record}
             loading={loading}
         >
             <InputContainer labelName='Nombre'>
@@ -58,25 +69,28 @@ const FileCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Subtema'>
-                <ReferenceInput
-                    source='subtheme_id'
-                    reference='subthemes'
-                    filter={{ trivia_id: trivia_id }}
-                    allowEmpty
+            <InputContainer labelName='Ingresa los puntos'>
+                <NumberInput
+                    source="min_points"
+                    placeholder="Ingresa los puntos"
                     fullWidth
-                >
-                    <SelectInput source="title" emptyText="N/A" optionText="name" />
-                </ReferenceInput>
-            </InputContainer>
-            <InputContainer labelName="" xs={12} md={12}>
-                <UploadFileButton
-                    name="file"
-                    accept='application/pdf'
                 />
             </InputContainer>
+            <InputContainer labelName='Tipo de premio'>
+                <SelectInput
+                    source="type"
+                    choices={ACCESS_TYPES}
+                    fullWidth
+                />
+            </InputContainer>
+            <FileInput />
         </BaseForm>
     )
 }
 
-export default FileCreate
+AwardsEdit.defaultProps = {
+    basePath: '/awards',
+    resource: 'awards'
+}
+
+export default AwardsEdit

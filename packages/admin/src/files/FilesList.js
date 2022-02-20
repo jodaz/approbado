@@ -36,7 +36,7 @@ const FileListView = ({ trivia_id }) => (
                 <ListActions trivia_id={trivia_id} />
             </FilterContext.Provider>
         }
-        list={<GridList component={<FileCard />} />}
+        list={<GridList component={<FileCard trivia_id={trivia_id} />} />}
     />
 );
 

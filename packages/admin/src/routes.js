@@ -16,11 +16,13 @@ import SubthemeCreate from './subthemes/SubthemeCreate'
 import SubthemeShow from './subthemes/SubthemeShow';
 import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
+import FileEdit from './files/FileEdit'
 import QuestionsCreate from './questions/QuestionCreate'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import QuestionsUpload from './questions/QuestionsUpload'
 import BlacklistedUserShow from './blacklistedUsers/BlacklistedUserShow'
 import QuestionEdit from './questions/QuestionEdit'
+import AwardEdit from './awards/AwardEdit'
 
 export default [
     <Route exact path="/configurations" render={() => <Configurations />} />,
@@ -62,6 +64,14 @@ export default [
     <Route
         path="/trivias/:trivia_id/awards/create"
         render={() => <AwardsCreate />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/files/:file_id"
+        render={() => <FileEdit />}
+    />,
+    <Route
+        path="/trivias/:trivia_id/awards/:award_id"
+        render={() => <AwardEdit />}
     />,
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/show"

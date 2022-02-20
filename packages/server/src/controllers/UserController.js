@@ -11,18 +11,15 @@ export const index = async (req, res) => {
         if (filter) {
             if (filter.global_search) {
                 query.where('names', 'ilike', `%${filter.global_search}%`)
-                    .orWhere('email', 'ilike', `%${filter.global_search}%`)
-                    .orWhere('user_name', 'ilike', `%${filter.global_search}%`)
-                    .orWhere('rol', 'ilike', `%${filter.global_search}%`)
             }
             if (filter.email) {
-                query.orWhere('email', 'ilike', `%${filter.email}%`)
+                query.where('email', 'ilike', `%${filter.email}%`)
             }
             if (filter.user_name) {
-                query.orWhere('user_name', 'ilike', `%${filter.user_name}%`)
+                query.where('user_name', 'ilike', `%${filter.user_name}%`)
             }
             if (filter.is_registered) {
-                query.orWhere('is_registered', filter.is_registered)
+                query.where('is_registered', filter.is_registered)
                     .withGraphFetched('posts')
             }
             if (filter.in_blacklist) {
@@ -37,6 +34,12 @@ export const index = async (req, res) => {
                         .countDistinct('users_reports.id')
                         .as('usersReportsCount')
                 ]);
+            }
+            if (filter.gt_date) {
+                query.where('created_at', '>=', `%${filter.gt_date}%`)
+            }
+            if (filter.lt_date) {
+                query.where('created_at', '<', `%${filter.lt_date}%`)
             }
         }
 

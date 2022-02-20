@@ -9,9 +9,17 @@ import cardStyles from '@approbado/lib/styles/cardStyles'
 import { ReactComponent as Subtract } from '@approbado/lib/icons/Subtract.svg'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 import Link from '@material-ui/core/Link'
+import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import { history } from '@approbado/lib/providers'
+import MenuButton from '@approbado/lib/components/MenuButton'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
+        <MenuButton
+            label="Editar"
+            onClick={() => history.push(`/trivias/${props.trivia_id}/files/${props.record.id}`)}
+            icon={<EditIcon />}
+        />
         <DeleteButton
             basePath='files'
             confirmColor='warning'
@@ -23,14 +31,14 @@ const OptionsMenu = props => (
     </OptionsCardMenu>
 );
 
-const FileCard = ({ data, id }) => {
+const FileCard = ({ data, trivia_id }) => {
     const classes = cardStyles();
 
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={<Subtract />}
-                action={<OptionsMenu record={data} />}
+                action={<OptionsMenu record={data} trivia_id={trivia_id} />}
                 title={
                     <Link
                         href={`${configs.SOURCE}/${data.file}`}

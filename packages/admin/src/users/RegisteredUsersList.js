@@ -1,14 +1,53 @@
 import {
     Datagrid,
     TextField,
-    FilterLiveSearch,
     ListBase,
     DateInput,
-    TopToolbar
+    useListContext,
+    TopToolbar,
+    FilterLiveSearch
 } from 'react-admin'
+import { Form } from 'react-final-form';
+import Box from '@material-ui/core/Box';
 import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
-import { Form } from 'react-final-form';
+import DownloadButton from '../components/DownloadButton'
+
+const FormFilter = props => {
+    const {
+        filterValues,
+        setFilters
+    } = useListContext();
+
+    const onSubmit = (values) => {
+        if (Object.keys(values).length > 0) {
+            setFilters(values);
+        }
+    };
+
+    return (
+        <Form
+            onSubmit={onSubmit}
+            initialValues={filterValues}
+            {...props}
+            render={ ({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                    <Box display="flex" alignItems="center" mb={1}>
+                        <Box component="span" mr={2}>
+                            <FilterLiveSearch source="global_search" />
+                        </Box>
+                        <Box component="span" mr={2}>
+                            <DateInput source="gt_date" label="Desde" />
+                        </Box>
+                        <Box component="span" mr={2}>
+                            <DateInput source="lt_date" label="Hasta" />
+                        </Box>
+                    </Box>
+                </form>
+            )}
+        />
+    );
+};
 
 const UsersDatagrid = props => (
     <Datagrid optimized>
@@ -20,16 +59,10 @@ const UsersDatagrid = props => (
 
 const ListActions = props => (
     <TopToolbar>
-        <Form onSubmit={() => console.log("hello")}
-            render={() => (
-                <>
-                    <FilterLiveSearch source="global_search" />
-                    <DateInput source="created_at" />
-                </>
-            )}
-        />
+        <FormFilter {...props} />
+        <DownloadButton />
     </TopToolbar>
-);
+)
 
 const RegisteredUsersList = props => (
     <ListBase

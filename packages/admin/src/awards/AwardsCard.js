@@ -11,9 +11,18 @@ import Avatar from '@material-ui/core/Avatar';
 import Dot from '@approbado/lib/components/Dot';
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 import { ReactComponent as Certificate } from '@approbado/lib/icons/Certificate.svg'
+// Edit button
+import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import { history } from '@approbado/lib/providers'
+import MenuButton from '@approbado/lib/components/MenuButton'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
+        <MenuButton
+            label="Editar"
+            onClick={() => history.push(`/trivias/${props.record.trivia_id}/awards/${props.record.id}`)}
+            icon={<EditIcon />}
+        />
         <DeleteButton
             basePath='awards'
             confirmColor='warning'
