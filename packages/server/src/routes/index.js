@@ -41,7 +41,7 @@ apiRouter.use('/like-posts', isAuthorizedMiddleware, likePostRoutes)
 apiRouter.use('/subthemes', isAuthorizedMiddleware, subthemesRoutes)
 apiRouter.use('/report-reasons', isAuthorizedMiddleware, reportReasonRoutes)
 apiRouter.use('/notifications', isAuthorizedMiddleware, notificationsRoutes)
-apiRouter.use('/memberships/payments', isAuthorizedMiddleware, paymentsRoutes)
+apiRouter.use('/memberships/payments', paymentsRoutes)
 apiRouter.use('/memberships/plans', isAuthorizedMiddleware, plansRoutes)
 apiRouter.use('/memberships', isAuthorizedMiddleware, memberships)
 apiRouter.use('/configurations/levels', isAuthorizedMiddleware, levelsRoutes)
@@ -52,11 +52,13 @@ apiRouter.use('/users', isAuthorizedMiddleware, usersRoutes)
 apiRouter.use('/trivias', isAuthorizedMiddleware, triviasRoutes)
 apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
 apiRouter.use('/fcms', isAuthorizedMiddleware, fcmsRoutes)
+apiRouter.use('/reports', isAuthorizedMiddleware, reportsRoutes)
+apiRouter.use('/blacklisted-users', isAuthorizedMiddleware, blacklistedUsers)
+
+// Authorization routes
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
 apiRouter.use('/update-password-mobile', updatePasswordMobileRouter)
-apiRouter.use('/reports', isAuthorizedMiddleware, reportsRoutes)
-apiRouter.use('/blacklisted-users', isAuthorizedMiddleware, blacklistedUsers)
 
 // Catch all other routes
 apiRouter.use('/*', (req, res) => {

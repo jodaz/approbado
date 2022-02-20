@@ -3,7 +3,6 @@ import { paginatedQueryResponse } from '../utils'
 import pug from 'pug'
 import path from 'path'
 import pdf from 'html-pdf'
-import fs from 'fs'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -19,7 +18,6 @@ export const index = async (req, res) => {
         }
 
         if (sort && order) {
-            console.log(sort);
             switch (sort) {
                 case 'user.email':
                     break;
@@ -41,21 +39,25 @@ export const index = async (req, res) => {
 
 export const download = async (req, res) => {
     try {
-        const query = Payment.query()
+        const query = await Payment.query().withGraphFetched('[user,plan]')
 
-        const compiledFunction = pug.compileFile(path.resolve(__dirname, '../resources/pdf/memberships.pug'));
+        const compiledFunction = pug.compileFile(
+            path.resolve(__dirname, '../resources/pdf/reports/memberships.pug')
+        );
 
         const compiledContent = compiledFunction({
-            name: 'Timothy'
+            records: query,
+            total: '0.00',
+            title: 'Reporte de pagos'
         });
 
-        // await pdf.create(compiledContent).toStream(async (err, stream) => {
-        //     return await res.status(201).json({ data: stream.pipe(fs.createWriteStream('./foo.pdf')) });
-        // });
-        pdf.create(compiledContent).toFile('./businesscard.pdf', function(err, res) {
-            if (err) return console.log(err);
-            console.log(res); // { filename: '/app/businesscard.pdf' }
+        const pdfFilePath = path.resolve(__dirname, '../../public/reports/pagos.pdf');
+
+        await pdf.create(compiledContent).toFile(pdfFilePath, async (error, res) => {
+            if (error) return console.log(error)
         });
+
+        res.download(pdfFilePath)
     } catch (error) {
         console.log(error)
 

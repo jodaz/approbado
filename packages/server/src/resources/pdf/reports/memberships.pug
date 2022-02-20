@@ -1,0 +1,25 @@
+extends ../layouts/template.pug
+
+block content
+    div.content
+        table(style="text-align: center")
+            caption=`${title.toUpperCase()}`
+            thead
+                tr
+                    th(width="5%")='#'
+                    th(width="25%")='CORREO'
+                    th(width="30%")='NOMBRE'
+                    th(width="20%")='MEMBRESÍA'
+                    th(width="20%")='MONTO'
+            tbody
+                each record, index in records
+                    tr
+                        td=`${index+1}`
+                        td=`${record.user.email}`
+                        td=`${record.user.names}`
+                        td=`${record.plan.name}`
+                        td=`${record.amount}`
+        <br>
+        div.bill-info
+            div.col-bill-info
+                div.total-amount=`MONTO TOTAL PROCESADO: ${total}`
