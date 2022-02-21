@@ -52,11 +52,13 @@ apiRouter.use('/users', isAuthorizedMiddleware, usersRoutes)
 apiRouter.use('/trivias', isAuthorizedMiddleware, triviasRoutes)
 apiRouter.use('/awards', isAuthorizedMiddleware, awardsRoutes)
 apiRouter.use('/fcms', isAuthorizedMiddleware, fcmsRoutes)
+apiRouter.use('/reports', isAuthorizedMiddleware, reportsRoutes)
+apiRouter.use('/blacklisted-users', isAuthorizedMiddleware, blacklistedUsers)
+
+// Authorization routes
 apiRouter.use('/auth', authRouter)
 apiRouter.use('/reset-password', resetPasswordRouter)
 apiRouter.use('/update-password-mobile', updatePasswordMobileRouter)
-apiRouter.use('/reports', isAuthorizedMiddleware, reportsRoutes)
-apiRouter.use('/blacklisted-users', isAuthorizedMiddleware, blacklistedUsers)
 
 // Catch all other routes
 apiRouter.use('/*', (req, res) => {

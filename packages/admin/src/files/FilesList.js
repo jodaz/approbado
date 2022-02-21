@@ -12,7 +12,7 @@ import ListContainer from '../components/ListContainer'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
-        <FilterLiveSearch source="global_search" />
+        <FilterLiveSearch source="global_search" label='' />
         <CreateButton basePath={`/trivias/${trivia_id}/files`} />
     </TopToolbar>
 );
@@ -36,7 +36,7 @@ const FileListView = ({ trivia_id }) => (
                 <ListActions trivia_id={trivia_id} />
             </FilterContext.Provider>
         }
-        list={<GridList component={<FileCard />} />}
+        list={<GridList component={<FileCard trivia_id={trivia_id} />} />}
     />
 );
 

@@ -15,13 +15,14 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { FieldArray } from 'react-final-form-arrays'
-import { Form } from 'react-final-form'
+import { Form, Field, FormSpy } from "react-final-form";
 import arrayMutators from 'final-form-arrays'
 import CustomCreateButton from '@approbado/lib/components/Button'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
+import { OnChange } from "react-final-form-listeners";
 
 const validate = (values) => {
     const errors = {};
@@ -65,13 +66,31 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+const WhenFieldChanges = ({ field }) => (
+    <Field name={field} subscription={{}}>
+        {(
+            { input: { onChange } }
+        ) => (
+            <FormSpy subscription={{}}>
+            {({ form }) => (
+                <OnChange name={field}>
+                    {value => {
+                        console.log(field, value)
+                    }}
+                </OnChange>
+            )}
+            </FormSpy>
+        )}
+    </Field>
+);
+
 const QuestionEdit = props => {
     const { subtheme_id, question_id } = useParams()
     const editControllerProps = useEditController({
         ...props,
         id: question_id
     });
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [mutate, { data, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
     const classes = useStyles();
@@ -93,11 +112,11 @@ const QuestionEdit = props => {
     }, [mutate, subtheme_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify(`¡Actualizó la pregunta "${data.description}" exitosamente!`, 'success')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record, loaded: loadedRecord } = editControllerProps
 
@@ -118,7 +137,8 @@ const QuestionEdit = props => {
                     form: {
                         mutators: { push }
                     },
-                    values
+                    values,
+                    submitting
                 }) => {
                     return (
                         <form onSubmit={handleSubmit}>
@@ -134,7 +154,7 @@ const QuestionEdit = props => {
                                         <TextInput
                                             source="description"
                                             placeholder="Ingresa el enunciado"
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -149,13 +169,14 @@ const QuestionEdit = props => {
                                                             placeholder="Ingrese la respuesta"
                                                             fullWidth
                                                             label=""
-                                                            disabled={loading}
+                                                            disabled={submitting}
                                                         />
                                                         <Box width="100%" display="flex" justifyContent="space-between">
                                                             <BooleanInput
                                                                 source={`${name}.is_right`}
                                                                 label="Opción correcta"
                                                             />
+                                                            <WhenFieldChanges field={`${name}.is_right`} />
                                                             <Grid item>
                                                                 <Button
                                                                     variant="outlined"
@@ -192,7 +213,7 @@ const QuestionEdit = props => {
                                         <SelectInput
                                             source="explanation_type"
                                             choices={OPTIONS}
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                             emptyText="Sin aclaratoria"
                                         />
@@ -201,7 +222,7 @@ const QuestionEdit = props => {
                                         <TextInput
                                             source="explanation"
                                             placeholder="Ingrese el texto de la aclaratoria"
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -209,7 +230,7 @@ const QuestionEdit = props => {
                                         <ReferenceInput
                                             source="file_id"
                                             reference="files"
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                             allowEmpty
                                         >
@@ -232,7 +253,7 @@ const QuestionEdit = props => {
                                     <Grid container>
                                         <Grid item xs={12} sm={12} md={4} lg={3}>
                                             <CustomCreateButton
-                                                disabled={loading}
+                                                disabled={submitting}
                                                 onClick={event => {
                                                     if (event) {
                                                         event.preventDefault();

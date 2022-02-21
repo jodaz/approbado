@@ -44,7 +44,7 @@ const DeleteButton = (
     };
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify(`Se ha eliminado el registro con éxito`, 'success')
 
             if (customAction) {

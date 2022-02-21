@@ -26,7 +26,7 @@ const BlacklistedUsersListView = () => (
         actions={
             <FilterContext.Provider>
                 <TopToolbar>
-                    <FilterLiveSearch source="global_search" />
+                    <FilterLiveSearch source="global_search" label='' />
                 </TopToolbar>
             </FilterContext.Provider>
         }

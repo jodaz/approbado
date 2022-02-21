@@ -47,7 +47,7 @@ const ForumListView = ({ sort, filter, perPage, page: initialPage }) => {
             setItems([...items, ...data])
             setLoadMore(total > items.length)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const handleLoadMore = async () => {
         await setPage(page + 1)

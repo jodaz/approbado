@@ -1,58 +1,67 @@
 import * as React from 'react'
 import {
-    useMutation,
     TextInput,
+    useRedirect,
     useNotify,
-    useRefresh
+    SelectInput,
+    ReferenceInput,
+    useEditController
 } from 'react-admin'
+import { fileProvider } from '@approbado/lib/providers'
+import { useFileProvider } from '@jodaz_/file-provider'
+import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import UploadFileButton from '@approbado/lib/components/UploadFileButton'
+import isEmpty from 'is-empty'
+import validate from './validateFileForm'
+import Spinner from '@approbado/lib/components/Spinner'
 
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.title) {
-        errors.title = "Ingrese el nombre.";
-    }
-    if (!values.duration) {
-        errors.duration = "Ingrese un tiempo límite.";
-    }
-
-    return errors;
-};
-
-const TriviaEdit = ({ record }) => {
-    const [mutate, { data, loading, loaded }] = useMutation();
+const FileEdit = props => {
+    const { file_id, trivia_id } = useParams();
+    const editControllerProps = useEditController({
+        ...props,
+        id: file_id
+    });
+    const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
+    const redirect = useRedirect()
     const notify = useNotify();
-    const refresh = useRefresh()
 
-    const save = React.useCallback(async values => {
+    const save = React.useCallback(async (values) => {
+        const data = { id: file_id, ...values };
+
         try {
-            await mutate({
+            await provider({
+                resource: 'files',
                 type: 'update',
-                resource: 'subthemes',
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+                payload: data
+            });
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [provider, trivia_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (!isEmpty(fileDataResponse)) {
             notify('Se ha completado la actualización con éxito', 'success')
-            refresh()
+            redirect('/configurations?tab=levels')
         }
-    }, [data, loaded])
+    }, [fileDataResponse])
+
+    const { record, loading: isRecordFetched } = editControllerProps
+
+    if (isRecordFetched) return <Spinner />
 
     return (
         <BaseForm
             save={save}
-            disabled={loading}
-            record={record}
             validate={validate}
+            record={record}
+            saveButtonLabel='Actualizar'
+            loading={loading}
+            formName='Editar archivo'
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
@@ -61,15 +70,31 @@ const TriviaEdit = ({ record }) => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Tiempo límite'>
-                <TextInput
-                    source="duration"
-                    placeholder="Tiempo límite"
+            <InputContainer labelName='Subtema'>
+                <ReferenceInput
+                    source='subtheme_id'
+                    reference='subthemes'
+                    filter={{ trivia_id: trivia_id }}
+                    allowEmpty
                     fullWidth
+                >
+                    <SelectInput source="title" emptyText="N/A" optionText="name" />
+                </ReferenceInput>
+            </InputContainer>
+            <InputContainer labelName="" xs={12} md={12}>
+                <UploadFileButton
+                    name="file"
+                    source='file'
+                    accept='application/pdf'
                 />
             </InputContainer>
         </BaseForm>
     )
 }
 
-export default TriviaEdit
+FileEdit.defaultProps = {
+    basePath: '/files',
+    resource: 'files'
+}
+
+export default FileEdit

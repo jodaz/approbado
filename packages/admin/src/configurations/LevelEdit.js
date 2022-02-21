@@ -37,11 +37,11 @@ const LevelEdit = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('Se ha completado la actualización con éxito', 'success')
+        if (loaded) {
+            notify(`¡Ha editado el nivel "${data.name}" exitosamente!`, 'success')
             redirect('/configurations?tab=levels')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record } = editControllerProps
 

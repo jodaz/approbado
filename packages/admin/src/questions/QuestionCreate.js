@@ -105,11 +105,11 @@ const QuestionCreate = () => {
     }, [mutate, subtheme_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('¡Has creado una nueva pregunta!', 'success')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <Box component='div'>

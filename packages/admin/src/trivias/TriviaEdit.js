@@ -15,7 +15,6 @@ import ImageInput from '@approbado/lib/components/ImageInput'
 import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
-import { checkArray } from '@approbado/lib/utils/checkArray'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },

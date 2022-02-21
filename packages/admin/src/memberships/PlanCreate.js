@@ -38,11 +38,11 @@ const PlanCreate = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('Se ha completado el registro con éxito', 'success');
             redirect('/memberships?tab=plans')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm

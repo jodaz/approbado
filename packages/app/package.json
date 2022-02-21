@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@closeio/use-infinite-scroll": "^1.0.0",
-    "@jodaz_/data-provider": "^1.1.0",
+    "@jodaz_/data-provider": "^1.1.5",
     "multer": "^1.4.3",
     "query-string": "^7.0.1",
     "react-infinite-scroll-hook": "^4.0.1",

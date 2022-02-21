@@ -5,7 +5,8 @@ import {
     useRedirect,
     useNotify,
     ReferenceInput,
-    SelectInput
+    SelectInput,
+    NumberInput
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -50,11 +51,11 @@ const SubthemeCreate = () => {
     }, [mutate, trivia_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('¡Has creado un nuevo subtema!', 'success')
+        if (loaded) {
+            notify(`¡Ha creado el subtema "${data.name}"!`, 'success')
             redirect(`/trivias/${trivia_id}/subthemes/${data.id}/show`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm
@@ -71,7 +72,7 @@ const SubthemeCreate = () => {
                 />
             </InputContainer>
             <InputContainer labelName='Tiempo límite'>
-                <TextInput
+                <NumberInput
                     source="duration"
                     placeholder="Tiempo límite"
                     fullWidth

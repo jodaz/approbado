@@ -58,11 +58,11 @@ const TriviaCreate = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('Has creado una nueva trivia', 'success')
+        if (loaded) {
+            notify(`¡Ha registrado la trivia "${data.name}"!`, 'success')
             redirect(`/trivias/${data.id}/show`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <CreateContextProvider value={createControllerProps}>

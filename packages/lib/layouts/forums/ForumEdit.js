@@ -50,11 +50,11 @@ const ForumEdit = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('Se ha completado la actualización con éxito', 'success')
             redirect(`/forums/${record.id}/show`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record, loading: loadingRecord } = editControllerProps;
 

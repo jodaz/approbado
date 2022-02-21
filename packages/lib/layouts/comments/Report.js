@@ -93,7 +93,7 @@ export default function ReportDialog({ id }) {
     }, [mutate, selectedIndex]);
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('¡Ha reportado la publicación exitosamente!', 'success');
             refresh();
             handleClose();

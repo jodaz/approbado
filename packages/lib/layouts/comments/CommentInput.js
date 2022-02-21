@@ -104,7 +104,7 @@ const CommentContainer = () => {
     }, [mutate]);
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('¡Ha publicado un nuevo comentario!', 'success');
             refresh();
         }
