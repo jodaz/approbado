@@ -53,17 +53,17 @@ export const destroyByUserId = async (req, res) => {
     let user_id = parseInt(req.params.user_id)
     let subtheme_id = parseInt(req.params.subtheme_id)
     let level_id = parseInt(req.params.level_id)
-    
+
     const question = await Question.query()
                           .where('subtheme_id', subtheme_id)
                           .where('level_id', level_id)
                           .withGraphFetched('options')
- 
+
 
     for (var i = 0; i < question.length; i++) {
- 
+
         for (var e = 0; e < question[i].options.length; e++) {
-            
+
             let answer = await question[i].options[e]
                                          .$relatedQuery('answers')
                                          .select('answers.*','options.statement')
@@ -73,7 +73,7 @@ export const destroyByUserId = async (req, res) => {
            if (answer !== undefined) {
                 await Answer.query().findById(answer.id).delete();
             }
-            
+
         }
     }
 
