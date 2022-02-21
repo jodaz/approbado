@@ -82,7 +82,9 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const model = await Trivia.query().insert(req.body)
+            const model = await Trivia.query()
+                .insert(req.body)
+                .returning('*')
 
             return res.status(201).json(model)
         } catch (error) {
@@ -100,7 +102,9 @@ export const storeGrupal = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const model = await TriviaGrupal.query().insert(rest)
+            const model = await TriviaGrupal.query()
+                .insert(rest)
+                .returning('*')
 
             await model.$relatedQuery('participants').relate(user_ids)
 
@@ -151,6 +155,7 @@ export const update = async (req, res) => {
                     name: rest.name,
                     category_id: rest.category_id
                 })
+                .returning('*')
 
             await model.$relatedQuery('plans').relate(plans_ids)
 
@@ -209,13 +214,6 @@ export const destroyByUsersId = async (req, res) => {
             .withGraphFetched('subtheme')
             .withGraphFetched('participants')
             .first()
-
-        const results = await Question.query()
-            .where('subtheme_id', subtheme_id)
-            .where('level_id', level_id)
-            .withGraphFetched('options')
-
-        //const model = await Answer.query().where('user_id',`${user_id}`).delete();
 
         return res.json(model);
     } catch (error) {
