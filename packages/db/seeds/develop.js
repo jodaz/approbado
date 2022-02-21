@@ -67,7 +67,8 @@ export async function seed(knex) {
         const plan = await Plan.query().insert({
             name: 'Approbado free',
             duration: 0,
-            amount: 0
+            amount: 0,
+            trivias_in_teams: 0
         });
 
         const payment1 = await user.$relatedQuery('payments').insert({
