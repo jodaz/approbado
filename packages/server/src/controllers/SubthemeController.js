@@ -43,7 +43,11 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const model = await Subtheme.query().insert(req.body)
+            const model = await Subtheme.query()
+                .insert(req.body)
+                .returning('*')
+
+            console.log(model)
 
             return res.status(201).json(model)
         } catch(error){
@@ -61,6 +65,7 @@ export const update = async (req, res) => {
             const { id } = req.params
             const model = await Subtheme.query()
                 .updateAndFetchById(id, req.body)
+                .returning('*')
 
             return res.status(201).json(model)
         } catch(error) {

@@ -29,11 +29,11 @@ const CategoryCreate = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('Se ha completado el registro con éxito', 'success');
+        if (loaded) {
+            notify(`¡Ha registrado la categoría "${data.name}!`, 'success');
             redirect('/configurations?tab=categories')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm

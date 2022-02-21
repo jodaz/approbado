@@ -86,12 +86,12 @@ export default function ReportDialog({ post_id }) {
     }, [mutate, selectedIndex]);
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('¡Ha reportado la publicación exitosamente!', 'success');
             refresh();
             handleClose();
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <div>

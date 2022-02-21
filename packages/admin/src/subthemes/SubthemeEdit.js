@@ -5,7 +5,8 @@ import {
     useNotify,
     useRefresh,
     ReferenceInput,
-    SelectInput
+    SelectInput,
+    NumberInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -46,11 +47,11 @@ const SubthemeEdit = ({ record }) => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('Se ha completado la actualización con éxito', 'success')
             refresh()
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm
@@ -67,7 +68,7 @@ const SubthemeEdit = ({ record }) => {
                 />
             </InputContainer>
             <InputContainer labelName='Tiempo límite'>
-                <TextInput
+                <NumberInput
                     source="duration"
                     placeholder="Tiempo límite"
                     fullWidth

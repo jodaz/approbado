@@ -77,11 +77,11 @@ const UserEdit = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify('Se ha completado la actualización con éxito', 'success')
             redirect('/users?tab=admins')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record } = editControllerProps
 

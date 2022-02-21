@@ -30,11 +30,11 @@ const LevelCreate = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('Se ha completado el registro con éxito', 'success');
+        if (loaded) {
+            notify(`¡Ha registrado el nivel "${data.name}"!`, 'success');
             redirect('/configurations?tab=levels')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>

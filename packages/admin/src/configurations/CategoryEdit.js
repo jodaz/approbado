@@ -36,11 +36,11 @@ const CategoryEdit = props => {
     }, [mutate])
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('Se ha completado la actualización con éxito', 'success')
+        if (loaded) {
+            notify(`¡Ha editado la categoría "${data.name}" exitosamente!`, 'success')
             redirect('/configurations?tab=categories')
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record } = editControllerProps
 

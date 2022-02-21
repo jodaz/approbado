@@ -42,7 +42,7 @@ const AwardsCreate = () => {
             notify('¡Has creado un nuevo premio!', 'success')
             redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     return (
         <BaseForm

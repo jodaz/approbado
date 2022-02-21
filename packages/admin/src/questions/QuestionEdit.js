@@ -112,11 +112,11 @@ const QuestionEdit = props => {
     }, [mutate, subtheme_id])
 
     React.useEffect(() => {
-        if (data && loaded) {
+        if (loaded) {
             notify(`¡Actualizó la pregunta "${data.description}" exitosamente!`, 'success')
             redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
         }
-    }, [data, loaded])
+    }, [loaded])
 
     const { record, loaded: loadedRecord } = editControllerProps
 
