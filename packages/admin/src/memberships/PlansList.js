@@ -11,7 +11,7 @@ import ListContainer from '../components/ListContainer'
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch label='' source="name" />
         <CreateButton basePath="/memberships/plans" />
     </TopToolbar>
 );

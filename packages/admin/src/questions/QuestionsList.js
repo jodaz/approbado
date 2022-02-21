@@ -12,7 +12,7 @@ import Pagination from '@approbado/lib/components/Pagination';
 
 const ListActions = props => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="global_search" label='' />
         {props.trivia_id && <AddQuestionsDialog {...props} />}
     </TopToolbar>
 );

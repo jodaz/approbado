@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
     Datagrid,
     TextField,
@@ -8,6 +9,7 @@ import {
     DateField
 } from 'react-admin'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
+import PaymentsReportDialog from './PaymentsReportDialog'
 
 const PaymentsDatagrid = () => (
     <Datagrid optimized>
@@ -21,7 +23,8 @@ const PaymentsDatagrid = () => (
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="global_search" />
+        <FilterLiveSearch source="global_search" label='' />
+        <PaymentsReportDialog />
     </TopToolbar>
 );
 

@@ -39,7 +39,12 @@ export const index = async (req, res) => {
 
 export const download = async (req, res) => {
     try {
+        const { from, to, payment_method } = req.query.filter;
+
         const query = await Payment.query().withGraphFetched('[user,plan]')
+            .where('created_at', from)
+            .where('created_at', to)
+            .where('payment_method', payment_method)
 
         const compiledFunction = pug.compileFile(
             path.resolve(__dirname, '../resources/pdf/reports/memberships.pug')

@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
         }
     },
     button: {
-        padding: '0.7rem 2rem',
         textTransform: 'none',
         fontSize: '16px',
         borderRadius: '6px',
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomButton = ({ disabled, children, unresponsive, ...rest }) => {
+const CustomButton = ({ disabled, children, unresponsive, icon, ...rest }) => {
     const classes = useStyles();
     const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
@@ -54,7 +53,7 @@ const CustomButton = ({ disabled, children, unresponsive, ...rest }) => {
                 disabled={disabled}
                 {...rest}
             >
-                <PlusIcon />
+                {icon}
             </Fab>
         )
     }
@@ -83,7 +82,8 @@ CustomButton.defaultProps = {
     unresponsive: false,
     variant: 'contained',
     color: 'secondary',
-    type: 'submit'
+    type: 'submit',
+    icon: <PlusIcon />
 }
 
 export default CustomButton

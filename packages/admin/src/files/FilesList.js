@@ -12,7 +12,7 @@ import ListContainer from '../components/ListContainer'
 
 const ListActions = ({ trivia_id }) => (
     <TopToolbar>
-        <FilterLiveSearch source="global_search" />
+        <FilterLiveSearch source="global_search" label='' />
         <CreateButton basePath={`/trivias/${trivia_id}/files`} />
     </TopToolbar>
 );
