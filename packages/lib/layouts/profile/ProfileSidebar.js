@@ -5,6 +5,8 @@ import { useUserState } from '@approbado/lib/hooks/useUserState'
 import ProfileExtraInfoCard from '@approbado/lib/components/ProfileExtraInfoCard'
 import { makeStyles, fade } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
+import ProfilePhotoInput from '@approbado/lib/components/ProfilePhotoInput'
+import { history } from '@approbado/lib/providers'
 
 // Illustrations
 import { ReactComponent as Stage1 } from '@approbado/lib/illustrations/Stage1.svg'
@@ -12,6 +14,7 @@ import { ReactComponent as Forum } from '@approbado/lib/illustrations/Forum.svg'
 import { ReactComponent as Forum2 } from '@approbado/lib/illustrations/Forum2.svg'
 import { ReactComponent as Ribbon } from '@approbado/lib/illustrations/Ribbon.svg'
 import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
+import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 
 const Spacer = () => <span style={{ height: 0, width: '100%', borderBottom: '0.1rem solid rgba(0, 0, 0, 0.2)' }} />;
 
@@ -62,24 +65,33 @@ const ProfileSidebar = ({
 }) => {
     const { user } = useUserState();
     const classes = useStyles();
+    const [isEditting] = React.useState(() => history.location.pathname == '/profile/edit')
 
     return (
         <Box className={classes.root}>
             <Box className={classes.headerContainer}>
-                <Avatar
-                    className={classes.picture}
-                    src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
-                />
+                {(!isEditting) ? (
+                    <Avatar
+                        className={classes.picture}
+                        src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
+                    />
+                ) : (
+                    <ProfilePhotoInput
+                        source='file'
+                        preview={user.picture}
+                        accept='image/jpeg, image/png'
+                    />
+                )}
                 <Typography variant="subtitle1" className={classes.name}>
                     {names}
                 </Typography>
                 <Typography variant="body2" className={classes.username}>
                     {user_name}
                 </Typography>
-                {(user.id == profile.user_id) && (
-                    <div className={classes.icon}>
+                {(user.id == profile.user_id && !isEditting) && (
+                    <Box className={classes.icon} to='/profile/edit' component={LinkBehavior}>
                         <EditIcon />
-                    </div>
+                    </Box>
                 )}
             </Box>
             <Box display='flex' flexDirection='column' justifyContent='flex-start' width='100%'>

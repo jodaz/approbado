@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { setSidebarVisibility } from 'ra-core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -56,6 +56,7 @@ const MenuItemLink = React.forwardRef((props, ref) => {
         tooltipProps,
         ...rest
     } = props;
+
     const classes = useStyles(props);
     const dispatch = useDispatch();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
