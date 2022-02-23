@@ -31,13 +31,25 @@ export const update = async (req, res) => {
             }
         };
 
-        await sendMail(mailerData, res)
+        // await sendMail(mailerData, res)
 
-        const { profile, ...rest } = req.body;
+        const {
+            profile,
+            names,
+            last_name,
+            user_name,
+            bio,
+            email,
+            phone
+        } = req.body;
 
         let userData = {
-            names: rest.names,
-            email: rest.email
+            names: names,
+            email: email,
+            ...(last_name != 'null') && { last_name: last_name },
+            ...(bio != 'null') && { bio: bio },
+            ...(phone != 'null') && { phone: phone },
+            ...(user_name != 'null') && { user_name: user_name },
         }
 
         if (req.file) {
