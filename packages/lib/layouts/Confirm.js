@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import classnames from 'classnames';
-import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
+import CloseIcon from '@approbado/lib/icons/CloseIcon';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 

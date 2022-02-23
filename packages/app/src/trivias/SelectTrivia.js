@@ -7,7 +7,7 @@ import { useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import { ReactComponent as BannerIllustration } from '@approbado/lib/illustrations/Banner.svg';
 import NoContent from '@approbado/lib/components/NoContent'
 import Temary from '../components/temary'
-import { useUserState } from "@approbado/lib/hooks/useUserState"
+import { usePlan } from '@approbado/lib/hooks/useUserState';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -19,20 +19,23 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const SelectTriviaContent = trivia => (
-    <Box>
-        {(!trivia.is_free) ? (
-            <BannerIllustration />
-        ) : (
-            <Temary {...trivia} />
-        )}
-    </Box>
-)
+const SelectTriviaContent = trivia => {
+    const isFreeMembership = usePlan('free');
+
+    return (
+        <Box>
+            {(!trivia.is_free && isFreeMembership) ? (
+                <BannerIllustration />
+            ) : (
+                <Temary {...trivia} />
+            )}
+        </Box>
+    )
+}
 
 const SelectTrivia = ({ isXSmall }) => {
     const classes = useStyles();
     const { trivia, selected } = useTriviaState();
-    const { user } = useUserState();
 
     return (
         <Box className={classes.root}>

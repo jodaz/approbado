@@ -32,12 +32,12 @@ const AboutMe = ({ submitting }) => (
             <TextInput source='profile.twitter' fullWidth />
         </InputContainer>
         <Grid container>
-            <Grid item xs='2'>
+            <Grid item xs='6'>
                 <MuiButton variant='outlined' size='large'>
                     Cancelar
                 </MuiButton>
             </Grid>
-            <Grid item xs='2'>
+            <Grid item xs='6'>
                 <Button disabled={submitting} size='large' unresponsive>
                     Guardar
                 </Button>

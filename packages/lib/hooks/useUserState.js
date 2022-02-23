@@ -7,13 +7,16 @@ export const useUserState = () => {
     return store.user;
 };
 
+/**
+ * Get user plan, or return true/false based on a plan name
+ * @param {*} planName
+ * @returns { plan model } | true | false
+ */
 export const usePlan = (planName) => {
     const plan = useSelector(state => state.user.user.memberships[0].plans);
 
     if (planName) {
-        console.log(planName == 'Free')
-        if (planName == 'Free') return false;
-        return planName == plan.name
+        return plan.name.search(planName)
     }
 
     return plan;

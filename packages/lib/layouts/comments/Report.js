@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
+import CloseIcon from '@approbado/lib/icons/CloseIcon';
 import Typography from '@material-ui/core/Typography';
 import Spinner from '@approbado/lib/components/Spinner'
 import List from '@material-ui/core/List';

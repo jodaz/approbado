@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/styles/makeStyles'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as SelectionIllustration } from '@approbado/lib/illustrations/Selection.svg';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
         height: '100%',

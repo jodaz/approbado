@@ -6,7 +6,7 @@ import { usePlan } from '@approbado/lib/hooks/useUserState';
 const AsideBar = () => {
     const isFreeMembership = usePlan('Free');
 
-    return !isFreeMembership && (
+    return isFreeMembership && (
         <Box p='0 0 0 2rem'>
             <BannerIllustration />
         </Box>

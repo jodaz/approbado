@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
-import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
+import CloseIcon from '@approbado/lib/icons/CloseIcon';
 import Typography from '@material-ui/core/Typography';
 
 export default function CustomizedDialogs({ trivia_id, id }) {

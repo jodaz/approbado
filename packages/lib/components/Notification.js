@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
-import { ReactComponent as CloseIcon} from '@approbado/lib/icons/Close.svg';
+import CloseIcon from '@approbado/lib/icons/CloseIcon';
 import Dialog from '@approbado/lib/components/Dialog'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
