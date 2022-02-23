@@ -11,5 +11,7 @@ export default function(values) {
         errors.file = "Ingrese un archivo.";
     }
 
+    console.log(errors)
+
     return errors;
 }

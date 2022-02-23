@@ -308,6 +308,7 @@ export const update = async (req, res) => {
 
             const model = await Award.query()
                 .updateAndFetchById(id, data)
+                .returning('*')
 
             return res.status(201).json(model)
         } catch(error){

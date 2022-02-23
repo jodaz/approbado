@@ -1,4 +1,4 @@
-import { Trivia, TriviaGrupal, Subtheme, Level, Question, Plan } from '../models'
+import { Trivia, TriviaGrupal, Subtheme, Level } from '../models'
 import { validateRequest, paginatedQueryResponse,sendNotification } from '../utils'
 
 export const index = async (req, res) => {
@@ -97,7 +97,7 @@ export const store = async (req, res) => {
 
 export const storeGrupal = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-    const {user_ids , ...rest } = req.body;
+    const {user_ids, ...rest } = req.body;
     const { names } = req.user;
 
     if (!reqErrors) {
@@ -113,16 +113,16 @@ export const storeGrupal = async (req, res) => {
             const level = await Level.query().findById(rest.level_id)
 
             let data_push_notification = {
-                title :  'Nueva solicitud de trivia grupal',
-                body :   `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
-                data : {
-                    path : {
-                        name : 'room',
-                        params : {
-                            token : rest.link
+                title: 'Nueva solicitud de trivia grupal',
+                body: `${names} te ha envitado una trivia grupal: ${subtheme.title} - ${level.name}`,
+                data: {
+                    path: {
+                        name: 'room',
+                        params: {
+                            token: rest.link
                         },
-                        query : {
-                            emit : true
+                        query: {
+                            emit: true
                         }
                     }
                 }
@@ -144,7 +144,7 @@ export const update = async (req, res) => {
 
     const { id } = req.params
 
-    const { plans_ids, ...rest } = req
+    const { plans_ids, ...rest } = req.body
 
     if (!reqErrors) {
         try {

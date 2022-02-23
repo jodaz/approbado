@@ -28,7 +28,7 @@ const AwardsEdit = props => {
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        const data = { id: award_id, ...values };
+        const data = { id: award_id, data: values };
 
         try {
             await provider({
@@ -45,8 +45,8 @@ const AwardsEdit = props => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('Se ha completado la actualización con éxito', 'success')
-            redirect('/configurations?tab=levels')
+            notify(`¡Ha actualizado el premio "${fileDataResponse.title}" exitosamente!`, 'success')
+            redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
     }, [fileDataResponse])
 

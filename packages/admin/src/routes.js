@@ -66,6 +66,10 @@ export default [
         render={() => <AwardsCreate />}
     />,
     <Route
+        path="/trivias/:trivia_id/files/create"
+        render={() => <FileCreate />}
+    />,
+    <Route
         path="/trivias/:trivia_id/files/:file_id"
         render={() => <FileEdit />}
     />,
@@ -76,10 +80,6 @@ export default [
     <Route
         path="/trivias/:trivia_id/subthemes/:subtheme_id/show"
         render={() => <SubthemeShow />}
-    />,
-    <Route
-        path="/trivias/:trivia_id/files/create"
-        render={() => <FileCreate />}
     />,
     <RouteWithoutLayout
         path="/reset-password"

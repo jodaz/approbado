@@ -39,10 +39,10 @@ const AwardsCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(data)) {
-            notify('¡Has creado un nuevo premio!', 'success')
+            notify(`¡Ha registrado el premio "${data.title}" exitosamente!`, 'success')
             redirect(`/trivias/${trivia_id}/show?tab=awards`)
         }
-    }, [loaded])
+    }, [data])
 
     return (
         <BaseForm

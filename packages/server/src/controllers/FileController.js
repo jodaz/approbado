@@ -45,6 +45,7 @@ export const store = async (req, res) => {
 
             const model = await File.query()
                 .insert(data)
+                .returning('*')
 
             return res.status(201).json(model)
         } catch(error) {
@@ -71,6 +72,7 @@ export const update = async (req, res) => {
 
             const model = await File.query()
                 .updateAndFetchById(id, data)
+                .returning('*')
 
             return res.status(201).json(model)
         } catch(error){

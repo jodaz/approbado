@@ -39,7 +39,8 @@ const FileCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('¡Ha registrado un nuevo archivo!', 'success')
+            console.log(fileDataResponse)
+            notify(`¡Ha registrado el archivo "${fileDataResponse.title}" exitosamente!`, 'success')
             redirect(`/trivias/${trivia_id}/show?tab=files`)
         }
     }, [fileDataResponse])

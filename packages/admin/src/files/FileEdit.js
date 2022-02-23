@@ -28,7 +28,7 @@ const FileEdit = props => {
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        const data = { id: file_id, ...values };
+        const data = { id: file_id, data: values };
 
         try {
             await provider({
@@ -41,12 +41,12 @@ const FileEdit = props => {
                 return error.response.data.errors;
             }
         }
-    }, [provider, trivia_id])
+    }, [provider, file_id])
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            notify('Se ha completado la actualización con éxito', 'success')
-            redirect('/configurations?tab=levels')
+            notify(`¡Ha actualizado el archivo "${fileDataResponse.title}" exitosamente!`, 'success')
+            redirect(`/trivias/${trivia_id}/show?tab=files`)
         }
     }, [fileDataResponse])
 
