@@ -47,8 +47,6 @@ export const store = async (req, res) => {
                 .insert(req.body)
                 .returning('*')
 
-            console.log(model)
-
             return res.status(201).json(model)
         } catch(error){
             console.log(error)

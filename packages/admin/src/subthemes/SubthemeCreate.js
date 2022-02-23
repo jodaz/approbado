@@ -84,6 +84,7 @@ const SubthemeCreate = () => {
                     reference='awards'
                     filter={{ trivia_id: trivia_id }}
                     fullWidth
+                    allowEmpty
                 >
                     <SelectInput source="title" emptyText="N/A" optionText="title" />
                 </ReferenceInput>
