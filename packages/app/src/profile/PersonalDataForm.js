@@ -1,11 +1,12 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { TextInput } from 'react-admin'
+import { TextInput,  } from 'react-admin'
 import Button from '@approbado/lib/components/Button'
 import MuiButton from '@material-ui/core/Button'
+import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
 
-const AboutMe = ({ submitting }) => (
+const AboutMe = ({ submitting, handleSubmit }) => (
     <Grid container spacing={1}>
         <InputContainer disabled={submitting} labelName='Nombres' sm={12} md={6}>
             <TextInput source='names' placeholder='Nombre(s)' fullWidth />
@@ -31,14 +32,17 @@ const AboutMe = ({ submitting }) => (
         <InputContainer disabled={submitting} labelName='Twitter' sm={12} md={6}>
             <TextInput source='profile.twitter' fullWidth />
         </InputContainer>
+        <InputContainer disabled={submitting} labelName='Biografía' sm={12} md={12}>
+            <TextInput source='bio' fullWidth multiline />
+        </InputContainer>
         <Grid container>
             <Grid item xs='6'>
-                <MuiButton variant='outlined' size='large'>
+                <MuiButton variant='outlined' size='large' component={DefaultLinkBehavior} to='/profile'>
                     Cancelar
                 </MuiButton>
             </Grid>
             <Grid item xs='6'>
-                <Button disabled={submitting} size='large' unresponsive>
+                <Button disabled={submitting} onClick={handleSubmit} size='large' unresponsive>
                     Guardar
                 </Button>
             </Grid>

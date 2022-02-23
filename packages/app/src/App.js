@@ -23,6 +23,7 @@ const AppLayout = () => (
         <Resource {...notifications} />
         <Resource name='trivias' />
         <Resource name='files' />
+        <Resource name='profile' />
         <Resource name='users' />
         <Resource name='comments' />
         <Resource name='like-posts' />
