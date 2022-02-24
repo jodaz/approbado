@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import clsx from 'clsx';
 import ResourceList from './ResourceList'
-import SubthemeList from './SubthemeList'
+import TemaryList from './TemaryList'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -60,7 +60,7 @@ export default function Temary(props) {
             </Box>
             <Box className={classes.content}>
                 {(selected == 'Temas') ? (
-                    <SubthemeList {...props} />
+                    <TemaryList {...props} />
                 ) : (
                     <ResourceList {...props} />
                 )}

@@ -28,7 +28,7 @@ const validate = (values) => {
 };
 
 const SubthemeEdit = ({ record }) => {
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [mutate, { loading, loaded }] = useMutation();
     const notify = useNotify();
     const refresh = useRefresh()
 
@@ -80,6 +80,7 @@ const SubthemeEdit = ({ record }) => {
                     reference='awards'
                     filter={{ trivia_id: record.trivia_id }}
                     fullWidth
+                    allowEmpty
                 >
                     <SelectInput  emptyText="N/A" source="name" optionText='title' />
                 </ReferenceInput>

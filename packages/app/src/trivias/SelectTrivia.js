@@ -23,7 +23,7 @@ const SelectTriviaContent = trivia => {
     const isFreeMembership = usePlan('free');
 
     return (
-        <Box>
+        <Box width='100%'>
             {(!trivia.is_free && isFreeMembership) ? (
                 <BannerIllustration />
             ) : (

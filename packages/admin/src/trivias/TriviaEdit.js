@@ -46,14 +46,20 @@ const TriviaEdit = ({ record }) => {
     const [provider, { data, loading }] = useFileProvider(fileProvider);
 
     const save = React.useCallback(async values => {
-        await provider({
-            resource: 'trivias',
-            type: 'update',
-            payload: {
-                id: record.id,
-                data: values
+        try {
+            await provider({
+                resource: 'trivias',
+                type: 'update',
+                payload: {
+                    id: record.id,
+                    data: values
+                }
+            });
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
             }
-        });
+        }
     }, [provider]);
 
     React.useEffect(() => {

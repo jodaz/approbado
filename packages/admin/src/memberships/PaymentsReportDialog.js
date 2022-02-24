@@ -66,7 +66,6 @@ export default function() {
     };
 
     const handleSubmit = React.useCallback(async (values) => {
-        console.log(values)
         try {
             await provider({
                 type: 'get',

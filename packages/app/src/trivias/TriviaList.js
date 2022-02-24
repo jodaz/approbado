@@ -13,7 +13,7 @@ import { useMediaQuery } from '@material-ui/core'
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" />
+        <FilterLiveSearch source="name" label='Buscar trivia' />
     </TopToolbar>
 );
 
@@ -37,7 +37,7 @@ const TriviaListView = () => {
     return (
         <>
             <Box display="flex" height='100%' width='100%'>
-                <Box width={'80%'}>
+                <Box width='70%'>
                     <Typography variant='h5'>
                         Trivias
                     </Typography>
@@ -46,7 +46,7 @@ const TriviaListView = () => {
                     </FilterContext.Provider>
                     <GridList component={<TriviaCard />} />
                 </Box>
-                <Box width={'20%'}>
+                <Box width='30%'>
                     <SelectTrivia isXSmall={isXSmall} />
                 </Box>
             </Box>

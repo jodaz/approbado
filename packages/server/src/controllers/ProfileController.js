@@ -25,13 +25,13 @@ export const update = async (req, res) => {
                 to: user.email,
             },
             template: 'accountChange',
-            subject: 'Actualizó sus configuraciones de la cuenta',
+            subject: 'Approbado | Actualización de perfil de usuario',
             locals: {
                 name: user.names
             }
         };
 
-        // await sendMail(mailerData, res)
+        await sendMail(mailerData, res)
 
         const {
             profile,

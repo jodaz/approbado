@@ -27,9 +27,8 @@ const ResourceList = ({ id }) => (
 
             return (
                 <div>
-                    {!data.map((item, key) => (
+                    {data.map(item => (
                         <Resource
-                            key={key}
                             {...item}
                         />
                     ))}

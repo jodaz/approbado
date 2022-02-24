@@ -52,11 +52,17 @@ const EditProfile = () => {
     const { fetchUser } = useUserDispatch();
 
     const handleSubmit = React.useCallback(async values => {
-        await provider({
-            resource: 'profile',
-            type: 'create',
-            payload: values
-        });
+        try {
+            await provider({
+                resource: 'profile',
+                type: 'create',
+                payload: values
+            });
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
     }, [provider]);
 
     React.useEffect(() => {

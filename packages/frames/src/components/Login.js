@@ -21,7 +21,7 @@ const validate = (values) => {
     const errors = {};
 
     if (!values.email) {
-        errors.email = 'Ingrese su correo electrónico';
+        errors.email = 'Ingrese su nombre de usuario';
     }
 
     if (!values.password) {

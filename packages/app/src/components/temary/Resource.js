@@ -6,17 +6,17 @@ import { ReactComponent as PDFIcon } from '@approbado/lib/icons/PDF.svg'
 import configs from '@approbado/lib/configs'
 import Link from '@material-ui/core/Link'
 import { ReactComponent as DownloadIcon } from '@approbado/lib/icons/download.svg'
+import { fileProvider } from '@approbado/lib/providers'
+import { useFileProvider } from '@jodaz_/file-provider'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(() => ({
     root: {
         margin: '0 1rem 1rem 0',
-        borderRadius: '6px !important',
-        background: '#F9F9F9',
+        background: 'transparent',
         width: '100%',
         height: 'max-content',
-        '&:hover': {
-            boxShadow: "4px 4px 90px 0px #00000014"
-        },
+        border: 'none'
     },
     content: {
         padding: '8px 16px'
@@ -28,6 +28,25 @@ const useStyles = makeStyles(() => ({
 
 export default function Resource({ title, size, key, file }) {
     const classes = useStyles();
+    const [provider] = useFileProvider(fileProvider);
+
+    const handleDownload = React.useCallback(async values => {
+        try {
+            await provider({
+                resource: 'files',
+                type: 'getOne',
+                payload: {
+                    name: `${title}`,
+                    ext: 'pdf',
+                    filterValues: values
+                }
+            });
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [provider]);
 
     return (
         <Card className={classes.root} key={key}>
@@ -45,7 +64,11 @@ export default function Resource({ title, size, key, file }) {
                 }
                 subheader={size}
                 className={classes.content}
-                action={<DownloadIcon />}
+                action={
+                    <IconButton onClick={handleDownload}>
+                        <DownloadIcon />
+                    </IconButton>
+                }
                 classes={{ action: classes.action }}
             />
         </Card>
