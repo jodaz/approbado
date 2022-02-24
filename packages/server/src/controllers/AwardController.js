@@ -14,7 +14,9 @@ const min_approbado = 75
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
-    const query = Award.query()
+    const { id: currUserId } = req.user;
+
+    let query = Award.query()
 
     try {
         if (filter) {
@@ -49,22 +51,11 @@ export const indexAwardSubtheme = async (req, res) => {
         const award_subthemes = await Award.query()
             .where('trivia_id', `${trivia_id}`)
             .withGraphFetched('subthemes')
-            .orderBy('min_points','ASC')
+            .orderBy('min_points', 'ASC')
 
-        for (var i = 0; i < award_subthemes.length; i++) {
-            for (var e = 0; e < award_subthemes[i].subthemes.length; e++) {
+        const results = await getFinishedSubthemes(award_subthemes, currUserId)
 
-                let finished = await award_subthemes[i].subthemes[e]
-                    .$relatedQuery('finished')
-                    .where('user_id',currUserId)
-                    .count()
-                    .first();
-
-                award_subthemes[i].subthemes[e].finished = finished.count == 0 ? false : true;
-            }
-        }
-
-        return res.status(200).json(award_subthemes)
+        return res.status(200).json(results)
     } catch(error){
         console.log(error)
         return res.status(500).json(error)
@@ -358,4 +349,27 @@ function compare(a, b) {
         return -1;
     }
     return 0;
+}
+
+/**
+ * Appends finished subthemes for a given user
+ * @param {ObjectionJSQuery} query
+ * @param {number} currUserId
+ * @returns {object}
+ */
+const getFinishedSubthemes = async (query, currUserId) => {
+    for (var i = 0; i < query.length; i++) {
+        for (var e = 0; e < query[i].subthemes.length; e++) {
+
+            let finished = await query[i].subthemes[e]
+                .$relatedQuery('finished')
+                .where('user_id',currUserId)
+                .count()
+                .first();
+
+            query[i].subthemes[e].finished = finished.count == 0 ? false : true;
+        }
+    }
+
+    return query;
 }
