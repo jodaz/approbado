@@ -1,6 +1,14 @@
 import { User } from '../models/User'
 import bcrypt from 'bcrypt'
-import { validateRequest, sendMail, paginatedQueryResponse, getRandomPass } from '../utils'
+import {
+    validateRequest,
+    sendMail,
+    paginatedQueryResponse,
+    getRandomPass
+} from '../utils'
+import pug from 'pug'
+import path from 'path'
+import pdf from 'html-pdf'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -65,6 +73,33 @@ export const index = async (req, res) => {
         }
 
         return paginatedQueryResponse(query, req, res)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
+}
+
+export const download = async (req, res) => {
+    try {
+        const query = await User.query()
+
+        const compiledFunction = pug.compileFile(
+            path.resolve(__dirname, '../resources/pdf/reports/users.pug')
+        );
+
+        const compiledContent = compiledFunction({
+            records: query,
+            title: 'Reporte de usuarios'
+        });
+
+        const pdfFilePath = path.resolve(__dirname, '../../public/reports/users.pdf');
+
+        await pdf.create(compiledContent).toFile(pdfFilePath, async (error, res) => {
+            if (error) return console.log(error)
+        });
+
+        res.download(pdfFilePath)
     } catch (error) {
         console.log(error)
 

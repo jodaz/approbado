@@ -1,0 +1,17 @@
+extends ../layouts/template.pug
+
+block content
+    div.content
+        table(style="text-align: center")
+            caption=`${title.toUpperCase()}`
+            thead
+                tr
+                    th(width="10%")='#'
+                    th(width="45%")='CORREO'
+                    th(width="45%")='NOMBRE'
+            tbody
+                each record, index in records
+                    tr
+                        td=`${index+1}`
+                        td=`${record.email}`
+                        td=`${record.names}`
