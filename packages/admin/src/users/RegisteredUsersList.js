@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
     Datagrid,
     TextField,
@@ -12,6 +13,8 @@ import Box from '@material-ui/core/Box';
 import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
 import DownloadButton from '../components/DownloadButton'
+import { fileProvider } from '@approbado/lib/providers'
+import { useFileProvider } from '@jodaz_/file-provider'
 
 const FormFilter = props => {
     const {
@@ -57,12 +60,33 @@ const UsersDatagrid = props => (
     </Datagrid>
 )
 
-const ListActions = props => (
-    <TopToolbar>
-        <FormFilter {...props} />
-        <DownloadButton />
-    </TopToolbar>
-)
+const ListActions = props => {
+    const [provider] = useFileProvider(fileProvider);
+
+    const handleSubmit = React.useCallback(async () => {
+        try {
+            await provider({
+                type: 'get',
+                resource: 'users/download',
+                payload: {
+                    name: `reporte-pagos-approbado`,
+                    ext: 'pdf'
+                }
+            })
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
+    }, [props]);
+
+    return (
+        <TopToolbar {...props}>
+            <FormFilter {...props} />
+            <DownloadButton onClick={handleSubmit} />
+        </TopToolbar>
+    )
+}
 
 const RegisteredUsersList = props => (
     <ListBase
@@ -71,7 +95,7 @@ const RegisteredUsersList = props => (
         filter={{ is_registered: true }}
         {...props}
     >
-        <DatagridListView actions={<ListActions />} datagrid={<UsersDatagrid />} />
+        <DatagridListView actions={<ListActions {...props} />} datagrid={<UsersDatagrid />} />
     </ListBase>
 );
 

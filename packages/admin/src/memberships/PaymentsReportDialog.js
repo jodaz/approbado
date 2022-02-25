@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { DateInput, FormWithRedirect, useNotify, SelectInput } from 'react-admin'
+import {
+    DateInput,
+    FormWithRedirect,
+    useNotify,
+    SelectInput
+} from 'react-admin'
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -55,7 +60,6 @@ const validate = (values) => {
 export default function() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const notify = useNotify();
     const [provider] = useFileProvider(fileProvider);
 
     const handleClickOpen = () => {
@@ -82,13 +86,6 @@ export default function() {
             }
         }
     }, []);
-
-    // React.useEffect(() => {
-    //     if (loaded) {
-    //         notify('¡Ha reportado la publicación exitosamente!', 'success')
-    //         handleClose();
-    //     }
-    // }, [loaded])
 
     return (
         <div>
