@@ -5,8 +5,11 @@ import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageCompone
 import Spinner from '@approbado/lib/components/Spinner'
 
 const DatagridListView = ({ datagrid, actions }) => {
-    const { loading, total, ids, data } = useListContext();
-
+    const { loading, total, ids, data } = useListContext({
+        basePath: 'configurations/levels',
+        resource: 'configurations/levels'
+    });
+    console.log(loading)
     return (
         <ListContainer
             actions={

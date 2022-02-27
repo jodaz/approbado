@@ -83,4 +83,9 @@ const TriviaShow = props => {
     )
 }
 
+TriviaShow.defaultProps = {
+    basePath: 'trivias',
+    resource: 'trivias'
+}
+
 export default TriviaShow;

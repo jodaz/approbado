@@ -47,15 +47,7 @@ const styles = makeStyles(theme => ({
         flexDirection: 'column',
         flexGrow: 1,
         flexBasis: 0,
-        padding: theme.spacing(3),
-        paddingTop: theme.spacing(1),
-        paddingLeft: 0,
-        [theme.breakpoints.up('xs')]: {
-            paddingLeft: 5,
-        },
-        [theme.breakpoints.down('sm')]: {
-            padding: 0,
-        },
+        padding: '4rem 2rem 0 2rem'
     },
 }));
 
@@ -63,18 +55,20 @@ export default ({ children }) => {
     const classes = styles()
 
     return (
-        <div className={classes.root}>
-            <AppBar />
-            <main className={classes.contentWithSidebar}>
-                <CustomSidebar>
-                    <CustomMenu />
-                </CustomSidebar>
-                <div id="main-content" className={classes.content}>
-                    {children}
-                </div>
-            </main>
+        <>
+            <div className={classes.root}>
+                <AppBar />
+                <main className={classes.contentWithSidebar}>
+                    <CustomSidebar>
+                        <CustomMenu />
+                    </CustomSidebar>
+                    <div id="main-content" className={classes.content}>
+                        {children}
+                    </div>
+                </main>
+            </div>
 
             <Notification />
-        </div>
+        </>
     )
 };

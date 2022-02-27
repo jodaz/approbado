@@ -8,13 +8,9 @@ import {
     useRedirect,
     useNotify,
     ReferenceInput,
-    ReferenceArrayInput,
-    SelectArrayInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
-import { Field } from 'react-final-form';
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -99,6 +95,11 @@ const TriviaCreate = props => {
             </BaseForm>
         </CreateContextProvider>
     )
+}
+
+TriviaCreate.defaultProps = {
+    basePath: 'trivias',
+    resource: 'trivias'
 }
 
 export default TriviaCreate
