@@ -34,7 +34,7 @@ const initialState = {
 
 const payload = {
     pagination: { page: 1, perPage: 9 },
-    sort: { field: 'top', order: 'DESC'},
+    sort: { field: 'points', order: 'DESC'},
     filter: { is_registered: true }
 };
 
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
     const spinnerClasses = useSpinnerStyles();
 
     const fetchUsers = React.useCallback(async () => {
-        const { total } = await axios.get('users?filter%5Bis_registered%5D=true')
+        const { data: { total } } = await axios.get('users?filter%5Bis_registered%5D=true')
 
         setState(state => ({
             ...state,
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
     }, []);
 
     const fetchTrivias = React.useCallback(async () => {
-        const { total } = await axios.get('trivias');
+        const { data: { total } } = await axios.get('trivias');
 
         setState(state => ({
             ...state,
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
     }, []);
 
     const fetchMemberships = React.useCallback(async () => {
-        const { total } = await axios.get('memberships')
+        const { data: { total } } = await axios.get('memberships')
 
         setState(state => ({
             ...state,
@@ -128,15 +128,15 @@ const AdminDashboard = () => {
 
                             return (
                                 <Grid container>
-                                    {data.map(user =>
+                                    {data.map((user, i) =>
                                         <Grid item xs={12} sm={6} md={4}>
-                                            <UserCard data={user} />
+                                            <UserCard data={user} index={i} />
                                         </Grid>
                                     )}
                                     {(total == 0) && (
                                         <Grid item xs={12} sm={6} md={4}>
                                             <Typography component={'p'} variant="body1">
-                                                No tenemos debates disponibles
+                                               No tenemos usuarios destacados
                                             </Typography>
                                         </Grid>
                                     )}
