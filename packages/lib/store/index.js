@@ -10,7 +10,6 @@ import {
 import { loadState } from './persistedState'
 
 export default ({
-    authProvider,
     dataProvider,
     history,
     customReducers = {},

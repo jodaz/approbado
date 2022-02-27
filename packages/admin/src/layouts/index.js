@@ -1,9 +1,8 @@
-import { Layout, Sidebar } from 'react-admin';
-import { theme } from '@approbado/lib/styles';
-import AppBar from '@approbado/lib/layouts/AppBar';
+import { Sidebar } from 'react-admin';
 import Menu from '@approbado/lib/layouts/Menu';
 import MenuItems from './MenuItems';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@approbado/lib/layouts/AppBar';
 import Notification from '@approbado/lib/components/Notification'
 
 const CustomSidebar = props => <Sidebar {...props} size={200} />;
@@ -14,15 +13,68 @@ const CustomMenu = props => (
     </Menu>
 )
 
-export default props => {
+const styles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        zIndex: 1,
+        minHeight: '100vh',
+        backgroundColor: theme.palette.background.default,
+        position: 'relative',
+        minWidth: 'fit-content',
+        width: '100%',
+        color: theme.palette.getContrastText(
+            theme.palette.background.default
+        ),
+    },
+    appFrame: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        [theme.breakpoints.up('xs')]: {
+            marginTop: theme.spacing(6),
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginTop: theme.spacing(7),
+        },
+    },
+    contentWithSidebar: {
+        display: 'flex',
+        flexGrow: 1,
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        flexBasis: 0,
+        padding: theme.spacing(3),
+        paddingTop: theme.spacing(1),
+        paddingLeft: 0,
+        [theme.breakpoints.up('xs')]: {
+            paddingLeft: 5,
+        },
+        [theme.breakpoints.down('sm')]: {
+            padding: 0,
+        },
+    },
+}));
+
+export default ({ children }) => {
+    const classes = styles()
+
     return (
-        <Layout
-            {...props}
-            appBar={AppBar}
-            sidebar={CustomSidebar}
-            menu={CustomMenu}
-            theme={createMuiTheme(theme)}
-            notification={Notification}
-        />
-    );
+        <div className={classes.root}>
+            <AppBar />
+            <main className={classes.contentWithSidebar}>
+                <CustomSidebar>
+                    <CustomMenu />
+                </CustomSidebar>
+                <div id="main-content" className={classes.content}>
+                    {children}
+                </div>
+            </main>
+
+            <Notification />
+        </div>
+    )
 };
