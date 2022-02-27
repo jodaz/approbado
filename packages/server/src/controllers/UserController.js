@@ -53,10 +53,12 @@ export const index = async (req, res) => {
 
         if (sort && order) {
             switch (sort) {
-                case 'top':
-                    query.modifiers({
-                        filterTop: query => query.modify('orderByPoints', order)
-                    })
+                case 'points':
+                    query.whereExists(
+                        User.relatedQuery('profile')
+                            .where(sort, '>', 0)
+                            .orderBy(sort, order)
+                    ).withGraphFetched('profile')
                     break;
                 case 'contributionsCount':
                     query.select(
