@@ -16,7 +16,12 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { TextInput } from 'react-admin'
 import Dialog from '@approbado/lib/components/Dialog'
-import LinkBehavior from '@approbado/lib/components/LinkBehavior';
+import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
+import { styled } from '@material-ui/core/styles'
+
+const LinkBehavior = styled(DefaultLinkBehavior)(({ theme }) => ({
+    'color': theme.palette.primary.main,
+}));
 
 const validate = (values) => {
     const errors = {};
@@ -91,8 +96,8 @@ const ResetPassword = () => {
                     />
                 </InputContainer>
                 <CardActions className={classes.actions}>
-                    <Button disabled={loading} type="submit" unresponsive>
-                        {'Recuperar contraseña'}
+                    <Button disabled={loading} type="submit" unresponsive fullWidth>
+                        Recuperar contraseña
                     </Button>
                 </CardActions>
                 <Link

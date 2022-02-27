@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '6px',
         boxShadow: 'none',
         maxHeight: '2.5rem !important',
-        width: 'max-content',
+        width: props => props.fullWidth ? '100%' : 'max-content',
+        minWidth: '8rem',
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
             backgroundColor: fade(theme.palette.secondary.main, 0.95)
@@ -39,8 +40,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomButton = ({ disabled, children, unresponsive, icon, ...rest }) => {
-    const classes = useStyles();
+const CustomButton = ({ disabled, children, fullWidth, unresponsive, icon, ...rest }) => {
+    const classes = useStyles({
+        fullWidth: fullWidth
+    });
     const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     );
@@ -79,13 +82,13 @@ const CustomButton = ({ disabled, children, unresponsive, icon, ...rest }) => {
 }
 
 CustomButton.defaultProps = {
-    fullWidth: true,
     disabled: false,
     unresponsive: false,
     variant: 'contained',
     color: 'secondary',
     type: 'submit',
-    icon: <PlusIcon />
+    icon: <PlusIcon />,
+    fullWidth: false
 }
 
 export default CustomButton

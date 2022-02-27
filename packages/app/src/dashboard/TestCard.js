@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
 import { styled } from '@material-ui/core/styles'
 
-const LinkBehavior = styled(DefaultLinkBehavior)(({ theme }) => ({
+const LinkBehavior = styled(DefaultLinkBehavior)(() => ({
     'textDecoration': 'none',
     '&:visited': {
         color: 'unset'
