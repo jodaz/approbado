@@ -20,26 +20,8 @@ import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
-import isEmpty from 'is-empty'
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.description) {
-        errors.description = "Ingrese un enunciado para la pregunta.";
-    }
-    if (!values.explanation) {
-        errors.explanation = "Ingrese el texto de la aclaratoria.";
-    }
-    if (!values.explanation_type) {
-        errors.explanation_type = "Seleccione cuando debe mostrarse la aclaratoria.";
-    }
-    if (!values.file_id) {
-        errors.file_id = "Seleccione un archivo.";
-    }
-
-    return errors;
-};
+import { unmarkOptions, validate } from './questionsFormUtils'
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const OPTIONS = [
     { id: '1', name: 'Respuesta correcta' },
@@ -63,22 +45,6 @@ const useStyles = makeStyles(theme => ({
         paddingRight: '1rem'
     }
 }))
-
-// // custom Mutator to write into formState.errors object
-// const setError = ([name, value], state, { setIn }) =>
-//   setIn(state, `formState.errors.${name}`, value);
-
-const uncheck = (args, state, { setIn, changeValue }) => {
-    // if (args) {
-    //     console.log(state.fields)
-    // }
-    // alert("hi");
-    // changeValue(state, "lastName", () => "xxx");
-    // const field = state.fields["lastName"];
-    // field.change("bob");
-    // state.formState.submitFailed = true;
-    // field.data = {...field.data, initialError: 'x0x0x'};
-};
 
 const QuestionCreate = () => {
     const { subtheme_id } = useParams()
@@ -116,16 +82,18 @@ const QuestionCreate = () => {
             <Form
                 onSubmit={save}
                 mutators={{
-                    ...arrayMutators
+                    ...arrayMutators,
+                    unmarkOptions
                 }}
                 validate={validate}
                 initialValues={initialFormState}
                 render={({
                     handleSubmit,
                     form: {
-                        mutators: { push }
+                        mutators: { push, unmarkOptions }
                     },
-                    values
+                    values,
+                    errors
             }) => {
                     return (
                         <form onSubmit={handleSubmit}>
@@ -162,6 +130,7 @@ const QuestionCreate = () => {
                                                             <BooleanInput
                                                                 source={`${name}.is_right`}
                                                                 label="Opción correcta"
+                                                                onClick={unmarkOptions}
                                                             />
                                                             <Grid item>
                                                                 <Button
@@ -180,14 +149,19 @@ const QuestionCreate = () => {
                                             }
                                         </FieldArray>
                                         <Grid container>
-                                            <Button
-                                                variant="outlined"
-                                                type="button"
-                                                onClick={() => push('options', undefined)}
-                                                className={classes.button}
-                                            >
-                                                Agregar opción
-                                            </Button>
+                                            <Grid item xs={12} md={2}>
+                                                <Button
+                                                    variant="outlined"
+                                                    type="button"
+                                                    onClick={() => push('options', undefined)}
+                                                    className={classes.button}
+                                                >
+                                                    Agregar opción
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={12} md={3}>
+                                                {errors.options_field && <FormHelperText error>{errors.options_field}</FormHelperText>}
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                     <Box paddingBottom='1rem' width='100%'>

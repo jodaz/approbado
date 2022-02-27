@@ -7,41 +7,22 @@ import {
     useNotify,
     useEditController,
     ReferenceInput,
-    BooleanInput,
-    FormWithRedirect
+    BooleanInput
 } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { FieldArray } from 'react-final-form-arrays'
-import { Form, Field, FormSpy } from "react-final-form";
+import { Form } from "react-final-form";
 import arrayMutators from 'final-form-arrays'
 import CustomCreateButton from '@approbado/lib/components/Button'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
-import { OnChange } from "react-final-form-listeners";
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.description) {
-        errors.description = "Ingrese un enunciado para la pregunta.";
-    }
-    if (!values.explanation) {
-        errors.explanation = "Ingrese el texto de la aclaratoria.";
-    }
-    if (!values.explanation_type) {
-        errors.explanation_type = "Seleccione cuando debe mostrarse la aclaratoria.";
-    }
-    if (!values.file_id) {
-        errors.file_id = "Seleccione un archivo.";
-    }
-
-    return errors;
-};
+import { unmarkOptions, validate } from './questionsFormUtils'
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const OPTIONS = [
     { id: '1', name: 'Respuesta correcta' },
@@ -65,24 +46,6 @@ const useStyles = makeStyles(theme => ({
         paddingRight: '1rem'
     }
 }))
-
-const WhenFieldChanges = ({ field }) => (
-    <Field name={field} subscription={{}}>
-        {(
-            { input: { onChange } }
-        ) => (
-            <FormSpy subscription={{}}>
-            {({ form }) => (
-                <OnChange name={field}>
-                    {value => {
-                        console.log(field, value)
-                    }}
-                </OnChange>
-            )}
-            </FormSpy>
-        )}
-    </Field>
-);
 
 const QuestionEdit = props => {
     const { subtheme_id, question_id } = useParams()
@@ -114,7 +77,7 @@ const QuestionEdit = props => {
     React.useEffect(() => {
         if (loaded) {
             notify(`¡Actualizó la pregunta "${data.description}" exitosamente!`, 'success')
-            redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
+            redirect(`/trivias/${subtheme_id}/subthemes/${data.subtheme_id}/show?tab=questions`)
         }
     }, [loaded])
 
@@ -128,17 +91,19 @@ const QuestionEdit = props => {
                 initialValues={record}
                 onSubmit={save}
                 mutators={{
-                    ...arrayMutators
+                    ...arrayMutators,
+                    unmarkOptions
                 }}
                 validate={validate}
                 initialValues={record}
                 render={({
                     handleSubmit,
                     form: {
-                        mutators: { push }
+                        mutators: { push, unmarkOptions }
                     },
                     values,
-                    submitting
+                    submitting,
+                    errors
                 }) => {
                     return (
                         <form onSubmit={handleSubmit}>
@@ -147,7 +112,7 @@ const QuestionEdit = props => {
                                     <Typography component='h1' variant='h5'>{'Crear pregunta'}</Typography>
                                     <Box paddingBottom='1rem' width='100%'>
                                         <Typography variant="subtitle1" color="textSecondary">
-                                            {'Enunciado'}
+                                            Enunciado
                                         </Typography>
                                     </Box>
                                     <InputContainer labelName='Pregunta' sm={12} md={12}>
@@ -156,6 +121,7 @@ const QuestionEdit = props => {
                                             placeholder="Ingresa el enunciado"
                                             disabled={submitting}
                                             fullWidth
+                                            multiline
                                         />
                                     </InputContainer>
                                     <Grid container className={classes.arrayRootField}>
@@ -175,8 +141,8 @@ const QuestionEdit = props => {
                                                             <BooleanInput
                                                                 source={`${name}.is_right`}
                                                                 label="Opción correcta"
+                                                                onClick={unmarkOptions}
                                                             />
-                                                            <WhenFieldChanges field={`${name}.is_right`} />
                                                             <Grid item>
                                                                 <Button
                                                                     variant="outlined"
@@ -194,14 +160,19 @@ const QuestionEdit = props => {
                                             }
                                         </FieldArray>
                                         <Grid container>
-                                            <Button
-                                                variant="outlined"
-                                                type="button"
-                                                onClick={() => push('options', undefined)}
-                                                className={classes.button}
-                                            >
-                                                Agregar opción
-                                            </Button>
+                                            <Grid item xs={12} md={2}>
+                                                <Button
+                                                    variant="outlined"
+                                                    type="button"
+                                                    onClick={() => push('options', undefined)}
+                                                    className={classes.button}
+                                                >
+                                                    Agregar opción
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={12} md={3}>
+                                                {errors.options_field && <FormHelperText error>{errors.options_field}</FormHelperText>}
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                     <Box paddingBottom='1rem' width='100%'>
@@ -258,6 +229,7 @@ const QuestionEdit = props => {
                                                     if (event) {
                                                         event.preventDefault();
                                                     }
+                                                    console.log(errors)
                                                     handleSubmit()
                                                 }}
                                             >

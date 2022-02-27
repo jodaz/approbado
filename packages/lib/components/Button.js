@@ -30,6 +30,8 @@ const useStyles = makeStyles(theme => ({
         fontSize: '16px',
         borderRadius: '6px',
         boxShadow: 'none',
+        maxHeight: '2.5rem !important',
+        width: 'max-content',
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
             backgroundColor: fade(theme.palette.secondary.main, 0.95)

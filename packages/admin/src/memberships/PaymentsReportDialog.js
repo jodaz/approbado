@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
+import { ReactComponent as DownloadIcon } from '@approbado/lib/icons/download.svg'
 
 const TYPES = [
     { id: 'none', name: 'none' },
@@ -89,7 +90,13 @@ export default function() {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} size="small">Descargar</Button>
+            <Button
+                icon={<DownloadIcon />}
+                onClick={handleClickOpen}
+                size="large"
+            >
+                Descargar
+            </Button>
             <Dialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
