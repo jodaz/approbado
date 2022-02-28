@@ -56,11 +56,19 @@ export const update = async (req, res) => {
             userData.picture = req.file.path;
         }
 
+        if (typeof profile == 'string') {
+            profile = JSON.parse(profile)
+        }
+
         await user.$query().patch(userData);
 
         if (typeof profile == 'object') {
             let user_profile = await user.$relatedQuery('profile');
-            user_profile === undefined ? await user.$relatedQuery('profile').insert(profile) : await user.$relatedQuery('profile').update(profile)
+            user_profile === undefined
+                ? await user.$relatedQuery('profile')
+                    .insert(profile)
+                : await user.$relatedQuery('profile')
+                    .update(profile)
         }
 
         const model = await user.$fetchGraph('profile')
