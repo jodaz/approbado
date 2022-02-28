@@ -57,13 +57,13 @@ const useStyles = makeStyles(theme => ({
 
 const CustomUserMenu = React.forwardRef((props, ref) => (
     <UserMenu {...props}>
-        <Box>
+        <Box color='primary'>
             <MenuItemLink
                 ref={ref}
                 to="/profile"
                 primaryText='Perfil'
                 title='Configuraciones de perfil'
-                leftIcon={<ProfileIcon />}
+                leftIcon={<ProfileIcon color='inherit' />}
                 onClick={props.onClick}
                 sidebarIsOpen
             />
@@ -85,7 +85,7 @@ const AppBar = props => {
         isOpenSidebar: open,
         isXSmall: isXSmall
     });
-    const { user, isAuth } = useUserState();
+    const { user } = useUserState();
 
     return (
         <MuiAppBar className={classes.root} position='absolute' {...props} title=''>

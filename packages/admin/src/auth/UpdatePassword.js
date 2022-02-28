@@ -6,7 +6,7 @@ import {
     Box
 } from '@material-ui/core';
 import axios from 'axios'
-import AuthLayout from './AuthLayout'
+import AuthLayout from '../layouts/AuthLayout'
 import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';

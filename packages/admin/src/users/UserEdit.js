@@ -5,7 +5,6 @@ import {
     SelectInput,
     BooleanInput,
     useEditController,
-    EditContextProvider,
     useRedirect,
     useNotify,
     PasswordInput as RaPasswordInput
@@ -86,42 +85,47 @@ const UserEdit = props => {
     const { record } = editControllerProps
 
     return (
-        <EditContextProvider value={editControllerProps}>
-            <BaseForm save={save} validate={validate} disabled={loading} record={record}>
-                <InputContainer
-                    labelName='Nombres'
-                >
-                    <TextInput
-                        source="names"
-                        placeholder="Nombres"
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer labelName='Correo electrónico'>
-                    <TextInput
-                        label={false}
-                        source="email"
-                        placeholder="Correo electronico"
-                        fullWidth
-                    />
-                </InputContainer>
-                <Grid item xs={12}>
-                    <BooleanInput
-                        source="random_pass"
-                        label="Generar contraseña y enviar por correo"
-                    />
-                </Grid>
-                <PasswordInput />
-                <InputContainer labelName='Tipo de acceso'>
-                    <SelectInput
-                        label={false}
-                        source="rol"
-                        choices={ACCESS_TYPES}
-                        fullWidth
-                    />
-                </InputContainer>
-            </BaseForm>
-        </EditContextProvider>
+        <BaseForm
+            save={save}
+            validate={validate}
+            disabled={loading}
+            record={record}
+            formName='Editar usuario'
+            saveButtonLabel='Actualizar'
+        >
+            <InputContainer
+                labelName='Nombres'
+            >
+                <TextInput
+                    source="names"
+                    placeholder="Nombres"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Correo electrónico'>
+                <TextInput
+                    label={false}
+                    source="email"
+                    placeholder="Correo electronico"
+                    fullWidth
+                />
+            </InputContainer>
+            <Grid item xs={12}>
+                <BooleanInput
+                    source="random_pass"
+                    label="Generar contraseña y enviar por correo"
+                />
+            </Grid>
+            <PasswordInput />
+            <InputContainer labelName='Tipo de acceso'>
+                <SelectInput
+                    label={false}
+                    source="rol"
+                    choices={ACCESS_TYPES}
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

@@ -30,7 +30,6 @@ function* setUser(action) {
 
 function* unsetUser() {
     try {
-        console.log("unset user")
         yield localStorage.removeItem(CONFIG_NAMES.USER)
         yield localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN)
     } catch (e) {

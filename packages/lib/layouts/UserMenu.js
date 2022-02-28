@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import { useUserState, useUserDispatch } from '@approbado/lib/hooks/useUserState'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -40,12 +40,8 @@ const UserMenu= props => {
     const { children, logout } = props
     const open = Boolean(anchorEl)
     const { user } = useUserState();
-    const { unsetUser } = useUserDispatch();
     const handleMenu = (event) => setAnchorEl(event.currentTarget)
-    const handleClose = () => {
-        setAnchorEl(null)
-        unsetUser();
-    }
+    const handleClose = () => setAnchorEl(null)
     if (!logout && !children) return null
 
     let { picture, names } = user;

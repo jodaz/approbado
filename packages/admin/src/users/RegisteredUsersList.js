@@ -37,7 +37,7 @@ const FormFilter = props => {
                 <form onSubmit={handleSubmit}>
                     <Box display="flex" alignItems="start" mb={1}>
                         <Box component="span" mr={2}>
-                            <FilterLiveSearch source="global_search" label='' />
+                            <FilterLiveSearch label=''source="global_search" label='' />
                         </Box>
                         <Box component="span" mr={2}>
                             <DateInput source="gt_date" label="Desde" />

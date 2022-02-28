@@ -13,7 +13,7 @@ import { useMediaQuery } from '@material-ui/core'
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" label='Buscar trivia' />
+        <FilterLiveSearch label='' source="name" label='Buscar trivia' />
     </TopToolbar>
 );
 
