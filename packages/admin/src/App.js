@@ -32,42 +32,45 @@ import TriviaCreate from './trivias/TriviaCreate';
 import TriviaShow from './trivias/TriviaShow';
 import TriviaList from './trivias/TriviaList';
 
+import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
+
 const App = () => {
     return (
         <Switch>
             <Route exact path='/login' render={() => <Login />} />
+            <Route exact path="/reset-password" render={() => <ResetPassword />} />,
+            <Route exact path="/update-password" render={() => <UpdatePassword />} />,
+
             <Layout>
                 <Switch>
-                    <Route exact path="/" render={() => <Dashboard />} />
-                    <Route exact path="/configurations" render={() => <Configurations />} />,
-                    <Route exact path="/memberships" render={() => <Memberships />} />,
-                    <Route exact path="/users/:id/show" render={() => <UserProfile />} />,
-                    <Route exact path="/reports/users/:id/show" render={() => <BlacklistedUserShow />} />,
-                    <Route exact path="/memberships/plans/create" render={() => <PlanCreate />} />,
-                    <Route exact path="/memberships/plans/:id" render={() => <PlanEdit />} />,
-                    <Route exact path="/configurations/levels/create" render={() => <LevelsCreate />} />,
-                    <Route exact path="/configurations/categories/create" render={() => <CategoryCreate />} />,
-                    <Route exact path="/configurations/categories/:id" render={() => <CategoryEdit />} />,
-                    <Route exact path="/configurations/levels/:id" render={() => <LevelEdit />} />,
-                    <Route exact path="/profile" render={() => <Profile />} />,
-                    <Route exact path="/reset-password" render={() => <ResetPassword />} />,
-                    <Route exact path="/update-password" render={() => <UpdatePassword />} />,
-                    <Route exact path="/error" render={() => <ErrorLayout />} />,
+                    <ProtectedRoute exact path="/" component={() => <Dashboard />} />
+                    <ProtectedRoute exact path="/configurations" component={() => <Configurations />} />,
+                    <ProtectedRoute exact path="/memberships" component={() => <Memberships />} />,
+                    <ProtectedRoute exact path="/users/:id/show" component={() => <UserProfile />} />,
+                    <ProtectedRoute exact path="/reports/users/:id/show" component={() => <BlacklistedUserShow />} />,
+                    <ProtectedRoute exact path="/memberships/plans/create" component={() => <PlanCreate />} />,
+                    <ProtectedRoute exact path="/memberships/plans/:id" component={() => <PlanEdit />} />,
+                    <ProtectedRoute exact path="/configurations/levels/create" component={() => <LevelsCreate />} />,
+                    <ProtectedRoute exact path="/configurations/categories/create" component={() => <CategoryCreate />} />,
+                    <ProtectedRoute exact path="/configurations/categories/:id" component={() => <CategoryEdit />} />,
+                    <ProtectedRoute exact path="/configurations/levels/:id" component={() => <LevelEdit />} />,
+                    <ProtectedRoute exact path="/profile" component={() => <Profile />} />,
+                    <ProtectedRoute exact path="/error" component={() => <ErrorLayout />} />,
 
                     {/**
                      * Trivias
                      */}
-                    <Route exact path='/trivias' render={(routeProps) =>
+                    <ProtectedRoute exact path='/trivias' component={(routeProps) =>
                         <TriviaList
                             resource="trivias"
                             basePath={routeProps.match.url}
                         />}
                     />,
-                    <Route exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create" render={() => <QuestionsCreate />} />,
-                    <Route exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload" render={() => <QuestionsUpload />} />,
-                    <Route exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id" render={() => <QuestionEdit />} />,
-                    <Route exact path='/trivias/create' render={() => <TriviaCreate />} />,
-                    <Route exact path='/trivias/:id/show' render={(routeProps) =>
+                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create" component={() => <QuestionsCreate />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload" component={() => <QuestionsUpload />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id" component={() => <QuestionEdit />} />,
+                    <ProtectedRoute exact path='/trivias/create' component={() => <TriviaCreate />} />,
+                    <ProtectedRoute exact path='/trivias/:id/show' component={(routeProps) =>
                         <TriviaShow
                             resource="trivias"
                             basePath={routeProps.match.url}
@@ -75,12 +78,12 @@ const App = () => {
                             {...routeProps}
                         />
                     } />,
-                    <Route exact path="/trivias/:trivia_id/subthemes/create" render={() => <SubthemeCreate />} />,
-                    <Route exact path="/trivias/:trivia_id/awards/create" render={() => <AwardsCreate />} />,
-                    <Route exact path="/trivias/:trivia_id/files/create" render={() => <FileCreate />} />,
-                    <Route exact path="/trivias/:trivia_id/files/:file_id" render={() => <FileEdit />} />,
-                    <Route exact path="/trivias/:trivia_id/awards/:award_id" render={() => <AwardEdit />} />,
-                    <Route exact path="/trivias/:trivia_id/subthemes/:subtheme_id/show" render={(routeProps) =>
+                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/create" component={() => <SubthemeCreate />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/awards/create" component={() => <AwardsCreate />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/files/create" component={() => <FileCreate />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/files/:file_id" component={() => <FileEdit />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/awards/:award_id" component={() => <AwardEdit />} />,
+                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/show" component={(routeProps) =>
                         <SubthemeShow
                             resource="trivias"
                             basePath={routeProps.match.url}

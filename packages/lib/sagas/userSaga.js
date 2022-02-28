@@ -6,7 +6,7 @@ import CONFIG_NAMES from '../configs'
 /**
  * Get currently authenticated user
  */
-function* fetchUser () {
+function* fetchUser() {
     try {
         const response = yield axios.get('/profile');
 
@@ -30,6 +30,7 @@ function* setUser(action) {
 
 function* unsetUser() {
     try {
+        console.log("unset user")
         yield localStorage.removeItem(CONFIG_NAMES.USER)
         yield localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN)
     } catch (e) {

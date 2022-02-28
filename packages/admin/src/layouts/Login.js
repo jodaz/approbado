@@ -103,7 +103,7 @@ const Login = () => {
                 </Box>
                 <CardActions className={classes.actions}>
                     <Button disabled={loading} unresponsive fullWidth>
-                        {'Iniciar sesión'}
+                        Iniciar sesión
                     </Button>
                 </CardActions>
             </div>
