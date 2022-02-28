@@ -12,12 +12,11 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import AuthLayout from '../layouts/AuthLayout'
 import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, styled } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { TextInput } from 'react-admin'
 import Dialog from '@approbado/lib/components/Dialog'
 import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
-import { styled } from '@material-ui/core/styles'
 
 const LinkBehavior = styled(DefaultLinkBehavior)(({ theme }) => ({
     'color': theme.palette.primary.main,

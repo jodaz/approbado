@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import TabbedList from '@approbado/lib/components/TabbedList'
 import TestList from './TestList'
 import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageComponent'
+import Box from '@material-ui/core/Box';
+import { useMediaQuery } from '@material-ui/core'
+import Schedule from '../components/schedule'
 
 const tags = [
     {
@@ -34,14 +37,18 @@ const tags = [
 ]
 
 export default function Dashboard() {
+    const isSmall = useMediaQuery(theme =>
+        theme.breakpoints.down('sm')
+    )
+
     return (
-        <Grid container>
-            <Grid item xs={12}>
-                <TabbedList
-                    tags={tags}
-                    name='Home'
-                />
+        <Box display="flex" p={isSmall ? '0' : '2rem 0'}>
+            <Grid container>
+                <Grid item xs={12}>
+                    <TabbedList tags={tags} name='Home' />
+                </Grid>
             </Grid>
-        </Grid>
+            <Schedule isSmall={isSmall} />
+        </Box>
     )
 }
