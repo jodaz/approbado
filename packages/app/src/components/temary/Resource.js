@@ -26,19 +26,19 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-export default function Resource({ title, size, key, file }) {
+export default function Resource({ id, title, size, key, file }) {
     const classes = useStyles();
     const [provider] = useFileProvider(fileProvider);
 
-    const handleDownload = React.useCallback(async values => {
+    const handleDownload = React.useCallback(async () => {
         try {
             await provider({
-                resource: 'files',
+                resource: 'files/download',
                 type: 'getOne',
                 payload: {
                     name: `${title}`,
                     ext: 'pdf',
-                    filterValues: values
+                    filterValues: { id: id }
                 }
             });
         } catch (error) {
@@ -46,7 +46,7 @@ export default function Resource({ title, size, key, file }) {
                 return error.response.data.errors;
             }
         }
-    }, [provider]);
+    }, [provider, id]);
 
     return (
         <Card className={classes.root} key={key}>

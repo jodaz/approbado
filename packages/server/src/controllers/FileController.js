@@ -1,6 +1,7 @@
 import { File } from '../models'
 import { validateRequest, paginatedQueryResponse, formatBytes } from '../utils'
 import isEmpty from 'is-empty'
+import path from 'path'
 
 export const index = async (req, res) => {
     const { filter } = req.query
@@ -82,13 +83,30 @@ export const update = async (req, res) => {
     }
 }
 
+export const download = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const model = await File.query().findById(id)
+
+        if (!model) return res.status(404).json({ error: 'notfound' })
+
+        const pdfFilePath = path.resolve(__dirname, model.file);
+        console.log(pdfFilePath)
+        return res.status(201).json(pdfFilePath)
+    } catch(error){
+        console.log(error)
+        return res.status(500).json(error)
+    }
+}
+
 export const show = async (req, res) => {
     const { id } = req.params
 
     try {
         const model = await File.query().findById(id)
 
-        return res.status(201).json(model)
+        res.download(pdfFilePath)
     } catch(error){
         console.log(error)
         return res.status(500).json(error)

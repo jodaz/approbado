@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/styles/makeStyles'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as SelectionIllustration } from '@approbado/lib/illustrations/Selection.svg';
+import BeforeStarting from './BeforeStarting'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -15,15 +16,19 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const StartTriviaSelector = () => {
+const StartTriviaSelector = ({ level, type }) => {
     const classes = useStyles();
 
     return (
         <Box className={classes.root}>
-            <NoContent
-                icon={<SelectionIllustration />}
-                title='Seleccione una trivia'
-            />
+            {(level && type) ? (
+                <BeforeStarting />
+            ) : (
+                <NoContent
+                    icon={<SelectionIllustration />}
+                    title='Seleccione un nivel y un tipo de trivia'
+                />
+            )}
         </Box>
     )
 }
