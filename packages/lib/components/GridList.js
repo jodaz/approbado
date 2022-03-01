@@ -6,10 +6,10 @@ import Spinner from '@approbado/lib/components/Spinner'
 import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageComponent'
 
 const LoadedGridList = props => {
-    const { component } = props
+    const { component, empty } = props
     const { ids, data, total } = useListContext()
 
-    if (!ids || !data || !total) return <EmptyMessageComponent message='Sin registros' />;
+    if (!ids || !data || !total) return <>{empty}</>;
 
     return (
         <Grid container>
@@ -28,12 +28,13 @@ const LoadedGridList = props => {
 };
 
 const GridList = props => {
-    const { component } = props;
+    const { component, empty } = props;
     const { loaded } = useListContext();
 
     return loaded ? (
         <LoadedGridList
             component={component}
+            empty={empty}
         />
     ) : (
         <Box display="flex">
@@ -43,7 +44,8 @@ const GridList = props => {
 };
 
 GridList.defaultProps = {
-    component: <></>
+    component: <></>,
+    empty: <EmptyMessageComponent message='Sin registros' />
 }
 
 export default GridList;

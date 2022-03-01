@@ -5,7 +5,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import { ReactComponent as Certificate } from '@approbado/lib/icons/Certificate.svg'
 import Box from '@material-ui/core/Box';
 import configs from '@approbado/lib/configs'
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import SubthemeItem from './SubthemeItem'
 import List from '@material-ui/core/List';
