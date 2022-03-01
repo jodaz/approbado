@@ -67,7 +67,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-const BeforeStarting = () => {
+const BeforeStarting = ({ trivia }) => {
     const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();

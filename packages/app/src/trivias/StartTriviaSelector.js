@@ -16,13 +16,13 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const StartTriviaSelector = ({ level, type }) => {
+const StartTriviaSelector = ({ level, type, trivia, selectedSubthemes }) => {
     const classes = useStyles();
 
     return (
         <Box className={classes.root}>
             {(level && type) ? (
-                <BeforeStarting />
+                <BeforeStarting trivia={trivia} subthemes={selectedSubthemes} />
             ) : (
                 <NoContent
                     icon={<SelectionIllustration />}

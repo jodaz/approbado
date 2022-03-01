@@ -56,11 +56,11 @@ export const update = async (req, res) => {
             userData.picture = req.file.path;
         }
 
+        await user.$query().patch(userData);
+
         if (typeof profile == 'string') {
             profile = JSON.parse(profile)
         }
-
-        await user.$query().patch(userData);
 
         if (typeof profile == 'object') {
             let user_profile = await user.$relatedQuery('profile');

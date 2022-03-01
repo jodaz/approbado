@@ -3,33 +3,29 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useSubthemesDispatch, useSubthemeState } from '@approbado/lib/hooks/useSubthemeSelect';
 
 export default function SubthemeItem(props) {
     const { id, name } = props;
-    const [checked, setChecked] = React.useState([1]);
+    const state = useSubthemeState();
+    const { setSubtheme, unsetSubtheme } = useSubthemesDispatch();
 
-    console.log(checked.indexOf(id))
     const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
+        if (state.indexOf(value) === -1) {
+            setSubtheme(value)
         } else {
-            newChecked.splice(currentIndex, 1);
+            unsetSubtheme(value)
         }
-
-        setChecked(newChecked);
     };
 
     return (
-        <ListItem key={id} button>
+        <ListItem key={id} button onClick={handleToggle(id)}>
             <ListItemText id={id} primary={name} />
             <ListItemSecondaryAction>
             <Checkbox
                 edge="end"
                 onChange={handleToggle(id)}
-                checked={checked.indexOf(id) !== -1}
+                checked={state.indexOf(id) !== -1}
             />
             </ListItemSecondaryAction>
         </ListItem>

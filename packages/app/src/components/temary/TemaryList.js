@@ -1,28 +1,17 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography'
 import AwardItem from './AwardItem'
 import Spinner from '@approbado/lib/components/Spinner'
-import { axios } from '@approbado/lib/providers'
-import SubthemeItem from './SubthemeItem'
+import { axios, history } from '@approbado/lib/providers'
+import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box';
+import { useSubthemeState } from '@approbado/lib/hooks/useSubthemeSelect';
 
 export default function TemaryList({ id }) {
     const [loading, setLoading] = React.useState(false)
     const [data, setData] = React.useState([])
-    const [checked, setChecked] = React.useState([1]);
     const [error, setError] = React.useState(false)
-
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
-    };
+    const state = useSubthemeState();
 
     React.useEffect(() => {
         setLoading(true)
@@ -41,31 +30,34 @@ export default function TemaryList({ id }) {
     if (loading) return <Spinner />
 
     if (error) return (
-        <Typography variant="subtitle1">
+        <Box variant="subtitle1">
             Ha ocurrido un error.
-        </Typography>
+        </Box>
     )
 
     if (!data.length) return (
-        <Typography variant="subtitle1">
-            Sin recursos
-        </Typography>
+        <Box variant="subtitle1">
+            Esta trivia aún no posee subtemas
+        </Box>
     )
 
     return (
-        <>
-            {data.map(item => {
-                const { subthemes, ...rest } = item
-
-                return (
-                    <>
-                        <AwardItem {...rest} />
-                        {subthemes.map(subtheme => (
-                            <SubthemeItem {...subtheme} />
-                        ))}
-                    </>
-                )
-            })}
-        </>
+        <Box sx={{
+            minHeight: 'max-content'
+        }}>
+            <List>
+                {data.map(item => <AwardItem {...item} /> )}
+            </List>
+            <Box marginTop='2rem'>
+                <Button
+                    color='primary'
+                    fullWidth
+                    onClick={() => history.push('/trivias/start')}
+                    disabled={!(state.length > 0)}
+                >
+                    Iniciar trivia
+                </Button>
+            </Box>
+        </Box>
     );
 }

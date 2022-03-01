@@ -10,6 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
 import { Query } from 'react-admin'
+import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
+import { history } from '@approbado/lib/providers'
+import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -56,14 +59,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const sampleItems = [
-    { name: 'Tema en específico #1' },
-    { name: 'Tema en específico #2' },
-    { name: 'Tema en específico #2' },
-    { name: 'Tema en específico #2' },
-    { name: 'Tema en específico #2' },
-];
-
 const payload = {
     pagination: { page: 1, perPage: 5 },
     sort: { field: 'created_at', order: 'DESC'}
@@ -73,6 +68,15 @@ const StartTrivia = () => {
     const classes = useStyles();
     const [level, setLevel] = React.useState('');
     const [type, setType] = React.useState('');
+    const state = useTriviaState()
+
+    React.useEffect(() => {
+        if (!state.selected) {
+            history.push('/trivias');
+        }
+    }, [state])
+
+    const { selectedSubthemes, trivia } = state
 
     return (
         <Grid container>
@@ -83,12 +87,12 @@ const StartTrivia = () => {
                 <Box className={classes.triviaInformation}>
                     <BalanceIcon />
                     &nbsp;
-                    <Typography variant='subtitle1'>Derecho Laboral</Typography>
+                    <Typography variant='subtitle1'>{trivia.name}</Typography>
                 </Box>
                 <Box className={classes.triviaInformation}>
                     <Typography variant='subtitle1'>Tema: </Typography>&nbsp;
                     <Box>
-                        <ItemCollection items={sampleItems} />
+                        <ItemCollection items={selectedSubthemes} />
                     </Box>
                 </Box>
             </Grid>
@@ -150,7 +154,7 @@ const StartTrivia = () => {
                 </Grid>
                 <Divider orientation='vertical' />
                 <Grid item xs>
-                    <StartTriviaSelector level={level} type={type} />
+                    <StartTriviaSelector level={level} type={type} {...state} />
                 </Grid>
             </Grid>
         </Grid>
