@@ -26,6 +26,12 @@ export const index = async (req, res) => {
             if (filter.trivia_id) {
                 query.where('trivia_id', filter.trivia_id)
             }
+            if (filter.user_id) {
+                query.whereExists(
+                    Award.relatedQuery('users')
+                        .where('user_id', filter.user_id)
+                )
+            }
         }
 
         if (sort && order) {

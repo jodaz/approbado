@@ -21,6 +21,18 @@ export class Award extends BaseClass {
                 from: 'awards.id',
                 to: 'subthemes.award_id'
             }
-        }
+        },
+        users: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/User`,
+            join: {
+                from: 'awards.id',
+                through: {
+                    from: 'awards_users.award_id',
+                    to: 'awards_users.user_id'
+                },
+                to: 'users.id'
+            }
+        },
     })
 }
