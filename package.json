@@ -24,5 +24,9 @@
     "rollback": "yarn workspace @approbado/db run db:rollback",
     "build:all": "concurrently \"npm run build:app\" \"npm run build:admin\" \"npm run build:frames\" && utils/predeploy.sh",
     "deploy": "npm run build:all && utils/deploy.sh"
+  },
+  "dependencies": {
+    "@jodaz_/data-provider": "^1.1.5",
+    "@jodaz_/file-provider": "^0.8.0"
   }
 }
