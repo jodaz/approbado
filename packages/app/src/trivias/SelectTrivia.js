@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const SelectTriviaContent = trivia => {
-    const isFreeMembership = usePlan('free');
+    const { found: isFreeMembership} = usePlan('Free');
 
     return (
         <Box width='100%'>

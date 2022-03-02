@@ -4,7 +4,7 @@ import { ReactComponent as BannerIllustration } from '@approbado/lib/illustratio
 import { usePlan } from '@approbado/lib/hooks/useUserState';
 
 const AsideBar = () => {
-    const isFreeMembership = usePlan('Free');
+    const { found: isFreeMembership} = usePlan('Free');
 
     return isFreeMembership && (
         <Box p='0 0 0 2rem'>

@@ -19,7 +19,8 @@ const palette = {
     },
     background: {
         default: '#FFFFFF',
-        dark: '#F9F9F9'
+        dark: '#F9F9F9',
+        light: '#F5F5F5'
     },
     info: {
         main: '#2280ED', // Azul primario,

@@ -13,13 +13,14 @@ export const useUserState = () => {
  * @returns { plan model } | true | false
  */
 export const usePlan = (planName) => {
-    const plan = useSelector(state => state.user.user.memberships[0].plans);
+    const store = useSelector(state => state.user.user.memberships[0]);
+    const { plans: plan, ...rest } = store
 
     if (planName) {
-        return plan.name.search(planName)
+        return { found: plan.name.search(planName), plan, membership: rest }
     }
 
-    return plan;
+    return { plan, membership: rest };
 }
 
 export const useUserDispatch = () => {
