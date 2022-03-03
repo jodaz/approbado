@@ -33,7 +33,7 @@ export const update = async (req, res) => {
 
         await sendMail(mailerData, res)
 
-        const {
+        let {
             profile,
             names,
             last_name,
