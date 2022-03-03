@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "@jodaz_/data-provider": "^1.1.5",
-    "@jodaz_/file-provider": "^0.8.0"
+    "@jodaz_/file-provider": "^0.9.0"
   }
 }

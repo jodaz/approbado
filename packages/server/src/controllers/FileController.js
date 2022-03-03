@@ -92,7 +92,7 @@ export const download = async (req, res) => {
         if (!model) return res.status(404).json({ error: 'notfound' })
 
         const pdfFilePath = path.resolve(__dirname, model.file);
-        console.log(pdfFilePath)
+
         return res.status(201).json(pdfFilePath)
     } catch(error){
         console.log(error)
@@ -106,7 +106,9 @@ export const show = async (req, res) => {
     try {
         const model = await File.query().findById(id)
 
-        res.download(pdfFilePath)
+        if (!model) return res.status(404).json({ error: 'notfound' })
+
+        return res.status(201).json(model)
     } catch(error){
         console.log(error)
         return res.status(500).json(error)
