@@ -4,6 +4,7 @@ import CustomButton from '@approbado/lib/components/Button'
 import { usePlan } from '@approbado/lib/hooks/useUserState';
 import CloseIcon from '@approbado/lib/icons/CloseIcon'
 import CheckIcon from '@approbado/lib/icons/CheckIcon'
+import UpdatePlanBanner from './UpdatePlanBanner'
 
 const NoAccessItem = () => (
     <li style={{
@@ -52,7 +53,7 @@ const FreeMembershipMessage = () => (
                 Actualmente tienes una cuenta free, cambiate a premium
                 y obtén más beneficios 😄
             </Box>
-            <Box width='20%'>
+            <Box>
                 <CustomButton unresponsive>
                     Ser premium
                 </CustomButton>
@@ -85,7 +86,7 @@ const PremiumMembershipMessage = () => (
             <Box width='50%'>
                 Con Approbado Premium tienes acceso a:
             </Box>
-            <Box width='20%'>
+            <Box>
                 <CustomButton unresponsive>
                     Actualizar
                 </CustomButton>
@@ -105,13 +106,14 @@ const PremiumMembershipMessage = () => (
 )
 
 const AboutMe = () => {
-    const plan = usePlan();
+    const { plan, membership } = usePlan();
 
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
         }}>
+            <UpdatePlanBanner />
             <Box sx={{
                 textTransform: 'uppercase',
                 fontWeight: 600
@@ -121,7 +123,10 @@ const AboutMe = () => {
             <Box component='h1'>
                 {plan.name}
             </Box>
-            {plan.name.search('free') ? <FreeMembershipMessage /> : <PremiumMembershipMessage />}
+            {plan.name.search('free')
+                ? <FreeMembershipMessage />
+                : <PremiumMembershipMessage />
+            }
         </Box>
     );
 }

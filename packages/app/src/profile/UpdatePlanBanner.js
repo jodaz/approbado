@@ -13,7 +13,7 @@ export default function() {
                 Actualiza tu plan!
             </Box>
             <Box>
-                Estás a 3 días para que tu plan finalice. Actualiza ahora y sigue disfrutando de todos los beneficios
+                Estás a 3 días para que tu plan finalice. Actualiza ahora y sigue disfrutando de todos los beneficios.
             </Box>
         </Box>
     )

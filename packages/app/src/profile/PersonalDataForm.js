@@ -21,7 +21,7 @@ const AboutMe = ({ submitting, handleSubmit }) => (
             <TextInput source='email' placeholder='hola@gmail.com' fullWidth />
         </InputContainer>
         <InputContainer disabled={submitting} labelName='Ocupación' sm={12} md={6}>
-            <TextInput source='ocupation' placeholder='Ingrese su ocupación' fullWidth />
+            <TextInput source='profile.ocupation' placeholder='Ingrese su ocupación' fullWidth />
         </InputContainer>
         <InputContainer disabled={submitting} labelName='Teléfono' sm={12} md={6}>
             <TextInput source='phone' fullWidth />
@@ -33,7 +33,7 @@ const AboutMe = ({ submitting, handleSubmit }) => (
             <TextInput source='profile.twitter' fullWidth />
         </InputContainer>
         <InputContainer disabled={submitting} labelName='Biografía' sm={12} md={12}>
-            <TextInput source='bio' fullWidth multiline />
+            <TextInput source='profile.summary' fullWidth multiline />
         </InputContainer>
         <Grid container>
             <Grid item xs='6'>
