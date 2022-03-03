@@ -38,7 +38,7 @@ export default function Resource({ id, title, size, key, file }) {
                 payload: {
                     name: `${title}`,
                     ext: 'pdf',
-                    filterValues: { id: id }
+                    record: id
                 }
             });
         } catch (error) {
