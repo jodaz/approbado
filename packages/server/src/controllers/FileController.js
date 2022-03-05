@@ -91,9 +91,9 @@ export const download = async (req, res) => {
 
         if (!model) return res.status(404).json({ error: 'notfound' })
 
-        const pdfFilePath = path.resolve(__dirname, model.file);
+        const pdfFilePath = path.resolve(model.file);
 
-        return res.status(201).json(pdfFilePath)
+        return res.download(pdfFilePath)
     } catch(error){
         console.log(error)
         return res.status(500).json(error)

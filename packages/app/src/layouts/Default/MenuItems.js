@@ -4,10 +4,8 @@ import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import MenuItemLink from '@approbado/lib/components/MenuItemLink'
-
-// Other resources
-import forums from '../forums'
-import notifications from '../notifications'
+import { ReactComponent as ForumIcon } from '@approbado/lib/icons/Forum.svg'
+import NotificationIcon from '@approbado/lib/icons/NotificationIcon'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -22,8 +20,8 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
         />
         <MenuItemLink
             to='/notifications'
-            primaryText={notifications.options.label}
-            leftIcon={<notifications.icon />}
+            primaryText='Notificaciones'
+            leftIcon={<NotificationIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
@@ -39,8 +37,8 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
         />
         <MenuItemLink
             to='/forums'
-            primaryText={forums.options.label}
-            leftIcon={<forums.icon />}
+            primaryText='Foros'
+            leftIcon={<ForumIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}

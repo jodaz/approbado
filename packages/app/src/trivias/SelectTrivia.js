@@ -6,7 +6,7 @@ import { ReactComponent as SelectionIllustration } from '@approbado/lib/illustra
 import { useTriviaState } from "@approbado/lib/hooks/useTriviaSelect"
 import { ReactComponent as BannerIllustration } from '@approbado/lib/illustrations/Banner.svg';
 import NoContent from '@approbado/lib/components/NoContent'
-import Temary from '../components/temary'
+import Temary from './temary'
 import { usePlan } from '@approbado/lib/hooks/useUserState';
 
 const useStyles = makeStyles(() => ({

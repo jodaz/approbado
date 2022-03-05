@@ -17,6 +17,7 @@ import LogoutButton from '@approbado/lib/components/LogoutButton'
 import Typography from '@material-ui/core/Typography'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import LazyLoader from '@approbado/lib/components/LazyLoader'
+import Dot from '@approbado/lib/components/Dot'
 
 const NotificationsButton = React.lazy(() => import('./NotificationsButton'))
 
@@ -26,7 +27,8 @@ const useStyles = makeStyles(theme => ({
                 props.isXSmall ? theme.palette.primary.main
                 : theme.palette.background.default,
             width: props =>
-                !props.isOpenSidebar && (!props.isXSmall) // Large screens
+                props.fullWidth ? '100%'
+                : !props.isOpenSidebar && (!props.isXSmall) // Large screens
                     ? `calc(100% - 55px)`
                 : (props.isXSmall) // Small screen
                     ? '100%'
@@ -51,6 +53,13 @@ const useStyles = makeStyles(theme => ({
             whiteSpace: 'nowrap',
             overflow: 'hidden',
         },
+        gameinfo: {
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            color: theme.palette.primary.main,
+            padding: '0 1rem'
+        }
     }),
     { name: 'RaAppBar' }
 );
@@ -77,13 +86,15 @@ const CustomUserMenu = React.forwardRef((props, ref) => (
 ));
 
 const AppBar = props => {
+    const { selected } = props
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const classes = useStyles({
         isOpenSidebar: open,
-        isXSmall: isXSmall
+        isXSmall: isXSmall,
+        fullWidth: selected
     });
     const { user } = useUserState();
 
@@ -94,10 +105,15 @@ const AppBar = props => {
                 variant={isXSmall ? 'regular' : 'dense'}
                 className={classes.toolbar}
             >
-                <div>
-                    <ToggleSidebarButton />
+                <Box display='flex'>
+                    {!selected && <ToggleSidebarButton />}
                     <GoBackButton />
-                </div>
+                    {(selected) && (
+                        <Box className={classes.gameinfo}>
+                            Trivia <Dot /> Derecho Laboral
+                        </Box>
+                    )}
+                </Box>
 
                 <div style={{ display: 'flex' }}>
                     {(user.is_registered) && (
@@ -111,5 +127,10 @@ const AppBar = props => {
         </MuiAppBar>
     );
 };
+
+AppBar.defaultsProps = {
+    fullWidth: false,
+    selected: true
+}
 
 export default AppBar;

@@ -5,7 +5,7 @@ import TestList from './TestList'
 import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageComponent'
 import Box from '@material-ui/core/Box';
 import { useMediaQuery } from '@material-ui/core'
-import Schedule from '../components/schedule'
+import Schedule from './schedule'
 
 const tags = [
     {

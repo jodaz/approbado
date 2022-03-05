@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import {
     FilterContext,
     ListBase,
@@ -18,18 +18,15 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-const TriviaList = props => {
-    console.log("props")
-    return (
-        <ListBase
-            perPage={10}
-            sort={{ field: 'created_at', order: 'DESC' }}
-            {...props}
-        >
-            <TriviaListView />
-        </ListBase>
-    );
-}
+const TriviaList = props => (
+    <ListBase
+        perPage={10}
+        sort={{ field: 'created_at', order: 'DESC' }}
+        {...props}
+    >
+        <TriviaListView />
+    </ListBase>
+);
 
 const TriviaListView = () => (
     <ListContainer

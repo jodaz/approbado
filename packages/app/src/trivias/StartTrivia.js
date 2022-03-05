@@ -12,7 +12,6 @@ import clsx from 'clsx';
 import { Query } from 'react-admin'
 import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
 import { history } from '@approbado/lib/providers'
-import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
     root: {

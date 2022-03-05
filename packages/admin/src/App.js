@@ -45,124 +45,120 @@ const App = () => {
             <Route exact path="/reset-password" render={() => <ResetPassword />} />
             <Route exact path="/update-password" render={() => <UpdatePassword />} />
 
-            <Layout>
-                <Switch>
-                    <ProtectedRoute exact path="/" component={() => <Dashboard />} />
-                    <ProtectedRoute exact path="/reports/users/:id/show" component={() => <BlacklistedUserShow />} />
-                    <ProtectedRoute exact path="/profile" component={() => <Profile />} />
-                    <ProtectedRoute exact path="/error" component={() => <ErrorLayout />} />
+            <ProtectedRoute layout={Layout} exact path="/" component={() => <Dashboard />} />
+            <ProtectedRoute layout={Layout} exact path="/reports/users/:id/show" component={() => <BlacklistedUserShow />} />
+            <ProtectedRoute layout={Layout} exact path="/profile" component={() => <Profile />} />
+            <ProtectedRoute layout={Layout} exact path="/error" component={() => <ErrorLayout />} />
 
-                    {/**
-                     * Reports
-                     */}
-                    <ProtectedRoute exact path='/reports' component={(routeProps) =>
-                        <ReportsView
-                            resource="reports"
-                            basePath={routeProps.match.url}
-                        />}
-                    />
-                    <ProtectedRoute exact path='/reports/:id' component={(routeProps) =>
-                        <ReportShow
-                            resource="reports"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
+            {/**
+             * Reports
+             */}
+            <ProtectedRoute layout={Layout} exact path='/reports' component={(routeProps) =>
+                <ReportsView
+                    resource="reports"
+                    basePath={routeProps.match.url}
+                />}
+            />
+            <ProtectedRoute layout={Layout} exact path='/reports/:id' component={(routeProps) =>
+                <ReportShow
+                    resource="reports"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
 
-                    {/**
-                     * Users
-                     */}
-                    <ProtectedRoute exact path='/users' component={(routeProps) =>
-                        <UserList
-                            resource="users"
-                            basePath={routeProps.match.url}
-                        />}
-                    />
-                    <ProtectedRoute exact path="/users/:id/show" component={() => <UserProfile />} />
-                    <ProtectedRoute exact path='/users/:id' component={(routeProps) =>
-                        <UserEdit
-                            resource="users"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
+            {/**
+             * Users
+             */}
+            <ProtectedRoute layout={Layout} exact path='/users' component={(routeProps) =>
+                <UserList
+                    resource="users"
+                    basePath={routeProps.match.url}
+                />}
+            />
+            <ProtectedRoute layout={Layout} exact path="/users/:id/show" component={() => <UserProfile />} />
+            <ProtectedRoute layout={Layout} exact path='/users/:id' component={(routeProps) =>
+                <UserEdit
+                    resource="users"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
 
-                    {/**
-                     * Plans and memberships
-                     */}
-                    <ProtectedRoute exact path="/memberships" component={() => <Memberships />} />
-                    <ProtectedRoute exact path="/memberships/plans/create" component={() => <PlanCreate />} />
-                    <ProtectedRoute exact path="/memberships/plans/:id" component={(routeProps) =>
-                        <PlanEdit
-                            resource="memberships/plans"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
+            {/**
+             * Plans and memberships
+             */}
+            <ProtectedRoute layout={Layout} exact path="/memberships" component={() => <Memberships />} />
+            <ProtectedRoute layout={Layout} exact path="/memberships/plans/create" component={() => <PlanCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/memberships/plans/:id" component={(routeProps) =>
+                <PlanEdit
+                    resource="memberships/plans"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
 
-                    {/**
-                     * Settings
-                     */}
-                    <ProtectedRoute exact path="/configurations" component={() => <Configurations />} />
-                    <ProtectedRoute exact path="/configurations/levels/create" component={() => <LevelsCreate />} />
-                    <ProtectedRoute exact path="/configurations/categories/create" component={() => <CategoryCreate />} />
-                    <ProtectedRoute exact path="/configurations/categories/:id" component={(routeProps) =>
-                        <CategoryEdit
-                            resource="configurations/categories"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
-                    <ProtectedRoute exact path="/configurations/levels/:id" component={(routeProps) =>
-                        <LevelEdit
-                            resource="configurations/levels"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
+            {/**
+             * Settings
+             */}
+            <ProtectedRoute layout={Layout} exact path="/configurations" component={() => <Configurations />} />
+            <ProtectedRoute layout={Layout} exact path="/configurations/levels/create" component={() => <LevelsCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/configurations/categories/create" component={() => <CategoryCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/configurations/categories/:id" component={(routeProps) =>
+                <CategoryEdit
+                    resource="configurations/categories"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+            <ProtectedRoute layout={Layout} exact path="/configurations/levels/:id" component={(routeProps) =>
+                <LevelEdit
+                    resource="configurations/levels"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
 
-                    {/**
-                     * Trivias
-                     */}
-                    <ProtectedRoute exact path='/trivias' component={(routeProps) =>
-                        <TriviaList
-                            resource="trivias"
-                            basePath={routeProps.match.url}
-                        />}
-                    />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create" component={() => <QuestionsCreate />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload" component={() => <QuestionsUpload />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id" component={() => <QuestionEdit />} />
-                    <ProtectedRoute exact path='/trivias/create' component={() => <TriviaCreate />} />
-                    <ProtectedRoute exact path='/trivias/:id/show' component={(routeProps) =>
-                        <TriviaShow
-                            resource="trivias"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/create" component={() => <SubthemeCreate />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/awards/create" component={() => <AwardsCreate />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/files/create" component={() => <FileCreate />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/files/:file_id" component={() => <FileEdit />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/awards/:award_id" component={() => <AwardEdit />} />
-                    <ProtectedRoute exact path="/trivias/:trivia_id/subthemes/:subtheme_id/show" component={(routeProps) =>
-                        <SubthemeShow
-                            resource="trivias"
-                            basePath={routeProps.match.url}
-                            id={decodeURIComponent((routeProps.match).params.id)}
-                            {...routeProps}
-                        />
-                    } />
-                    <Route path='/*' render={() => <NotFound />} />
-                </Switch>
-            </Layout>
+            {/**
+             * Trivias
+             */}
+            <ProtectedRoute layout={Layout} exact path='/trivias' component={(routeProps) =>
+                <TriviaList
+                    resource="trivias"
+                    basePath={routeProps.match.url}
+                />}
+            />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create" component={() => <QuestionsCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload" component={() => <QuestionsUpload />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id" component={() => <QuestionEdit />} />
+            <ProtectedRoute layout={Layout} exact path='/trivias/create' component={() => <TriviaCreate />} />
+            <ProtectedRoute layout={Layout} exact path='/trivias/:id/show' component={(routeProps) =>
+                <TriviaShow
+                    resource="trivias"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/create" component={() => <SubthemeCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/awards/create" component={() => <AwardsCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/files/create" component={() => <FileCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/files/:file_id" component={() => <FileEdit />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/awards/:award_id" component={() => <AwardEdit />} />
+            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/show" component={(routeProps) =>
+                <SubthemeShow
+                    resource="trivias"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+            <Route path='/*' render={() => <NotFound />} />
         </Switch>
     )
 }
