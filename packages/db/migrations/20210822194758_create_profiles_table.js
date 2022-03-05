@@ -19,6 +19,7 @@ export async function up(knex) {
         table.boolean('notify_email').defaultTo(1);
         table.boolean('notify_about_chat').defaultTo(1);
         table.boolean('notify_about_comments').defaultTo(1);
+        table.boolean('notify_about_account').defaultTo(1);
         table.timestamps();
         table.integer('user_id').unsigned();
         table.foreign('user_id').references('users.id').onDelete('cascade');
