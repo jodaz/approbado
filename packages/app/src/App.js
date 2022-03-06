@@ -54,15 +54,18 @@ const App = () => {
                 {/**
                  * Trivias
                  */}
-                <ProtectedRoute exact path="/trivias" component={() => <TriviaList />} layout={DefaultLayout} />
+                <ProtectedRoute layout={DefaultLayout} exact path='/trivias' component={(routeProps) =>
+                    <TriviaList
+                        resource="trivias"
+                        basePath={routeProps.match.url}
+                    />}
+                />
                 <ProtectedRoute exact path="/trivias/start" component={() => <StartTrivia />} layout={DefaultLayout} />
             </Switch>
 
             <Switch>
                 <ProtectedRoute exact path="/game" component={() => <TriviaGame />} layout={GameLayout} />
             </Switch>
-
-            <Route path='/*' render={() => <NotFound />} />
         </>
     )
 }

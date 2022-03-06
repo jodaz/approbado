@@ -34,8 +34,6 @@ const Index = () => (
             <Resource name='forums' intent='registration' />
             <Resource name='comments' intent='registration' />
             <Resource name='report-reasons' intent='registration' />
-            <Resource name="configurations/categories" intent='registration' />
-            <Resource name="configurations/levels" intent='registration' />
             <Resource name="blacklisted-users" intent="registration" />
             <Resource name="memberships/payments" intent="registration" />
             <Resource name="memberships/plans" intent="registration" />

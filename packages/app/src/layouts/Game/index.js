@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@approbado/lib/layouts/AppBar';
 import Notification from '@approbado/lib/components/Notification'
 import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
@@ -17,17 +17,6 @@ const styles = makeStyles(theme => ({
             theme.palette.background.default
         ),
     },
-    appFrame: {
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 1,
-        [theme.breakpoints.up('xs')]: {
-            marginTop: theme.spacing(6),
-        },
-        [theme.breakpoints.down('xs')]: {
-            marginTop: theme.spacing(7),
-        },
-    },
     content: {
         display: 'flex',
         flexDirection: 'column',
@@ -35,8 +24,11 @@ const styles = makeStyles(theme => ({
         flexBasis: 0,
         padding: '0 1rem !important',
         marginTop: '4em',
-        paddingTop: '8px',
-        paddingLeft: 0
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            width: '80%'
+        }
     },
 }));
 

@@ -40,7 +40,7 @@ export default function Temary(props) {
     return (
         <Box className={classes.root}>
             <Typography variant="h6">
-                Temario
+                {props.name}
             </Typography>
             <Box width="max-content" marginTop='1rem'>
                 <Button

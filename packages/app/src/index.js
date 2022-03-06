@@ -22,18 +22,21 @@ const Index = () => (
         })}
     >
         <DataProviderContext.Provider value={dataProvider}>
-            <Resource name='comments' />
-            <Resource name='forums' />
-            <Resource name='notifications' />
-            <Resource name='trivias' />
-            <Resource name='files' />
-            <Resource name='profile' />
-            <Resource name='users' />
-            <Resource name='comments' />
-            <Resource name='like-posts' />
-            <Resource name='report-reasons' />
-            <Resource name="configurations/categories" />
-            <Resource name="configurations/levels" />
+            <Resource name="configurations/levels" intent="registration" />
+            <Resource name="configurations/categories" intent="registration" />
+            <Resource name='trivias' intent='registration' />
+            <Resource name='files' intent='registration' />
+            <Resource name='awards' intent='registration' />
+            <Resource name='subthemes' intent='registration' />
+            <Resource name='questions' intent='registration' />
+            <Resource name='profile' intent='registration' />
+            <Resource name='users' intent='registration' />
+            <Resource name='forums' intent='registration' />
+            <Resource name='comments' intent='registration' />
+            <Resource name='report-reasons' intent='registration' />
+            <Resource name="blacklisted-users" intent="registration" />
+            <Resource name="memberships/payments" intent="registration" />
+            <Resource name="memberships/plans" intent="registration" />
 
             <ConnectedRouter history={history}>
                 <ThemeProvider theme={createTheme(theme)}>
