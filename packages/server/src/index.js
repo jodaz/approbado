@@ -19,27 +19,27 @@ app.use(routes);
 let http = require("http").Server(app);
 
 const io = require("socket.io")
-(http,{
-  cors: {
-    origin: "*",
-   methods: ["GET", "POST"]
-  },
-  allowEIO3: true
+    (http,{
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    },
+    allowEIO3: true
 });
 
 io.on("connection", function(socket) {
-  socket.on("room", async function (data) {
-    socket.broadcast.emit("room-"+data.token,data)
-  })
+    socket.on("room", async function (data) {
+        socket.broadcast.emit("room-"+data.token,data)
+    })
 
-  socket.on("user_conected", async function (user) {
-  	socket.broadcast.emit("users_conected",user)
-  })
+    socket.on("user_conected", async function (user) {
+        socket.broadcast.emit("users_conected",user)
+    })
 
-  socket.on("finished", async function (user) {
-    console.log("finished"+ user.token+" "+user.id)
-    socket.broadcast.emit("user_finished-"+user.token,user)
-  })
+    socket.on("finished", async function (user) {
+        console.log("finished"+ user.token+" "+user.id)
+        socket.broadcast.emit("user_finished-"+user.token,user)
+    })
 });
 
 http.listen(APP_PORT, () => {
@@ -47,7 +47,7 @@ http.listen(APP_PORT, () => {
 })
 
 cron.schedule('* * * * *',async function () {
-  await get_schedules()
+    await get_schedules()
 })
 
 app.locals.io = io;
