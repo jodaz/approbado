@@ -5,6 +5,7 @@ import { usePlan } from '@approbado/lib/hooks/useUserState';
 import CloseIcon from '@approbado/lib/icons/CloseIcon'
 import CheckIcon from '@approbado/lib/icons/CheckIcon'
 import UpdatePlanBanner from './UpdatePlanBanner'
+import { format, parseISO, differenceInDays } from 'date-fns'
 
 const NoAccessItem = () => (
     <li style={{
@@ -107,13 +108,16 @@ const PremiumMembershipMessage = () => (
 
 const AboutMe = () => {
     const { plan, membership } = usePlan();
+    const currDate = new Date();
+    const membershipStartDate = parseISO(membership.created_at)
+    const daysLeft = differenceInDays(currDate, membershipStartDate)
 
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
         }}>
-            <UpdatePlanBanner />
+            {(daysLeft && daysLeft < 7) && <UpdatePlanBanner days={daysLeft} />}
             <Box sx={{
                 textTransform: 'uppercase',
                 fontWeight: 600

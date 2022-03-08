@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 
-export default function() {
+const UpdatePlanBanner = ({ days }) => {
     return (
         <Box sx={{
             bgcolor: 'background.light',
@@ -13,8 +13,17 @@ export default function() {
                 Actualiza tu plan!
             </Box>
             <Box>
-                Estás a 3 días para que tu plan finalice. Actualiza ahora y sigue disfrutando de todos los beneficios.
+                {
+                `Estás a ${days} día${(days > 1) ? 's' : ''} para que tu plan finalice.
+                Actualiza ahora y sigue disfrutando de todos los beneficios.`
+                }
             </Box>
         </Box>
     )
 }
+
+UpdatePlanBanner.defaultProps = {
+    days: 0
+}
+
+export default UpdatePlanBanner
