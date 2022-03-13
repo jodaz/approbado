@@ -1,23 +1,15 @@
 import * as React from 'react';
-import { makeStyles, Box, fade } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import Tag from './Tag'
 
-const useStyles = makeStyles(theme => ({
-    root: {
+export default ({ items }) => (
+    <Box sx={{
         display: 'flex',
         justifyContent: 'start',
         flexDirection: 'row'
-    }
-}))
-
-export default ({ items }) => {
-    const classes = useStyles();
-
-    return (
-        <Box display="flex" className={classes.root}>
-            {items.map((item, i) => (
-                <Tag key={i} name={item.name} />
-            ))}
-        </Box>
-    );
-}
+    }}>
+        {items.map((item, i) => (
+            <Tag key={i} name={item.name} />
+        ))}
+    </Box>
+);

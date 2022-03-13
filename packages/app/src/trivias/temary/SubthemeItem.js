@@ -9,12 +9,13 @@ export default function SubthemeItem(props) {
     const { id, name } = props;
     const state = useSubthemeState();
     const { setSubtheme, unsetSubtheme } = useSubthemesDispatch();
+    const status = state.map(({ id }) => id)
 
-    const handleToggle = (value) => () => {
-        if (state.indexOf(value) === -1) {
-            setSubtheme(value)
+    const handleToggle = value => () => {
+        if (status.indexOf(value) === -1) {
+            setSubtheme(props)
         } else {
-            unsetSubtheme(value)
+            unsetSubtheme(id)
         }
     };
 
@@ -22,11 +23,11 @@ export default function SubthemeItem(props) {
         <ListItem key={id} button onClick={handleToggle(id)}>
             <ListItemText id={id} primary={name} />
             <ListItemSecondaryAction>
-            <Checkbox
-                edge="end"
-                onChange={handleToggle(id)}
-                checked={state.indexOf(id) !== -1}
-            />
+                <Checkbox
+                    edge="end"
+                    onChange={handleToggle(id)}
+                    checked={status.indexOf(id) !== -1}
+                />
             </ListItemSecondaryAction>
         </ListItem>
     );

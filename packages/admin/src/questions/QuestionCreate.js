@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const QuestionCreate = () => {
-    const { subtheme_id } = useParams()
+    const { subtheme_id, trivia_id } = useParams()
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
@@ -73,7 +73,7 @@ const QuestionCreate = () => {
     React.useEffect(() => {
         if (loaded) {
             notify('¡Has creado una nueva pregunta!', 'success')
-            redirect(`/trivias/${subtheme_id}/subthemes/${data.id}/show?tab=questions`)
+            redirect(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show?tab=questions`)
         }
     }, [loaded])
 

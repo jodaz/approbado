@@ -14,7 +14,7 @@ const LevelsDatagrid = props => (
     <Datagrid optimized>
         <TextField label='#ID' source="id" />
         <TextField label='Nombre' source="name" />
-        <ColorField source='color' record='1' />
+        <ColorField source='color' record='1' label='Color' />
         <DatagridOptions
             basePath='configurations/levels'
             confirmTitle='Eliminar nivel'

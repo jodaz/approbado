@@ -9,6 +9,18 @@ export const USER_FETCH_SUCCEEDED = 'USER_FETCH_SUCCEEDED'
 export const USER_FETCH_FAILED = 'USER_FETCH_FAILED'
 export const SET_SUBTHEMES = 'SET_SUBTHEMES';
 export const UNSET_SUBTHEMES = 'UNSET_SUBTHEMES';
+export const SET_QUESTIONS = 'SET_QUESTIONS';
+export const UNSET_QUESTIONS = 'UNSET_QUESTIONS';
+
+export const setQuestions = data => ({
+    type: SET_QUESTIONS,
+    payload: data
+});
+
+export const unsetQuestions = data => ({
+    type: UNSET_QUESTIONS,
+    payload: data
+});
 
 export const unsetSubtheme = data => ({
     type: UNSET_SUBTHEMES,

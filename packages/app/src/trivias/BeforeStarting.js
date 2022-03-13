@@ -4,9 +4,8 @@ import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import { makeStyles, styled } from '@material-ui/core/styles'
 import Button from '@approbado/lib/components/Button'
 import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { history } from '@approbado/lib/providers'
 
 const useStyles = makeStyles(theme => ({
     test: {
@@ -67,10 +66,21 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-const BeforeStarting = ({ trivia }) => {
+const getMaxTime = subthemes => subthemes.map(({ duration }) => duration).reduce((a, b) => a + b, 0)
+
+const BeforeStarting = props => {
+    const { questions, selectedSubthemes } = props
     const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();
+
+    const handleSetMaxTime = () => {
+        if (!maxTime) {
+            setMaxTime(getMaxTime(selectedSubthemes))
+        } else {
+            setMaxTime(false)
+        }
+    }
 
     return (
         <Box
@@ -96,7 +106,7 @@ const BeforeStarting = ({ trivia }) => {
                     <LayerIcon />
                 </Box>
                 <Box>
-                    La trivia consta de 16 preguntas
+                    {`La trivia consta de ${questions.length} preguntas`}
                 </Box>
             </Box>
             <Box className={classes.test}>
@@ -109,24 +119,28 @@ const BeforeStarting = ({ trivia }) => {
             </Box>
             <Box className={classes.test}>
                 <div>
-                    <AntSwitch onClick={() => setMaxTime(!maxTime)} />
+                    <AntSwitch onClick={handleSetMaxTime} />
                 </div>
                 <Box>
                     Definir tiempo
                     {(maxTime) && (
                         <Box fontWeight={600} fontSize='0.9rem' marginTop='0.5rem'>
-                            Tiempo asignado: 24 minutos
+                            {`Tiempo asignado: ${maxTime} minutos`}
                         </Box>
                     )}
                 </Box>
             </Box>
             <Box marginTop='2rem'>
-                <Button>
+                <Button onClick={() => history.push('/game')}>
                     Comenzar
                 </Button>
             </Box>
         </Box>
     )
+}
+
+BeforeStarting.defaultProps = {
+    questions: [1, 2, 3]
 }
 
 export default BeforeStarting

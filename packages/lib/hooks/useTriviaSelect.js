@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setTrivia, unsetTrivia } from '../actions';
+import {
+    setTrivia,
+    unsetTrivia,
+    setQuestions,
+    unsetQuestions
+} from '../actions';
 
 export const useTriviaState = () => {
     const store = useSelector(state => state);
@@ -13,6 +18,8 @@ export const useTriviaDispatch = () => {
 
     return {
         setTrivia: data => dispatch((data.id != store.trivia.trivia.id) ? setTrivia(data) : unsetTrivia()),
-        unsetTrivia: () => dispatch(unsetTrivia())
+        unsetTrivia: () => dispatch(unsetTrivia()),
+        setQuestions: data => dispatch(setQuestions(data)),
+        unsetQuestions: data => dispatch(unsetQuestions(data))
     }
 }
