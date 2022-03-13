@@ -32,6 +32,9 @@ export const index = async (req, res) => {
                         builder.where('is_right', '=', filter.onlyTrueOptions)
                     })
             }
+            if (filter.subthemes_ids) {
+                query.whereIn('subtheme_id', filter.subthemes_ids)
+            }
         }
 
         if (sort && order) {
@@ -63,7 +66,6 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            console.log(req.body)
             const { options, ...rest } = req.body;
             const model = await Question.query().insertGraphAndFetch({
                 ...rest,

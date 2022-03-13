@@ -69,7 +69,7 @@ export const indexAwardSubtheme = async (req, res) => {
 }
 
 export const verifyAward = async (req, res) => {
-    const { user_id, subtheme_id,level_id, award_id, type } = req.body
+    const { user_id, subtheme_id, level_id, award_id, type } = req.body
 
     try {
         const subtheme = await Subtheme.query().findById(subtheme_id)
