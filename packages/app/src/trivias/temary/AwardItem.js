@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function AwardItem(props) {
     const {
+        key,
         file,
         min_points,
         title,
@@ -46,7 +47,7 @@ export default function AwardItem(props) {
 
     return (
         <>
-            <ListItem button className={classes.root} onClick={handleClick}>
+            <ListItem button className={classes.root} onClick={handleClick} key={key}>
                 <ListItemAvatar>
                     {(type == 'Insignia') ? (
                         <Avatar

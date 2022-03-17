@@ -11,6 +11,11 @@ export const SET_SUBTHEMES = 'SET_SUBTHEMES';
 export const UNSET_SUBTHEMES = 'UNSET_SUBTHEMES';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const UNSET_QUESTIONS = 'UNSET_QUESTIONS';
+export const PASS_QUESTION = 'PASS_QUESTION';
+
+export const passQuestion = () => ({
+    type: PASS_QUESTION
+});
 
 export const setQuestions = data => ({
     type: SET_QUESTIONS,

@@ -1,5 +1,13 @@
 import { Router } from "express"
-import { destroy, index, store, showResult, update, show, upload } from '../controllers/QuestionController'
+import {
+    destroy,
+    index,
+    store,
+    showResult,
+    update,
+    show,
+    upload
+} from '../controllers/QuestionController'
 import { upload as uploadMiddleware } from '../config'
 
 const questionsRouter = Router()

@@ -46,7 +46,7 @@ export default function TemaryList({ id }) {
             minHeight: 'max-content'
         }}>
             <List>
-                {data.map(item => <AwardItem {...item} /> )}
+                {data.map((item, key) => <AwardItem {...item} key={key} /> )}
             </List>
             <Box marginTop='2rem'>
                 <Button

@@ -8,11 +8,6 @@ export const createAnswerSchema = {
         notEmpty: {
             errorMessage: 'Seleccione un nivel'
         }
-    },
-    /*option_id: {
-        notEmpty: {
-            errorMessage: 'Ingrese una explicación'
-        }
-    }*/
+    }
 };
 

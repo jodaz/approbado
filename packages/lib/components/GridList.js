@@ -14,7 +14,7 @@ const LoadedGridList = props => {
     return (
         <Grid container>
             {ids.map((id, i) => (
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={4} key={i}>
                     {React.cloneElement(component, {
                         data: data[id],
                         id: id,

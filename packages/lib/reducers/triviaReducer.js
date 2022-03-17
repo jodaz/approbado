@@ -4,21 +4,22 @@ import {
     SET_SUBTHEMES,
     UNSET_SUBTHEMES,
     SET_QUESTIONS,
-    UNSET_QUESTIONS
+    UNSET_QUESTIONS,
+    PASS_QUESTION
 } from '../actions';
 
 const initialState = {
     selected: false,
     trivia: {},
     selectedSubthemes: [],
-    questions: []
+    questions: [],
+    currQuestion: 0
 }
 
 const dialogReducer = (
     state = initialState,
     action
 ) => {
-    console.log(action.payload)
     switch (action.type) {
         case SET_TRIVIA:
             return {
@@ -52,6 +53,11 @@ const dialogReducer = (
         }
         case UNSET_TRIVIA:
             return initialState;
+        case PASS_QUESTION:
+            return {
+                ...state,
+                currQuestion: state.currQuestion + 1
+            }
         default:
             return state;
     }
