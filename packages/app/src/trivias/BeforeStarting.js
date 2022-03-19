@@ -131,7 +131,7 @@ const BeforeStarting = props => {
                 </Box>
             </Box>
             <Box marginTop='2rem'>
-                <Button onClick={() => history.push('/game')}>
+                <Button unresponsive onClick={() => history.push('/game')}>
                     Comenzar
                 </Button>
             </Box>

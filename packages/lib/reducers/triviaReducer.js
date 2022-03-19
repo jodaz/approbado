@@ -5,15 +5,18 @@ import {
     UNSET_SUBTHEMES,
     SET_QUESTIONS,
     UNSET_QUESTIONS,
-    PASS_QUESTION
+    SET_ANSWER_STATUS,
+    PASS_QUESTION,
+    UNSET_ANSWER_STATUS
 } from '../actions';
 
 const initialState = {
-    selected: false,
-    trivia: {},
-    selectedSubthemes: [],
-    questions: [],
-    currQuestion: 0
+    selected: false, // Si hay una trivia seleccionada
+    trivia: {}, // Info de la trivia
+    selectedSubthemes: [], // Subtemas seleccionados
+    questions: [], // Lista de preguntas
+    currQuestion: 0, // Pregunta actual (Jugando)
+    is_right: null
 }
 
 const dialogReducer = (
@@ -57,6 +60,16 @@ const dialogReducer = (
             return {
                 ...state,
                 currQuestion: state.currQuestion + 1
+            }
+        case SET_ANSWER_STATUS:
+            return {
+                ...state,
+                is_right: action.payload
+            }
+        case UNSET_ANSWER_STATUS:
+            return {
+                ...state,
+                is_right: null
             }
         default:
             return state;

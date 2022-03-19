@@ -12,6 +12,17 @@ export const UNSET_SUBTHEMES = 'UNSET_SUBTHEMES';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const UNSET_QUESTIONS = 'UNSET_QUESTIONS';
 export const PASS_QUESTION = 'PASS_QUESTION';
+export const SET_ANSWER_STATUS = 'SET_ANSWER_STATUS';
+export const UNSET_ANSWER_STATUS = 'UNSET_ANSWER_STATUS';
+
+export const setAnswerStatus = data => ({
+    type: SET_ANSWER_STATUS,
+    payload: data
+});
+
+export const unsetAnswerStatus = () => ({
+    type: UNSET_ANSWER_STATUS
+});
 
 export const passQuestion = () => ({
     type: PASS_QUESTION
