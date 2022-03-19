@@ -12,7 +12,7 @@ import GridList from '@approbado/lib/components/GridList';
 import TriviaCard from './TriviaCard'
 import Drawer from '@material-ui/core/Drawer'
 import Temary from './temary'
-import SelectTrivia from './SelectTrivia'
+import SelectTrivia from './components/SelectTrivia'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 // Hooks

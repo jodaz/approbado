@@ -6,6 +6,7 @@ import Button from '@approbado/lib/components/Button'
 import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
 import Switch from '@material-ui/core/Switch';
 import { history } from '@approbado/lib/providers'
+import { useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 
 const useStyles = makeStyles(theme => ({
     test: {
@@ -69,10 +70,11 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 const getMaxTime = subthemes => subthemes.map(({ duration }) => duration).reduce((a, b) => a + b, 0)
 
 const BeforeStarting = props => {
-    const { questions, selectedSubthemes } = props
+    const { questions, selectedSubthemes, type } = props
     const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();
+    const { setConfigs } = useTriviaDispatch();
 
     const handleSetMaxTime = () => {
         if (!maxTime) {
@@ -80,6 +82,11 @@ const BeforeStarting = props => {
         } else {
             setMaxTime(false)
         }
+    }
+
+    const handleClick = () => {
+        setConfigs(type)
+        history.push('/game')
     }
 
     return (
@@ -131,7 +138,7 @@ const BeforeStarting = props => {
                 </Box>
             </Box>
             <Box marginTop='2rem'>
-                <Button unresponsive onClick={() => history.push('/game')}>
+                <Button unresponsive onClick={handleClick}>
                     Comenzar
                 </Button>
             </Box>

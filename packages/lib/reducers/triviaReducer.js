@@ -5,9 +5,10 @@ import {
     UNSET_SUBTHEMES,
     SET_QUESTIONS,
     UNSET_QUESTIONS,
-    SET_ANSWER_STATUS,
+    SET_ANSWER,
     PASS_QUESTION,
-    UNSET_ANSWER_STATUS
+    SET_TYPE,
+    UNSET_TYPE
 } from '../actions';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
     selectedSubthemes: [], // Subtemas seleccionados
     questions: [], // Lista de preguntas
     currQuestion: 0, // Pregunta actual (Jugando)
-    is_right: null
+    answers: [],
+    type: ''
 }
 
 const dialogReducer = (
@@ -54,23 +56,23 @@ const dialogReducer = (
                 questions: state.questions.filter(({ id }) => id != action.payload)
             }
         }
-        case UNSET_TRIVIA:
-            return initialState;
         case PASS_QUESTION:
             return {
                 ...state,
                 currQuestion: state.currQuestion + 1
             }
-        case SET_ANSWER_STATUS:
+        case SET_ANSWER:
             return {
                 ...state,
-                is_right: action.payload
+                answers: [...state.answers, action.payload]
             }
-        case UNSET_ANSWER_STATUS:
+        case SET_TYPE:
             return {
                 ...state,
-                is_right: null
+                type: action.payload
             }
+        case UNSET_TRIVIA:
+            return initialState;
         default:
             return state;
     }

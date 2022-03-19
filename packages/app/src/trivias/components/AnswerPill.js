@@ -16,7 +16,8 @@ const AnswerPill = ({
             borderRadius: '6px',
             padding: '0.5rem 0.6rem',
             fontSize: '0.9rem',
-            width: 'max-content'
+            width: 'max-content',
+            fontWeight: 600
         }}>
             {children}
         </Box>

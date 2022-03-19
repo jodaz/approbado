@@ -12,11 +12,18 @@ export const UNSET_SUBTHEMES = 'UNSET_SUBTHEMES';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const UNSET_QUESTIONS = 'UNSET_QUESTIONS';
 export const PASS_QUESTION = 'PASS_QUESTION';
-export const SET_ANSWER_STATUS = 'SET_ANSWER_STATUS';
+export const SET_ANSWER = 'SET_ANSWER';
 export const UNSET_ANSWER_STATUS = 'UNSET_ANSWER_STATUS';
+export const SET_TYPE = 'SET_TYPE';
+export const UNSET_TYPE = 'UNSET_TYPE';
 
-export const setAnswerStatus = data => ({
-    type: SET_ANSWER_STATUS,
+export const setType = data => ({
+    type: SET_TYPE,
+    payload: data
+});
+
+export const setAnswer = data => ({
+    type: SET_ANSWER,
     payload: data
 });
 

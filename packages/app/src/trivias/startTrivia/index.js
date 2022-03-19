@@ -2,10 +2,8 @@ import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, fade } from '@material-ui/core'
-import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
-import ItemCollection from '@approbado/lib/components/ItemCollection';
 import Button from '@material-ui/core/Button';
-import StartTriviaSelector from './StartTriviaSelector'
+import Sidebar from './Sidebar'
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
@@ -14,6 +12,9 @@ import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTrivi
 import { history } from '@approbado/lib/providers'
 import { axios } from '@approbado/lib/providers'
 import { stringify } from 'qs';
+// Icons
+import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
+import ItemCollection from '@approbado/lib/components/ItemCollection';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -95,6 +96,7 @@ const StartTrivia = () => {
             }
         }
     }, [level, selectedSubthemes])
+    console.log(type)
 
     return (
         <Box sx={{ padding: '2rem' }}>
@@ -174,7 +176,7 @@ const StartTrivia = () => {
                     </Grid>
                     <Divider orientation='vertical' />
                     <Grid item xs>
-                        <StartTriviaSelector level={level} type={type} {...state} />
+                        <Sidebar {...state} level={level} type={type} />
                     </Grid>
                 </Grid>
             </Grid>
