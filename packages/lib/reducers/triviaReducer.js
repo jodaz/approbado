@@ -7,8 +7,7 @@ import {
     UNSET_QUESTIONS,
     SET_ANSWER,
     PASS_QUESTION,
-    SET_TYPE,
-    UNSET_TYPE
+    SET_CONFIGS
 } from '../actions';
 
 const initialState = {
@@ -18,7 +17,11 @@ const initialState = {
     questions: [], // Lista de preguntas
     currQuestion: 0, // Pregunta actual (Jugando)
     answers: [],
-    type: ''
+    configs: {
+        type: '',
+        view: '',
+        level: ''
+    }
 }
 
 const dialogReducer = (
@@ -66,10 +69,10 @@ const dialogReducer = (
                 ...state,
                 answers: [...state.answers, action.payload]
             }
-        case SET_TYPE:
+        case SET_CONFIGS:
             return {
                 ...state,
-                type: action.payload
+                configs: action.payload
             }
         case UNSET_TRIVIA:
             return initialState;

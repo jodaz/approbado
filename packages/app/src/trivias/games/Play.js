@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ProgressBar from '../components/ProgressBar'
 import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
-import { history } from '@approbado/lib/providers'
 import Box from '@material-ui/core/Box'
 import AnswerPill from '../components/AnswerPill'
 import OptionsForm from '../components/OptionsForm'
@@ -29,28 +28,29 @@ const getAnswer = (question, answers) => {
 export default function() {
     const {
         questions,
-        selected,
         currQuestion: current,
         answers,
-        type
+        configs
     } = useTriviaState()
     const currQuestion = questions[current]
     const [currAnswer, setCurrentAnswer] = React.useState(null)
     const [isRight, setIsRight] = React.useState(null)
-    const { passQuestion, unsetAnswer } = useTriviaDispatch()
+    const { passQuestion, unsetAnswer, setConfigs } = useTriviaDispatch()
     const classes = useStyles();
+    const { type } = configs
 
     const handleNextQuestion = () => {
-        passQuestion();
-        unsetAnswer()
-        setIsRight(null)
-    }
-
-    React.useEffect(() => {
-        if (!selected) {
-            history.push('/trivias');
+        if (current + 1 == questions.length) {
+            setConfigs({
+                ...configs,
+                view: 'resume'
+            })
+        } else {
+            passQuestion();
+            unsetAnswer()
+            setIsRight(null)
         }
-    }, [selected])
+    }
 
     React.useEffect(() => {
         const answer = getAnswer(currQuestion, answers)
@@ -61,8 +61,6 @@ export default function() {
 
         setCurrentAnswer(answer)
     }, [answers, currQuestion]);
-
-    if (!selected) return null
 
     return (
         <Box padding='1rem'>
@@ -88,7 +86,7 @@ export default function() {
                 <Box padding='1rem 0' minHeight='10rem'>
                     {(isRight !== null) && (
                         <>
-                            {(type == 'Práctica') && (
+                            {(type == 'Práctica' && isRight == false) && (
                                 <Box fontWeight={600}>
                                     Respuesta correcta: {currAnswer.correctAnswer.statement}
                                 </Box>

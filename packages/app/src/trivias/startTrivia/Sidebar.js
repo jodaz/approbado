@@ -20,7 +20,7 @@ const StartTriviaSelector = props => {
     const classes = useStyles();
 
     const { level, type } = props
-    console.log(props)
+
     return (
         <Box className={classes.root}>
             {(level && type) ? (

@@ -1,17 +1,27 @@
 import * as React from 'react'
 import LazyLoader from '@approbado/lib/components/LazyLoader'
 import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
-
+import { history } from '@approbado/lib/providers'
 const PlayTriviaGame = React.lazy(() => import('./Play'))
 const ResumeTriviaGame = React.lazy(() => import('./Resume'))
 const FinishedTriviaGame = React.lazy(() => import('./Finished'))
 
 export default function() {
-    const state = useTriviaState();
+    const { selected, configs: { view } } = useTriviaState();
+
+    React.useEffect(() => {
+        if (!selected) {
+            history.push('/trivias');
+        }
+    }, [selected])
 
     return (
         <LazyLoader>
-            <PlayTriviaGame />
+            {(view == 'playing')
+                ? <PlayTriviaGame />
+                : (view == 'resume') ? (
+                    <ResumeTriviaGame />
+                ) : <FinishedTriviaGame />}
         </LazyLoader>
     )
 }

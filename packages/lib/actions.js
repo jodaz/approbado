@@ -14,11 +14,16 @@ export const UNSET_QUESTIONS = 'UNSET_QUESTIONS';
 export const PASS_QUESTION = 'PASS_QUESTION';
 export const SET_ANSWER = 'SET_ANSWER';
 export const UNSET_ANSWER_STATUS = 'UNSET_ANSWER_STATUS';
-export const SET_TYPE = 'SET_TYPE';
-export const UNSET_TYPE = 'UNSET_TYPE';
+export const SET_CONFIGS = 'SET_CONFIGS';
+export const UNSET_CONFIGS = 'UNSET_CONFIGS';
 
-export const setType = data => ({
-    type: SET_TYPE,
+export const setConfigs = data => ({
+    type: SET_CONFIGS,
+    payload: data
+});
+
+export const setStatus = data => ({
+    type: SET_STATUS,
     payload: data
 });
 

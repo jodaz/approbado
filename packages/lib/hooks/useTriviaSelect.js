@@ -6,7 +6,7 @@ import {
     unsetQuestions,
     passQuestion,
     setAnswer,
-    setType,
+    setConfigs,
     unsetAnswerStatus
 } from '../actions';
 
@@ -27,7 +27,7 @@ export const useTriviaDispatch = () => {
         unsetQuestions: data => dispatch(unsetQuestions(data)),
         passQuestion: () => dispatch(passQuestion()),
         unsetAnswer: () => dispatch(unsetAnswerStatus()),
-        setConfigs: data => dispatch(setType(data)),
+        setConfigs: data => dispatch(setConfigs(data)),
         setAnswer: data => dispatch(setAnswer(data)),
     }
 }

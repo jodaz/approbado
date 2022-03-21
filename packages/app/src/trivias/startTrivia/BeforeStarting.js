@@ -70,7 +70,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 const getMaxTime = subthemes => subthemes.map(({ duration }) => duration).reduce((a, b) => a + b, 0)
 
 const BeforeStarting = props => {
-    const { questions, selectedSubthemes, type } = props
+    const { questions, selectedSubthemes, type, level } = props
     const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();
@@ -85,7 +85,11 @@ const BeforeStarting = props => {
     }
 
     const handleClick = () => {
-        setConfigs(type)
+        setConfigs({
+            level: level,
+            type: type,
+            view: 'playing'
+        })
         history.push('/game')
     }
 
