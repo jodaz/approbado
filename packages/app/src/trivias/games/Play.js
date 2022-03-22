@@ -106,6 +106,7 @@ export default function() {
                     className={classes.passQuestion}
                     onClick={handleNextQuestion}
                     disabled={(current == questions.length || isRight != null)}
+                    unresponsive
                 >
                     Saltar pregunta
                 </Button>

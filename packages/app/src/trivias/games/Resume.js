@@ -1,20 +1,28 @@
 import * as React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
+import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 import { history } from '@approbado/lib/providers'
 import Box from '@material-ui/core/Box'
 import Emoji from '@approbado/lib/components/Emoji'
+import Button from '@approbado/lib/components/Button'
+import { useGetResponses} from '@approbado/lib/hooks/useGetResponses'
 
-const useStyles = makeStyles(theme => ({
-    passQuestion: {
-        color: theme.palette.info.dark,
-        border: `2px solid ${theme.palette.info.dark}`,
-        width: 'max-content'
-    }
-}))
+const NoAnswer = () => (
+    <Box fontWeight={600}>
+        No seleccionó ninguna respuesta.
+    </Box>
+)
 
 export default function() {
-    const { selected } = useTriviaState()
+    const { selected, answers, questions, configs } = useTriviaState()
+    const { setConfigs } = useTriviaDispatch()
+    const items = useGetResponses(questions, answers)
+
+    const handleClick = () => {
+        setConfigs({
+            ...configs,
+            view: 'finished'
+        })
+    }
 
     React.useEffect(() => {
         if (!selected) {
@@ -25,13 +33,39 @@ export default function() {
     if (!selected) return null
 
     return (
-        <Box padding='1rem'>
+        <>
             <Box>
-                Resumen
+                <Box margin='1rem 0' fontSize="2rem" fontWeight="600">
+                    Resumen
+                </Box>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontWeight: 600
+                }}>
+                    <Box>
+                        Revisa tus respuestas antes de enviar <Emoji symbol='😉' />
+                    </Box>
+                    <Button onClick={handleClick}>
+                        Enviar
+                    </Button>
+                </Box>
             </Box>
-            <Box>
-                Revisa tus respuestas antes de enviar <Emoji symbol='😉' />
+            <Box margin='1rem 0 4rem 0'>
+                {items.map((item, index) => (
+                    <Box sx={{
+                        borderBottom: '1px solid #A6A6A6',
+                        padding: '1rem 0'
+                    }}>
+                        <Box fontWeight='600' margin='1rem 0'>
+                            {`${index + 1}. ${item.description}`}
+                        </Box>
+                        <Box paddingBottom='1rem'>
+                            {item.answer ? item.answer : <NoAnswer />}
+                        </Box>
+                    </Box>
+                ))}
             </Box>
-        </Box>
+        </>
     )
 }
