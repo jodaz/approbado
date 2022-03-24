@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { makeStyles } from '@material-ui/core'
 import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
 import { history } from '@approbado/lib/providers'
 import Box from '@material-ui/core/Box'
@@ -9,10 +10,27 @@ import Button from '@approbado/lib/components/Button'
 import Checkbox from '../components/Checkbox'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import NoAnswer from '../components/NoAnswer'
+
+const useStyles = makeStyles(theme => ({
+    congratulations: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: 'max-content',
+        [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row'
+        }
+    },
+    button: {
+        margin: '0.5rem 0'
+    }
+}))
 
 export default function() {
     const { selected, trivia, questions, answers } = useTriviaState()
     const items = useGetResponses(questions, answers)
+    const classes = useStyles();
 
     React.useEffect(() => {
         if (!selected) {
@@ -28,27 +46,25 @@ export default function() {
                 {trivia.name}
             </Box>
             <Box sx={{ display: 'flex',  width: 'max-content' }}>
-                <Box sx={{ paddingRight: '2rem' }}>
-                    <StateIllustration />
-                </Box>
-                <Box
-                    display='flex'
-                    flexDirection='column'
-                    justifyContent='space-between'
-                    height='9rem'
-                >
-                    <Box fontSize="1.6rem" fontWeight="600">
-                        Excelente trivia!
-                        <br/>
-                        Sigue así <Emoji symbol='😉' />
+                <Box className={classes.congratulations}>
+                    <Box sx={{ paddingRight: '2rem' }}>
+                        <StateIllustration />
                     </Box>
-                    <Box>Sigue practicando y llegarás lejos.</Box>
-                    <Button
-                        onClick={() => history.push('/')}
-                        unresponsive
-                    >
-                        Ir a home
-                    </Button>
+                    <Box>
+                        <Box fontSize="1.6rem" fontWeight="600">
+                            Excelente trivia!
+                            <br/>
+                            Sigue así <Emoji symbol='😉' />
+                        </Box>
+                        <Box>Sigue practicando y llegarás lejos.</Box>
+                        <Button
+                            className={classes.button}
+                            onClick={() => history.push('/')}
+                            unresponsive
+                        >
+                            Ir a home
+                        </Button>
+                    </Box>
                 </Box>
             </Box>
             <Box margin='1rem 0 4rem 0'>
@@ -60,11 +76,7 @@ export default function() {
                         <Box fontWeight='600' margin='1rem 0'>
                             {`${index + 1}. ${item.description}`}
                         </Box>
-                        <ListItem
-                            key={item.id}
-                            dense
-                            disabled={false}
-                        >
+                        <ListItem key={item.id} dense disabled={false}>
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
@@ -74,7 +86,7 @@ export default function() {
                                 />
                             </ListItemIcon>
                             <Box sx={{ fontWeight: 600 }}>
-                                {item.answer}
+                                {item.answer ? item.answer : <NoAnswer />}
                             </Box>
                         </ListItem>
                         {(item.explanation) && (

@@ -58,6 +58,13 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'start',
         paddingTop: '1rem',
+        flexDirection: 'row',
+        alignItems: 'space-between',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        }
     }
 }))
 
@@ -96,7 +103,6 @@ const StartTrivia = () => {
             }
         }
     }, [level, selectedSubthemes])
-    console.log(type)
 
     return (
         <Box sx={{ padding: '2rem' }}>

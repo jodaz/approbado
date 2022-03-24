@@ -65,7 +65,7 @@ export default function() {
     return (
         <Box padding='1rem'>
             <ProgressBar current={current + 1} total={questions.length} />
-            <Box sx={{ fontWeight: 600, margin: '2rem 0' }}>
+            <Box sx={{ fontWeight: 600, margin: '2rem 0', height: '2rem' }}>
                 {current + 1}. {currQuestion.description}
             </Box>
             <Box minHeight='10rem'>

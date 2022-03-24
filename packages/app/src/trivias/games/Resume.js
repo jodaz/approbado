@@ -5,12 +5,7 @@ import Box from '@material-ui/core/Box'
 import Emoji from '@approbado/lib/components/Emoji'
 import Button from '@approbado/lib/components/Button'
 import { useGetResponses} from '@approbado/lib/hooks/useGetResponses'
-
-const NoAnswer = () => (
-    <Box fontWeight={600}>
-        No seleccionó ninguna respuesta.
-    </Box>
-)
+import NoAnswer from '../components/NoAnswer'
 
 export default function() {
     const { selected, answers, questions, configs } = useTriviaState()
