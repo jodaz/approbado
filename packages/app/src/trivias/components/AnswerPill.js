@@ -2,7 +2,6 @@ import Box from '@material-ui/core/Box'
 import { fade } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-
 const AnswerPill = ({
     variant,
     children
