@@ -20,10 +20,13 @@ export const index = async (req, res) => {
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
+    const { user } = req;
 
     if (!reqErrors) {
-
-        const model = await Answer.query().insert(req.body)
+        const model = await Answer.query().insert({
+            ...req.body,
+            user_id: user.id
+        });
 
         return res.status(201).json(model)
     }

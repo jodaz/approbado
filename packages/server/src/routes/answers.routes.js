@@ -12,5 +12,4 @@ answersRouter.put('/:id', checkSchema(createAnswerSchema), update)
 answersRouter.delete('/user/:user_id/:subtheme_id/:level_id', destroyByUserId)
 answersRouter.delete('/:id', destroy)
 
-
 export default answersRouter;

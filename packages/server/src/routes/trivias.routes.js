@@ -7,10 +7,11 @@ import {
     storeGrupal,
     showGrupal,
     indexByPlan,
+    finishTrivia,
     store,
     update
 } from '../controllers/TriviaController'
-import { createTriviaSchema, createTriviaGrupalSchema } from '../validations'
+import { createTriviaSchema, createTriviaGrupalSchema, finishTriviaSchema } from '../validations'
 import { checkSchema } from 'express-validator';
 
 const triviasRouter = Router()
@@ -19,7 +20,8 @@ triviasRouter.get('/', index)
 triviasRouter.get('/plans', indexByPlan)
 triviasRouter.get('/:id', show)
 triviasRouter.get('/grupal/:token', showGrupal)
-triviasRouter.post('/grupal',checkSchema(createTriviaGrupalSchema),storeGrupal )
+triviasRouter.post('/grupal', checkSchema(createTriviaGrupalSchema), storeGrupal )
+triviasRouter.post('/finish', checkSchema(finishTriviaSchema), finishTrivia)
 triviasRouter.post('/', checkSchema(createTriviaSchema), store)
 triviasRouter.put('/:id', upload.single('file'), checkSchema(createTriviaSchema), update)
 triviasRouter.delete('/:id', destroy)

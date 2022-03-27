@@ -17,6 +17,29 @@ export const createTriviaSchema = {
     }
 };
 
+export const finishTriviaSchema = {
+    level_id: {
+        notEmpty: {
+            errorMessage: 'Seleccione un nivel'
+        }
+    },
+    type: {
+        notEmpty: {
+            errorMessage: 'Ingrese el tipo'
+        }
+    },
+    subthemes_ids: {
+        notEmpty: {
+            errorMessage: 'Ingrese los subtemas'
+        }
+    },
+    awards_ids: {
+        notEmpty: {
+            errorMessage: 'Ingrese los premios'
+        }
+    },
+};
+
 export const editTriviaSchema = {
     ...createTriviaSchema,
     plans_ids: {

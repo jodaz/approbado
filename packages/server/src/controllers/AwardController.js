@@ -14,7 +14,6 @@ const min_approbado = 75
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
-    const { id: currUserId } = req.user;
 
     let query = Award.query()
 
@@ -80,8 +79,8 @@ export const verifyAward = async (req, res) => {
             await SubthemeFinished.query()
                 .insert({
                     subtheme_id: subtheme_id,
-                    user_id : user_id,
-                    finished : true
+                    user_id: user_id,
+                    finished: true
                 })
         }
 
@@ -97,7 +96,10 @@ export const verifyAward = async (req, res) => {
                 .count()
                 .first()
 
-        const response = (count_subthemes_finished.count == count_subthemes.count && results.percenteje >= min_approbado) ? {win_award : true, award :award} : {win_award : false}
+        const response = (count_subthemes_finished.count == count_subthemes.count
+            && results.percenteje >= min_approbado)
+            ? {win_award : true, award :award}
+            : {win_award : false}
 
         const user = await User.query().findById(user_id)
 
@@ -121,7 +123,7 @@ export const verifyAward = async (req, res) => {
             }
         }
 
-        return res.status(200).json({ ...response, ...results, subtheme})
+        return res.status(200).json({ ...response, ...results, subtheme })
     } catch(error){
         console.log(error)
         return res.status(500).json(error)
@@ -140,16 +142,16 @@ export const showResultAward = async (subtheme_id, level_id, user_id) => {
         for (var i = 0; i < results.length; i++) {
             total++
             results[i].option_right = await results[i].$relatedQuery('options')
-                .where('is_right',true)
+                .where('is_right', true)
                 .first()
             results[i].file =  await results[i].$relatedQuery('file')
             for (var e = 0; e < results[i].options.length; e++) {
 
                 let answer = await results[i].options[e]
                     .$relatedQuery('answers')
-                    .select('answers.*','options.statement')
-                    .join('options','options.id','answers.option_id')
-                    .where('user_id',user_id)
+                    .select('answers.*', 'options.statement')
+                    .join('options', 'options.id','answers.option_id')
+                    .where('user_id', user_id)
                     .first()
                 if (answer !== undefined) {
                     answer.is_right ? rights++ : null
@@ -185,7 +187,6 @@ export const showResultTriviaGrupal = async (req, res) => {
         for (var l = 0; l < participants.length; l++) {
             let rights = 0
             let total = 0
-
 
             for (var i = 0; i < results.length; i++) {
             total++
