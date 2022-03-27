@@ -47,7 +47,12 @@ export default function AwardItem(props) {
 
     return (
         <>
-            <ListItem button className={classes.root} onClick={handleClick} key={key}>
+            <ListItem
+                button
+                className={classes.root}
+                onClick={handleClick}
+                key={key}
+            >
                 <ListItemAvatar>
                     {(type == 'Insignia') ? (
                         <Avatar

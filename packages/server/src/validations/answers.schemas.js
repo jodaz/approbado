@@ -1,12 +1,12 @@
 export const createAnswerSchema = {
     is_right: {
         notEmpty: {
-            errorMessage: 'Ingrese una descripcińón'
+            errorMessage: 'Ingrese si fue correcta o no'
         }
     },
-    user_id: {
+    option_id: {
         notEmpty: {
-            errorMessage: 'Seleccione un nivel'
+            errorMessage: 'Ingrese la opción'
         }
     }
 };

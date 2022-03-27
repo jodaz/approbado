@@ -6,9 +6,10 @@ import Emoji from '@approbado/lib/components/Emoji'
 import Button from '@approbado/lib/components/Button'
 import { useGetResponses} from '@approbado/lib/hooks/useGetResponses'
 import NoAnswer from '../components/NoAnswer'
+import { axios } from '@approbado/lib/providers'
 
 export default function() {
-    const { selected, answers, questions, configs } = useTriviaState()
+    const { selected, answers, questions, configs, selectedSubthemes } = useTriviaState()
     const { setConfigs } = useTriviaDispatch()
     const items = useGetResponses(questions, answers)
 
@@ -16,6 +17,18 @@ export default function() {
         setConfigs({
             ...configs,
             view: 'finished'
+        })
+
+        const subthemesIds = selectedSubthemes.map(({ id }) => id)
+        const awardsIds = selectedSubthemes
+            .map(({ award_id }) => award_id)
+            .filter((value, index, self) => self.indexOf(value) === index)
+
+        axios.post('/trivias/finish', {
+            subthemes_ids: subthemesIds,
+            level_id: configs.level,
+            type: 'Reto',
+            awards_ids: awardsIds
         })
     }
 

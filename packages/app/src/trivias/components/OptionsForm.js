@@ -72,6 +72,7 @@ export default function({ options, id: questionID }) {
                             classes={{
                                 checked: classes.checked
                             }}
+                            disabled={checked == item.id}
                             disableRipple
                         />
                     </ListItemIcon>

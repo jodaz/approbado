@@ -41,9 +41,11 @@ export default function() {
 
     const handleNextQuestion = () => {
         if (current + 1 == questions.length) {
+            const view = (configs.type == 'Reto') ? 'resume' : 'finished';
+
             setConfigs({
                 ...configs,
-                view: 'resume'
+                view: view
             })
         } else {
             passQuestion();

@@ -108,7 +108,7 @@ const AppBar = props => {
                 <Box display='flex'>
                     {!selected && <ToggleSidebarButton />}
                     <GoBackButton />
-                    {(selected) && (
+                    {(selected && !isXSmall) && (
                         <Box className={classes.gameinfo}>
                             Trivia <Dot /> Derecho Laboral
                         </Box>

@@ -17,6 +17,7 @@ const initialState = {
     questions: [], // Lista de preguntas
     currQuestion: 0, // Pregunta actual (Jugando)
     answers: [],
+    selectedAwards: [],
     configs: {
         type: '',
         view: '',

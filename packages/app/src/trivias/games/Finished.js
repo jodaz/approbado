@@ -11,6 +11,8 @@ import Checkbox from '../components/Checkbox'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import NoAnswer from '../components/NoAnswer'
+import Points from '../components/Points'
+import TotalRights from '../components/TotalRights'
 
 const useStyles = makeStyles(theme => ({
     congratulations: {
@@ -66,9 +68,9 @@ export default function() {
                         </Button>
                     </Box>
                     <Box>
-                        
+                        <Points />
+                        <TotalRights />
                     </Box>
-
                 </Box>
             </Box>
             <Box margin='1rem 0 4rem 0'>
