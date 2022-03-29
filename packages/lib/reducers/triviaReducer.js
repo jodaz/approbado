@@ -7,7 +7,9 @@ import {
     UNSET_QUESTIONS,
     SET_ANSWER,
     PASS_QUESTION,
-    SET_CONFIGS
+    SET_CONFIGS,
+    SET_RESULTS,
+    FETCH_RESULTS_FAILED
 } from '../actions';
 
 const initialState = {
@@ -22,7 +24,10 @@ const initialState = {
         type: '',
         view: '',
         level: ''
-    }
+    },
+    rights: 0,
+    points: 0,
+    error: ''
 }
 
 const dialogReducer = (
@@ -74,6 +79,16 @@ const dialogReducer = (
             return {
                 ...state,
                 configs: action.payload
+            }
+        case SET_RESULTS:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case FETCH_RESULTS_FAILED:
+            return {
+                ...state,
+                error: action.payload
             }
         case UNSET_TRIVIA:
             return initialState;

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function() {
-    const { selected, trivia, questions, answers } = useTriviaState()
+    const { selected, trivia, questions, answers, points, rights } = useTriviaState()
     const items = useGetResponses(questions, answers)
     const classes = useStyles();
 
@@ -68,8 +68,8 @@ export default function() {
                         </Button>
                     </Box>
                     <Box>
-                        <Points />
-                        <TotalRights />
+                        <Points points={points} />
+                        <TotalRights rights={rights} total={questions.length} />
                     </Box>
                 </Box>
             </Box>

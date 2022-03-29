@@ -16,6 +16,9 @@ export const SET_ANSWER = 'SET_ANSWER';
 export const UNSET_ANSWER_STATUS = 'UNSET_ANSWER_STATUS';
 export const SET_CONFIGS = 'SET_CONFIGS';
 export const UNSET_CONFIGS = 'UNSET_CONFIGS';
+export const GET_RESULTS = 'GET_RESULTS';
+export const SET_RESULTS = 'SET_RESULTS';
+export const FETCH_RESULTS_FAILED = 'FETCH_RESULTS_FAILED';
 
 export const setConfigs = data => ({
     type: SET_CONFIGS,
@@ -71,6 +74,15 @@ export const setTrivia = data => ({
 
 export const unsetUser = () => ({
     type: UNSET_USER
+});
+
+export const setResults = data => ({
+    type: SET_RESULTS,
+    payload: data
+});
+
+export const getResults = () => ({
+    type: GET_RESULTS
 });
 
 export const setUser = data => ({

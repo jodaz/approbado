@@ -110,7 +110,7 @@ export const store = async (req, res) => {
 
 export const storeGrupal = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-    const {user_ids, ...rest } = req.body;
+    const { user_ids, ...rest } = req.body;
     const { names } = req.user;
 
     if (!reqErrors) {
@@ -159,6 +159,7 @@ export const finishTrivia = async (req, res) => {
         const { user } = req
         const subtheme = await Subtheme.query().findById(subthemes_ids)
         const results = await showResult(subthemes_ids, level_id, user.id, res)
+        let response = {}
 
         if (type == 'Reto' && results.percentage >= MIN_APROBADO) {
             const subthemesFinishedRaw = subthemes_ids.map(id => ({
@@ -168,32 +169,32 @@ export const finishTrivia = async (req, res) => {
             }))
 
             await SubthemeFinished.query().insert(subthemesFinishedRaw)
-        }
 
-        const award = await Award.query().findById(awards_ids)
+            const award = await Award.query().findById(awards_ids)
 
-        const count_subthemes = await award.$relatedQuery('subthemes').count().first();
+            const count_subthemes = await award.$relatedQuery('subthemes')
+                .count()
+                .first();
 
-        const count_subthemes_finished = await Subtheme.query()
-            .join('subthemes_finished', 'subthemes.id', 'subthemes_finished.subtheme_id')
-            .where('user_id', user.id)
-            .whereIn('award_id', awards_ids)
-            .where('finished', true)
-            .count()
-            .first()
+            const count_subthemes_finished = await Subtheme.query()
+                .join('subthemes_finished', 'subthemes.id', 'subthemes_finished.subtheme_id')
+                .where('user_id', user.id)
+                .whereIn('award_id', awards_ids)
+                .where('finished', true)
+                .count()
+                .first()
 
-        const response = (count_subthemes_finished.count == count_subthemes.count
-            && results.percentage >= MIN_APROBADO)
-            ? { win_award : true, award: award}
-            : { win_award : false}
+            response = (count_subthemes_finished.count == count_subthemes.count
+                && results.percentage >= MIN_APROBADO)
+                ? { win_award : true, award: award}
+                : { win_award : false}
 
-        if (response.win_award) {
-            await user.$relatedQuery('awards').relate(award)
-        }
+            if (response.win_award) {
+                await user.$relatedQuery('awards').relate(award)
+            }
 
-        const user_profile = await user.$relatedQuery('profile');
+            const user_profile = await user.$relatedQuery('profile');
 
-        if (type == 'Reto') {
             if(user_profile === undefined){
                 await user.$relatedQuery('profile')
                     .insert({

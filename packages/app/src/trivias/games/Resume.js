@@ -4,13 +4,12 @@ import { history } from '@approbado/lib/providers'
 import Box from '@material-ui/core/Box'
 import Emoji from '@approbado/lib/components/Emoji'
 import Button from '@approbado/lib/components/Button'
-import { useGetResponses} from '@approbado/lib/hooks/useGetResponses'
+import { useGetResponses } from '@approbado/lib/hooks/useGetResponses'
 import NoAnswer from '../components/NoAnswer'
-import { axios } from '@approbado/lib/providers'
 
 export default function() {
-    const { selected, answers, questions, configs, selectedSubthemes } = useTriviaState()
-    const { setConfigs } = useTriviaDispatch()
+    const { selected, answers, questions, configs } = useTriviaState()
+    const { setConfigs, getResults } = useTriviaDispatch()
     const items = useGetResponses(questions, answers)
 
     const handleClick = () => {
@@ -18,18 +17,7 @@ export default function() {
             ...configs,
             view: 'finished'
         })
-
-        const subthemesIds = selectedSubthemes.map(({ id }) => id)
-        const awardsIds = selectedSubthemes
-            .map(({ award_id }) => award_id)
-            .filter((value, index, self) => self.indexOf(value) === index)
-
-        axios.post('/trivias/finish', {
-            subthemes_ids: subthemesIds,
-            level_id: configs.level,
-            type: 'Reto',
-            awards_ids: awardsIds
-        })
+        getResults()
     }
 
     React.useEffect(() => {
