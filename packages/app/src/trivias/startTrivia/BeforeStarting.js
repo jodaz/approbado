@@ -74,7 +74,7 @@ const BeforeStarting = props => {
     const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();
-    const { setConfigs } = useTriviaDispatch();
+    const { setConfigs, startCounter } = useTriviaDispatch();
 
     const handleSetMaxTime = () => {
         if (!maxTime) {
@@ -88,8 +88,12 @@ const BeforeStarting = props => {
         setConfigs({
             level: level,
             type: type,
-            view: 'playing'
+            view: 'playing',
+            duration: maxTime
         })
+
+        if (maxTime) { startCounter(maxTime) }
+
         history.push('/game')
     }
 

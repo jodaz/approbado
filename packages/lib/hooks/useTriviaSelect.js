@@ -8,7 +8,8 @@ import {
     setAnswer,
     setConfigs,
     unsetAnswerStatus,
-    getResults
+    getResults,
+    startCounter
 } from '../actions';
 
 export const useTriviaState = () => {
@@ -30,6 +31,7 @@ export const useTriviaDispatch = () => {
         unsetAnswer: () => dispatch(unsetAnswerStatus()),
         setConfigs: data => dispatch(setConfigs(data)),
         setAnswer: data => dispatch(setAnswer(data)),
-        getResults: () => dispatch(getResults())
+        getResults: () => dispatch(getResults()),
+        startCounter: mins => dispatch(startCounter(mins * 60))
     }
 }

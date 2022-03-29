@@ -19,10 +19,17 @@ export const UNSET_CONFIGS = 'UNSET_CONFIGS';
 export const GET_RESULTS = 'GET_RESULTS';
 export const SET_RESULTS = 'SET_RESULTS';
 export const FETCH_RESULTS_FAILED = 'FETCH_RESULTS_FAILED';
+export const START_COUNTER = 'START_COUNTER';
+export const UPDATE_COUNTER = 'UPDATE_COUNTER';
 
 export const setConfigs = data => ({
     type: SET_CONFIGS,
     payload: data
+});
+
+export const startCounter = secs => ({
+    type: START_COUNTER,
+    payload: secs
 });
 
 export const setStatus = data => ({
@@ -107,4 +114,9 @@ export const fetchUser = () => ({
 export const fetchUserSuccess = data => ({
     type: USER_FETCH_SUCCEEDED,
     payload: data
+});
+
+export const updateCounter = secs => ({
+    type: UPDATE_COUNTER,
+    payload: secs
 });

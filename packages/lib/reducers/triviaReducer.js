@@ -9,7 +9,9 @@ import {
     PASS_QUESTION,
     SET_CONFIGS,
     SET_RESULTS,
-    FETCH_RESULTS_FAILED
+    UPDATE_COUNTER,
+    FETCH_RESULTS_FAILED,
+    START_COUNTER
 } from '../actions';
 
 const initialState = {
@@ -23,11 +25,13 @@ const initialState = {
     configs: {
         type: '',
         view: '',
-        level: ''
+        level: '',
+        duration: 0
     },
     rights: 0,
     points: 0,
-    error: ''
+    error: '',
+    secs: 0
 }
 
 const dialogReducer = (
@@ -35,6 +39,11 @@ const dialogReducer = (
     action
 ) => {
     switch (action.type) {
+        case START_COUNTER:
+            return {
+                ...state,
+                secs: action.payload
+            }
         case SET_TRIVIA:
             return {
                 ...state,
@@ -90,6 +99,12 @@ const dialogReducer = (
                 ...state,
                 error: action.payload
             }
+        case UPDATE_COUNTER: {
+            return {
+                ...state,
+                secs: action.payload
+            }
+        }
         case UNSET_TRIVIA:
             return initialState;
         default:

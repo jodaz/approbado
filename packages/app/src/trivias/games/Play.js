@@ -6,6 +6,7 @@ import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTrivi
 import Box from '@material-ui/core/Box'
 import AnswerPill from '../components/AnswerPill'
 import OptionsForm from '../components/OptionsForm'
+import Counter from '../components/Counter'
 
 const useStyles = makeStyles(theme => ({
     passQuestion: {
@@ -30,7 +31,8 @@ export default function() {
         questions,
         currQuestion: current,
         answers,
-        configs
+        configs,
+        secs
     } = useTriviaState()
     const currQuestion = questions[current]
     const [currAnswer, setCurrentAnswer] = React.useState(null)
@@ -64,8 +66,13 @@ export default function() {
         setCurrentAnswer(answer)
     }, [answers, currQuestion]);
 
+    const { duration } = configs
+
     return (
         <Box padding='1rem'>
+            {(duration != 0) && (
+                <Counter sec={secs} />
+            )}
             <ProgressBar current={current + 1} total={questions.length} />
             <Box sx={{ fontWeight: 600, margin: '2rem 0', height: '2rem' }}>
                 {current + 1}. {currQuestion.description}
@@ -73,7 +80,6 @@ export default function() {
             <Box minHeight='10rem'>
                 <OptionsForm {...currQuestion} />
             </Box>
-
             <Box padding='1rem 0'>
                 {(isRight) ? (
                     <AnswerPill variant='success'>
