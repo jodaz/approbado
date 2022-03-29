@@ -22,9 +22,10 @@ export const showResult = async (subtheme_id, level_id, user_id, res) => {
                 .$relatedQuery('options')
                 .where('is_right', true)
                 .first()
-            results[i].file =  await results[i].$relatedQuery('file')
-            for (var e = 0; e < results[i].options.length; e++) {
 
+            results[i].file =  await results[i].$relatedQuery('file')
+
+            for (var e = 0; e < results[i].options.length; e++) {
                 let answer = await results[i].options[e]
                     .$relatedQuery('answers')
                     .select('answers.*', 'options.statement')
