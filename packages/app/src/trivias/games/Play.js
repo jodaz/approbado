@@ -48,11 +48,11 @@ export default function() {
             setConfigs({
                 ...configs,
                 view: view
-            })
+            });
         } else {
             passQuestion();
-            unsetAnswer()
-            setIsRight(null)
+            unsetAnswer();
+            setIsRight(null);
         }
     }
 

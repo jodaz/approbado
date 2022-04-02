@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { makeStyles } from '@material-ui/core'
-import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
+import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 import { history } from '@approbado/lib/providers'
 import Box from '@material-ui/core/Box'
 import Emoji from '@approbado/lib/components/Emoji'
@@ -30,15 +30,30 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function() {
-    const { selected, trivia, questions, answers, points, rights } = useTriviaState()
+    const {
+        selected,
+        trivia,
+        questions,
+        answers,
+        points,
+        rights
+    } = useTriviaState();
+    const { unsetTrivia, getResults } = useTriviaDispatch();
     const items = useGetResponses(questions, answers)
     const classes = useStyles();
 
     React.useEffect(() => {
         if (!selected) {
             history.push('/trivias');
+        } else {
+            getResults();
         }
     }, [selected])
+
+    const handleGoHome = () => {
+        unsetTrivia();
+        history.push('/');
+    }
 
     if (!selected) return null
 
@@ -47,7 +62,7 @@ export default function() {
             <Box fontWeight={600} margin='2rem 0'>
                 {trivia.name}
             </Box>
-            <Box sx={{ display: 'flex',  width: 'max-content' }}>
+            <Box sx={{ display: 'flex',  width: '100%', justifyContent: 'space-between' }}>
                 <Box className={classes.congratulations}>
                     <Box sx={{ paddingRight: '2rem' }}>
                         <StateIllustration />
@@ -61,16 +76,19 @@ export default function() {
                         <Box>Sigue practicando y llegarás lejos.</Box>
                         <Button
                             className={classes.button}
-                            onClick={() => history.push('/')}
+                            onClick={handleGoHome}
                             unresponsive
                         >
                             Ir a home
                         </Button>
                     </Box>
-                    <Box>
-                        <Points points={points} />
-                        <TotalRights rights={rights} total={questions.length} />
-                    </Box>
+                </Box>
+                <Box display='flex' justifyContent='space-between'>
+                    <TotalRights
+                        rights={rights}
+                        total={questions.length}
+                    />
+                    <Points points={points} />
                 </Box>
             </Box>
             <Box margin='1rem 0 4rem 0'>

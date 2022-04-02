@@ -26,7 +26,7 @@ export default function SubthemeItem(props) {
                 <Checkbox
                     edge="end"
                     onChange={handleToggle(id)}
-                    checked={status.indexOf(id) !== -1}
+                    checked={status.indexOf(id) !== -1 || finished}
                     disabled={finished}
                 />
             </ListItemSecondaryAction>

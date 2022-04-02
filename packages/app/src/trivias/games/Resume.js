@@ -9,7 +9,7 @@ import NoAnswer from '../components/NoAnswer'
 
 export default function() {
     const { selected, answers, questions, configs } = useTriviaState()
-    const { setConfigs, getResults } = useTriviaDispatch()
+    const { setConfigs } = useTriviaDispatch()
     const items = useGetResponses(questions, answers)
 
     const handleClick = () => {
@@ -17,7 +17,6 @@ export default function() {
             ...configs,
             view: 'finished'
         })
-        getResults()
     }
 
     React.useEffect(() => {

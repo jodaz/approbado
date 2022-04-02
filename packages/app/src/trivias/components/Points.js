@@ -9,10 +9,11 @@ const Points = ({ points }) => (
         padding: '0.5rem',
         backgroundColor: '#2280ED',
         borderRadius: '6px',
-        width: '6rem',
-        margin: '0 1rem'
+        width: '7rem',
+        margin: '0 1rem',
+        color: '#fff'
     }}>
-        <Box fontSize='2rem' fontWeight='600'>{points}</Box>
+        <Box fontSize='1.5rem' fontWeight='600'>{points}</Box>
         <Box>Puntos</Box>
     </Box>
 )

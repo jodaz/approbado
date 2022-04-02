@@ -99,7 +99,7 @@ const AppBar = props => {
     const { user } = useUserState();
 
     return (
-        <MuiAppBar className={classes.root} position='absolute' {...props} title=''>
+        <MuiAppBar className={classes.root} position='absolute'>
             <Toolbar
                 disableGutters
                 variant={isXSmall ? 'regular' : 'dense'}

@@ -9,10 +9,10 @@ const TotalRights = ({ rights, total }) => (
         padding: '0.5rem',
         backgroundColor: '#E8E8E8',
         borderRadius: '6px',
-        width: '6rem',
+        width: '7rem',
         margin: '0 1rem'
     }}>
-        <Box fontSize='2rem' fontWeight='600'>{rights} / {total}</Box>
+        <Box fontSize='1.5rem' fontWeight='600'>{rights}/{total}</Box>
         <Box>Aciertos</Box>
     </Box>
 )
