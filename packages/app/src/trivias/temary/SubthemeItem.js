@@ -4,6 +4,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useSubthemesDispatch, useSubthemeState } from '@approbado/lib/hooks/useSubthemeSelect';
+import CheckGrayIcon from '@approbado/lib/icons/CheckGrayIcon'
+import CheckSolid from '@approbado/lib/icons/CheckSolid'
 
 export default function SubthemeItem(props) {
     const { id, name, finished } = props;
@@ -28,6 +30,8 @@ export default function SubthemeItem(props) {
                     onChange={handleToggle(id)}
                     checked={status.indexOf(id) !== -1 || finished}
                     disabled={finished}
+                    icon={<CheckGrayIcon />}
+                    checkedIcon={<CheckSolid />}
                 />
             </ListItemSecondaryAction>
         </ListItem>

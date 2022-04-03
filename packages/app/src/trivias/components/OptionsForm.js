@@ -6,6 +6,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 import { makeStyles } from '@material-ui/core/styles'
+// Icons
+import CheckSolid from '@approbado/lib/icons/CheckSolid'
+import CloseSolid from '@approbado/lib/icons/CloseSolid'
+import Ellipse from '@approbado/lib/icons/Ellipse'
 
 const useStyles = makeStyles(theme => ({
     checked: props => ({
@@ -72,8 +76,10 @@ export default function({ options, id: questionID }) {
                             classes={{
                                 checked: classes.checked
                             }}
+                            icon={<Ellipse />}
                             disabled={checked == item.id}
                             disableRipple
+                            checkedIcon={(item.is_right) ? <CheckSolid /> : <CloseSolid />}
                         />
                     </ListItemIcon>
                     <ListItemText primary={item.statement} />
