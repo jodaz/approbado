@@ -7,12 +7,32 @@ import Box from '@material-ui/core/Box'
 import AnswerPill from '../components/AnswerPill'
 import OptionsForm from '../components/OptionsForm'
 import Counter from '../components/Counter'
+import ShareIcon from '@approbado/lib/icons/ShareIcon'
+import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 
 const useStyles = makeStyles(theme => ({
     passQuestion: {
         color: theme.palette.info.dark,
         border: `2px solid ${theme.palette.info.dark}`,
         width: 'max-content'
+    },
+    resources: {
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        height: 'fit-content',
+        width: 'fit-content',
+        fontSize: '1rem',
+        marginTop: '0.5rem',
+        color: theme.palette.info.light,
+        '&:visited': {
+            color: 'normal'
+        }
+    },
+    icon: {
+        fontSize: 'inherit',
+        marginLeft: '0.5rem'
     }
 }))
 
@@ -91,23 +111,31 @@ export default function() {
                     </AnswerPill>
                 )}
             </Box>
-                <Box padding='1rem 0' minHeight='10rem'>
-                    {(isRight !== null) && (
-                        <>
-                            {(type == 'Práctica' && isRight == false) && (
-                                <Box fontWeight={600}>
-                                    Respuesta correcta: {currAnswer.correctAnswer.statement}
-                                </Box>
-                            )}
+            <Box padding='1rem 0' minHeight='10rem'>
+                {(isRight !== null) && (
+                    <>
+                        {(type == 'Práctica' && isRight == false) && (
+                            <Box fontWeight={600}>
+                                Respuesta correcta: {currAnswer.correctAnswer.statement}
+                            </Box>
+                        )}
 
-                            {(currQuestion.explanation_type == isRight && currQuestion.explanation) && (
-                                <Box>
-                                    Nota: {currQuestion.explanation}
-                                </Box>
-                            )}
-                        </>
-                    )}
-                </Box>
+                        {(currQuestion.explanation_type == isRight && currQuestion.explanation) && (
+                            <Box>
+                                Nota: {currQuestion.explanation}
+                            </Box>
+                        )}
+                        <Box
+                            className={classes.resources}
+                            fontSize='0.9rem'
+                            component={LinkBehavior}
+                            to='/trivias'
+                        >
+                            Para más detalles ver recursos <ShareIcon className={classes.icon} />
+                        </Box>
+                    </>
+                )}
+            </Box>
             <Box display="flex" justifyContent="space-between">
                 <Button
                     variant="outlined"

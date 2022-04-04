@@ -87,7 +87,10 @@ const dialogReducer = (
         case SET_CONFIGS:
             return {
                 ...state,
-                configs: action.payload
+                configs: {
+                    ...state.configs,
+                    ...action.payload
+                }
             }
         case SET_RESULTS:
             return {

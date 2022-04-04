@@ -38,6 +38,8 @@ export default function({ options, id: questionID }) {
     const classes = useStyles({ isRight: isRight })
 
     const handleClick = id => {
+        if (checked != 0) return null;
+
         setChecked(id);
         let answer = options.find(item => id == item.id);
         let correctAnswer = options.find(item => item.is_right)

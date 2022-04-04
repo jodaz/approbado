@@ -9,7 +9,8 @@ import {
 } from 'redux-saga/effects';
 import {
   START_COUNTER,
-  updateCounter
+  updateCounter,
+  setConfigs
 } from '../actions';
 
 const countdown = secs =>
@@ -25,13 +26,14 @@ const countdown = secs =>
 
 function* startCounterTask(action) {
     const { payload: secs } = action
-
     const chan = yield call(countdown, secs);
 
     try {
         while (true) {
             const sec = yield take(chan);
             yield put(updateCounter(sec));
+
+            if (sec == 0) yield put(setConfigs({ view: 'timeout' }))
         }
     } finally {
         if (yield cancelled()) {
