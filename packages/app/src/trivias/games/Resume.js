@@ -7,8 +7,8 @@ import Button from '@approbado/lib/components/Button'
 import { useGetResponses } from '@approbado/lib/hooks/useGetResponses'
 import NoAnswer from '../components/NoAnswer'
 import makeStyles from '@material-ui/styles/makeStyles'
-import ListItem from '@material-ui/core/ListItem';
 import SelectIcon from '@approbado/lib/icons/SelectIcon'
+import Icon from '@material-ui/core/Icon'
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -19,6 +19,18 @@ const useStyles = makeStyles(theme => ({
             flexDirection: 'row',
             justifyContent: 'space-between',
         }
+    },
+    answer: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '1rem',
+        border: `2px solid ${theme.palette.primary.dark}`,
+        borderRadius: '6px',
+        margin: '1rem 0'
+    },
+    icon: {
+        fill: theme.palette.background.default,
+        marginRight: '1rem'
     }
 }))
 
@@ -67,8 +79,8 @@ export default function() {
                         <Box fontWeight='600' margin='1rem 0'>
                             {`${index + 1}. ${item.description}`}
                         </Box>
-                        <Box paddingBottom='1rem'>
-                            <SelectIcon />
+                        <Box className={classes.answer}>
+                            <SelectIcon className={classes.icon}/>
                             {item.answer ? item.answer : <NoAnswer />}
                         </Box>
                     </Box>
