@@ -90,9 +90,9 @@ export const verifyAward = async (req, res) => {
 
         const count_subthemes_finished = await Subtheme.query()
                 .join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id')
-                .where('user_id',user_id)
-                .where('award_id',award_id)
-                .where('finished',true)
+                .where('user_id', user_id)
+                .where('award_id', award_id)
+                .where('finished', true)
                 .count()
                 .first()
 
