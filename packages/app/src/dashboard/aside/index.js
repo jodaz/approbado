@@ -2,10 +2,37 @@ import * as React from 'react';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
 import EmptySchedule from './EmptySchedule'
+import { axios } from '@approbado/lib/providers'
 import ScheduledTriviaCard from './ScheduledTriviaCard'
+import Spinner from '@approbado/lib/components/Spinner'
 
-const Schedule = ({ isSmall }) => {
+const Schedule = ({ isSmall, user }) => {
+    const [data, setData] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
+
+    const fetchSchedules = React.useCallback(async () => {
+        const { data } = await axios.get(`/schedules/user/${user.id}`)
+
+        setData(data);
+        setLoading(false);
+    }, [])
+
+    React.useEffect(() => {
+        fetchSchedules();
+    }, [])
+
     if (isSmall) return null;
+
+    const renderer = () => (
+        <>
+            {(data.length)
+            ? (
+                <>
+                    {data.map(schedule => <ScheduledTriviaCard {...schedule} />)}
+                </>
+            ) : <EmptySchedule />}
+        </>
+    )
 
     return (
         <Box sx={{
@@ -19,9 +46,7 @@ const Schedule = ({ isSmall }) => {
             }}>
                 Agenda mensual
             </Box>
-            <EmptySchedule />
-            <ScheduledTriviaCard />
-            <ScheduledTriviaCard />
+            {(loading) ? <Spinner /> : renderer()}
         </Box>
     );
 }

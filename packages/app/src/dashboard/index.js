@@ -7,6 +7,7 @@ import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageCompone
 import Box from '@material-ui/core/Box';
 import { useMediaQuery } from '@material-ui/core'
 import Aside from './aside'
+import { useUserState } from '@approbado/lib/hooks/useUserState'
 
 const tags = [
     {
@@ -36,6 +37,7 @@ const tags = [
 ]
 
 export default function Dashboard() {
+    const { user } = useUserState()
     const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -47,7 +49,7 @@ export default function Dashboard() {
                     <TabbedList tags={tags} name='Home' />
                 </Grid>
             </Grid>
-            <Aside isSmall={isSmall} />
+            <Aside isSmall={isSmall} user={user} />
         </Box>
     )
 }

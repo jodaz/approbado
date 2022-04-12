@@ -1,9 +1,22 @@
-import { Schedule,Participant,User,Question } from '../models'
-import { validateRequest, paginatedQueryResponse,getDateString,getDayWeekString ,getTimeString,sendNotification } from '../utils'
+import {
+    Schedule,
+    Participant,
+    User,
+    Question
+} from '../models'
+import {
+    validateRequest,
+    paginatedQueryResponse,
+    getDateString,
+    getDayWeekString,
+    getTimeString,
+    sendNotification
+} from '../utils'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
     const query = Schedule.query()
+    const { user } = req;
 
     try {
         if (filter) {
@@ -52,11 +65,10 @@ export const byUserId = async (req, res) => {
         }
 
         for (var i = 0; i < schedules.length; i++) {
-
             let participants_finished =  await schedules[i].$relatedQuery('participants')
-                                                .where('participants.finished',false)
-                                                .count()
-                                                .first()
+                .where('participants.finished',false)
+                .count()
+                .first()
 
             schedules[i].rest = participants_finished.count
 
@@ -105,7 +117,7 @@ export const new_schedules = async (req, res) => {
 
 export const get_schedules = async () => {
     const schedules = await Schedule.query()
-                                    .whereRaw("cast(starts_at-now() as varchar) like '00:30%'")
+        .whereRaw("cast(starts_at-now() as varchar) like '00:30%'")
 
     try{
         for (var i = 0; i < schedules.length; i++) {

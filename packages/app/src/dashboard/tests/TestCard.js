@@ -3,6 +3,7 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
 import { styled } from '@material-ui/core/styles'
+import { useTriviaDispatch } from "@approbado/lib/hooks/useTriviaSelect"
 
 const LinkBehavior = styled(DefaultLinkBehavior)(() => ({
     'textDecoration': 'none',
@@ -41,22 +42,31 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AnalyticsCard = () => {
+const TestCard = trivia => {
+    const { id, name, subthemesCount, subthemesFinishedCount } = trivia
     const classes = useStyles()
+    const total = subthemesCount - subthemesFinishedCount;
+    const { setTrivia } = useTriviaDispatch();
 
     return (
-        <Box className={classes.root} to='/profile/edit' component={LinkBehavior}>
+        <Box
+            className={classes.root}
+            to='/trivias'
+            component={LinkBehavior}
+            key={id}
+            onClick={() => setTrivia(trivia)}
+        >
             <Box component='div' className={classes.bar} />
             <Box display='flex' flexDirection='column' alignSelf='end' padding='1rem'>
                 <Box component='strong'>
-                    Derecho constitucional
+                    {name}
                 </Box>
                 <Box sx={{ color: '#232730' }}>
-                    Te faltan 12 preguntas
+                    {`Te faltan ${total} subtemas`}
                 </Box>
             </Box>
         </Box>
     );
 }
 
-export default AnalyticsCard
+export default TestCard

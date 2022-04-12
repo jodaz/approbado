@@ -82,6 +82,9 @@ export const indexByPlan = async (req, res) => {
             if (filter.recent) {
                 query.orderBy('id','DESC')
             }
+            if (filter.unfinished) {
+                query.where('subthemesCount', '>', 'subthemesFinishedCount')
+            }
         }
 
         return paginatedQueryResponse(query, req, res)
@@ -197,7 +200,7 @@ export const finishTrivia = async (req, res) => {
 
             const user_profile = await user.$relatedQuery('profile');
 
-            if(user_profile === undefined){
+            if(user_profile === undefined) {
                 await user.$relatedQuery('profile')
                     .insert({
                         points : parseFloat(results.points)
