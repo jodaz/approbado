@@ -1,33 +1,60 @@
-import * as React from 'react';
-import PropTypes from 'prop-types'
-import Box from '@material-ui/core/Box';
-import EmptySchedule from './EmptySchedule'
-import ScheduledTriviaCard from './ScheduledTriviaCard'
+import Grid from '@material-ui/core/Grid'
+import { TextInput } from 'react-admin'
+import InputContainer from '@approbado/lib/components/InputContainer'
+import { Form } from 'react-final-form'
+import Button from '@approbado/lib/components/Button'
 
-const Schedule = ({ isSmall }) => {
-    if (isSmall) return null;
+const ScheduleForm = () => {
+    const handleSubmit = values => {
+        console.log(values)
+    }
 
     return (
-        <Box sx={{
-            width: '30%',
-            padding: '0 1rem'
-        }}>
-            <Box sx={{
-                fontWeight: '700',
-                fontSize: '1.5rem',
-                width: '100%'
-            }}>
-                Agenda mensual
-            </Box>
-            <EmptySchedule />
-            <ScheduledTriviaCard />
-            <ScheduledTriviaCard />
-        </Box>
-    );
+        <Form
+            onSubmit={handleSubmit}
+            render={({ handleSubmit, submitting, form, pristine }) => (
+                <form onSubmit={handleSubmit} noValidate>
+                    <Grid container>
+                        <Grid item sm={6}>
+                            <InputContainer disabled={submitting} labelName='Título de la reunión' sm={12} md={12}>
+                                <TextInput
+                                    source='title'
+                                    placeholder='Ingrese un título'
+                                    fullWidth
+                                />
+                            </InputContainer>
+                            <InputContainer disabled={submitting} labelName='Descripción' sm={12} md={12}>
+                                <TextInput
+                                    source='description'
+                                    placeholder='Añadir una descripción'
+                                    fullWidth
+                                    multiline
+                                />
+                            </InputContainer>
+                            <Grid container>
+                                <Grid item xs='6'>
+                                    <Button
+                                        variant='outlined'
+                                        size='large'
+                                        onClick={() => {
+                                            form.reset();
+                                        }}
+                                    >
+                                        Cancelar
+                                    </Button>
+                                </Grid>
+                                <Grid item xs='6'>
+                                    <Button disabled={submitting} onClick={handleSubmit} size='large' unresponsive>
+                                        Guardar
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </form>
+            )}
+        />
+    )
 }
 
-Schedule.propTypes = {
-    isSmall: PropTypes.bool
-}
-
-export default Schedule
+export default ScheduleForm

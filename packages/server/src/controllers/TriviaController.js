@@ -48,10 +48,12 @@ export const index = async (req, res) => {
 
 export const indexByPlan = async (req, res) => {
     const { filter } = req.query
-    const user = req.user
+    const { user } = req
 
     try{
-        const plan = await user.$relatedQuery('plan').where('active',true).first()
+        const plan = await user.$relatedQuery('plan')
+            .where('active',true)
+            .first()
 
         const query = Trivia.query().select(
             Trivia.ref('*'),

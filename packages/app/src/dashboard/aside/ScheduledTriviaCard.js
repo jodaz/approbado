@@ -88,7 +88,6 @@ const ScheduledTriviaCard = ({ users }) => {
                 action={
                     <OptionsCardMenu icon={<MoreIcon />}>
                         <DeleteButton
-                            label='Eliminar'
                             basePath='notifications'
                             confirmColor='warning'
                             confirmTitle='Eliminar notificación'

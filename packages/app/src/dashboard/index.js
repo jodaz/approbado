@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TabbedList from '@approbado/lib/components/TabbedList'
-import TestList from './TestList'
+import TestList from './tests'
+import ScheduleForm from './schedule'
 import EmptyMessageComponent from '@approbado/lib/components/EmptyMessageComponent'
 import Box from '@material-ui/core/Box';
 import { useMediaQuery } from '@material-ui/core'
-import Schedule from './schedule'
+import Aside from './aside'
 
 const tags = [
     {
@@ -16,9 +17,7 @@ const tags = [
     {
         name: 'Agenda',
         pathname: 'calendar',
-        component: <EmptyMessageComponent
-            message='Sin resultados'
-        />
+        component: <ScheduleForm />
     },
     {
         name: 'Puntajes',
@@ -48,7 +47,7 @@ export default function Dashboard() {
                     <TabbedList tags={tags} name='Home' />
                 </Grid>
             </Grid>
-            <Schedule isSmall={isSmall} />
+            <Aside isSmall={isSmall} />
         </Box>
     )
 }
