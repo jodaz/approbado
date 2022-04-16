@@ -37,7 +37,7 @@ const tags = [
 ]
 
 export default function Dashboard() {
-    const { user } = useUserState()
+    const { user, isAuth } = useUserState()
     const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -49,7 +49,7 @@ export default function Dashboard() {
                     <TabbedList tags={tags} name='Home' />
                 </Grid>
             </Grid>
-            <Aside isSmall={isSmall} user={user} />
+            {isAuth && <Aside isSmall={isSmall} user={user} />}
         </Box>
     )
 }
