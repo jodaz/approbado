@@ -17,7 +17,7 @@ import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
 
 const AwardsCreate = () => {
     const { trivia_id } = useParams()
-    const [provider, { data, loading, loaded }] = useFileProvider(fileProvider);
+    const [provider, { data, loading }] = useFileProvider(fileProvider);
     const redirect = useRedirect()
     const notify = useNotify();
 
