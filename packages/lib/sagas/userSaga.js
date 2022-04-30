@@ -9,7 +9,7 @@ import CONFIG_NAMES from '../configs'
 function* fetchUser() {
     try {
         const response = yield axios.get('/profile');
-        console.log(response)
+
         yield localStorage.setItem(CONFIG_NAMES.USER, JSON.stringify(response.data))
         yield put(fetchUserSuccess(response.data));
     } catch (e) {

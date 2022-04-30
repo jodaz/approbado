@@ -1,46 +1,84 @@
+import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import {
     TextInput,
     DateInput,
     ReferenceInput,
-    ReferenceArrayInput,
-    AutocompleteArrayInput,
     SelectInput
 } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { Form, useFormState, Field } from 'react-final-form'
 import Button from '@approbado/lib/components/Button'
 import Checkbox from '@approbado/lib/components/Checkbox'
+import Select from './Select'
+import validateSchedule from './validateSchedule'
+import { axios } from '@approbado/lib/providers'
+import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
+import IdeaIcon from '@approbado/lib/icons/IdeaIcon';
+import LayerIcon from '@approbado/lib/icons/LayerIcon';
 
-const SubthemesInput = () => {
-    const { values } = useFormState();
+const SubthemesInput = ({ submitting }) => {
+    const { values: { trivia_id } } = useFormState();
+    const [subthemes, setSubthemes] = React.useState([])
 
-    if (!values.trivia_id) return null;
+    const fetchSubthemes = React.useCallback(async (trivia) => {
+        const { data: { data } } = await axios.get(`/subthemes?filter[trivia_id]=${trivia}`)
+        setSubthemes(data)
+    }, []);
+
+    React.useEffect(() => {
+        if (trivia_id) {
+            fetchSubthemes(trivia_id);
+        }
+    }, [trivia_id])
+
+    if (!trivia_id) return null;
 
     return (
-        <InputContainer labelName='Subtema' sm='12' md='12'>
-            <ReferenceInput
-                source='subtheme_id'
-                reference='subthemes'
-                allowEmpty
-                fullWidth
-                defaultValue={{ trivia_id: values.trivia_id }}
-            >
-                <SelectInput fullWidth source="name" emptyText="N/A" />
-            </ReferenceInput>
+        <InputContainer
+            disabled={submitting}
+            labelName="Tema"
+            md={12}
+            xs={12}
+        >
+            <Field
+                component={Select}
+                name='subtheme_id'
+                options={subthemes}
+                icon={<LayerIcon />}
+            />
         </InputContainer>
     )
 }
 
 const ScheduleForm = () => {
+    const [trivias, setTrivias] = React.useState([])
+    const [levels, setLevels] = React.useState([])
+
+    const fetchTrivias = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/trivias')
+        setTrivias(data)
+    }, []);
+
+    const fetchLevels = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/configurations/levels')
+        setLevels(data)
+    }, []);
+
     const handleSubmit = values => {
         console.log(values)
     }
 
+    React.useEffect(() => {
+        fetchTrivias();
+        fetchLevels();
+    }, [])
+
     return (
         <Form
             onSubmit={handleSubmit}
-            render={({ handleSubmit, submitting, form, pristine }) => (
+            validate={validateSchedule}
+            render={({ handleSubmit, submitting, form }) => (
                 <form onSubmit={handleSubmit} noValidate>
                     <Grid container>
                         <Grid item md={6}></Grid>
@@ -48,7 +86,7 @@ const ScheduleForm = () => {
                             <Grid container>
                                 <InputContainer
                                     disabled={submitting}
-                                    labelName='Título de la reunión'
+                                    labelName='starts_at'
                                     sm={12}
                                     md={12}
                                 >
@@ -65,36 +103,33 @@ const ScheduleForm = () => {
                                         fullWidth
                                     />
                                 </InputContainer>
-                                <InputContainer labelName='Trivia' sm='12' md='12'>
-                                    <ReferenceInput
-                                        source='trivia_id'
-                                        reference='trivias'
-                                        allowEmpty
-                                        fullWidth
-                                    >
-                                        <SelectInput  fullWidth source="name" emptyText="N/A" />
-                                    </ReferenceInput>
+                                <InputContainer
+                                    disabled={submitting}
+                                    labelName="Trivia"
+                                    md={12}
+                                    xs={12}
+                                >
+                                    <Field
+                                        component={Select}
+                                        name='trivia_id'
+                                        options={trivias}
+                                        icon={<BalanceIcon />}
+                                    />
                                 </InputContainer>
-                                <InputContainer labelName='Nivel' sm='12' md='12'>
-                                    <ReferenceInput
-                                        source='level_id'
-                                        reference='configurations/levels'
-                                        allowEmpty
-                                        fullWidth
-                                    >
-                                        <SelectInput  fullWidth source="name" emptyText="N/A" />
-                                    </ReferenceInput>
+                                <InputContainer
+                                    disabled={submitting}
+                                    labelName="Nivel"
+                                    md={12}
+                                    xs={12}
+                                >
+                                    <Field
+                                        component={Select}
+                                        name='level_id'
+                                        options={levels}
+                                        icon={<IdeaIcon />}
+                                    />
                                 </InputContainer>
-                                <InputContainer labelName='Usuario' sm='12' md='12'>
-                                    <ReferenceArrayInput
-                                        source="users_ids"
-                                        reference="users"
-                                        fullWidth
-                                    >
-                                        <AutocompleteArrayInput source="names" emptyText="NA" />
-                                    </ReferenceArrayInput>
-                                </InputContainer>
-                                <SubthemesInput />
+                                <SubthemesInput submitting={submitting} />
                                 <InputContainer disabled={submitting} labelName='Descripción' sm={12} md={12}>
                                     <TextInput
                                         source='description'
@@ -104,9 +139,9 @@ const ScheduleForm = () => {
                                     />
                                 </InputContainer>
                                 <Field
-                                    name="conditions"
+                                    name="notify_before"
                                     type="checkbox"
-                                    value="conditions"
+                                    value="notify_before"
                                     component={Checkbox}
                                 >
                                     <label style={{
@@ -121,9 +156,7 @@ const ScheduleForm = () => {
                                         <Button
                                             variant='outlined'
                                             size='large'
-                                            onClick={() => {
-                                                form.reset();
-                                            }}
+                                            onClick={form.reset}
                                         >
                                             Cancelar
                                         </Button>

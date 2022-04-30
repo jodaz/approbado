@@ -18,7 +18,6 @@ import Dashboard from './dashboard'
 import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Account from './account';
 import Profile from './profile';
-import NotFound from '@approbado/lib/layouts/NotFound'
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
 import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
