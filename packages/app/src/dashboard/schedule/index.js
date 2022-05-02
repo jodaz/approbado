@@ -2,9 +2,7 @@ import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import {
     TextInput,
-    DateInput,
-    ReferenceInput,
-    SelectInput
+    DateInput
 } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { Form, useFormState, Field } from 'react-final-form'
@@ -16,6 +14,7 @@ import { axios } from '@approbado/lib/providers'
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import IdeaIcon from '@approbado/lib/icons/IdeaIcon';
 import LayerIcon from '@approbado/lib/icons/LayerIcon';
+import AutocompleteSelectInput from './AutocompleteSelectInput'
 
 const SubthemesInput = ({ submitting }) => {
     const { values: { trivia_id } } = useFormState();
@@ -54,6 +53,7 @@ const SubthemesInput = ({ submitting }) => {
 const ScheduleForm = () => {
     const [trivias, setTrivias] = React.useState([])
     const [levels, setLevels] = React.useState([])
+    const [users, setUsers] = React.useState([])
 
     const fetchTrivias = React.useCallback(async () => {
         const { data: { data } } = await axios.get('/trivias')
@@ -65,6 +65,11 @@ const ScheduleForm = () => {
         setLevels(data)
     }, []);
 
+    const fetchUsers = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
+        setUsers(data)
+    }, []);
+
     const handleSubmit = values => {
         console.log(values)
     }
@@ -72,6 +77,7 @@ const ScheduleForm = () => {
     React.useEffect(() => {
         fetchTrivias();
         fetchLevels();
+        fetchUsers();
     }, [])
 
     return (
@@ -96,11 +102,29 @@ const ScheduleForm = () => {
                                         fullWidth
                                     />
                                 </InputContainer>
-                                <InputContainer disabled={submitting} labelName='Título de la reunión' sm={12} md={12}>
+                                <InputContainer
+                                    disabled={submitting}
+                                    labelName='Título de la reunión'
+                                    sm={12}
+                                    md={12}
+                                >
                                     <TextInput
                                         source='title'
                                         placeholder='Ingrese un título'
                                         fullWidth
+                                    />
+                                </InputContainer>
+                                <InputContainer
+                                    disabled={submitting}
+                                    labelName="Participantes"
+                                    md={12}
+                                    xs={12}
+                                >
+                                    <Field
+                                        component={AutocompleteSelectInput}
+                                        name='users_ids'
+                                        options={users}
+                                        placeholder='Ingresar jugadores (máx: 5)'
                                     />
                                 </InputContainer>
                                 <InputContainer

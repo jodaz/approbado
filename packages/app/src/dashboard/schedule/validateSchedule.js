@@ -13,7 +13,7 @@ export default function(values) {
     if (!values.subtheme_id) {
         errors.subtheme_id = "Seleccione un subtema.";
     }
-    if (!values.users_ids) {
+    if (!values.users_ids && values.users_ids.length) {
         errors.users_ids = "Seleccione al menos un participante.";
     }
 
