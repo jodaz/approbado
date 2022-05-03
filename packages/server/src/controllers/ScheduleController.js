@@ -47,21 +47,24 @@ export const byUserId = async (req, res) => {
 
     try {
         const user = await  User.query().findById(user_id)
-
+        let otherModels = '[participants,level,subtheme.trivia]'
         let schedules = null
 
         if (filter) {
             if (filter.before) {
                 schedules = await user.$relatedQuery('schedules')
                     .where('schedules.starts_at', '>=', new Date())
+                    .withGraphFetched(otherModels)
             }
             if (filter.current) {
                 schedules = await user.$relatedQuery('schedules')
                     .whereRaw('extract(hour from starts_at) = '+parseInt(new Date().getHours()))
                     .where('schedules.starts_at', '<=', new Date())
+                    .withGraphFetched(otherModels)
             }
         } else {
             schedules = await user.$relatedQuery('schedules')
+                            .withGraphFetched(otherModels)
         }
 
         for (var i = 0; i < schedules.length; i++) {
@@ -160,12 +163,14 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const { users_ids, ...schedule } = req.body;
-
         try {
+            const { users_ids, starts_at, trivia_id, ...schedule } = req.body;
+
+            const date = new Date(starts_at).toISOString()
+
             const model = await Schedule.query().insert({
                 ...schedule,
-                starts_at: new Date(schedule.starts_at).toLocaleString(),
+                starts_at: date,
                 created_by: req.user.id
             })
             await model.$relatedQuery('participants').relate(users_ids)
