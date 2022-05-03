@@ -53,11 +53,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const users = [
-    { id: 1, full_name: 'Smith Lopez'},
-    { id: 2, full_name: 'Tia May'}
-]
-
 const Description = ({ title, children }) => (
     <Box sx={{
         display: 'flex',
@@ -72,7 +67,8 @@ const Description = ({ title, children }) => (
     </Box>
 )
 
-const ScheduledTriviaCard = ({ users }) => {
+const ScheduledTriviaCard = props => {
+    const { description, time_string, date_string, level, participants, subtheme, title } = props
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -105,11 +101,11 @@ const ScheduledTriviaCard = ({ users }) => {
             <Box className={classes.actions}>
                 <Box className={classes.subheader}>
                     <Box variant='subtitle2'>
-                        MAR. 10, AGOSTO
+                        {date_string}
                     </Box>
                     <Dot />
                     <Box variant='subtitle2'>
-                        11 AM
+                        {time_string}
                     </Box>
                 </Box>
                 <IconButton
@@ -128,12 +124,12 @@ const ScheduledTriviaCard = ({ users }) => {
                     </Button>
                     <Description title='Título'>
                         <Box fontWeight='600'>
-                            Reforzamiento de derecho laboral
+                            {subtheme.trivia.name}
                         </Box>
                     </Description>
                     <Description title='Trivia'>
                         <Box fontWeight='600'>
-                            Derecho constitucional
+                            {title}
                         </Box>
                     </Description>
                     <Description title='Tema'>
@@ -143,7 +139,7 @@ const ScheduledTriviaCard = ({ users }) => {
                     </Description>
                     <Description title='Nivel'>
                         <Box fontWeight='600'>
-                            Avanzado
+                            {subtheme.name}
                         </Box>
                     </Description>
                     <Description title='Participantes'>
@@ -151,24 +147,20 @@ const ScheduledTriviaCard = ({ users }) => {
                             display: 'flex',
                             justifyContent: 'start'
                         }}>
-                            {users.map((item, i) => (
-                                <Tag key={i} name={item.full_name} />
+                            {participants.map((item, i) => (
+                                <Tag key={i} name={item.names} />
                             ))}
                         </Box>
                     </Description>
                     <Description title='Descripción'>
                         <Box fontWeight='600'>
-                        Vamos por la aprobación de esa práctica. SOMOS!!!
+                        {description}
                         </Box>
                     </Description>
                 </Box>
             </Collapse>
         </Card>
     );
-}
-
-ScheduledTriviaCard.defaultProps = {
-    users: users
 }
 
 export default ScheduledTriviaCard

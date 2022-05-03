@@ -1,6 +1,6 @@
 export default function(values) {
     const errors = {};
-
+    console.log(values)
     if (!values.trivia_id) {
         errors.trivia_id = "Seleccione una trivia.";
     }
@@ -13,8 +13,8 @@ export default function(values) {
     if (!values.subtheme_id) {
         errors.subtheme_id = "Seleccione un subtema.";
     }
-    if (!values.users_ids && values.users_ids.length) {
-        errors.users_ids = "Seleccione al menos un participante.";
+    if (!values.users_ids) {
+        errors.users_ids = "Seleccione un participante.";
     }
 
     return errors;

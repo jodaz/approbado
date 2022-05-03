@@ -1,20 +1,18 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
-import {
-    TextInput,
-    DateInput
-} from 'react-admin'
+import { DateInput } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { Form, useFormState, Field } from 'react-final-form'
 import Button from '@approbado/lib/components/Button'
 import Checkbox from '@approbado/lib/components/Checkbox'
 import Select from './Select'
 import validateSchedule from './validateSchedule'
-import { axios } from '@approbado/lib/providers'
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import IdeaIcon from '@approbado/lib/icons/IdeaIcon';
 import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import AutocompleteSelectInput from './AutocompleteSelectInput'
+import { axios } from '@approbado/lib/providers'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const SubthemesInput = ({ submitting }) => {
     const { values: { trivia_id } } = useFormState();
@@ -70,8 +68,16 @@ const ScheduleForm = () => {
         setUsers(data)
     }, []);
 
-    const handleSubmit = values => {
-        console.log(values)
+    const handleSubmit = async (values) => {
+        try {
+            const { data } = await axios.post('/schedules', values)
+
+            console.log(data)
+        } catch (error) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
     }
 
     React.useEffect(() => {
@@ -92,12 +98,12 @@ const ScheduleForm = () => {
                             <Grid container>
                                 <InputContainer
                                     disabled={submitting}
-                                    labelName='starts_at'
+                                    labelName='Empieza'
                                     sm={12}
                                     md={12}
                                 >
                                     <DateInput
-                                        source='date'
+                                        source='starts_at'
                                         placeholder='Día'
                                         fullWidth
                                     />
@@ -109,7 +115,7 @@ const ScheduleForm = () => {
                                     md={12}
                                 >
                                     <TextInput
-                                        source='title'
+                                        name='title'
                                         placeholder='Ingrese un título'
                                         fullWidth
                                     />
@@ -156,7 +162,7 @@ const ScheduleForm = () => {
                                 <SubthemesInput submitting={submitting} />
                                 <InputContainer disabled={submitting} labelName='Descripción' sm={12} md={12}>
                                     <TextInput
-                                        source='description'
+                                        name='description'
                                         placeholder='Añadir una descripción'
                                         fullWidth
                                         multiline

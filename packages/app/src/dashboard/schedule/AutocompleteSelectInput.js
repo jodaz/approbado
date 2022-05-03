@@ -34,14 +34,6 @@ const Select = props => {
     const [inputValue, setInputValue] = React.useState('');
     const [open, setOpen] = React.useState(false);
 
-    React.useEffect(() => {
-        if (defaultValue && options.length) {
-            const newValue = options.filter(item => item.id == defaultValue);
-
-            setValue(newValue[0])
-        }
-    }, [defaultValue, options])
-
     return (
         <FormControl className="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense MuiFormControl-fullWidth">
             <Autocomplete
@@ -84,9 +76,11 @@ const Select = props => {
                     </Box>
                 )}
                 value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                    onChange(newValue.id)
+                onChange={async (event, newValue) => {
+                    await setValue(newValue);
+
+                    const ids = await newValue.map(item => item.id);
+                    await onChange(ids)
                 }}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
