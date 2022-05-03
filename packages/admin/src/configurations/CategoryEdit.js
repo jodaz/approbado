@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useEditController,
     useRedirect,
     useNotify
@@ -10,6 +9,7 @@ import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const CategoryEdit = props => {
     const { id } = useParams();
@@ -55,7 +55,7 @@ const CategoryEdit = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

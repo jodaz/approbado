@@ -13,8 +13,9 @@ import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
-import { TextInput, PasswordInput } from 'react-admin'
+import { PasswordInput } from 'react-admin'
 import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -84,7 +85,7 @@ const Login = () => {
 
                 <InputContainer labelName='Correo electrónico' md={12}>
                     <TextInput
-                        source="email"
+                        name="email"
                         placeholder="Ingrese su correo electrónico"
                         disabled={loading}
                         fullWidth

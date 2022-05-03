@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useRedirect,
     useNotify,
     NumberInput,
@@ -14,6 +13,7 @@ import { fileProvider } from '@approbado/lib/providers'
 import isEmpty from 'is-empty'
 import validate from './validateAwardForm'
 import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const AwardsCreate = () => {
     const { trivia_id } = useParams()
@@ -53,7 +53,7 @@ const AwardsCreate = () => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="title"
+                    name="title"
                     placeholder="Nombre"
                     fullWidth
                 />

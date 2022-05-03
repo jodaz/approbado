@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TextInput, FormWithRedirect, useNotify } from 'react-admin'
+import { FormWithRedirect, useNotify } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
 import { fileProvider } from '@approbado/lib/providers'
@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@approbado/lib/components/Button'
 import isEmpty from 'is-empty'
 import { useUserDispatch, useUserState } from '@approbado/lib/hooks/useUserState'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = values => {
     const errors = {};
@@ -66,16 +67,14 @@ const UpdateProfile = () => {
                         <Grid item md='9' xs='12'>
                             <InputContainer labelName='Nombre' md={8} sm={8} xs={12}>
                                 <TextInput
-                                    label={false}
-                                    source='names'
+                                    name='names'
                                     disabled={loading}
                                     fullWidth
                                 />
                             </InputContainer>
                             <InputContainer labelName='Correo electrónico' md={8} sm={8} xs={12}>
                                 <TextInput
-                                    label={false}
-                                    source='email'
+                                    name='email'
                                     disabled={loading}
                                     fullWidth
                                 />

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useRedirect,
     useNotify,
     SelectInput,
@@ -14,6 +13,7 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
 import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 import validate from './validateFileForm'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const FileCreate = () => {
     const { trivia_id } = useParams()
@@ -54,7 +54,7 @@ const FileCreate = () => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="title"
+                    name="title"
                     placeholder="Nombre"
                     fullWidth
                 />

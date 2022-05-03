@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useRedirect,
     SelectInput,
     useNotify,
@@ -22,6 +21,7 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 import { unmarkOptions, validate } from './questionsFormUtils'
 import FormHelperText from '@material-ui/core/FormHelperText';
+import TextInput from '@approbado/lib/components/TextInput'
 
 const OPTIONS = [
     { id: '1', name: 'Respuesta correcta' },
@@ -107,7 +107,7 @@ const QuestionCreate = () => {
                                     </Box>
                                     <InputContainer labelName='Pregunta' sm={12} md={12}>
                                         <TextInput
-                                            source="description"
+                                            name="description"
                                             placeholder="Ingresa el enunciado"
                                             disabled={loading}
                                             fullWidth
@@ -120,7 +120,7 @@ const QuestionCreate = () => {
                                                     <Grid item xs={12} sm={12} md={6} key={name} className={classes.arrayItem}>
                                                         <InputLabel>Opción {index + 1}</InputLabel>
                                                         <TextInput
-                                                            source={`${name}.statement`}
+                                                            name={`${name}.statement`}
                                                             placeholder="Ingrese la respuesta"
                                                             fullWidth
                                                             label=""
@@ -179,7 +179,7 @@ const QuestionCreate = () => {
                                     </InputContainer>
                                     <InputContainer sm='12' md='6' labelName='Aclaratoria'>
                                         <TextInput
-                                            source="explanation"
+                                            name="explanation"
                                             placeholder="Ingrese el texto de la aclaratoria"
                                             disabled={loading}
                                             fullWidth

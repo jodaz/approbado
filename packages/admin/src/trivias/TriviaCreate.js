@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     SelectInput,
     useCreateController,
     CreateContextProvider,
@@ -11,6 +10,7 @@ import {
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -70,7 +70,7 @@ const TriviaCreate = props => {
             >
                 <InputContainer labelName='Nombre'>
                     <TextInput
-                        source="name"
+                        name="name"
                         placeholder="Nombre"
                         fullWidth
                     />

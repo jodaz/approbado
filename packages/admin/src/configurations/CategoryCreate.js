@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useMutation,
     useRedirect,
     useNotify,
@@ -8,6 +7,7 @@ import {
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const CategoryCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -44,7 +44,7 @@ const CategoryCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

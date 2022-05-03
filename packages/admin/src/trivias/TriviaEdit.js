@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     SelectInput,
     useNotify,
     ReferenceInput,
@@ -15,6 +14,7 @@ import ImageInput from '@approbado/lib/components/ImageInput'
 import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -73,7 +73,7 @@ const TriviaEdit = ({ record }) => {
         <BaseForm save={save} validate={validate} loading={loading} record={record}>
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useRedirect,
     useNotify,
     ReferenceInput,
@@ -11,6 +10,7 @@ import {
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -66,7 +66,7 @@ const SubthemeCreate = () => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

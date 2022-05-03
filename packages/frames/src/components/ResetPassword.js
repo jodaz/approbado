@@ -7,10 +7,8 @@ import {
     Box
 } from '@material-ui/core';
 import axios from 'axios'
-import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
 import useStyles from '@approbado/lib/styles/formStyles'
-import AuthHeaderForm from './AuthHeaderForm';
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link } from 'react-router-dom'
@@ -18,6 +16,7 @@ import AccountCircle from '@material-ui/icons/PersonOutlineOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Dialog from '@approbado/lib/components/Dialog'
 import Button from '@approbado/lib/components/Button'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -59,8 +58,7 @@ const ResetPassword = () => {
     return (
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Recuperar contraseña'>
             <div className={classes.form}>
-                <Field
-                    component={renderInput}
+                <TextInput
                     name="email"
                     type="text"
                     placeholder='Correo electrónico'

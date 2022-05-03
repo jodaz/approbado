@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useMutation,
     useRedirect,
     useNotify,
@@ -9,6 +8,7 @@ import { validateLevel } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import CustomColorPicker from './CustomColorPicker'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const LevelCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -40,7 +40,7 @@ const LevelCreate = props => {
         <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

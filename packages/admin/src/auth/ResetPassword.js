@@ -14,9 +14,9 @@ import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme, styled } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
-import { TextInput } from 'react-admin'
 import Dialog from '@approbado/lib/components/Dialog'
 import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const LinkBehavior = styled(DefaultLinkBehavior)(({ theme }) => ({
     'color': theme.palette.primary.main,
@@ -88,7 +88,7 @@ const ResetPassword = () => {
 
                 <InputContainer labelName='Correo electrónico' md={12}>
                     <TextInput
-                        source="email"
+                        name="email"
                         placeholder="Ingrese su correo electrónico"
                         disabled={loading}
                         fullWidth

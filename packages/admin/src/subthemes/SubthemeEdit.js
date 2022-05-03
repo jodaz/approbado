@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useNotify,
     useRefresh,
     ReferenceInput,
@@ -10,6 +9,7 @@ import {
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -62,7 +62,7 @@ const SubthemeEdit = ({ record }) => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

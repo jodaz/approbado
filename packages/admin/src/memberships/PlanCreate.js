@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useMutation,
     NumberInput,
     ReferenceArrayInput,
@@ -12,6 +11,7 @@ import { validatePlan } from './plansValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
+import TextInput from '@approbado/lib/components/TextInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Permitido' },
@@ -53,7 +53,7 @@ const PlanCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Ingresa el nombre de la membresía"
                     fullWidth
                 />

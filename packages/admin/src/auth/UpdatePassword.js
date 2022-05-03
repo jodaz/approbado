@@ -11,12 +11,12 @@ import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { useLocation, useHistory, Link } from 'react-router-dom'
-import { TextInput } from 'react-admin'
 import Spinner from '@approbado/lib/components/Spinner'
 import queryString from 'query-string'
 import Dialog from '@approbado/lib/components/Dialog'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Button from '@approbado/lib/components/Button'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -129,7 +129,7 @@ const UpdatePassword = () => {
                                     <>
                                         <InputContainer labelName='Nueva contraseña' md={12}>
                                             <TextInput
-                                                source="password"
+                                                name="password"
                                                 placeholder="Ingrese su contraseña"
                                                 disabled={loading}
                                                 fullWidth
@@ -137,7 +137,7 @@ const UpdatePassword = () => {
                                         </InputContainer>
                                         <InputContainer labelName='Confirma tu contraseña' md={12}>
                                             <TextInput
-                                                source="password_confirmed"
+                                                name="password_confirmed"
                                                 placeholder="Repita su contraseña"
                                                 disabled={loading}
                                                 fullWidth

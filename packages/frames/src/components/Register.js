@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core';
 import Button from '@approbado/lib/components/Button'
 import axios from 'axios'
-import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
 import useStyles from '@approbado/lib/styles/formStyles'
 import { Link } from 'react-router-dom'
@@ -22,7 +21,7 @@ import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import Checkbox from '@approbado/lib/components/Checkbox'
 import { useSelector, useDispatch } from "react-redux";
 import { unset } from '../store/formFiller'
-
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -95,10 +94,14 @@ const Register = () => {
     }, [state]);
 
     return (
-        <AuthLayout validate={validate} handleSubmit={handleSubmit} initialValues={formInitialValues} title="Crear usuario">
+        <AuthLayout
+            validate={validate}
+            handleSubmit={handleSubmit}
+            initialValues={formInitialValues}
+            title="Crear usuario"
+        >
             <div className={classes.form}>
-                <Field
-                    component={renderInput}
+                <TextInput
                     name="names"
                     type="text"
                     placeholder='Ingresa un nombre'
@@ -112,10 +115,9 @@ const Register = () => {
                         ),
                     }}
                 />
-                <Field
+                <TextInput
                     name="email"
                     // @ts-ignore
-                    component={renderInput}
                     placeholder='Ingresa un correo electrónico'
                     disabled={loading}
                     className={classes.input}
@@ -127,10 +129,9 @@ const Register = () => {
                         ),
                     }}
                 />
-                <Field
+                <TextInput
                     name="password"
                     // @ts-ignore
-                    component={renderInput}
                     placeholder='Ingresa una contraseña'
                     type="password"
                     disabled={loading}
@@ -143,10 +144,9 @@ const Register = () => {
                         ),
                     }}
                 />
-                <Field
+                <TextInput
                     name="phone"
                     // @ts-ignore
-                    component={renderInput}
                     placeholder='Teléfono'
                     type="text"
                     disabled={loading}
@@ -178,8 +178,7 @@ const Register = () => {
                     </label>
                 </Field>
                 {sendWithCode && (
-                    <Field
-                        component={renderInput}
+                    <TextInput
                         name="code"
                         type="text"
                         placeholder='Ingresa el código de confirmación'

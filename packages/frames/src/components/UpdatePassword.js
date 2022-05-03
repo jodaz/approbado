@@ -1,16 +1,12 @@
 import * as React from 'react';
-import { Field } from 'react-final-form';
 import {
-    Card,
     CardActions,
     Typography,
     Box
 } from '@material-ui/core';
 import axios from 'axios'
-import renderInput from '@approbado/lib/components/renderInput'
 import AuthLayout from './AuthLayout'
 import useStyles from '@approbado/lib/styles/formStyles'
-import AuthHeaderForm from './AuthHeaderForm';
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
@@ -19,6 +15,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Spinner from '@approbado/lib/components/Spinner'
 import queryString from 'query-string'
 import Button from '@approbado/lib/components/Button'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = (values) => {
     const errors = {};
@@ -86,8 +83,7 @@ const UpdatePassword = () => {
                             {(verificationError == undefined)
                                 ? (
                                     <>
-                                        <Field
-                                            component={renderInput}
+                                        <TextInput
                                             name="password"
                                             type="text"
                                             placeholder='Nueva contraseña'
@@ -101,8 +97,7 @@ const UpdatePassword = () => {
                                                 ),
                                             }}
                                         />
-                                        <Field
-                                            component={renderInput}
+                                        <TextInput
                                             name="password_confirmed"
                                             type="text"
                                             placeholder='Ingresa de nuevo tu contraseña'
