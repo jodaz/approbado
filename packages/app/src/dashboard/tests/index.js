@@ -2,7 +2,6 @@ import * as React from 'react'
 import Box from '@material-ui/core/Box'
 import { axios } from '@approbado/lib/providers'
 // Components
-import Spinner from '@approbado/lib/components/Spinner'
 import TestCard from './TestCard'
 
 const initialState = {

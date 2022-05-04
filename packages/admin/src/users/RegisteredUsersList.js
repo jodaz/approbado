@@ -9,7 +9,7 @@ import {
 } from 'react-admin'
 import { Form } from 'react-final-form';
 import Box from '@material-ui/core/Box';
-import GoToProfileButtonLink from '../components/GoToProfileButtonLink'
+import GoToProfileButtonLink from '@approbado/lib/components/GoToProfileButtonLink'
 import DatagridListView from '@approbado/lib/components/DatagridListView'
 import DownloadButton from '@approbado/lib/components/Button'
 import { fileProvider } from '@approbado/lib/providers'

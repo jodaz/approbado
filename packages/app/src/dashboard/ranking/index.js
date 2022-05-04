@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Box from '@material-ui/core/Box'
 import { axios } from '@approbado/lib/providers'
+import RankingTable from './RankingTable'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const initialState = {
     data: {},
@@ -8,47 +10,24 @@ const initialState = {
     loaded: false
 }
 
-const TestList = () => {
-    // const [users, setUsers] = React.useState(initialState)
+const RankingList = () => {
+    const [data, setData] = React.useState(initialState)
 
-    // const fetchUsers = React.useCallback(async () => {
-    //     const { data } = await axios.get('/users')
+    const fetchUsers = React.useCallback(async () => {
+        const { data } = await axios.get('/users?page=0&perPage=5&sort=points&order=desc')
 
-    //     setNewTrivias({...data, loaded: true })
-    // }, [])
+        setData({...data, loaded: true })
+    }, [])
 
-    // const renderer = ({ data }) => (
-    //     <Box margin='1rem 0'>
-    //         {data.map((trivia, i) => (
-    //             <TestCard key={i} {...trivia} />
-    //         ))}
-    //     </Box>
-    // )
-
-    // React.useEffect(() => {
-    //     fetchUsers();
-    // }, [])
+    React.useEffect(() => {
+        fetchUsers();
+    }, [])
 
     return (
         <Box display='flex' flexDirection='column'>
-            {(newTrivias.loaded) && (
-                <Box marginBottom='1rem'>
-                    <Box component='strong'>
-                        Continúa con tu prueba
-                    </Box>
-                    {renderer(newTrivias)}
-                </Box>
-            )}
-            {(popularTrivias.loaded) && (
-                <Box marginBottom='1rem'>
-                    <Box component='strong'>
-                    Pruebas populares - Estas listo? 🔥
-                    </Box>
-                    {renderer(popularTrivias)}
-                </Box>
-            )}
+            {data.loaded ? <RankingTable {...data} /> : <Spinner />}
         </Box>
     )
 }
 
-export default TestList
+export default RankingList

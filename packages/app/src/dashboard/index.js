@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import { useMediaQuery } from '@material-ui/core'
 import Aside from './aside'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
+import Ranking from './ranking'
 
 const tags = [
     {
@@ -23,9 +24,7 @@ const tags = [
     {
         name: 'Puntajes',
         pathname: 'ranking',
-        component: <EmptyMessageComponent
-            message='Sin resultados'
-        />
+        component: <Ranking />
     },
     {
         name: 'Pruebas realizadas',
