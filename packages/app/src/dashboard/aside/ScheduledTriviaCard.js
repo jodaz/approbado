@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: '1rem',
         fontWeight: 400,
         color: theme.palette.primary.main,
-        borderLeft: '6px solid #2280ED',
+        borderLeft: props => `6px solid ${props.color}`,
         borderRadius: '4px',
         paddingLeft: '1rem'
     },
@@ -69,7 +69,7 @@ const Description = ({ title, children }) => (
 
 const ScheduledTriviaCard = props => {
     const { description, time_string, date_string, level, participants, subtheme, title } = props
-    const classes = useStyles();
+    const classes = useStyles({ color: level.color });
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = e => {
