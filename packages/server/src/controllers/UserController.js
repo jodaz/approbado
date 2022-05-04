@@ -55,10 +55,10 @@ export const index = async (req, res) => {
             switch (sort) {
                 case 'points':
                     query.whereExists(
-                        User.relatedQuery('profile')
-                            .where(sort, '>', 0)
-                            .orderBy(sort, order)
-                    ).withGraphFetched('profile')
+                            User.relatedQuery('profile')
+                                .where(sort, '>', 0)
+                                .orderBy(sort, order)
+                        ).withGraphFetched('[profile,awards]')
                     break;
                 case 'contributionsCount':
                     query.select(
