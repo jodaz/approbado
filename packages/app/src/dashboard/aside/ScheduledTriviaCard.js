@@ -163,4 +163,10 @@ const ScheduledTriviaCard = props => {
     );
 }
 
+ScheduledTriviaCard.defaultProps = {
+    level: {
+        color: '#2280ED'
+    }
+}
+
 export default ScheduledTriviaCard
