@@ -5,16 +5,17 @@ import EmptySchedule from './EmptySchedule'
 import { axios } from '@approbado/lib/providers'
 import ScheduledTriviaCard from './ScheduledTriviaCard'
 import Spinner from '@approbado/lib/components/Spinner'
+import { useSchedulesState, useSchedulesDispatch } from '@approbado/lib/hooks/useSchedules'
 
 const Schedule = ({ isSmall, user }) => {
-    const [data, setData] = React.useState([])
     const [loading, setLoading] = React.useState(true)
+    const data = useSchedulesState();
+    const { setData } = useSchedulesDispatch();
 
     const fetchSchedules = React.useCallback(async () => {
         const { data } = await axios.get(`/schedules/user/${user.id}`)
-
-        setData(data);
-        setLoading(false);
+        setData(data)
+        setLoading(false)
     }, [])
 
     React.useEffect(() => {

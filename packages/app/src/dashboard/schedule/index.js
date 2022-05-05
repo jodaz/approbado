@@ -13,6 +13,8 @@ import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import AutocompleteSelectInput from './AutocompleteSelectInput'
 import { axios } from '@approbado/lib/providers'
 import TextInput from '@approbado/lib/components/TextInput'
+import MuiDatepicker from './MuiDatepicker'
+import { useSchedulesState } from '@approbado/lib/hooks/useSchedules'
 
 const SubthemesInput = ({ submitting }) => {
     const { values: { trivia_id } } = useFormState();
@@ -52,6 +54,7 @@ const ScheduleForm = () => {
     const [trivias, setTrivias] = React.useState([])
     const [levels, setLevels] = React.useState([])
     const [users, setUsers] = React.useState([])
+    const schedules = useSchedulesState();
 
     const fetchTrivias = React.useCallback(async () => {
         const { data: { data } } = await axios.get('/trivias')
@@ -93,7 +96,9 @@ const ScheduleForm = () => {
             render={({ handleSubmit, submitting, form }) => (
                 <form onSubmit={handleSubmit} noValidate>
                     <Grid container>
-                        <Grid item md={6}></Grid>
+                        <Grid item md={6}>
+                            <MuiDatepicker data={schedules} name="starts_at" />
+                        </Grid>
                         <Grid item sm={6}>
                             <Grid container>
                                 <InputContainer

@@ -1,6 +1,6 @@
 export default function(values) {
     const errors = {};
-    console.log(values)
+
     if (!values.trivia_id) {
         errors.trivia_id = "Seleccione una trivia.";
     }

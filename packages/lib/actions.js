@@ -21,6 +21,13 @@ export const SET_RESULTS = 'SET_RESULTS';
 export const FETCH_RESULTS_FAILED = 'FETCH_RESULTS_FAILED';
 export const START_COUNTER = 'START_COUNTER';
 export const UPDATE_COUNTER = 'UPDATE_COUNTER';
+export const FETCH_SCHEDULES = 'FETCH_SCHEDULES';
+export const CLEAR_SCHEDULES = 'CLEAR_SCHEDULES';
+
+export const fetchSchedules = data => ({
+    type: FETCH_SCHEDULES,
+    payload: data
+});
 
 export const setConfigs = data => ({
     type: SET_CONFIGS,
