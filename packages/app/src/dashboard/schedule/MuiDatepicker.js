@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DatePicker } from "@material-ui/pickers";
 import Badge from "@material-ui/core/Badge";
-import { format, isValid, parse } from "date-fns";
+import { format, isValid } from "date-fns";
 import { Field } from 'react-final-form'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -38,7 +38,6 @@ const CalendarInput = ({ name, input, input: { value, onChange }, items, ...rest
                         onChange(null);
                     }
                 }}
-                initialFocusedDate={new Date()}
                 leftArrowIcon={<LeftAngleIcon />}
                 rightArrowIcon={<RightAngleIcon />}
             />

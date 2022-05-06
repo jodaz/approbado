@@ -1,7 +1,7 @@
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import { intervalToDuration } from 'date-fns'
-import { ReactComponent as TimeIcon } from '@approbado/lib/icons/TimeIcon.svg'
+import TimeIcon from '@approbado/lib/icons/TimeIcon'
 
 const Counter = ({ sec }) => {
     const duration = intervalToDuration({ start: 0, end: sec * 1000 })

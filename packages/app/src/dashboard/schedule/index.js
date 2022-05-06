@@ -1,54 +1,21 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { DateInput } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { Form, useFormState, Field } from 'react-final-form'
+import { Form, Field } from 'react-final-form'
 import Button from '@approbado/lib/components/Button'
 import Checkbox from '@approbado/lib/components/Checkbox'
 import Select from './Select'
 import validateSchedule from './validateSchedule'
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import IdeaIcon from '@approbado/lib/icons/IdeaIcon';
-import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import AutocompleteSelectInput from './AutocompleteSelectInput'
 import { axios } from '@approbado/lib/providers'
 import TextInput from '@approbado/lib/components/TextInput'
 import MuiDatepicker from './MuiDatepicker'
 import { useSchedulesState } from '@approbado/lib/hooks/useSchedules'
-
-const SubthemesInput = ({ submitting }) => {
-    const { values: { trivia_id } } = useFormState();
-    const [subthemes, setSubthemes] = React.useState([])
-
-    const fetchSubthemes = React.useCallback(async (trivia) => {
-        const { data: { data } } = await axios.get(`/subthemes?filter[trivia_id]=${trivia}`)
-        setSubthemes(data)
-    }, []);
-
-    React.useEffect(() => {
-        if (trivia_id) {
-            fetchSubthemes(trivia_id);
-        }
-    }, [trivia_id])
-
-    if (!trivia_id) return null;
-
-    return (
-        <InputContainer
-            disabled={submitting}
-            labelName="Tema"
-            md={12}
-            xs={12}
-        >
-            <Field
-                component={Select}
-                name='subtheme_id'
-                options={subthemes}
-                icon={<LayerIcon />}
-            />
-        </InputContainer>
-    )
-}
+import Box from '@material-ui/core/Box'
+import SubthemesInput from './SubthemesInput'
+import DateInput from './DateInput'
 
 const ScheduleForm = () => {
     const [trivias, setTrivias] = React.useState([])
@@ -101,18 +68,9 @@ const ScheduleForm = () => {
                         </Grid>
                         <Grid item sm={6}>
                             <Grid container>
-                                <InputContainer
-                                    disabled={submitting}
-                                    labelName='Empieza'
-                                    sm={12}
-                                    md={12}
-                                >
-                                    <DateInput
-                                        source='starts_at'
-                                        placeholder='Día'
-                                        fullWidth
-                                    />
-                                </InputContainer>
+                                <Box sx={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem' }}>
+                                    Agendar una trivia
+                                </Box>
                                 <InputContainer
                                     disabled={submitting}
                                     labelName='Título de la reunión'
@@ -125,6 +83,7 @@ const ScheduleForm = () => {
                                         fullWidth
                                     />
                                 </InputContainer>
+                                <DateInput />
                                 <InputContainer
                                     disabled={submitting}
                                     labelName="Participantes"

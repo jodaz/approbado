@@ -10,12 +10,13 @@ const ControllableTextInput = props => {
         input,
         meta,
         fullWidth,
+        default: value,
         ...rest
     } = props;
-
+    console.log(rest)
     return (
         <FormControl fullWidth className="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense MuiFormControl-fullWidth">
-            <TextField {...input} {...rest} />
+            <TextField {...input} {...rest} value={value} />
             {meta.error && meta.touched && <FormHelperText error>{meta.error}</FormHelperText>}
         </FormControl>
     );
