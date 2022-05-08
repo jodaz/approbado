@@ -40,11 +40,12 @@ const ScheduleForm = () => {
     }, []);
 
     const handleSubmit = async (values) => {
-        const { time, day, starts_at, ...rest } = values;
+        const { time, day, starts_at, notify_before, ...rest } = values;
 
         try {
             const { data } = await axios.post('/schedules', {
                 starts_at: `${starts_at} ${time}`,
+                notify_before: notify_before.length,
                 ...rest
             })
 
@@ -158,8 +159,9 @@ const ScheduleForm = () => {
                                             variant='outlined'
                                             size='large'
                                             onClick={form.reset}
+                                            unresponsive
                                         >
-                                            Cancelar
+                                            Descartar
                                         </Button>
                                     </Grid>
                                     <Grid item xs='6'>

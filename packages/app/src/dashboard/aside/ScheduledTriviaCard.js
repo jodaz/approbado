@@ -15,6 +15,8 @@ import DownAngleIcon from '@approbado/lib/icons/DownAngleIcon'
 import UpperAngleIcon from '@approbado/lib/icons/UpperAngleIcon'
 import Button from '@material-ui/core/Button';
 import Tag from '@approbado/lib/components/Tag'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -68,7 +70,7 @@ const Description = ({ title, children }) => (
 )
 
 const ScheduledTriviaCard = props => {
-    const { description, time_string, date_string, level, participants, subtheme, title } = props
+    const { description, starts_at, level, participants, subtheme, title } = props
     const classes = useStyles({ color: level.color });
     const [expanded, setExpanded] = React.useState(false);
 
@@ -76,7 +78,7 @@ const ScheduledTriviaCard = props => {
         setExpanded(!expanded);
         e.preventDefault();
     };
-
+    console.log(format(new Date(starts_at), 'p'), starts_at, new Date(starts_at))
     return (
         <Card className={classes.root} onClick={handleExpandClick}>
             <CardHeader
@@ -101,11 +103,11 @@ const ScheduledTriviaCard = props => {
             <Box className={classes.actions}>
                 <Box className={classes.subheader}>
                     <Box variant='subtitle2'>
-                        {date_string}
+                        {format(new Date(starts_at), 'eee. d, MMMM', { locale: es }).toUpperCase()}
                     </Box>
                     <Dot />
                     <Box variant='subtitle2'>
-                        {time_string}
+                        {format(new Date(starts_at), 'p')}
                     </Box>
                 </Box>
                 <IconButton
