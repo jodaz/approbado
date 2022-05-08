@@ -23,6 +23,7 @@ import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import NotificationsView from './notifications/NotificationsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
+import MessagesView from './messages'
 
 import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
@@ -76,6 +77,11 @@ const App = () => (
                 />}
             />
             <ProtectedRoute exact path="/trivias/start" component={() => <StartTrivia />} layout={DefaultLayout} />
+
+            {/**
+             * Messages
+             */}
+            <ProtectedRoute exact path="/messages" component={() => <MessagesView />} layout={DefaultLayout} />
         </Switch>
 
         <Switch>
