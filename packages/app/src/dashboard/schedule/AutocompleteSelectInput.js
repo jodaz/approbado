@@ -7,6 +7,8 @@ import Avatar from '@material-ui/core/Avatar';
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import configs from '@approbado/lib/configs'
+import Chip from '@material-ui/core/Chip';
+import CloseIcon from '@approbado/lib/icons/CloseIcon'
 
 const useStyles = makeStyles(theme => ({
     userCard: {
@@ -19,6 +21,13 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'start'
+    },
+    chip: {
+        padding: '4px 4px 4px 8px !important',
+        backgroundColor: '#EAEAEA !important',
+        borderRadius: '6px',
+        fontWeight: 600,
+        color: theme.palette.info.dark
     }
 }))
 
@@ -75,6 +84,17 @@ const Select = props => {
                         </Box >
                     </Box>
                 )}
+                renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                        <Chip
+                            label={option.names}
+                            size="small"
+                            classes={{ root: classes.chip }}
+                            deleteIcon={<CloseIcon />}
+                            {...getTagProps({ index })}
+                        />
+                    ))
+                }
                 value={value}
                 onChange={async (event, newValue) => {
                     await setValue(newValue);
@@ -86,6 +106,7 @@ const Select = props => {
                 onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);
                 }}
+                disableClearable
             />
             {meta.error && meta.touched && <FormHelperText error>{meta.error}</FormHelperText>}
         </FormControl>

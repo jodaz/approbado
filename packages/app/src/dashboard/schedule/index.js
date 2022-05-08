@@ -16,6 +16,7 @@ import { useSchedulesState } from '@approbado/lib/hooks/useSchedules'
 import Box from '@material-ui/core/Box'
 import SubthemesInput from './SubthemesInput'
 import DateInput from './DateInput'
+import TimeInput from './TimeInput'
 
 const ScheduleForm = () => {
     const [trivias, setTrivias] = React.useState([])
@@ -39,8 +40,13 @@ const ScheduleForm = () => {
     }, []);
 
     const handleSubmit = async (values) => {
+        const { time, day, starts_at, ...rest } = values;
+
         try {
-            const { data } = await axios.post('/schedules', values)
+            const { data } = await axios.post('/schedules', {
+                starts_at: `${starts_at} ${time}`,
+                ...rest
+            })
 
             console.log(data)
         } catch (error) {
@@ -83,7 +89,8 @@ const ScheduleForm = () => {
                                         fullWidth
                                     />
                                 </InputContainer>
-                                <DateInput />
+                                <DateInput name="starts_at" submitting={submitting} />
+                                <TimeInput submitting={submitting} />
                                 <InputContainer
                                     disabled={submitting}
                                     labelName="Participantes"

@@ -22,6 +22,7 @@ import Checkbox from '@approbado/lib/components/Checkbox'
 import { useSelector, useDispatch } from "react-redux";
 import { unset } from '../store/formFiller'
 import TextInput from '@approbado/lib/components/TextInput'
+import formatString from "format-string-by-pattern";
 
 const validate = (values) => {
     const errors = {};
@@ -150,6 +151,7 @@ const Register = () => {
                     placeholder='Teléfono'
                     type="text"
                     disabled={loading}
+                    parse={formatString("+49 (AAAA) BBBBBBB")}
                     className={classes.input}
                     InputProps={{
                         startAdornment: (

@@ -24,8 +24,19 @@ import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import NotificationsView from './notifications/NotificationsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 
+import { format } from "date-fns";
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from "date-fns/locale/es";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+class LocalizedUtils extends DateFnsUtils {
+    getDatePickerHeaderText(date) {
+        return format(date, "dd-MM-yyyy", { locale: this.locale });
+    }
+}
+
 const App = () => (
-    <>
+    <MuiPickersUtilsProvider utils={LocalizedUtils} locale={esLocale}>
         <Route path='/auth' render={() => <Authenticate />} />
 
         <Switch>
@@ -46,7 +57,13 @@ const App = () => (
              */}
             <ProtectedRoute exact path="/forums" component={() => <ForumsView />} layout={DefaultLayout} />
             <ProtectedRoute exact path="/forums/:id" component={() => <ForumEdit />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/forums/:id/show" component={() => <ForumShow />} layout={DefaultLayout} />
+            <ProtectedRoute exact path="/forums/:id/show" component={(routeProps) =>
+                <ForumShow
+                    resource={'forums'}
+                    basePath={routeProps.match.url}
+                />}
+                layout={DefaultLayout}
+            />
             <ProtectedRoute exact path="/comments/:id/show" component={() => <CommentShow />} layout={DefaultLayout} />
 
             {/**
@@ -64,7 +81,7 @@ const App = () => (
         <Switch>
             <ProtectedRoute exact path="/game" component={() => <TriviaGame />} layout={GameLayout} />
         </Switch>
-    </>
+    </MuiPickersUtilsProvider>
 )
 
 export default App;

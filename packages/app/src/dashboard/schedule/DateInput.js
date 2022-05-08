@@ -29,7 +29,7 @@ const DateInput = ({ submitting }) => {
         >
             <TextInput
                 name="day"
-                default={value}
+                source={value}
                 InputProps={{
                     startAdornment: (
                         <Box marginLeft='6px' display='flex'>
