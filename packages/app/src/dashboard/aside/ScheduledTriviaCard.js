@@ -3,9 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
-import clsx from 'clsx';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import DeleteButton from '@approbado/lib/components/DeleteButton'
 import makeStyles from '@material-ui/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Dot from '@approbado/lib/components/Dot'
@@ -17,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import Tag from '@approbado/lib/components/Tag'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import DeleteEvent from './DeleteEvent'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -78,20 +77,14 @@ const ScheduledTriviaCard = props => {
         setExpanded(!expanded);
         e.preventDefault();
     };
-    console.log(format(new Date(starts_at), 'p'), starts_at, new Date(starts_at))
+
     return (
         <Card className={classes.root} onClick={handleExpandClick}>
             <CardHeader
                 className={classes.header}
                 action={
                     <OptionsCardMenu icon={<MoreIcon />}>
-                        <DeleteButton
-                            basePath='notifications'
-                            confirmColor='warning'
-                            confirmTitle='Eliminar notificación'
-                            confirmContent='¿Está seguro que desea eliminar este evento?'
-                            label='Eliminar evento'
-                        />
+                        <DeleteEvent />
                     </OptionsCardMenu>
                 }
                 title={
