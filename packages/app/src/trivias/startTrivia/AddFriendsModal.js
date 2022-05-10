@@ -78,7 +78,8 @@ const validate = (values) => {
     return errors;
 }
 
-export default function() {
+export default function(props) {
+    console.log(props)
     const classes = useStyles();
     const [addFriends, setAddFriends] = React.useState(false)
     const [open, setOpen] = React.useState(false);
@@ -100,15 +101,7 @@ export default function() {
 
     const handleSubmit = React.useCallback(async (values) => {
         try {
-            await provider({
-                type: 'get',
-                resource: 'memberships/payments/download',
-                payload: {
-                    name: `reporte-pagos-approbado`,
-                    ext: 'pdf',
-                    filterValues: values
-                }
-            })
+            const { data } = axios.post('/trivias/grupal', values)
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
@@ -206,6 +199,7 @@ export default function() {
                                 <Button
                                     disabled={submitting}
                                     unresponsive
+                                    onClick={handleSubmit}
                                 >
                                     Crear sala
                                 </Button>
