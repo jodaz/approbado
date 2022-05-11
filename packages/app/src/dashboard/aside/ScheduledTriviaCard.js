@@ -78,7 +78,7 @@ const ScheduledTriviaCard = props => {
         setExpanded(!expanded);
         e.preventDefault();
     };
-    console.log(format(new Date(starts_at), 'p'), starts_at, new Date(starts_at))
+
     return (
         <Card className={classes.root} onClick={handleExpandClick}>
             <CardHeader
