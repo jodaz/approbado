@@ -8,7 +8,6 @@ import { useGetResponses } from '@approbado/lib/hooks/useGetResponses'
 import NoAnswer from '../components/NoAnswer'
 import makeStyles from '@material-ui/styles/makeStyles'
 import SelectIcon from '@approbado/lib/icons/SelectIcon'
-import Icon from '@material-ui/core/Icon'
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -38,7 +37,7 @@ export default function() {
     const classes = useStyles();
     const { selected, answers, questions, configs } = useTriviaState()
     const { setConfigs } = useTriviaDispatch()
-    const items = useGetResponses(questions, answers)
+    const { responses } = useGetResponses(questions, answers)
 
     const handleClick = () => {
         setConfigs({
@@ -71,7 +70,7 @@ export default function() {
                 </Box>
             </Box>
             <Box margin='1rem 0 4rem 0'>
-                {items.map((item, index) => (
+                {responses.map((item, index) => (
                     <Box sx={{
                         borderBottom: '1px solid #A6A6A6',
                         padding: '1rem 0'
