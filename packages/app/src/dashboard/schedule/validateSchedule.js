@@ -2,7 +2,7 @@ let timeRegex = /^([0-1]\d):([0-5]\d)\s(?:AM|PM)?$/i;
 
 export default function(values) {
     const errors = {};
-    console.log("in validation ", values)
+
     if (!values.trivia_id) {
         errors.trivia_id = "Seleccione una trivia.";
     }

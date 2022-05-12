@@ -12,7 +12,6 @@ const userReducer = (
     switch (action.type) {
         case FETCH_SCHEDULES:
             return [
-                ...previousState,
                 ...action.payload
             ]
         case CLEAR_SCHEDULES:
