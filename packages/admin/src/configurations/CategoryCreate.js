@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
     useRedirect,
     useNotify,
 } from 'react-admin'
@@ -8,32 +7,32 @@ import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers'
 
-const CategoryCreate = props => {
-    const [mutate, { data, loading, loaded }] = useMutation();
+const CategoryCreate = () => {
+    const [loading, setLoading] = React.useState(false)
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post(`/configurations/categories`, values);
+
+            setLoading(false)
+
+            if (data) {
+                notify(`¡Ha registrado la categoría "${data.name}!`, 'success');
+                redirect('/configurations?tab=categories')
+            }
         } catch (error) {
+            setLoading(false)
+
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha registrado la categoría "${data.name}!`, 'success');
-            redirect('/configurations?tab=categories')
-        }
-    }, [loaded])
+    }, [])
 
     return (
         <BaseForm
@@ -51,11 +50,6 @@ const CategoryCreate = props => {
             </InputContainer>
         </BaseForm>
     )
-}
-
-CategoryCreate.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
 }
 
 export default CategoryCreate

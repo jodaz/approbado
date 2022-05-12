@@ -1,7 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
-    useEditController,
     useRedirect,
     useNotify
 } from 'react-admin'
@@ -10,39 +8,44 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers';
 
-const CategoryEdit = props => {
+const CategoryEdit = () => {
     const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [loading, setLoading] = React.useState(false)
+    const [record, setRecord] = React.useState({})
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/configurations/categories/${id}`, values);
+
+            setLoading(false)
+
+            if (data) {
+                notify(`¡Ha editado la categoría "${data.name}!`, 'success');
+                redirect('/configurations?tab=categories')
+            }
         } catch (error) {
+            setLoading(false)
+
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [])
 
-    React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha editado la categoría "${data.name}" exitosamente!`, 'success')
-            redirect('/configurations?tab=categories')
+    React.useEffect(async () => {
+        if (id) {
+            const { data } = await axios.get(`/configurations/categories/${id}`)
+
+            if (data) {
+                setRecord(data)
+            }
         }
-    }, [loaded])
-
-    const { record } = editControllerProps
+    }, [id])
 
     return (
         <BaseForm
@@ -62,11 +65,6 @@ const CategoryEdit = props => {
             </InputContainer>
         </BaseForm>
     )
-}
-
-CategoryEdit.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
 }
 
 export default CategoryEdit

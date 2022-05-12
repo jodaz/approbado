@@ -1,7 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
-    useEditController,
     useRedirect,
     useNotify
 } from 'react-admin'
@@ -11,39 +9,44 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 import CustomColorPicker from './CustomColorPicker'
 import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers';
 
-const LevelEdit = props => {
+const LevelEdit = () => {
     const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
-    const [mutate, { data, loading, loaded }] = useMutation();
+    const [loading, setLoading] = React.useState(false)
+    const [record, setRecord] = React.useState({})
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/configurations/levels/${id}`, values);
+
+            setLoading(false)
+
+            if (data) {
+                notify(`¡Ha editado el nivel "${data.name}!`, 'success');
+                redirect('/configurations?tab=levels')
+            }
         } catch (error) {
+            setLoading(false)
+
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [])
 
-    React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha editado el nivel "${data.name}" exitosamente!`, 'success')
-            redirect('/configurations?tab=levels')
+    React.useEffect(async () => {
+        if (id) {
+            const { data } = await axios.get(`/configurations/levels/${id}`)
+
+            if (data) {
+                setRecord(data)
+            }
         }
-    }, [loaded])
-
-    const { record } = editControllerProps
+    }, [id])
 
     return (
         <BaseForm
@@ -66,11 +69,6 @@ const LevelEdit = props => {
             </InputContainer>
         </BaseForm>
     )
-}
-
-LevelEdit.defaultProps = {
-    basePath: '/configurations/levels',
-    resource: 'configurations/levels'
 }
 
 export default LevelEdit

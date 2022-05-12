@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useMutation,
     useRedirect,
     useNotify,
 } from 'react-admin'
@@ -9,32 +8,32 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import CustomColorPicker from './CustomColorPicker'
 import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers'
 
-const LevelCreate = props => {
-    const [mutate, { data, loading, loaded }] = useMutation();
+const LevelCreate = () => {
+    const [loading, setLoading] = React.useState(false)
     const redirect = useRedirect()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post(`/configurations/levels`, values);
+
+            setLoading(false)
+
+            if (data) {
+                notify(`¡Ha registrado el nivel "${data.name}"!`, 'success');
+                redirect('/configurations?tab=levels')
+            }
         } catch (error) {
+            setLoading(false)
+
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha registrado el nivel "${data.name}"!`, 'success');
-            redirect('/configurations?tab=levels')
-        }
-    }, [loaded])
+    }, [])
 
     return (
         <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
@@ -50,11 +49,6 @@ const LevelCreate = props => {
             </InputContainer>
         </BaseForm>
     )
-}
-
-LevelCreate.defaultProps = {
-    basePath: '/configurations/levels',
-    resource: 'configurations/levels'
 }
 
 export default LevelCreate
