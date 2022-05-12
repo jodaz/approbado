@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Confirm from '@approbado/lib/layouts/Confirm';
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 import { useDialogState, useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 
 const useStyles = makeStyles(theme => ({

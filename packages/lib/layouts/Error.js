@@ -3,7 +3,7 @@ import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '@approbado/lib/styles';
 import { Card, Box, Typography, CardContent } from '@material-ui/core'
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 
 const useStyles = makeStyles(theme => ({
     outer: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     card: {
-        background: fade(theme.palette.secondary.light, 0.9),
+        background: alpha(theme.palette.secondary.light, 0.9),
         padding: '2rem 1rem',
         width: '24rem',
         display: 'flex',

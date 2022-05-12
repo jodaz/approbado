@@ -21,7 +21,7 @@ const Schedule = ({ isSmall, user }) => {
             {(data.length)
             ? (
                 <>
-                    {data.map(schedule => <ScheduledTriviaCard {...schedule} />)}
+                    {data.map((schedule, key) => <ScheduledTriviaCard key={key} {...schedule} />)}
                 </>
             ) : <EmptySchedule />}
         </>

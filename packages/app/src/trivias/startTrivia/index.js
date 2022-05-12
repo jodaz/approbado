@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, fade } from '@material-ui/core'
+import { makeStyles, alpha } from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import Sidebar from './Sidebar'
 import Grid from '@material-ui/core/Grid';
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.main,
         border: `2px solid ${theme.palette.secondary.main}`,
         '&:hover': {
-            backgroundColor: fade(theme.palette.secondary.main, 0.9)
+            backgroundColor: alpha(theme.palette.secondary.main, 0.9)
         }
     },
     buttonContainer: {

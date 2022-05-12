@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSchedules } from '../actions';
+import { fetchSchedules, unsetSchedule } from '../actions';
 import { axios } from '@approbado/lib/providers'
 
 export const useSchedulesState = () => {
@@ -34,6 +34,7 @@ export const useSchedulesDispatch = () => {
         fetchSchedules: async id => {
             await handleFetchSchedule(id)
         },
+        unsetSchedule: data => dispatch(unsetSchedule(data)),
         loading: loading,
         data: data
     }

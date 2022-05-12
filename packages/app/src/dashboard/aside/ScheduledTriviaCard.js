@@ -16,6 +16,8 @@ import Tag from '@approbado/lib/components/Tag'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import DeleteEvent from './DeleteEvent'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import EditEvent from './EditEvent';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -72,89 +74,99 @@ const ScheduledTriviaCard = props => {
     const { description, starts_at, level, participants, subtheme, title } = props
     const classes = useStyles({ color: level.color });
     const [expanded, setExpanded] = React.useState(false);
+    const anchorRef = React.useRef(null);
 
     const handleExpandClick = e => {
-        setExpanded(!expanded);
+        if (anchorRef.current && anchorRef.current.contains(e.target)) {
+            setExpanded(!expanded);
+        }
         e.preventDefault();
     };
 
+    const handleClose = () => {
+        setExpanded(false)
+    }
+
     return (
-        <Card className={classes.root} onClick={handleExpandClick}>
-            <CardHeader
-                className={classes.header}
-                action={
-                    <OptionsCardMenu icon={<MoreIcon />}>
-                        <DeleteEvent />
-                    </OptionsCardMenu>
-                }
-                title={
-                    <Typography className={classes.title}>
-                        Trivia Grupal
-                    </Typography>
-                }
-            />
-            <Box className={classes.actions}>
-                <Box className={classes.subheader}>
-                    <Box variant='subtitle2'>
-                        {format(new Date(starts_at), 'eee. d, MMMM', { locale: es }).toUpperCase()}
+        <ClickAwayListener onClickAway={handleClose}>
+            <Card ref={anchorRef} className={classes.root} onClick={handleExpandClick}>
+                <CardHeader
+                    className={classes.header}
+                    action={
+                        <OptionsCardMenu icon={<MoreIcon />}>
+                            <EditEvent />
+                            <DeleteEvent {...props} />
+                        </OptionsCardMenu>
+                    }
+                    title={
+                        <Typography className={classes.title}>
+                            Trivia Grupal
+                        </Typography>
+                    }
+                />
+                <Box className={classes.actions}>
+                    <Box className={classes.subheader}>
+                        <Box variant='subtitle2'>
+                            {format(new Date(starts_at), 'eee. d, MMMM', { locale: es }).toUpperCase()}
+                        </Box>
+                        <Dot />
+                        <Box variant='subtitle2'>
+                            {format(new Date(starts_at), 'p')}
+                        </Box>
                     </Box>
-                    <Dot />
-                    <Box variant='subtitle2'>
-                        {format(new Date(starts_at), 'p')}
+                    <IconButton
+                        className={classes.expand}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        {!expanded ? <DownAngleIcon /> : <UpperAngleIcon /> }
+                    </IconButton>
+                </Box>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <Box sx={{ marginTop: '1rem' }}>
+                        <Button color="primary" fullWidth>
+                            Ingresar a la trivia
+                        </Button>
+                        <Description title='Título'>
+                            <Box fontWeight='600'>
+                                {subtheme.trivia.name}
+                            </Box>
+                        </Description>
+                        <Description title='Trivia'>
+                            <Box fontWeight='600'>
+                                {title}
+                            </Box>
+                        </Description>
+                        <Description title='Tema'>
+                            <Box fontWeight='600'>
+                                Tema en especifico
+                            </Box>
+                        </Description>
+                        <Description title='Nivel'>
+                            <Box fontWeight='600'>
+                                {subtheme.name}
+                            </Box>
+                        </Description>
+                        <Description title='Participantes'>
+                            <Box sx={{
+                                display: 'flex',
+                                justifyContent: 'start'
+                            }}>
+                                {participants.map((item, i) => (
+                                    <Tag key={i} name={item.names} />
+                                ))}
+                            </Box>
+                        </Description>
+                        <Description title='Descripción'>
+                            <Box fontWeight='600'>
+                            {description}
+                            </Box>
+                        </Description>
                     </Box>
-                </Box>
-                <IconButton
-                    className={classes.expand}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    {!expanded ? <DownAngleIcon /> : <UpperAngleIcon /> }
-                </IconButton>
-            </Box>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <Box sx={{ marginTop: '1rem' }}>
-                    <Button color="primary" fullWidth>
-                        Ingresar a la trivia
-                    </Button>
-                    <Description title='Título'>
-                        <Box fontWeight='600'>
-                            {subtheme.trivia.name}
-                        </Box>
-                    </Description>
-                    <Description title='Trivia'>
-                        <Box fontWeight='600'>
-                            {title}
-                        </Box>
-                    </Description>
-                    <Description title='Tema'>
-                        <Box fontWeight='600'>
-                            Tema en especifico
-                        </Box>
-                    </Description>
-                    <Description title='Nivel'>
-                        <Box fontWeight='600'>
-                            {subtheme.name}
-                        </Box>
-                    </Description>
-                    <Description title='Participantes'>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'start'
-                        }}>
-                            {participants.map((item, i) => (
-                                <Tag key={i} name={item.names} />
-                            ))}
-                        </Box>
-                    </Description>
-                    <Description title='Descripción'>
-                        <Box fontWeight='600'>
-                        {description}
-                        </Box>
-                    </Description>
-                </Box>
-            </Collapse>
-        </Card>
+                </Collapse>
+            </Card>
+        </ClickAwayListener>
     );
 }
 

@@ -19,8 +19,15 @@ const NoContent = ({ icon, title }) => (
 );
 
 NoContent.propTypes = {
-    title: PropTypes.string,
-    icon: React.ReactElement
+    title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ]),
+    icon: PropTypes.element
+}
+
+NoContent.defaultProps = {
+    icon: <></>
 }
 
 export default NoContent;

@@ -49,10 +49,10 @@ const SuccessDialog = ({ open, handleClose, ...rest }) => (
                         width: '20rem',
                         padding: '1rem'
                     }}>
-                        <Box sx={{ fontSize: '1.1rem', fontWeight: 700 }}>
+                        <Box sx={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem' }}>
                             Acabas de crear una trivia
                         </Box>
-                        <Box sx={{ fontSize: '0.9rem', fontWeight: 600 }}>
+                        <Box sx={{ fontSize: '1rem', fontWeight: 500 }}>
                             Felicidades! Diviertete realizando las increíbles trivias que tenemos para ti
                         </Box>
                     </Box>

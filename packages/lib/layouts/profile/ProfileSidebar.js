@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import ProfileExtraInfoCard from '@approbado/lib/components/ProfileExtraInfoCard'
-import { makeStyles, fade } from '@material-ui/core'
+import { makeStyles, alpha } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import ProfilePhotoInput from '@approbado/lib/components/ProfilePhotoInput'
 import { history } from '@approbado/lib/providers'
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     },
     username: {
         fontWeight: 600,
-        color: fade(theme.palette.primary.dark, 0.7)
+        color: alpha(theme.palette.primary.dark, 0.7)
     },
     headerContainer: {
         display: 'flex',

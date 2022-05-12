@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl, { useFormControl } from '@material-ui/core/FormControl';
-import { makeStyles, fade, styled } from '@material-ui/core'
+import { makeStyles, alpha, styled } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
 import SendIcon from '@approbado/lib/icons/SendIcon'
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         width: '100% !important',
         display: 'flex',
         boxShadow: props => props.focused &&
-            (`0px 0px 1px 1px ${fade(theme.palette.info.main, 0.7)}`)
+            (`0px 0px 1px 1px ${alpha(theme.palette.info.main, 0.7)}`)
     },
     input: {
         width: '100%',
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         height: '21px',
     },
     focused: {
-        boxShadow: `0px 0px 1px 1px ${fade(theme.palette.info.main, 0.7)}`
+        boxShadow: `0px 0px 1px 1px ${alpha(theme.palette.info.main, 0.7)}`
     },
     sendIcon: {
         color: theme.palette.info.main,
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
         alignSelf: 'end',
         '&:hover': {
             backgroundColor: 'unset !important',
-            color: `${fade(theme.palette.info.main, 0.7)}`
+            color: `${alpha(theme.palette.info.main, 0.7)}`
         }
     }
 }))
