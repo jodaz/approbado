@@ -158,11 +158,13 @@ const ScheduledTriviaCard = props => {
                                 ))}
                             </Box>
                         </Description>
-                        <Description title='Descripción'>
-                            <Box fontWeight='600'>
-                            {description}
-                            </Box>
-                        </Description>
+                        {description && (
+                            <Description title='Descripción'>
+                                <Box fontWeight='600'>
+                                {description}
+                                </Box>
+                            </Description>
+                        )}
                     </Box>
                 </Collapse>
             </Card>

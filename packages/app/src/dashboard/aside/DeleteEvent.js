@@ -179,6 +179,7 @@ export default function({ onClick, id }) {
                         <Box sx={{
                             display: 'flex',
                             padding: '1rem 0',
+                            justifyContent: 'center',
                             width: '100%'
                         }}>
                             <Button
