@@ -1,17 +1,18 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import makeStyles from '@material-ui/styles/makeStyles';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import configs from '@approbado/lib/configs'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -54,7 +55,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RecipeReviewCard() {
+export default function NotificationCard({
+    created_at,
+    data,
+    user,
+    type,
+    long_data,
+    post_id
+}) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -68,9 +76,10 @@ export default function RecipeReviewCard() {
             <CardHeader
                 className={classes.header}
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
-                    </Avatar>
+                    <Avatar
+                        aria-label="recipe"
+                        src={`${configs.SOURCE}/${user.picture}`}
+                    />
                 }
                 action={
                     <OptionsCardMenu>
@@ -85,11 +94,13 @@ export default function RecipeReviewCard() {
                     </OptionsCardMenu>
                 }
                 title={
-                    <Typography className={classes.title}>
-                        Davinia Cuevas te ha enviado una invitación para formar parte de su grupo de debate “los corruptos de la justicia”
-                    </Typography>
+                    <Box
+                        component='div'
+                        className={classes.title}
+                        dangerouslySetInnerHTML={{ __html: data }}
+                    />
                 }
-                subheader="September 14, 2016"
+                subheader={format(new Date(created_at), 'eee. d, MMMM', { locale: es }).toUpperCase()}
             />
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
