@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NotificationCard = ({ data, rootRef, index }) => {
-    const loading = true;
+    const loading = data == null;
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -76,7 +76,7 @@ const NotificationCard = ({ data, rootRef, index }) => {
             <CardHeader
                 className={classes.header}
                 avatar={
-                    !loading ? (
+                    loading ? (
                       <Skeleton
                         animation="wave"
                         variant="circle"
@@ -91,18 +91,22 @@ const NotificationCard = ({ data, rootRef, index }) => {
                     )
                 }
                 action={
-                    <OptionsCardMenu>
-                        <DeleteButton
-                            basePath='notifications'
-                            confirmColor='warning'
-                            confirmTitle='Eliminar notificación'
-                            confirmContent='¿Está seguro que desea eliminar esta notificación?'
-                            label='Eliminar esta notificación'
-                        />
-                    </OptionsCardMenu>
+                    <>
+                        {!loading && (
+                            <OptionsCardMenu>
+                                <DeleteButton
+                                    basePath='notifications'
+                                    confirmColor='warning'
+                                    confirmTitle='Eliminar notificación'
+                                    confirmContent='¿Está seguro que desea eliminar esta notificación?'
+                                    label='Eliminar esta notificación'
+                                />
+                            </OptionsCardMenu>
+                        )}
+                    </>
                 }
                 title={
-                    !loading ? (
+                    loading ? (
                       <Skeleton
                         animation="wave"
                         height={10}
@@ -118,7 +122,7 @@ const NotificationCard = ({ data, rootRef, index }) => {
                     )
                 }
                 subheader={
-                    !loading ? (
+                    loading ? (
                       <Skeleton
                         animation="wave"
                         height={10}
@@ -130,18 +134,22 @@ const NotificationCard = ({ data, rootRef, index }) => {
                     )
                 }
             />
-            <Collapse in={loading && expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <CardActions className={classes.actions} disableSpacing>
-                        <Button variant="outlined" color="secondary">
-                            Rechazar
-                        </Button>
-                        <Button variant="contained" color="primary">
-                            Aceptar
-                        </Button>
-                    </CardActions>
-                </CardContent>
-            </Collapse>
+            <>
+                {!loading && (
+                    <Collapse in={!loading && expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <CardActions className={classes.actions} disableSpacing>
+                                <Button variant="outlined" color="secondary">
+                                    Rechazar
+                                </Button>
+                                <Button variant="contained" color="primary">
+                                    Aceptar
+                                </Button>
+                            </CardActions>
+                        </CardContent>
+                    </Collapse>
+                )}
+            </>
         </Card>
     );
 }

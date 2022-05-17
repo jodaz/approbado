@@ -3,12 +3,16 @@ import * as React from 'react'
 import { useMediaQuery } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import Banner from './Banner'
-import useNotificationsFetch from './useNotificationsFetch'
+import useFetch from '@approbado/lib/hooks/useFetch'
 import NotificationCard from './NotificationCard'
 import Spinner from '@approbado/lib/components/Spinner'
 
+const generateNullData = results => Array.from({ length: results }).map(_ => null)
+
+const results = 5
+
 const Index = () => {
-    const [perPage, setPerPage] = React.useState(10)
+    const [perPage, setPerPage] = React.useState(results)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs'))
     const {
@@ -16,7 +20,8 @@ const Index = () => {
         error,
         data,
         hasMore
-    } = useNotificationsFetch(perPage, 0)
+    } = useFetch('/notifications', perPage, 0)
+    const [items, setItems] = React.useState([])
 
     const observer = React.useRef()
     const lastItemRef = React.useCallback(node => {
@@ -24,11 +29,24 @@ const Index = () => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
-                setPerPage(prevPerPage => prevPerPage + 10)
+                setItems(prevItems => {
+                    return [...prevItems, ...generateNullData(results)]
+                })
+                setPerPage(prevPerPage => prevPerPage + results)
             }
         })
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
+
+    React.useEffect(() => {
+        if (data.length) {
+            setItems(data)
+        }
+    }, [data])
+
+    React.useEffect(() => {
+        setItems(generateNullData(results))
+    }, [])
 
     return (
         <Box display="flex" p={isXSmall ? '0' : '2rem'}>
@@ -37,8 +55,8 @@ const Index = () => {
                 flexDirection='column'
                 width='100%'
             >
-                {data.map((item, index) => {
-                    if (data.length === index + 1) {
+                {items.map((item, index) => {
+                    if (items.length === index + 1) {
                         return <NotificationCard data={item} index={index} rootRef={lastItemRef} />
                     } else {
                         return <NotificationCard index={index} data={item} />
