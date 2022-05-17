@@ -1,17 +1,19 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import makeStyles from '@material-ui/styles/makeStyles';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import configs from '@approbado/lib/configs'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -54,7 +56,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RecipeReviewCard() {
+const NotificationCard = ({ data, rootRef, index }) => {
+    const loading = data == null;
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -64,45 +67,91 @@ export default function RecipeReviewCard() {
     };
 
     return (
-        <Card className={classes.root} onClick={handleExpandClick}>
+        <Card
+            className={classes.root}
+            onClick={handleExpandClick}
+            ref={rootRef}
+            key={index}
+        >
             <CardHeader
                 className={classes.header}
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
-                    </Avatar>
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        variant="circle"
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                        <Avatar
+                            aria-label="recipe"
+                            src={`${configs.SOURCE}/${data.user.picture}`}
+                        />
+                    )
                 }
                 action={
-                    <OptionsCardMenu>
-                        <DeleteButton
-                            label='Eliminar'
-                            basePath='notifications'
-                            confirmColor='warning'
-                            confirmTitle='Eliminar notificación'
-                            confirmContent='¿Está seguro que desea eliminar esta notificación?'
-                            label='Eliminar esta notificación'
-                        />
-                    </OptionsCardMenu>
+                    <>
+                        {!loading && (
+                            <OptionsCardMenu>
+                                <DeleteButton
+                                    basePath='notifications'
+                                    confirmColor='warning'
+                                    confirmTitle='Eliminar notificación'
+                                    confirmContent='¿Está seguro que desea eliminar esta notificación?'
+                                    label='Eliminar esta notificación'
+                                />
+                            </OptionsCardMenu>
+                        )}
+                    </>
                 }
                 title={
-                    <Typography className={classes.title}>
-                        Davinia Cuevas te ha enviado una invitación para formar parte de su grupo de debate “los corruptos de la justicia”
-                    </Typography>
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                        <Box
+                            component='div'
+                            className={classes.title}
+                            dangerouslySetInnerHTML={{ __html: data.data }}
+                        />
+                    )
                 }
-                subheader="September 14, 2016"
+                subheader={
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="20%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                        format(new Date(data.created_at), 'eee. d, MMMM', { locale: es }).toUpperCase()
+                    )
+                }
             />
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <CardActions className={classes.actions} disableSpacing>
-                        <Button variant="outlined" color="secondary">
-                            Rechazar
-                        </Button>
-                        <Button variant="contained" color="primary">
-                            Aceptar
-                        </Button>
-                    </CardActions>
-                </CardContent>
-            </Collapse>
+            <>
+                {!loading && (
+                    <Collapse in={!loading && expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <CardActions className={classes.actions} disableSpacing>
+                                <Button variant="outlined" color="secondary">
+                                    Rechazar
+                                </Button>
+                                <Button variant="contained" color="primary">
+                                    Aceptar
+                                </Button>
+                            </CardActions>
+                        </CardContent>
+                    </Collapse>
+                )}
+            </>
         </Card>
     );
 }
+
+export default NotificationCard
