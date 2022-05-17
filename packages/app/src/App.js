@@ -21,7 +21,7 @@ import Profile from './profile';
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
 import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
-import NotificationsView from './notifications/NotificationsView'
+import NotificationsView from './notifications'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 
 import { format } from "date-fns";
