@@ -3,41 +3,59 @@ import * as React from 'react'
 import { useMediaQuery } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import Banner from './Banner'
-import NotificationsList from './NotificationsList'
-import { axios } from '@approbado/lib/providers'
-
-const initialState = {
-    data: {},
-    total: 0,
-    loaded: false
-}
+import useNotificationsFetch from './useNotificationsFetch'
+import NotificationCard from './NotificationCard'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const Index = () => {
-    const [state, setState] = React.useState(initialState)
+    const [perPage, setPerPage] = React.useState(10)
     const isXSmall = useMediaQuery(theme =>
-        theme.breakpoints.down('xs')
-    )
+        theme.breakpoints.down('xs'))
+    const {
+        loading,
+        error,
+        data,
+        hasMore
+    } = useNotificationsFetch(perPage, 0)
 
-    const fetchNotifications = async () => {
-        const { data } = await axios.get('/notifications')
-
-        setState({
-            ...state,
-            total: data.length,
-            data: data.data,
-            loaded: true
+    const observer = React.useRef()
+    const lastItemRef = React.useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPerPage(prevPerPage => prevPerPage + 10)
+            }
         })
-    }
-
-    React.useEffect(() => {
-        fetchNotifications();
-    }, [])
-
-    console.log(state)
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
 
     return (
         <Box display="flex" p={isXSmall ? '0' : '2rem'}>
-            <NotificationsList isXSmall={isXSmall} {...state} />
+            <Box
+                display="flex"
+                flexDirection='column'
+                width='100%'
+            >
+                {data.map((item, index) => {
+                    if (data.length === index + 1) {
+                        return <NotificationCard data={item} index={index} rootRef={lastItemRef} />
+                    } else {
+                        return <NotificationCard index={index} data={item} />
+                    }
+                })}
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '2rem 0'
+                }}>
+                    {(loading) && <Spinner />}
+
+                    {(error) && (
+                        <Box fontWeight='300'>Ha ocurrido un error en su solicitud</Box>
+                    )}
+                </Box>
+            </Box>
             {(!isXSmall) && <Banner />}
         </Box>
     )

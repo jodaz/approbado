@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import configs from '@approbado/lib/configs'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -55,14 +56,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function NotificationCard({
-    created_at,
-    data,
-    user,
-    type,
-    long_data,
-    post_id
-}) {
+const NotificationCard = ({ data, rootRef, index }) => {
+    const loading = true;
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -72,19 +67,32 @@ export default function NotificationCard({
     };
 
     return (
-        <Card className={classes.root} onClick={handleExpandClick}>
+        <Card
+            className={classes.root}
+            onClick={handleExpandClick}
+            ref={rootRef}
+            key={index}
+        >
             <CardHeader
                 className={classes.header}
                 avatar={
-                    <Avatar
-                        aria-label="recipe"
-                        src={`${configs.SOURCE}/${user.picture}`}
-                    />
+                    !loading ? (
+                      <Skeleton
+                        animation="wave"
+                        variant="circle"
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                        <Avatar
+                            aria-label="recipe"
+                            src={`${configs.SOURCE}/${data.user.picture}`}
+                        />
+                    )
                 }
                 action={
                     <OptionsCardMenu>
                         <DeleteButton
-                            label='Eliminar'
                             basePath='notifications'
                             confirmColor='warning'
                             confirmTitle='Eliminar notificación'
@@ -94,15 +102,35 @@ export default function NotificationCard({
                     </OptionsCardMenu>
                 }
                 title={
-                    <Box
-                        component='div'
-                        className={classes.title}
-                        dangerouslySetInnerHTML={{ __html: data }}
-                    />
+                    !loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                        <Box
+                            component='div'
+                            className={classes.title}
+                            dangerouslySetInnerHTML={{ __html: data.data }}
+                        />
+                    )
                 }
-                subheader={format(new Date(created_at), 'eee. d, MMMM', { locale: es }).toUpperCase()}
+                subheader={
+                    !loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="20%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                        format(new Date(data.created_at), 'eee. d, MMMM', { locale: es }).toUpperCase()
+                    )
+                }
             />
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Collapse in={loading && expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <CardActions className={classes.actions} disableSpacing>
                         <Button variant="outlined" color="secondary">
@@ -117,3 +145,5 @@ export default function NotificationCard({
         </Card>
     );
 }
+
+export default NotificationCard
