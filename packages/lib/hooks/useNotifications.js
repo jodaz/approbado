@@ -19,7 +19,7 @@ export const useNotificationDispatch = () => {
             type: FETCH_NOTIFICATIONS,
             payload: data
         }),
-        delete: id => dispatch({
+        deleteNotification: id => dispatch({
             type: DELETE_NOTIFICATION,
             payload: id
         }),

@@ -6,7 +6,10 @@ import Banner from './Banner'
 import useFetch from '@approbado/lib/hooks/useFetch'
 import NotificationCard from './NotificationCard'
 import Spinner from '@approbado/lib/components/Spinner'
-import { useNotificationDispatch, useNotificationState } from '@approbado/lib/hooks/useNotifications'
+import {
+    useNotificationDispatch,
+    useNotificationState
+} from '@approbado/lib/hooks/useNotifications'
 
 const generateNullData = results => Array.from({ length: results }).map(_ => null)
 
