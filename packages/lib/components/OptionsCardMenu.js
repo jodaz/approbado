@@ -91,13 +91,11 @@ const OptionsCardMenu = ({ children, icon }) => {
                         aria-labelledby="composition-button"
                         onKeyDown={handleListKeyDown}
                     >
-                        {React.Children.map(arrayChildren, (child, i) => (
-                            <>
-                                {React.cloneElement(child, {
-                                    onClick: handleToggle
-                                })}
-                            </>
-                        ))}
+                        {React.Children.map(arrayChildren, (child, i) =>
+                            React.cloneElement(child, {
+                                onClick: handleToggle
+                            })
+                        )}
                     </MenuList>
                 </ClickAwayListener>
             </Menu>

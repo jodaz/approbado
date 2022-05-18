@@ -6,7 +6,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import DeleteButton from '@approbado/lib/components/DeleteButton'
 import makeStyles from '@material-ui/styles/makeStyles';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
@@ -14,6 +13,9 @@ import configs from '@approbado/lib/configs'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import Skeleton from "@material-ui/lab/Skeleton";
+import { ReactComponent as ActionDelete } from '@approbado/lib/icons/Trash.svg';
+import MenuItem from '@material-ui/core/MenuItem'
+import DeleteNotification from './DeleteNotification'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -60,9 +62,13 @@ const NotificationCard = ({ data, rootRef, index }) => {
     const loading = data == null;
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+    const anchorRef = React.useRef(null);
+    const ref = React.useRef(null)
 
     const handleExpandClick = e => {
-        setExpanded(!expanded);
+        if (anchorRef.current && anchorRef.current.contains(e.target)) {
+            setExpanded(!expanded);
+        }
         e.preventDefault();
     };
 
@@ -70,7 +76,7 @@ const NotificationCard = ({ data, rootRef, index }) => {
         <Card
             className={classes.root}
             onClick={handleExpandClick}
-            ref={rootRef}
+            ref={anchorRef}
             key={index}
         >
             <CardHeader
@@ -94,13 +100,7 @@ const NotificationCard = ({ data, rootRef, index }) => {
                     <>
                         {!loading && (
                             <OptionsCardMenu>
-                                <DeleteButton
-                                    basePath='notifications'
-                                    confirmColor='warning'
-                                    confirmTitle='Eliminar notificación'
-                                    confirmContent='¿Está seguro que desea eliminar esta notificación?'
-                                    label='Eliminar esta notificación'
-                                />
+                                <DeleteNotification id={data.id} />
                             </OptionsCardMenu>
                         )}
                     </>

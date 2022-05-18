@@ -79,19 +79,26 @@ export const updateReadAt = async (req, res) => {
     return res.status(200).json(user_notification)
 }
 
+/**
+ * Deletes a notification
+ * @param {*} req (id of notification)
+ * @returns deleted model
+ */
 export const destroy = async (req, res) => {
-    let id = parseInt(req.params.id)
-    const { id: currUserId } = req.user;
+    try {
+        let id = parseInt(req.params.id)
+        const { user } = req;
 
-    const user = await User.query().findById(currUserId)
+        const model = await user.$relatedQuery('notifications')
+            .where('notifications.id', id)
+            .delete()
+            .returning('*')
+            .first();
 
-    const notification = await Notification.query().findById(id)
+        return res.json(model);
+    } catch (error) {
+        console.log(error);
 
-    const notifications = await user.$relatedQuery('notifications')
-        .where('notifications.data',notification.data)
-        .delete()
-        .returning('*')
-        .first();
-
-    return res.json(notifications);
+        return res.status(500).json(error)
+    }
 }

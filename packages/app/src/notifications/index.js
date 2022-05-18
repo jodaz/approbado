@@ -6,6 +6,10 @@ import Banner from './Banner'
 import useFetch from '@approbado/lib/hooks/useFetch'
 import NotificationCard from './NotificationCard'
 import Spinner from '@approbado/lib/components/Spinner'
+import {
+    useNotificationDispatch,
+    useNotificationState
+} from '@approbado/lib/hooks/useNotifications'
 
 const generateNullData = results => Array.from({ length: results }).map(_ => null)
 
@@ -21,7 +25,8 @@ const Index = () => {
         data,
         hasMore
     } = useFetch('/notifications', perPage, 0)
-    const [items, setItems] = React.useState([])
+    const { items, total } = useNotificationState()
+    const { set } = useNotificationDispatch();
 
     const observer = React.useRef()
     const lastItemRef = React.useCallback(node => {
@@ -29,7 +34,7 @@ const Index = () => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
-                setItems(prevItems => {
+                set(prevItems => {
                     return [...prevItems, ...generateNullData(results)]
                 })
                 setPerPage(prevPerPage => prevPerPage + results)
@@ -40,12 +45,16 @@ const Index = () => {
 
     React.useEffect(() => {
         if (data.length) {
-            setItems(data)
+            set(data)
         }
-    }, [data])
+
+        if (data.length == 0 && !loading) {
+            set([])
+        }
+    }, [data, loading])
 
     React.useEffect(() => {
-        setItems(generateNullData(results))
+        set(generateNullData(results))
     }, [])
 
     return (
@@ -55,13 +64,23 @@ const Index = () => {
                 flexDirection='column'
                 width='100%'
             >
-                {items.map((item, index) => {
+                {total ? items.map((item, index) => {
                     if (items.length === index + 1) {
-                        return <NotificationCard data={item} index={index} rootRef={lastItemRef} />
+                        return (
+                            <NotificationCard
+                                data={item}
+                                index={index}
+                                rootRef={lastItemRef}
+                            />
+                        );
                     } else {
                         return <NotificationCard index={index} data={item} />
                     }
-                })}
+                }) : (
+                    <Box fontWeight={300}>
+                        No tiene notificaciones disponibles
+                    </Box>
+                )}
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'center',
