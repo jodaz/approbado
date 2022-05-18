@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { makeStyles, fade } from '@material-ui/core'
+import { makeStyles, alpha } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types'
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         transition: '0.1s',
         '&:hover': {
             boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
-            border: `3px solid ${fade(theme.palette.secondary.main, 0.8)}`
+            border: `3px solid ${alpha(theme.palette.secondary.main, 0.8)}`
         },
         position: 'relative',
         '&::before': {
@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
             zIndex: 0,
         },
         boxShadow: props => props.isSelected && "0px 1px 8px rgba(0, 0, 0, 0.12)",
-        border: props => props.isSelected && `3px solid ${fade(theme.palette.secondary.main, 0.8)}`,
+        border: props => props.isSelected && `3px solid ${alpha(theme.palette.secondary.main, 0.8)}`,
     },
     content: {
         textAlign: 'center',

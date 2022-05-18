@@ -7,7 +7,7 @@ import { setSidebarVisibility } from 'ra-core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { useMediaQuery, makeStyles, fade } from '@material-ui/core';
+import { useMediaQuery, makeStyles, alpha } from '@material-ui/core';
 
 const NavLinkRef = React.forwardRef((props, ref) => (
     <NavLink innerRef={ref} {...props} />
@@ -24,12 +24,12 @@ const useStyles = makeStyles(
             display: 'flex',
             alignItems: 'center',
             '&:hover': {
-                backgroundColor: fade(theme.palette.primary.light, 0.16),
+                backgroundColor: alpha(theme.palette.primary.light, 0.16),
             }
         },
         active: {
             borderLeft: `3px solid ${theme.palette.secondary.main}`,
-            backgroundColor: fade(theme.palette.secondary.main, 0.16),
+            backgroundColor: alpha(theme.palette.secondary.main, 0.16),
             color: theme.palette.secondary.main,
             fill: theme.palette.secondary.main,
             stroke: theme.palette.secondary.main

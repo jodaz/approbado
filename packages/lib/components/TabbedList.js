@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box'
 import Tabs from '@material-ui/core/Tabs'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { useLocation, Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     },
     tabs: {
         backgroundColor: 'transparent',
-        color: fade(`${theme.palette.primary.dark}`, 0.8)
+        color: alpha(`${theme.palette.primary.dark}`, 0.8)
     },
     tab: {
         textTransform: 'none',

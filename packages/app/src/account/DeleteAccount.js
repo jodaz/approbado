@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { ReactComponent as DeleteIllustration } from '@approbado/lib/illustrations/delete.svg';
 import Box from '@material-ui/core/Box';
 import Confirm from '@approbado/lib/layouts/Confirm';
@@ -93,7 +93,7 @@ const useStyles = makeStyles(
             textTransform: 'none',
             borderColor: theme.palette.error.main,
             '&:hover': {
-                backgroundColor: fade(theme.palette.primary.light, 0.12),
+                backgroundColor: alpha(theme.palette.primary.light, 0.12),
                 // Reset on mouse devices
                 '@media (hover: none)': {
                     backgroundColor: 'transparent',

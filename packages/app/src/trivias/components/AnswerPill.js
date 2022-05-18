@@ -1,5 +1,5 @@
 import Box from '@material-ui/core/Box'
-import { fade } from '@material-ui/core'
+import { alpha } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 const AnswerPill = ({
@@ -10,7 +10,7 @@ const AnswerPill = ({
 
     return (
         <Box sx={{
-            backgroundColor: fade(color, 0.12),
+            backgroundColor: alpha(color, 0.12),
             color: color,
             borderRadius: '6px',
             padding: '0.5rem 0.6rem',
