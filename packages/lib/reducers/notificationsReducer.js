@@ -4,7 +4,10 @@ import {
     DELETE_NOTIFICATION
 } from '../actions';
 
-const initialState = []
+const initialState = {
+    items: [],
+    total: null
+}
 
 const notificationsReducer = (
     previousState = initialState,
@@ -12,13 +15,15 @@ const notificationsReducer = (
 ) => {
     switch (action.type) {
         case FETCH_NOTIFICATIONS:
-            return [
-                ...action.payload
-            ]
+            return {
+                items: [...action.payload],
+                total: action.payload.length
+            }
         case DELETE_NOTIFICATION:
-            return [
-                ...previousState.filter(({ id }) => id != action.payload.id)
-            ]
+            return {
+                items: [...previousState.items.filter(({ id }) => id != action.payload.id)],
+                total: previousState.total - 1
+            }
         case CLEAR_NOTIFICATIONS:
             return initialState;
         default:

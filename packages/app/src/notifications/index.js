@@ -23,10 +23,9 @@ const Index = () => {
         loading,
         error,
         data,
-        hasMore,
-        total
+        hasMore
     } = useFetch('/notifications', perPage, 0)
-    const items = useNotificationState()
+    const { items, total } = useNotificationState()
     const { set } = useNotificationDispatch();
 
     const observer = React.useRef()
@@ -48,7 +47,11 @@ const Index = () => {
         if (data.length) {
             set(data)
         }
-    }, [data])
+
+        if (data.length == 0 && !loading) {
+            set([])
+        }
+    }, [data, loading])
 
     React.useEffect(() => {
         set(generateNullData(results))
@@ -61,7 +64,7 @@ const Index = () => {
                 flexDirection='column'
                 width='100%'
             >
-                {(total != 0) ? items.map((item, index) => {
+                {total ? items.map((item, index) => {
                     if (items.length === index + 1) {
                         return (
                             <NotificationCard
