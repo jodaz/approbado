@@ -14,7 +14,6 @@ import { axios } from '@approbado/lib/providers'
 import { ReactComponent as TrashIcon } from '@approbado/lib/icons/Trash.svg'
 import { unsetSchedule } from '@approbado/lib/actions'
 import { useDispatch } from 'react-redux';
-import Confirm from '@approbado/lib/layouts/Confirm';
 
 const useStyles = makeStyles(theme => ({
     title: {
