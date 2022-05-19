@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import UserCard from './UserCard'
 import Spinner from '@approbado/lib/components/Spinner'
-import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import useFetch from '@approbado/lib/hooks/useFetch'
 import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
@@ -31,9 +30,7 @@ const initialState = {
     },
 };
 
-const AdminDashboard = () => {
-    const [state, setState] = React.useState(initialState);
-    const spinnerClasses = useSpinnerStyles();
+const TopUsersList = () => {
     const {
         loading,
         total,
@@ -79,4 +76,4 @@ const AdminDashboard = () => {
     )
 }
 
-export default AdminDashboard
+export default TopUsersList

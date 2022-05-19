@@ -2,7 +2,6 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
@@ -11,6 +10,8 @@ import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
 import ReplyIcon from '@approbado/lib/icons/ReplyIcon';
+import useFetch from '@approbado/lib/hooks/useFetch'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -51,6 +52,16 @@ const useStyles = makeStyles(theme => ({
 const AsideBar = ({ isXSmall }) => {
     const classes = useStyles();
     const spinnerClasses = useSpinnerStyles();
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/users', {
+        perPage: 5,
+        page: 1,
+        sort: { field: 'contributionsCount', order: 'DESC'}
+    })
 
     return (
         <Box>
@@ -66,52 +77,43 @@ const AsideBar = ({ isXSmall }) => {
                             {'Personas que comentaron debates y compartieron conocimientos en el foro.'}
                         </Box>
                     </Typography>
-                    <Query type='getList' resource='users' payload={payload}>
-                        {({ data, total, loading, error }) => {
-                            if (loading) {
-                                return (
-                                    <Spinner classes={spinnerClasses}/>
-                                );
-                            }
-                            if (error) { return null; }
+                    {loading && <Spinner classes={spinnerClasses}/>}
 
-                            if (total == 0) return (
-                                <Box className={classes.description} paddingTop='2rem' >
-                                    <Typography component={'p'} variant="body1">
-                                        No tenemos contribuidores disponibles
-                                        {' '}
-                                        <Emoji symbol="😔" />
-                                    </Typography>
-                                </Box>
-                            )
+                    {error && <ErrorMessage />}
 
-                            return (
-                                <Box>
-                                    {data.map(user =>
-                                        <Box className={classes.card}>
-                                            <Avatar
-                                                className={classes.icon}
-                                                src={`${configs.SOURCE}/${user.picture}`}
-                                                alt='photo_profile'
-                                            />
-                                            <Box className={classes.description}>
-                                                <Link
-                                                    className={classes.username}
-                                                    to={`/users/${user.id}/show`}
-                                                >
-                                                    {user.names}
-                                                </Link>
-                                                <Box className={classes.contributionsCount}>
-                                                    <ReplyIcon />
-                                                    {user.contributionsCount} discusiones
-                                                </Box>
-                                            </Box>
+                    {(total || loading == false) ? (
+                        <Box>
+                            {data.map(user =>
+                                <Box className={classes.card}>
+                                    <Avatar
+                                        className={classes.icon}
+                                        src={`${configs.SOURCE}/${user.picture}`}
+                                        alt='photo_profile'
+                                    />
+                                    <Box className={classes.description}>
+                                        <Link
+                                            className={classes.username}
+                                            to={`/users/${user.id}/show`}
+                                        >
+                                            {user.names}
+                                        </Link>
+                                        <Box className={classes.contributionsCount}>
+                                            <ReplyIcon />
+                                            {user.contributionsCount} discusiones
                                         </Box>
-                                    )}
+                                    </Box>
                                 </Box>
-                            );
-                        }}
-                    </Query>
+                            )}
+                        </Box>
+                    ) : (
+                        <Box className={classes.description} paddingTop='2rem' >
+                            <Typography component={'p'} variant="body1">
+                                No tenemos contribuidores disponibles
+                                {' '}
+                                <Emoji symbol="😔" />
+                            </Typography>
+                        </Box>
+                    )};
                 </Box>
             )}
         </Box>
