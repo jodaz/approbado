@@ -94,7 +94,7 @@ export const byUserId = async (req, res) => {
             schedule.color  = '#F6FA00'
         })
 
-        return res.status(200).json(schedules)
+        return res.status(200).json({ data: schedules, total: schedules.length })
     } catch(error){
         console.log(error)
         return res.status(500).json(error)
