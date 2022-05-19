@@ -4,7 +4,7 @@ import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '@approbado/lib/styles';
 import { Card, Box } from '@material-ui/core'
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         width: '30%'
     },
     card: {
-        background: fade(theme.palette.secondary.light, 0.5),
+        background: alpha(theme.palette.secondary.light, 0.5),
         padding: '1rem 0',
         width: '24rem',
         display: 'flex',

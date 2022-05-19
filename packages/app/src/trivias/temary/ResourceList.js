@@ -1,41 +1,43 @@
 import * as React from 'react'
-import Typography from '@material-ui/core/Typography'
 import Resource from './Resource'
-import { Query } from 'react-admin';
 import Spinner from '@approbado/lib/components/Spinner'
+import useFetch from '@approbado/lib/hooks/useFetch'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
-const payload = id => ({
-    pagination: { page: 1, perPage: 100 },
-    sort: { field: 'created_at', order: 'DESC'},
-    filter: { trivia_id: id }
-});
+const ResourceList = ({ id }) => {
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/files', {
+        perPage: 100,
+        page: 1,
+        sort: { field: 'created_at', order: 'DESC' },
+        filter: { trivia_id: id }
+    })
 
-const ResourceList = ({ id }) => (
-    <Query type='getList' resource='files' payload={payload(id)}>
-        {({ data, total, loading, error }) => {
-            if (loading) return <Spinner />;
+    if (loading) return <Spinner />;
 
-            if (error) return null;
+    if (error) return <ErrorMessage />;
 
-            if (!total) {
-                return (
-                    <Typography variant="subtitle1">
-                        Sin recursos
-                    </Typography>
-                )
-            }
+    if (!total) {
+        return (
+            <ErrorMessage>
+                Sin recursos disponibles.
+            </ErrorMessage>
+        )
+    }
 
-            return (
-                <div>
-                    {data.map(item => (
-                        <Resource
-                            {...item}
-                        />
-                    ))}
-                </div>
-            );
-        }}
-    </Query>
-)
+    return (
+        <div>
+            {data.map(item => (
+                <Resource
+                    {...item}
+                />
+            ))}
+        </div>
+    );
+}
 
 export default ResourceList;

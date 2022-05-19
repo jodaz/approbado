@@ -2,8 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as ActionDelete } from '@approbado/lib/icons/Trash.svg';
 import { useMutation, useNotify, useRefresh } from 'react-admin';
-import MenuButton from './MenuButton'
 import Confirm from '@approbado/lib/layouts/Confirm';
+import MenuItem from '@material-ui/core/MenuItem'
+import Box from '@material-ui/core/Box';
 
 const DeleteButton = (
     props
@@ -23,6 +24,7 @@ const DeleteButton = (
     const [open, setOpen] = React.useState(false);
     const notify = useNotify();
     const refresh = useRefresh();
+    const ref = React.useRef(null);
 
     const handleDelete = React.useCallback(async () => {
         try {
@@ -59,7 +61,16 @@ const DeleteButton = (
 
     return (
         <React.Fragment>
-            <MenuButton icon={icon} label={label} onClick={handleDialog} />
+            <MenuItem ref={ref} onClick={handleDialog}>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginRight: '10px'
+                }}>
+                    {icon}
+                </Box>
+                {label}
+            </MenuItem>
             <Confirm
                 isOpen={open}
                 loading={loading}

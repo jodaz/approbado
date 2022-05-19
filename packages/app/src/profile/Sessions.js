@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { TextInput } from 'react-admin'
+import TextInput from '@approbado/lib/components/TextInput'
 import { ReactComponent as FacebookIcon } from "@approbado/lib/icons/FacebookIconOutline.svg"
 import Box from '@material-ui/core/Box'
 import { ReactComponent as GoogleIcon } from "@approbado/lib/icons/GoogleIcon.svg"
@@ -9,7 +9,7 @@ import { ReactComponent as GoogleIcon } from "@approbado/lib/icons/GoogleIcon.sv
 const Sessions = () => (
     <Grid container spacing={1}>
         <InputContainer labelName='Email de acceso' sm={12} md={6}>
-            <TextInput source='email' placeholder='hola@email.com' fullWidth />
+            <TextInput name='email' placeholder='hola@email.com' fullWidth />
         </InputContainer>
         <Grid item md={12}>
             <Box display='flex' justifyContent='space-between' width='8rem'>

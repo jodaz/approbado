@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import classnames from 'classnames';
 import CloseIcon from '@approbado/lib/icons/CloseIcon';
 import IconButton from '@material-ui/core/IconButton';
@@ -54,7 +54,7 @@ const useStyles = makeStyles(
             color: theme.palette.background.default,
             backgroundColor: theme.palette.error.main,
             '&:hover': {
-                backgroundColor: fade(theme.palette.error.main, 0.8),
+                backgroundColor: alpha(theme.palette.error.main, 0.8),
                 // Reset on mouse devices
                 '@media (hover: none)': {
                     backgroundColor: 'transparent',
@@ -124,9 +124,11 @@ const Confirm = props => {
             className={classes.root}
         >
             <DialogTitle className={classes.title}>
-                <Typography variant="subtitle1">
-                    {title && title}
-                </Typography>
+                {title && (
+                    <Typography variant="subtitle1">
+                        {title}
+                    </Typography>
+                )}
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
@@ -187,11 +189,11 @@ Confirm.propTypes = {
     ConfirmIcon: PropTypes.elementType,
     CancelIcon: PropTypes.elementType,
     content: PropTypes.node.isRequired,
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.bool.isRequired,
     loading: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     noCancel: PropTypes.bool
 };
 

@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
         boxShadow: 'none',
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
-            backgroundColor: fade(theme.palette.secondary.main, 0.95)
+            backgroundColor: alpha(theme.palette.secondary.main, 0.95)
         }
     }
 }));

@@ -2,17 +2,12 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query } from 'react-admin';
 import Emoji from '@approbado/lib/components/Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
-import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
-
-const payload = {
-    pagination: { page: 1, perPage: 5 },
-    sort: { field: 'comments', order: 'DESC'}
-};
+import useFetch from '@approbado/lib/hooks/useFetch'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -54,7 +49,16 @@ const useStyles = makeStyles(theme => ({
 
 const AsideBar = ({ isXSmall }) => {
     const classes = useStyles();
-    const spinnerClasses = useSpinnerStyles();
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/forums', {
+        perPage: 5,
+        page: 1,
+        sort: { field: 'comments', order: 'DESC'}
+    })
 
     return (
         <Box>
@@ -65,49 +69,37 @@ const AsideBar = ({ isXSmall }) => {
                             Debates más hots{' '} <Emoji symbol="😰" />
                         </Box>
                     </Typography>
-                    <Query type='getList' resource='forums' payload={payload}>
-                        {({ data, total, loading, error }) => {
-                            if (loading) {
-                                return (
-                                    <Spinner classes={spinnerClasses} />
-                                );
-                            }
-                            if (error) { return null; }
+                    <div>
+                        {(total || loading == false) ? data.map((post, index) => {
+                            <Box className={classes.container} key={index}>
+                                <Box className={classes.innerContent}>
+                                    <Link
+                                        className={classes.postTitle}
+                                        to={`/forums/${post.id}/show`}
+                                    >
+                                        {post.message}
+                                    </Link>
+                                    <Box className={classes.description}>
+                                        Por
+                                        <Link
+                                            className={classes.username}
+                                            to={`/users/${post.owner.id}/show`}
+                                        >
+                                            {post.owner.names}
+                                        </Link>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        }) : (
+                            <ErrorMessage>
+                                No tiene notificaciones disponibles.
+                            </ErrorMessage>
+                        )}
 
-                            return (
-                                <div>
-                                    {data.map(post =>
-                                        <Box className={classes.container}>
-                                            <Box className={classes.innerContent}>
-                                                <Link
-                                                    className={classes.postTitle}
-                                                    to={`/forums/${post.id}/show`}
-                                                >
-                                                    {post.message}
-                                                </Link>
-                                                <Box className={classes.description}>
-                                                    Por
-                                                    <Link
-                                                        className={classes.username}
-                                                        to={`/users/${post.owner.id}/show`}
-                                                    >
-                                                        {post.owner.names}
-                                                    </Link>
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                    )}
-                                    {(total == 0) && (
-                                        <Box className={classes.description}>
-                                            <Typography component={'p'} variant="body1">
-                                                No tenemos debates disponibles
-                                            </Typography>
-                                        </Box>
-                                    )}
-                                </div>
-                            );
-                        }}
-                    </Query>
+                        {(loading) && <Spinner />}
+
+                        {(error) && <ErrorMessage />}
+                    </div>
                 </Box>
             )}
         </Box>
