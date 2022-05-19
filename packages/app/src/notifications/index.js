@@ -10,6 +10,7 @@ import {
     useNotificationDispatch,
     useNotificationState
 } from '@approbado/lib/hooks/useNotifications'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
 const generateNullData = results => Array.from({ length: results }).map(_ => null)
 
@@ -24,7 +25,10 @@ const Index = () => {
         error,
         data,
         hasMore
-    } = useFetch('/notifications', perPage, 0)
+    } = useFetch('/notifications', {
+        perPage: perPage,
+        page: 1
+    })
     const { items, total } = useNotificationState()
     const { set } = useNotificationDispatch();
 
@@ -77,9 +81,9 @@ const Index = () => {
                         return <NotificationCard index={index} data={item} />
                     }
                 }) : (
-                    <Box fontWeight={300}>
-                        No tiene notificaciones disponibles
-                    </Box>
+                    <ErrorMessage>
+                        No tiene notificaciones disponibles.
+                    </ErrorMessage>
                 )}
                 <Box sx={{
                     display: 'flex',
@@ -88,9 +92,7 @@ const Index = () => {
                 }}>
                     {(loading) && <Spinner />}
 
-                    {(error) && (
-                        <Box fontWeight='300'>Ha ocurrido un error en su solicitud</Box>
-                    )}
+                    {(error) && <ErrorMessage />}
                 </Box>
             </Box>
             {(!isXSmall) && <Banner />}

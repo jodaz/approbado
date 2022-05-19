@@ -1,12 +1,35 @@
 import * as React from 'react'
 import { axios } from '@approbado/lib/providers'
 
-export default function useFetch(url, perPage, page) {
+const getQueryFromParams = ({
+    perPage, page, sort, filter
+}) => {
+    const query = {
+        page: page + (-1),
+        perPage: perPage
+    }
+
+    // Add all filter params to query.
+    Object.keys(filter || {}).forEach((key) => {
+        query[`filter[${key}]`] = filter[key];
+    });
+
+    // Add sort parameter
+    if (sort && sort.field) {
+        query.sort = sort.field;
+        query.order = sort.order === 'ASC' ? 'asc' : 'desc';
+    }
+
+    return query;
+}
+
+export default function useFetch(url, params) {
     const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(false)
     const [data, setData] = React.useState([])
     const [hasMore, setHasMore] = React.useState(null)
     const [total, setTotal] = React.useState(null)
+    const { perPage, page } = params
 
     React.useEffect(() => {
         if (hasMore == null || hasMore == true) {
@@ -16,7 +39,7 @@ export default function useFetch(url, perPage, page) {
             axios({
                 method: 'GET',
                 url: url,
-                params: { page: page, perPage: perPage }
+                params: getQueryFromParams(params)
             }).then(res => {
                 const { total: totalResults, data } = res.data
 

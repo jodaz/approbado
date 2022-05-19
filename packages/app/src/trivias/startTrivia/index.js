@@ -7,7 +7,6 @@ import Sidebar from './Sidebar'
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
-import { Query } from 'react-admin'
 import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 import { history } from '@approbado/lib/providers'
 import { axios } from '@approbado/lib/providers'
@@ -15,6 +14,7 @@ import { stringify } from 'qs';
 // Icons
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import ItemCollection from '@approbado/lib/components/ItemCollection';
+import useFetch from '@approbado/lib/hooks/useFetch'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -68,11 +68,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const payload = {
-    pagination: { page: 1, perPage: 5 },
-    sort: { field: 'created_at', order: 'DESC'}
-};
-
 const StartTrivia = () => {
     const classes = useStyles();
     const [level, setLevel] = React.useState('');
@@ -80,6 +75,16 @@ const StartTrivia = () => {
     const { setQuestions } = useTriviaDispatch();
     const state = useTriviaState()
     const { selectedSubthemes, trivia } = state
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/configurations/levels', {
+        perPage: 5,
+        page: 1,
+        sort: { field: 'created_at', order: 'DESC' }
+    })
 
     React.useEffect(() => {
         if (!state.selected) {
@@ -103,6 +108,14 @@ const StartTrivia = () => {
             }
         }
     }, [level, selectedSubthemes])
+
+    if (error) return (
+        <Box fontWeight={700}>
+            Ha ocurrido un error en su solicitud.
+        </Box>
+    )
+
+    if (loading) return null;
 
     return (
         <Box sx={{ padding: '2rem' }}>
@@ -132,27 +145,17 @@ const StartTrivia = () => {
                             <Box fontWeight='600' fontSize='1.1rem'>
                                 Selecciona un nivel
                             </Box>
-                            <Query type='getList' resource='configurations/levels' payload={payload}>
-                                {({ data, total, loading, error }) => {
-                                    if (loading) return null;
-                                    if (error) return null
-                                    if (total == 0) return null;
-
-                                    return (
-                                        <Box className={classes.buttonContainer}>
-                                            {data.map(item =>
-                                                <Button
-                                                    className={clsx(classes.button, (item.id == level) && classes.selectedButton)}
-                                                    onClick={e => setLevel(e.currentTarget.value)}
-                                                    value={item.id}
-                                                >
-                                                    {item.name}
-                                                </Button>
-                                            )}
-                                        </Box>
-                                    );
-                                }}
-                            </Query>
+                            <Box className={classes.buttonContainer}>
+                                {data.map(item =>
+                                    <Button
+                                        className={clsx(classes.button, (item.id == level) && classes.selectedButton)}
+                                        onClick={e => setLevel(e.currentTarget.value)}
+                                        value={item.id}
+                                    >
+                                        {item.name}
+                                    </Button>
+                                )}
+                            </Box>
                         </Box>
                         <Box paddingTop='2rem' paddingBottom='2rem'>
                             <Box fontWeight='600' fontSize='1.1rem'>
