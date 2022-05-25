@@ -1,5 +1,15 @@
 import { Router } from "express"
-import { destroy, index, newMessages, show, store, update, storeMessage, updateStatus,updateReadAt} from '../controllers/ChatController'
+import {
+    destroy,
+    index,
+    newMessages,
+    show,
+    store,
+    update,
+    storeMessage,
+    updateStatus,
+    updateReadAt
+} from '../controllers/ChatController'
 import { createChatSchema, createMessageSchema, updateChatSchema} from '../validations'
 import { checkSchema } from 'express-validator';
 import { upload } from '../config'
