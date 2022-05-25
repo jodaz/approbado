@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const UserMessageCard = ({ data, handleClick }) => {
     const classes = useStyles();
+    const name = data.is_private ? data.participants[0]['names'] : data.name;
 
     return (
         <Box
@@ -38,7 +39,7 @@ const UserMessageCard = ({ data, handleClick }) => {
             className={classes.root}
         >
             <Box className={classes.container}>
-                <Box className={classes.names}>Recién conociendonos</Box>
+                <Box className={classes.names}>{name}</Box>
                 <Box className={classes.message}>
                     Último mensaje
                     <Dot />
