@@ -1,10 +1,10 @@
 import * as React from 'react'
 import Box from '@material-ui/core/Box';
 import LayerIcon from '@approbado/lib/icons/LayerIcon';
-import { makeStyles, styled } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import Button from '@approbado/lib/components/Button'
 import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
-import Switch from '@material-ui/core/Switch';
+import Switch from '@approbado/lib/components/Switch';
 import { history } from '@approbado/lib/providers'
 import { useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 
@@ -24,48 +24,6 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer'
     }
 }))
-
-const AntSwitch = styled(Switch)(({ theme }) => ({
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: 'flex',
-    '&:active': {
-        '& .MuiSwitch-thumb': {
-            width: 15,
-        },
-        '& .MuiSwitch-switchBase.Mui-checked': {
-            width: 'translateX(9px)',
-        },
-    },
-    '& .MuiSwitch-switchBase': {
-        padding: 2,
-        '&.Mui-checked': {
-            transform: 'translateX(12px)',
-            color: '#fff',
-            '& + .MuiSwitch-track': {
-                opacity: 1,
-                backgroundColor: theme.palette.mode === 'dark' ? '#177ddc' : '#1890ff',
-            },
-        },
-    },
-    '& .MuiSwitch-thumb': {
-            boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
-            width: 12,
-            height: 12,
-            borderRadius: 6,
-            transition: theme.transitions.create(['width'], {
-            duration: 200,
-        }),
-    },
-    '& .MuiSwitch-track': {
-        borderRadius: 16 / 2,
-        opacity: 1,
-        backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.25)',
-        boxSizing: 'border-box',
-    },
-}));
 
 const getMaxTime = subthemes => subthemes.map(({ duration }) => duration).reduce((a, b) => a + b, 0)
 
@@ -134,7 +92,7 @@ const BeforeStarting = props => {
             </Box>
             <Box className={classes.test}>
                 <div>
-                    <AntSwitch onClick={handleSetMaxTime} />
+                    <Switch onClick={handleSetMaxTime} />
                 </div>
                 <Box>
                     Definir tiempo

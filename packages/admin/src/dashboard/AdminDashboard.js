@@ -2,11 +2,9 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CardButton from './CardButton'
-import UserCard from './UserCard'
-import { Query } from 'react-admin'
-import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import { axios } from '@approbado/lib/providers'
+import TopUsersList from './TopUsersList'
 
 const initialState = {
     'users': {
@@ -30,12 +28,6 @@ const initialState = {
         linkText: 'Editar trivias',
         link: '/trivias'
     },
-};
-
-const payload = {
-    pagination: { page: 1, perPage: 9 },
-    sort: { field: 'points', order: 'DESC'},
-    filter: { is_registered: true }
 };
 
 const AdminDashboard = () => {
@@ -110,41 +102,7 @@ const AdminDashboard = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid container>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Typography component='h3' variant={'h6'}>
-                            Usuarios destacados
-                        </Typography>
-                    </Grid>
-                    <Query type='getList' resource='users' payload={payload}>
-                        {({ data, total, loading, error }) => {
-                            if (error) { return null; }
-
-                            if (loading) {
-                                return (
-                                    <Spinner classes={spinnerClasses} />
-                                );
-                            }
-
-                            return (
-                                <Grid container>
-                                    {data.map((user, i) =>
-                                        <Grid item xs={12} sm={6} md={4}>
-                                            <UserCard data={user} index={i} />
-                                        </Grid>
-                                    )}
-                                    {(total == 0) && (
-                                        <Grid item xs={12} sm={6} md={4}>
-                                            <Typography component={'p'} variant="body1">
-                                               No tenemos usuarios destacados
-                                            </Typography>
-                                        </Grid>
-                                    )}
-                                </Grid>
-                            );
-                        }}
-                    </Query>
-                </Grid>
+                <TopUsersList />
             </Grid>
         </Grid>
     )

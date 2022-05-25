@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, fade } from '@material-ui/core'
+import { makeStyles, alpha } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     imageContainer: {
         height: '3rem',
         width: '3rem',
-        backgroundColor: fade(theme.palette.primary.light, 0.2),
+        backgroundColor: alpha(theme.palette.primary.light, 0.2),
         padding: '0.5rem',
         borderRadius: '50%'
     },

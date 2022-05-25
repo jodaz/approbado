@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@material-ui/core/Typography';
 import { useMediaQuery } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         zIndex: 1000,
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
-            backgroundColor: fade(theme.palette.secondary.main, 0.95)
+            backgroundColor: alpha(theme.palette.secondary.main, 0.95)
         }
     },
     button: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         minWidth: '8rem',
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
-            backgroundColor: fade(theme.palette.secondary.main, 0.95)
+            backgroundColor: alpha(theme.palette.secondary.main, 0.95)
         }
     }
 }));

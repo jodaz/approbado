@@ -14,6 +14,8 @@ import NoAnswer from '../components/NoAnswer'
 // Icons
 import CheckSolid from '@approbado/lib/icons/CheckSolid'
 import CloseSolid from '@approbado/lib/icons/CloseSolid'
+import Switch from '@approbado/lib/components/Switch'
+import Item from './Item'
 
 const statisticsBoxStyles = {
     display: 'flex',
@@ -78,17 +80,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const itemStyles = makeStyles(theme => ({
-    root: isRight => ({
-        borderRadius: '6px',
-        backgroundColor: 'transparent',
-        opacity: 'unset',
-        border: isRight
-            ? `3px solid ${theme.palette.success.main} !important`
-            : `3px solid ${theme.palette.error.main} !important`
-    })
-}))
-
 export default function() {
     const {
         selected,
@@ -99,8 +90,9 @@ export default function() {
         rights
     } = useTriviaState();
     const { unsetTrivia, getResults } = useTriviaDispatch();
-    const items = useGetResponses(questions, answers)
+    const { responses } = useGetResponses(questions, answers)
     const classes = useStyles();
+    const [showAnswers, setShowAnswers] = React.useState(false);
 
     React.useEffect(() => {
         if (!selected) {
@@ -114,6 +106,10 @@ export default function() {
         unsetTrivia();
         history.push('/');
     }
+
+    const toggleChecked = () => {
+        setShowAnswers((prev) => !prev);
+    };
 
     if (!selected) return null
 
@@ -156,44 +152,50 @@ export default function() {
                     </Box>
                 </Box>
             </Box>
-            <Box margin='1rem 0 4rem 0'>
-                {items.map((item, index) => (
-                    <Box sx={{
-                        borderBottom: '1px solid #A6A6A6',
-                        padding: '1rem 0'
-                    }}>
-                        <Box fontWeight='600' margin='1rem 0'>
-                            {`${index + 1}. ${item.description}`}
-                        </Box>
-                        <ListItem
-                            key={item.id}
-                            dense
-                            disabled={false}
-                            classes={{
-                                root: itemStyles(item.is_right).root
-                            }}
-                        >
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={true}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    checkedIcon={(item.is_right) ? <CheckSolid /> : <CloseSolid />}
-                                />
-                            </ListItemIcon>
-                            <Box sx={{ fontWeight: 600 }}>
-                                {item.answer ? item.answer : <NoAnswer />}
-                            </Box>
-                        </ListItem>
-                        {(item.explanation) && (
-                            <Box sx={{ color: '#333333', fontSize: '0.9rem', padding: '1rem 0' }}>
-                                Nota: {item.explanation}
-                            </Box>
-                        )}
-                    </Box>
-                ))}
+            <Box display='flex' alignItems='center'>
+                <Switch checked={showAnswers} onChange={toggleChecked} />
+                <Box sx={{ paddingLeft: '1rem' }}>
+                    Mostrar respuestas
+                </Box>
             </Box>
+            {showAnswers && (
+                <Box margin='1rem 0 4rem 0'>
+                    {responses.map((item, index) => (
+                        <Box sx={{
+                            borderBottom: '1px solid #A6A6A6',
+                            padding: '1rem 0'
+                        }}>
+                            <Box fontWeight='600' margin='1rem 0'>
+                                {`${index + 1}. ${item.description}`}
+                            </Box>
+                            <Item
+                                key={item.id}
+                                dense
+                                disabled={false}
+                                isRight={item.is_right}
+                            >
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={true}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        checkedIcon={(item.is_right) ? <CheckSolid /> : <CloseSolid />}
+                                    />
+                                </ListItemIcon>
+                                <Box sx={{ fontWeight: 600 }}>
+                                    {item.answer ? item.answer : <NoAnswer />}
+                                </Box>
+                            </Item>
+                            {(item.explanation) && (
+                                <Box sx={{ color: '#333333', fontSize: '0.9rem', padding: '1rem 0' }}>
+                                    Nota: {item.explanation}
+                                </Box>
+                            )}
+                        </Box>
+                    ))}
+                </Box>
+            )}
         </Box>
     )
 }

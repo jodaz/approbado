@@ -18,5 +18,5 @@ export const useGetResponses = (questions, answers) => {
         }
     }
 
-    return questions;
+    return ({ responses: questions });
 }

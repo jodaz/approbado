@@ -12,6 +12,7 @@ import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
+import { useMediaQuery } from '@material-ui/core'
 
 const GoToProfileButtonLink = ({ id }) => (
     <Link
@@ -39,7 +40,10 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'uppercase'
     },
     tBodyColumn: {
-        padding: '0 1rem'
+        padding: '0 0.1rem',
+        [theme.breakpoints.up('sm')]: {
+            padding: '0 1rem'
+        }
     },
     tbodyRow: {
         margin: '1rem',
@@ -55,52 +59,101 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.12)'
+    },
+    fullWidth: {
+        width: '100%'
     }
 }));
 
 export default function RankingTable({ data }) {
     const classes = useStyles();
+    const isSmall = useMediaQuery(theme =>
+        theme.breakpoints.down('sm')
+    )
+
+    const renderRows = () => (
+        <>
+            {data.map((row, i) => (
+                <TableRow key={i} className={classes.tbodyRow}>
+                    <TableCell align="left" className={classes.tBodyColumn}>
+                        <Box className={classes.position}>
+                            {i+1}
+                        </Box>
+                    </TableCell>
+                    <TableCell align="left" className={classes.tBodyColumn} component="th" scope="row">
+                        <Box className={classes.user}>
+                            <Avatar
+                                src={`${configs.SOURCE}/${row.picture}`}
+                                alt='photo_profile'
+                            />
+                            @{row.user_name}
+                        </Box>
+                    </TableCell>
+                    {(!isSmall) && (
+                        <TableCell align="center" className={classes.tBodyColumn}>
+                            {row.awards.length}
+                        </TableCell>
+                    )}
+                    <TableCell align="center" className={classes.tBodyColumn}>
+                        {row.profile.points} pts
+                    </TableCell>
+                    <TableCell align="center" className={classes.tBodyColumn}>
+                        <GoToProfileButtonLink {...row} />
+                    </TableCell>
+                </TableRow>
+            ))}
+        </>
+    )
 
     return (
         <TableContainer component={Paper} className={classes.root}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell className={classes.tHeadCell} align="left">Puesto</TableCell>
-                        <TableCell className={classes.tHeadCell} align="left">Usuarios</TableCell>
-                        <TableCell className={classes.tHeadCell} align="center">Certificados</TableCell>
-                        <TableCell className={classes.tHeadCell} align="center">Puntaje total</TableCell>
-                        <TableCell className={classes.tHeadCell} align="center">Detalle</TableCell>
+                        <TableCell
+                            className={classes.tHeadCell}
+                            align="left"
+                        >
+                            {(!isSmall) ? 'Puesto' : '#'}
+                        </TableCell>
+                        <TableCell
+                            className={classes.tHeadCell}
+                            align="left"
+                        >
+                            Usuarios
+                        </TableCell>
+                        {(!isSmall) && (
+                            <TableCell
+                                className={classes.tHeadCell}
+                                align="center"
+                            >
+                                Certificados
+                            </TableCell>
+                        )}
+                        <TableCell
+                            className={classes.tHeadCell}
+                            align="center"
+                        >
+                            {(!isSmall) ? 'Puntaje total' : 'P. total'}
+                        </TableCell>
+                        <TableCell
+                            className={classes.tHeadCell}
+                            align="center"
+                        >
+                            Detalle
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row, i) => (
-                        <TableRow key={i} className={classes.tbodyRow}>
-                            <TableCell align="left" className={classes.tBodyColumn}>
-                                <Box className={classes.position}>
-                                    {i+1}
-                                </Box>
-                            </TableCell>
-                            <TableCell align="left" className={classes.tBodyColumn} component="th" scope="row">
-                                <Box className={classes.user}>
-                                    <Avatar
-                                        src={`${configs.SOURCE}/${row.picture}`}
-                                        alt='photo_profile'
-                                    />
-                                    @{row.user_name}
-                                </Box>
-                            </TableCell>
-                            <TableCell align="center" className={classes.tBodyColumn}>
-                                {row.awards.length}
-                            </TableCell>
-                            <TableCell align="center" className={classes.tBodyColumn}>
-                                {row.profile.points} pts
-                            </TableCell>
-                            <TableCell align="center" className={classes.tBodyColumn}>
-                                <GoToProfileButtonLink {...row} />
+                    {(data.length)
+                        ? renderRows()
+                        : (
+                        <TableRow className={classes.tbodyRow}>
+                            <TableCell align="center" colSpan={5}>
+                                Sin registros
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>

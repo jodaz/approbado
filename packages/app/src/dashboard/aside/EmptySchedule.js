@@ -3,14 +3,14 @@ import { ReactComponent as EventIllustration} from '@approbado/lib/illustrations
 import NoContent from '@approbado/lib/components/NoContent'
 import Link from '@material-ui/core/Link'
 import DefaultLinkBehavior from '@approbado/lib/components/LinkBehavior';
-import { styled, fade } from '@material-ui/core';
+import { styled, alpha } from '@material-ui/core';
 
 const LinkBehavior = styled(DefaultLinkBehavior)(({ theme }) => ({
     'color': theme.palette.info.main,
     'transition': '0.2s',
     'textDecoration': 'underline',
     '&:hover': {
-        color: fade(theme.palette.info.main, 0.8)
+        color: alpha(theme.palette.info.main, 0.8)
     }
 }));
 

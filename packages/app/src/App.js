@@ -8,6 +8,7 @@ import DefaultLayout from './layouts/Default'
 import GameLayout from './layouts/Game'
 
 // Views
+import NotificationsView from './notifications'
 import TriviaList from './trivias/TriviaList'
 import TriviaGame from './trivias/games'
 import StartTrivia from './trivias/startTrivia'
@@ -21,7 +22,6 @@ import Profile from './profile';
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
 import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
-import NotificationsView from './notifications/NotificationsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 import MessagesView from './messages'
 

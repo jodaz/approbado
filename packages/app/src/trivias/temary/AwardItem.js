@@ -1,7 +1,5 @@
 import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import { ReactComponent as Certificate } from '@approbado/lib/icons/Certificate.svg'
 import Box from '@material-ui/core/Box';
 import configs from '@approbado/lib/configs'
@@ -11,17 +9,14 @@ import SubthemeItem from './SubthemeItem'
 import List from '@material-ui/core/List';
 import Collapse from '@material-ui/core/Collapse';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         backgroundColor: '#F7F7F7',
         borderRadius: '6px',
         display: 'flex',
         alignItems: 'center',
-        marginBottom: '0.2rem'
-    },
-    text: {
-        fontSize: '0.9rem',
-        fontWeight: 600
+        marginBottom: '0.2rem',
+        justifyContent: 'space-between'
     }
 }))
 
@@ -53,22 +48,42 @@ export default function AwardItem(props) {
                 onClick={handleClick}
                 key={key}
             >
-                <ListItemAvatar>
-                    {(type == 'Insignia') ? (
-                        <Avatar
-                            src={`${configs.SOURCE}/${file}`}
-                            alt='icon'
-                        />
-                    ) : (
-                        <Certificate />
-                    )}
-                </ListItemAvatar>
-                <Box className={classes.text}>
-                    {title}
+                <Box sx={{
+                    display: 'flex',
+                    flexGrow: '2'
+                }}>
+                    <Box sx={{
+                        display: 'flex',
+                        minWidth: '3rem'
+                    }}>
+                        {(type == 'Insignia') ? (
+                            <Avatar
+                                src={`${configs.SOURCE}/${file}`}
+                                alt='icon'
+                            />
+                        ) : (
+                            <Certificate />
+                        )}
+                    </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '0.9rem',
+                        fontWeight: 600
+                    }}>
+                        {title}
+                    </Box>
                 </Box>
-                <ListItemSecondaryAction className={classes.text}>
+                <Box
+                    component='span'
+                    sx={{
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        width: 'min-content'
+                    }}
+                >
                     {min_points} puntos
-                </ListItemSecondaryAction>
+                </Box>
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
