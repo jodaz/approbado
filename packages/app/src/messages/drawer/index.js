@@ -1,48 +1,85 @@
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import AsideBarHeader from './AsideBarHeader';
-import { axios } from '@approbado/lib/providers'
+import useFetch from '@approbado/lib/hooks/useFetch'
 import ChatsList from './ChatsList';
 
-const initialState = {
-    data: {},
-    total: 0,
-    loaded: false
-}
+const results = 10
 
-const initialUrl = '/chats'
+const generateNullData = results => Array.from({ length: results }).map(_ => null)
 
 const MessagesAsideBar = () => {
-    const [state, setState] = React.useState(initialState)
-    const [url, setUrl] = React.useState(initialUrl)
-
-    const fetchChats = async () => {
-        try {
-            const { data } = await axios.get(url)
-
-            setState({ ...state, ...data, loaded: true })
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    const [perPage, setPerPage] = React.useState(results)
+    const [filter, setFilter] = React.useState({})
+    const {
+        loading,
+        error,
+        data,
+        hasMore,
+        total
+    } = useFetch('/chats', {
+        perPage: perPage,
+        page: 1,
+        filter: filter
+    })
+    const [items, setItems] = React.useState([])
+    const observer = React.useRef()
 
     const handleChange = e => {
         if (e.currentTarget.value) {
-            setUrl(`${initialUrl}?filter%5Bname%5D=${e.currentTarget.value}`)
+            setFilter({
+                name: e.currentTarget.value
+            })
         } else {
-            setUrl(initialUrl)
+            setFilter({})
         }
     }
 
+    const lastItemRef = React.useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                setItems(prevItems => {
+                    return [...prevItems, ...generateNullData(results)]
+                })
+                setPerPage(prevPerPage => prevPerPage + results)
+            }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
+
     React.useEffect(() => {
-        setState({ ...state, loaded: false })
-        fetchChats();
-    }, [url])
+        if (data.length) {
+            setItems(data)
+        }
+
+        if (data.length == 0 && !loading) {
+            setItems([])
+        }
+    }, [data, loading])
+
+    React.useEffect(() => {
+        setItems(generateNullData(results))
+    }, [])
 
     return (
-        <Box height='inherit' width='300px' component='div'>
+        <Box
+            component='div'
+            sx={{
+                height: 'inherit',
+                width: 300,
+                boxShadow: '1px 0px 0px rgba(0, 0, 0, 0.24)'
+            }}
+        >
             <AsideBarHeader onChange={handleChange} />
-            <ChatsList {...state} />
+            <ChatsList
+                total={total}
+                error={error}
+                loading={loading}
+                items={items}
+                lastItemRef={lastItemRef}
+            />
         </Box>
     );
 }

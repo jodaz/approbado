@@ -24,6 +24,7 @@ import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 import MessagesView from './messages'
+import ChatView from './messages/chat'
 
 import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
@@ -81,7 +82,8 @@ const App = () => (
             {/**
              * Messages
              */}
-            <ProtectedRoute exact path="/messages" component={() => <MessagesView />} layout={DefaultLayout} />
+            <ProtectedRoute exact path="/chats" component={() => <MessagesView />} layout={DefaultLayout} />
+            <ProtectedRoute exact path="/chats/:chat_id" component={() => <ChatView />} layout={DefaultLayout} />
         </Switch>
 
         <Switch>

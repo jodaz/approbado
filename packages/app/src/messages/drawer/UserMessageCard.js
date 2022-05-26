@@ -2,6 +2,8 @@ import Avatar from '@material-ui/core/Avatar'
 import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import Dot from '@approbado/lib/components/Dot'
+import Skeleton from "@material-ui/lab/Skeleton";
+import configs from '@approbado/lib/configs'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -13,7 +15,8 @@ const useStyles = makeStyles(theme => ({
     },
     container: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '100%'
     },
     names: {
         fontWeight: 700,
@@ -29,22 +32,61 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const UserMessageCard = ({ data, handleClick }) => {
+const UserMessageCard = ({ rootRef, index, data, handleClick }) => {
     const classes = useStyles();
-    const name = data.is_private ? data.participants[0]['names'] : data.name;
+    const loading = data == null;
 
     return (
         <Box
             onClick={handleClick}
             className={classes.root}
+            ref={rootRef}
+            index={index}
         >
+            <Box sx={{ marginRight: '1rem' }}>
+                {loading ? (
+                    <Skeleton
+                    animation="wave"
+                    variant="circle"
+                    width={40}
+                    height={40}
+                    />
+                ) : (
+                    <Box className={classes.names}>
+                        <Avatar src={`${configs.SOURCE}/${data.participants[0].picture}`} />
+                    </Box>
+                )}
+            </Box>
             <Box className={classes.container}>
-                <Box className={classes.names}>{name}</Box>
-                <Box className={classes.message}>
-                    Último mensaje
-                    <Dot />
-                    12 minutos
-                </Box>
+                {loading ? (
+                    <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                    />
+                ) : (
+                    <Box className={classes.names}>
+                        {data.is_private
+                            ? data.participants[0]['names']
+                            : data.name
+                        }
+                    </Box>
+                )}
+                {loading ? (
+                    <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="40%"
+                        style={{ marginBottom: 6 }}
+                    />
+                ) : (
+                    <Box className={classes.message}>
+                        Último mensaje
+                        <Dot />
+                        12 minutos
+                    </Box>
+                )}
             </Box>
         </Box>
     );

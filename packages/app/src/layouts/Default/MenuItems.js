@@ -45,7 +45,7 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             dense={dense}
         />
         <MenuItemLink
-            to='/messages'
+            to='/chats'
             primaryText='Mensajería'
             leftIcon={<MessageIcon />}
             onClick={onMenuClick}

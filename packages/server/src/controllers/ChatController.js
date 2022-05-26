@@ -121,6 +121,7 @@ export const store = async (req, res) => {
 
 export const show = async (req, res) => {
     const { id } = req.params
+
     try {
         const model = await Chat.query()
             .findById(id)

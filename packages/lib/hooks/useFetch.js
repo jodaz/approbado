@@ -23,13 +23,18 @@ const getQueryFromParams = ({
     return query;
 }
 
-export default function useFetch(url, params) {
+const useFetch = (url, params) => {
     const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(false)
     const [data, setData] = React.useState([])
     const [hasMore, setHasMore] = React.useState(null)
     const [total, setTotal] = React.useState(null)
-    const { perPage, page } = params
+    const {
+        perPage,
+        page,
+        filter,
+        sort
+    } = params
 
     React.useEffect(() => {
         if (hasMore == null || hasMore == true) {
@@ -54,7 +59,9 @@ export default function useFetch(url, params) {
                 setError(true)
             })
         }
-    }, [page, perPage])
+    }, [page, perPage, filter, sort])
 
     return { loading, error, data, hasMore, total }
 }
+
+export default useFetch
