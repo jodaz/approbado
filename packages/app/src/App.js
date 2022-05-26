@@ -6,6 +6,7 @@ import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
 // Layouts
 import DefaultLayout from './layouts/Default'
 import GameLayout from './layouts/Game'
+import ChatLayout from './layouts/Chat'
 
 // Views
 import NotificationsView from './notifications'
@@ -23,8 +24,8 @@ import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
 import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
 import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
-import MessagesView from './messages'
-import ChatView from './messages/chat'
+import SelectMessageAlert from './layouts/Chat/SelectMessageAlert'
+import Chatbox from './chatbox'
 
 import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
@@ -78,16 +79,28 @@ const App = () => (
                 />}
             />
             <ProtectedRoute exact path="/trivias/start" component={() => <StartTrivia />} layout={DefaultLayout} />
-
-            {/**
-             * Messages
-             */}
-            <ProtectedRoute exact path="/chats" component={() => <MessagesView />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/chats/:chat_id" component={() => <ChatView />} layout={DefaultLayout} />
         </Switch>
 
         <Switch>
             <ProtectedRoute exact path="/game" component={() => <TriviaGame />} layout={GameLayout} />
+        </Switch>
+
+        <Switch>
+            {/**
+             * Chats
+             */}
+            <ProtectedRoute
+                exact
+                path="/chats"
+                component={() => <SelectMessageAlert />}
+                layout={ChatLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/chats/:chat_id"
+                component={() => <Chatbox />}
+                layout={ChatLayout}
+            />
         </Switch>
     </MuiPickersUtilsProvider>
 )

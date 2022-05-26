@@ -5,8 +5,10 @@ import TextField from '@material-ui/core/TextField'
 
 const AsideBarHeader = ({ onChange }) => (
     <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '1rem 0',
         width: '100%',
-        padding: '1em 0',
         boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.18)'
     }}>
         <TextField
@@ -19,7 +21,6 @@ const AsideBarHeader = ({ onChange }) => (
                 )
             }}
             placeholder='Buscar a un usuario'
-            fullWidth
         />
     </Box>
 );

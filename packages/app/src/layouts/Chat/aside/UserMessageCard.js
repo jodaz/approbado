@@ -4,6 +4,8 @@ import Box from '@material-ui/core/Box';
 import Dot from '@approbado/lib/components/Dot'
 import Skeleton from "@material-ui/lab/Skeleton";
 import configs from '@approbado/lib/configs'
+import { useHistory } from 'react-router-dom'
+import { useChatDispatch } from '@approbado/lib/hooks/useChat';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,9 +34,16 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const UserMessageCard = ({ rootRef, index, data, handleClick }) => {
+const UserMessageCard = ({ rootRef, index, data }) => {
     const classes = useStyles();
     const loading = data == null;
+    const history = useHistory();
+    const { setChat } = useChatDispatch();
+
+    const handleClick = () => {
+        history.push(`/chats/${data.id}`)
+        setChat(data)
+    }
 
     return (
         <Box
@@ -46,10 +55,10 @@ const UserMessageCard = ({ rootRef, index, data, handleClick }) => {
             <Box sx={{ marginRight: '1rem' }}>
                 {loading ? (
                     <Skeleton
-                    animation="wave"
-                    variant="circle"
-                    width={40}
-                    height={40}
+                        animation="wave"
+                        variant="circle"
+                        width={40}
+                        height={40}
                     />
                 ) : (
                     <Box className={classes.names}>

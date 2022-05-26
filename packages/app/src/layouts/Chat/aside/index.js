@@ -3,12 +3,25 @@ import Box from '@material-ui/core/Box';
 import AsideBarHeader from './AsideBarHeader';
 import useFetch from '@approbado/lib/hooks/useFetch'
 import ChatsList from './ChatsList';
+import makeStyles from '@material-ui/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 300
+        },
+        height: 'inherit',
+        boxShadow: '1px 0px 0px rgba(0, 0, 0, 0.24)'
+    }
+}))
 
 const results = 10
 
 const generateNullData = results => Array.from({ length: results }).map(_ => null)
 
-const MessagesAsideBar = () => {
+const Aside = () => {
+    const classes = useStyles();
     const [perPage, setPerPage] = React.useState(results)
     const [filter, setFilter] = React.useState({})
     const {
@@ -64,14 +77,7 @@ const MessagesAsideBar = () => {
     }, [])
 
     return (
-        <Box
-            component='div'
-            sx={{
-                height: 'inherit',
-                width: 300,
-                boxShadow: '1px 0px 0px rgba(0, 0, 0, 0.24)'
-            }}
-        >
+        <Box className={classes.root}>
             <AsideBarHeader onChange={handleChange} />
             <ChatsList
                 total={total}
@@ -84,4 +90,4 @@ const MessagesAsideBar = () => {
     );
 }
 
-export default MessagesAsideBar;
+export default Aside;

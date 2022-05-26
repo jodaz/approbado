@@ -189,20 +189,25 @@ export default function(props) {
                                 >
                                     Agendar una trivia grupal
                                 </Link>
-                                <Button
-                                    onClick={handleClose}
-                                    disabled={submitting}
-                                    unresponsive
-                                >
-                                    Cancelar
-                                </Button>
-                                <Button
-                                    disabled={submitting}
-                                    unresponsive
-                                    onClick={handleSubmit}
-                                >
-                                    Crear sala
-                                </Button>
+                                <Box sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between'
+                                }}>
+                                    <Button
+                                        onClick={handleClose}
+                                        disabled={submitting}
+                                        unresponsive
+                                    >
+                                        Cancelar
+                                    </Button>
+                                    <Button
+                                        disabled={submitting}
+                                        unresponsive
+                                        onClick={handleSubmit}
+                                    >
+                                        Crear sala
+                                    </Button>
+                                </Box>
                             </Box>
                         )}
                     />

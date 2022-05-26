@@ -47,15 +47,17 @@ const styles = makeStyles(theme => ({
         flexDirection: 'column',
         flexGrow: 1,
         flexBasis: 0,
-        padding: '0 1rem !important',
-        marginTop: '4em',
+        padding: props => (!props.disablePaddingContent)
+            ? '0 1rem !important'
+            : 'unset',
+        marginTop: '3em',
         paddingTop: '8px',
         paddingLeft: 0
     },
 }));
 
-export default ({ children }) => {
-    const classes = styles()
+const DefaultLayout = ({ children, ...rest }) => {
+    const classes = styles(rest)
 
     return (
         <>
@@ -75,3 +77,9 @@ export default ({ children }) => {
         </>
     )
 };
+
+DefaultLayout.defaultProps = {
+    disablePaddingContent: false
+}
+
+export default DefaultLayout
