@@ -31,7 +31,8 @@ const initialState = {
     rights: 0,
     points: 0,
     error: '',
-    secs: 0
+    secs: 0,
+    participants: []
 }
 
 const dialogReducer = (
