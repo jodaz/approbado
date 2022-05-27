@@ -4,13 +4,11 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl, { useFormControl } from '@material-ui/core/FormControl';
 import { makeStyles, alpha, styled } from '@material-ui/core'
-import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
 import SendIcon from '@approbado/lib/icons/SendIcon'
 import { Field, Form } from 'react-final-form';
 import Box from '@material-ui/core/Box'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
-import { useMutation, useNotify, useRefresh } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import AddFileInput from './AddFileInput'
 import AddImageInput from './AddImageInput'
@@ -58,7 +56,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     containerButtons: {
-        display: 'flex'
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: '1'
     }
 }))
 

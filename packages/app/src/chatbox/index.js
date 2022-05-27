@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box'
 import ChatboxHeader from './ChatboxHeader'
 import ChatboxInput from './ChatboxInput'
+import ChatboxMessages from './ChatboxMessages'
 
 const Chatbox = () => {
     return (
@@ -10,7 +11,7 @@ const Chatbox = () => {
             flexDirection: 'column'
         }}>
             <ChatboxHeader />
-            <Box sx={{ display: 'flex', flex: 1 }} />
+            <ChatboxMessages />
             <ChatboxInput />
         </Box>
     );
