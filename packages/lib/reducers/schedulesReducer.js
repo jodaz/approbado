@@ -1,19 +1,23 @@
 import {
     FETCH_SCHEDULES,
-    CLEAR_SCHEDULES
+    CLEAR_SCHEDULES,
+    DELETE_SCHEDULE
 } from '../actions';
 
 const initialState = []
 
-const userReducer = (
+const schedulesReducer = (
     previousState = initialState,
     action
 ) => {
     switch (action.type) {
         case FETCH_SCHEDULES:
             return [
-                ...previousState,
                 ...action.payload
+            ]
+        case DELETE_SCHEDULE:
+            return [
+                ...previousState.filter(({ id }) => id != action.payload.id)
             ]
         case CLEAR_SCHEDULES:
             return initialState;
@@ -22,5 +26,5 @@ const userReducer = (
     }
 }
 
-export default userReducer;
+export default schedulesReducer;
 

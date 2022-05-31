@@ -23,6 +23,15 @@ export const START_COUNTER = 'START_COUNTER';
 export const UPDATE_COUNTER = 'UPDATE_COUNTER';
 export const FETCH_SCHEDULES = 'FETCH_SCHEDULES';
 export const CLEAR_SCHEDULES = 'CLEAR_SCHEDULES';
+export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
+export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS';
+export const CLEAR_NOTIFICATIONS = 'CLEAR_NOTIFICATIONS';
+export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
+
+export const unsetSchedule = data => ({
+    type: DELETE_SCHEDULE,
+    payload: data
+});
 
 export const fetchSchedules = data => ({
     type: FETCH_SCHEDULES,

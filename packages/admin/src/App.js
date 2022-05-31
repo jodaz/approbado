@@ -37,6 +37,10 @@ import UserEdit from './users/UserEdit'
 import ReportsView from './reports/ReportsView'
 import ReportShow from './reports/ReportShow'
 import NotFound from './layouts/NotFound'
+import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
+import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
+import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
+import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 
 const App = () => {
     return (
@@ -158,6 +162,20 @@ const App = () => {
                     {...routeProps}
                 />
             } />
+
+            {/**
+             * Forum
+             */}
+            <ProtectedRoute exact path="/forums" component={() => <ForumsView />} layout={Layout} />
+            <ProtectedRoute exact path="/forums/:id" component={() => <ForumEdit />} layout={Layout} />
+            <ProtectedRoute exact path="/forums/:id/show" component={(routeProps) =>
+                <ForumShow
+                    resource={'forums'}
+                    basePath={routeProps.match.url}
+                />}
+                layout={Layout}
+            />
+            <ProtectedRoute exact path="/comments/:id/show" component={() => <CommentShow />} layout={Layout} />
             <Route path='/*' render={() => <NotFound />} />
         </Switch>
     )

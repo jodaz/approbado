@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Box from '@material-ui/core/Box'
-import { makeStyles, fade } from '@material-ui/core'
+import { makeStyles, alpha } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import clsx from 'clsx';
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.background.default,
         backgroundColor: theme.palette.info.main,
         '&:hover': {
-            backgroundColor: fade(theme.palette.info.main, 0.9)
+            backgroundColor: alpha(theme.palette.info.main, 0.9)
         }
     }
 }))

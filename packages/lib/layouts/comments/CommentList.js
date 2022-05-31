@@ -2,18 +2,16 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query } from 'react-admin';
 import { makeStyles } from '@material-ui/core'
 import Spinner from '@approbado/lib/components/Spinner'
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShowLayout';
+import useFetch from '@approbado/lib/hooks/useFetch'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
 const useStyles = makeStyles(theme => ({
     root: {
         padding: '0 0 0 2rem',
-        // [theme.breakpoints.up('sm')]: {
-        //     padding: '0 0 0 2rem'
-        // }
     },
     title: {
         fontWeight: '700',
@@ -55,37 +53,34 @@ const useStyles = makeStyles(theme => ({
 const CommentList = ({ parent_id }) => {
     const classes = useStyles();
     const spinnerStyles = useSpinnerStyles();
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/comments', {
+        perPage: 5,
+        page: 1,
+        sort: { field: 'created_at', order: 'DESC'},
+        filter: { id: parent_id }
+    })
 
     return (
         <Box className={classes.root}>
-            <Query type='getList' resource='comments' payload={{
-                pagination: { page: 1, perPage: 5 },
-                sort: { field: 'created_at', order: 'DESC'},
-                filter: { id: parent_id }
-            }}>
-                {({ data, total, loading, error }) => {
-                    if (loading) {
-                        return (
-                            <Spinner classes={spinnerStyles}/>
-                        );
-                    }
+            {(loading) && <Spinner classes={spinnerStyles}/>}
 
-                    if (error) { return null; }
+            {error && <ErrorMessage />}
 
-                    return (
-                        <div>
-                            <Box className={classes.description}>
-                                <Typography component={'p'} variant="body1">
-                                    {total} Respuestas
-                                </Typography>
-                            </Box>
-                            {data.map(comment => (
-                                <CommentShow {...comment} />
-                            ))}
-                        </div>
-                    );
-                }}
-            </Query>
+            <div>
+                <Box className={classes.description}>
+                    <Typography component={'p'} variant="body1">
+                        {total} Respuestas
+                    </Typography>
+                </Box>
+                {(total) && data.map(comment => (
+                    <CommentShow {...comment} />
+                ))}
+            </div>
         </Box>
     );
 }

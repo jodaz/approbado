@@ -1,4 +1,4 @@
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints'
 
 const breakpoints = createBreakpoints({})
@@ -99,7 +99,7 @@ const theme = {
             textPrimary: {
                 backgroundColor: palette.secondary.main,
                 '&:hover': {
-                    backgroundColor: fade(palette.secondary.main, 0.7)
+                    backgroundColor: alpha(palette.secondary.main, 0.7)
                 }
             },
             outlinedSecondary: {
@@ -108,8 +108,8 @@ const theme = {
                 border: `1px solid ${palette.primary.light}`,
                 transition: '300ms',
                 '&:hover': {
-                    color: fade(palette.primary.light, 1),
-                    border: `1px solid ${fade(palette.primary.light, 0.99)}`,
+                    color: alpha(palette.primary.light, 1),
+                    border: `1px solid ${alpha(palette.primary.light, 0.99)}`,
                 }
             },
             containedPrimary: {
@@ -118,7 +118,7 @@ const theme = {
                 boxShadow: 'none',
                 transition: '300ms',
                 '&:hover': {
-                    backgroundColor: fade(palette.secondary.main, 0.99)
+                    backgroundColor: alpha(palette.secondary.main, 0.99)
                 }
             }
         },
@@ -137,11 +137,11 @@ const theme = {
                     borderRadius: 6,
                     color: `${palette.primary.main}`,
                     border: `1px solid ${palette.info.main}`,
-                    boxShadow: `0px 0px 1px 1px ${fade(palette.info.main, 0.7)}`
+                    boxShadow: `0px 0px 1px 1px ${alpha(palette.info.main, 0.7)}`
                 }
             },
             input: {
-                backgroundColor: fade('#fff', 0.8),
+                backgroundColor: alpha('#fff', 0.8),
                 padding: '0.7rem !important',
                 borderRadius: 6
             }
@@ -324,7 +324,7 @@ const theme = {
             root: {
                 backgroundColor: 'unset',
                 '&:hover': {
-                    backgroundColor: `${fade(palette.secondary.main, 0.8)} !important`
+                    backgroundColor: `${alpha(palette.secondary.main, 0.8)} !important`
                 }
             }
         }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { fade } from '@material-ui/core'
+import { alpha } from '@material-ui/core'
 import styled from '@material-ui/styles/styled';
 import { useMutation, useNotify, useRedirect } from 'react-admin'
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ const CustomizedButton = styled(Button)(({ theme }) => ({
     color: '#fff',
     marginLeft: '1rem',
     '&:hover': {
-        backgroundColor: fade(theme.palette.error.main, 0.9)
+        backgroundColor: alpha(theme.palette.error.main, 0.9)
     }
 }));
 

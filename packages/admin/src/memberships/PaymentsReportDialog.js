@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     DateInput,
     FormWithRedirect,
-    useNotify,
     SelectInput
 } from 'react-admin'
 import Dialog from '@material-ui/core/Dialog';

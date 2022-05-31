@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { useResourceContext } from 'ra-core';
 import Button from '@material-ui/core/Button';
@@ -61,7 +61,7 @@ const useStyles = makeStyles(
             backgroundColor: theme.palette.secondary.main,
             color: theme.palette.primary.main,
             '&:hover': {
-                backgroundColor: `${fade(theme.palette.secondary.main, 0.8)} !important`
+                backgroundColor: `${alpha(theme.palette.secondary.main, 0.8)} !important`
             }
         }
     }),

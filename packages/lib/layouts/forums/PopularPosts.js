@@ -2,12 +2,12 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box';
-import { Query } from 'react-admin';
 import Emoji from '../Emoji'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Spinner from '@approbado/lib/components/Spinner'
-import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
+import useFetch from '@approbado/lib/hooks/useFetch'
+import ErrorMessage from '@approbado/lib/components/ErrorMessage'
 
 const payload = {
     pagination: { page: 1, perPage: 5 },
@@ -54,7 +54,16 @@ const useStyles = makeStyles(theme => ({
 
 const AsideBar = ({ isXSmall }) => {
     const classes = useStyles();
-    const spinnerClasses = useSpinnerStyles();
+    const {
+        loading,
+        total,
+        data,
+        error
+    } = useFetch('/forums', {
+        perPage: 5,
+        page: 1,
+        sort: { field: 'comments', order: 'DESC'}
+    })
 
     return (
         <Box>
