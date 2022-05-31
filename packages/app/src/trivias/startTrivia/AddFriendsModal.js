@@ -18,6 +18,8 @@ import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import AutocompleteSelectInput from '@approbado/lib/components/AutocompleteSelectInput'
 import { axios } from '@approbado/lib/providers'
+import ClipboardCopyField from './ClipboardCopyField'
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
     dialogRoot: {
@@ -61,10 +63,6 @@ const useStyles = makeStyles(theme => ({
         textDecoration: 'underline',
         color: theme.palette.info.main,
         cursor: 'pointer'
-    },
-    icon: {
-        color: theme.palette.info.main,
-        cursor: 'pointer'
     }
 }));
 
@@ -83,7 +81,6 @@ export default function(props) {
     const classes = useStyles();
     const [addFriends, setAddFriends] = React.useState(false)
     const [open, setOpen] = React.useState(false);
-    const [provider] = useFileProvider(fileProvider);
     const [users, setUsers] = React.useState([])
 
     const fetchUsers = React.useCallback(async () => {
@@ -169,18 +166,8 @@ export default function(props) {
                                         noOptionsText='Sin opciones'
                                     />
                                 </InputContainer>
-                                <InputContainer sx='12' md='12' labelName="Compàrtir link">
-                                    <TextInput
-                                        name='link'
-                                        disabled
-                                        InputProps={{
-                                            endAdornment: (
-                                                <Box marginRight='6px' display='flex'>
-                                                    <IconCopy className={classes.icon} />
-                                                </Box>
-                                            )
-                                        }}
-                                    />
+                                <InputContainer sx='12' md='12' labelName="Compartir link">
+                                    <ClipboardCopyField name="link" disabled />
                                 </InputContainer>
                                 <Link
                                     to='/?tab=calendar'
@@ -189,20 +176,27 @@ export default function(props) {
                                 >
                                     Agendar una trivia grupal
                                 </Link>
-                                <Button
-                                    onClick={handleClose}
-                                    disabled={submitting}
-                                    unresponsive
-                                >
-                                    Cancelar
-                                </Button>
-                                <Button
-                                    disabled={submitting}
-                                    unresponsive
-                                    onClick={handleSubmit}
-                                >
-                                    Crear sala
-                                </Button>
+                                <Box sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    width: '100%',
+                                    paddingTop: '1rem'
+                                }}>
+                                    <Button
+                                        onClick={handleClose}
+                                        disabled={submitting}
+                                        unresponsive
+                                    >
+                                        Cancelar
+                                    </Button>
+                                    <Button
+                                        disabled={submitting}
+                                        unresponsive
+                                        onClick={handleSubmit}
+                                    >
+                                        Crear sala
+                                    </Button>
+                                </Box>
                             </Box>
                         )}
                     />
