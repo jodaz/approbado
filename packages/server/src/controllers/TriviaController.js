@@ -146,7 +146,7 @@ export const storeGrupal = async (req, res) => {
                 }
             }
 
-            await sendNotification(data_push_notification,user_ids)
+            await sendNotification(data_push_notification, user_ids)
 
             return res.status(201).json(model)
         } catch (error) {
