@@ -70,6 +70,7 @@ const ClipboardCopyField = props => {
                     </Box>
                 )
             }}
+            onClick={handleCopyClick}
         />
     );
 }

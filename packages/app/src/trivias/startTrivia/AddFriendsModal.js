@@ -4,22 +4,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@approbado/lib/icons/CloseIcon';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 import Button from '@approbado/lib/components/Button'
 import Box from '@material-ui/core/Box';
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { fileProvider } from '@approbado/lib/providers'
-import { useFileProvider } from '@jodaz_/file-provider'
 import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
 import { Form } from 'react-final-form'
-import TextInput from '@approbado/lib/components/TextInput'
-import IconCopy from '@approbado/lib/icons/IconCopy'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import AutocompleteSelectInput from '@approbado/lib/components/AutocompleteSelectInput'
 import { axios } from '@approbado/lib/providers'
 import ClipboardCopyField from './ClipboardCopyField'
-import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
     dialogRoot: {
@@ -59,6 +54,15 @@ const useStyles = makeStyles(theme => ({
             width: '3rem'
         }
     },
+    cancelButton: {
+        backgroundColor: theme.palette.secondary.light,
+        color: theme.palette.primary.main,
+        fontWeight: 600,
+        boxShadow: 'none',
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.secondary.light, 0.9)
+        }
+    },
     link: {
         textDecoration: 'underline',
         color: theme.palette.info.main,
@@ -76,7 +80,7 @@ const validate = (values) => {
     return errors;
 }
 
-export default function(props) {
+const AddFriendsModal = props => {
     console.log(props)
     const classes = useStyles();
     const [addFriends, setAddFriends] = React.useState(false)
@@ -185,6 +189,7 @@ export default function(props) {
                                     <Button
                                         onClick={handleClose}
                                         disabled={submitting}
+                                        className={classes.cancelButton}
                                         unresponsive
                                     >
                                         Cancelar
@@ -205,3 +210,5 @@ export default function(props) {
         </>
     );
 }
+
+export default AddFriendsModal;
