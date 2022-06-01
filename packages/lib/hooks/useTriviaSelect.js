@@ -29,7 +29,10 @@ export const useTriviaDispatch = () => {
         unsetQuestions: data => dispatch(unsetQuestions(data)),
         passQuestion: () => dispatch(passQuestion()),
         unsetAnswer: () => dispatch(unsetAnswerStatus()),
-        setConfigs: data => dispatch(setConfigs(data)),
+        setConfigs: data => {
+            console.log(data)
+            return dispatch(setConfigs(data))
+        },
         setAnswer: data => dispatch(setAnswer(data)),
         getResults: () => dispatch(getResults()),
         startCounter: mins => dispatch(startCounter(mins * 60))

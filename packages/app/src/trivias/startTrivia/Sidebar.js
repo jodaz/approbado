@@ -18,8 +18,7 @@ const useStyles = makeStyles(() => ({
 
 const StartTriviaSelector = props => {
     const classes = useStyles();
-
-    const { level, type } = props
+    const { configs: { level, type } } = props
 
     return (
         <Box className={classes.root}>

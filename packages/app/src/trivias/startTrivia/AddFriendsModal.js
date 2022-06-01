@@ -15,6 +15,7 @@ import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import AutocompleteSelectInput from '@approbado/lib/components/AutocompleteSelectInput'
 import { axios } from '@approbado/lib/providers'
 import ClipboardCopyField from './ClipboardCopyField'
+import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
 
 const useStyles = makeStyles(theme => ({
     dialogRoot: {
@@ -83,13 +84,18 @@ const validate = (values) => {
     return errors;
 }
 
-const AddFriendsModal = props => {
-    console.log(props)
+const AddFriendsModal = () => {
     const classes = useStyles();
     const [addFriends, setAddFriends] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const [users, setUsers] = React.useState([])
     const [link, setLink] = React.useState('')
+    const {
+        configs: {
+            level, type
+        },
+        selectedSubthemes
+    } = useTriviaState()
 
     const fetchUsers = React.useCallback(async () => {
         const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
@@ -164,7 +170,12 @@ const AddFriendsModal = props => {
                     <Form
                         onSubmit={handleSubmit}
                         validate={validate}
-                        initialValues={{ link: link }}
+                        initialValues={{
+                            link: link,
+                            level_id: level,
+                            type: type,
+                            subtheme_id: selectedSubthemes[0].id
+                        }}
                         render={ ({ handleSubmit, submitting }) => (
                             <Box
                                 width='100%'
