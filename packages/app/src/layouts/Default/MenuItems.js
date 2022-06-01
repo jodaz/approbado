@@ -6,6 +6,7 @@ import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 import MenuItemLink from '@approbado/lib/components/MenuItemLink'
 import { ReactComponent as ForumIcon } from '@approbado/lib/icons/Forum.svg'
 import NotificationIcon from '@approbado/lib/icons/NotificationIcon'
+import MessageIcon from '@approbado/lib/icons/MessageIcon'
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -39,6 +40,14 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             to='/forums'
             primaryText='Foros'
             leftIcon={<ForumIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+        />
+        <MenuItemLink
+            to='/chats'
+            primaryText='Mensajería'
+            leftIcon={<MessageIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
