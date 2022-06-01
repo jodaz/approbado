@@ -9,7 +9,8 @@ import {
     indexByPlan,
     finishTrivia,
     store,
-    update
+    update,
+    generateLink
 } from '../controllers/TriviaController'
 import { createTriviaSchema, createTriviaGrupalSchema, finishTriviaSchema } from '../validations'
 import { checkSchema } from 'express-validator';
@@ -19,6 +20,7 @@ const triviasRouter = Router()
 triviasRouter.get('/', index)
 triviasRouter.get('/plans', indexByPlan)
 triviasRouter.get('/:id', show)
+triviasRouter.get('/grupal/link', generateLink)
 triviasRouter.get('/grupal/:token', showGrupal)
 triviasRouter.post('/grupal', checkSchema(createTriviaGrupalSchema), storeGrupal )
 triviasRouter.post('/finish', checkSchema(finishTriviaSchema), finishTrivia)
