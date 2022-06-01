@@ -35,6 +35,10 @@ const validate = (values) => {
         errors.names = 'Ingrese su nombre';
     }
 
+    if (!values.user_name) {
+        errors.user_name = 'Ingrese su nombre de usuario';
+    }
+
     if (!values.phone) {
         errors.phone = 'Ingrese su teléfono';
     }
@@ -126,6 +130,20 @@ const Register = () => {
                         startAdornment: (
                             <InputAdornment position="start">
                                 <EmailOutlinedIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <TextInput
+                    name="user_name"
+                    type="text"
+                    placeholder='Ingresa un nombre de usuario'
+                    disabled={loading}
+                    className={classes.input}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircle />
                             </InputAdornment>
                         ),
                     }}

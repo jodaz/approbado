@@ -11,6 +11,7 @@ import {
     SET_RESULTS,
     UPDATE_COUNTER,
     FETCH_RESULTS_FAILED,
+    SET_ROOM,
     START_COUNTER
 } from '../actions';
 
@@ -32,7 +33,13 @@ const initialState = {
     points: 0,
     error: '',
     secs: 0,
-    participants: []
+    room: {
+        loaded: false,
+        id: '',
+        token: '',
+        participants: [],
+        subtheme: ''
+    }
 }
 
 const dialogReducer = (
@@ -40,6 +47,24 @@ const dialogReducer = (
     action
 ) => {
     switch (action.type) {
+        case SET_ROOM: {
+            return {
+                ...state,
+                room: {
+                    ...state.room,
+                    loaded: true,
+                    participants: action.payload.participants,
+                    subtheme: action.payload.subtheme_id,
+                    token: action.payload.link
+                },
+                configs: {
+                    ...configs,
+                    type: action.payload.type,
+                    level: action.payload.level,
+                    duration: action.payload.duration
+                }
+            }
+        }
         case START_COUNTER:
             return {
                 ...state,

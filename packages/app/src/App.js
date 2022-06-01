@@ -12,6 +12,7 @@ import ChatLayout from './layouts/Chat'
 import NotificationsView from './notifications'
 import TriviaList from './trivias/TriviaList'
 import TriviaGame from './trivias/games'
+import PreparingRoom from './trivias/games/PreparingRoom'
 import StartTrivia from './trivias/startTrivia'
 import ErrorLayout from '@approbado/lib/layouts/Error'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
@@ -81,8 +82,12 @@ const App = () => (
             <ProtectedRoute exact path="/trivias/start" component={() => <StartTrivia />} layout={DefaultLayout} />
         </Switch>
 
+        {/**
+         * Game
+         */}
         <Switch>
             <ProtectedRoute exact path="/game" component={() => <TriviaGame />} layout={GameLayout} />
+            <ProtectedRoute exact path="/room/:token" component={() => <PreparingRoom />} layout={GameLayout} />
         </Switch>
 
         <Switch>

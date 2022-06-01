@@ -70,9 +70,7 @@ const useStyles = makeStyles(theme => ({
 
 const StartTrivia = () => {
     const classes = useStyles();
-    const [level, setLevel] = React.useState('');
-    const [type, setType] = React.useState('');
-    const { setQuestions } = useTriviaDispatch();
+    const { setQuestions, setConfigs } = useTriviaDispatch();
     const state = useTriviaState()
     const { selectedSubthemes, trivia } = state
     const {
@@ -85,6 +83,7 @@ const StartTrivia = () => {
         page: 1,
         sort: { field: 'created_at', order: 'DESC' }
     })
+    const { configs: { level } } = state;
 
     React.useEffect(() => {
         if (!state.selected) {
@@ -148,8 +147,11 @@ const StartTrivia = () => {
                             <Box className={classes.buttonContainer}>
                                 {data.map(item =>
                                     <Button
-                                        className={clsx(classes.button, (item.id == level) && classes.selectedButton)}
-                                        onClick={e => setLevel(e.currentTarget.value)}
+                                        className={clsx(classes.button, (item.id == state.configs.level) && classes.selectedButton)}
+                                        onClick={e => setConfigs({
+                                            ...state.configs,
+                                            level: e.currentTarget.value
+                                        })}
                                         value={item.id}
                                     >
                                         {item.name}
@@ -163,19 +165,25 @@ const StartTrivia = () => {
                             </Box>
                             <Box className={classes.buttonContainer} marginBottom='1rem'>
                                 <Button
-                                    className={clsx(classes.button, ('Práctica' == type) && classes.selectedButton)}
-                                    onClick={e => setType(e.currentTarget.innerText)}
+                                    className={clsx(classes.button, ('Práctica' == state.configs.type) && classes.selectedButton)}
+                                    onClick={e => setConfigs({
+                                        ...state.configs,
+                                        type: e.currentTarget.innerText
+                                    })}
                                 >
                                     Práctica
                                 </Button>
                                 <Button
-                                    className={clsx(classes.button, ('Reto' == type) && classes.selectedButton)}
-                                    onClick={e => setType(e.currentTarget.innerText)}
+                                    className={clsx(classes.button, ('Reto' == state.configs.type) && classes.selectedButton)}
+                                    onClick={e => setConfigs({
+                                        ...state.configs,
+                                        type: e.currentTarget.innerText
+                                    })}
                                 >
                                     Reto
                                 </Button>
                             </Box>
-                            {(type == 'Práctica') && (
+                            {(state.configs.type == 'Práctica') && (
                                 <Typography variant='subtitle2'>
                                     *Este tipo de trivia es exploratoria.
                                     Contestarás las preguntas y podrás visualizar las respuestas en el momento.
@@ -185,7 +193,7 @@ const StartTrivia = () => {
                     </Grid>
                     <Divider orientation='vertical' />
                     <Grid item xs>
-                        <Sidebar {...state} level={level} type={type} />
+                        <Sidebar {...state} />
                     </Grid>
                 </Grid>
             </Grid>
