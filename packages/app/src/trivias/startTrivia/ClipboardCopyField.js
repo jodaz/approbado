@@ -8,11 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(theme => ({
-    link: {
-        textDecoration: 'underline',
-        color: theme.palette.info.main,
-        cursor: 'pointer'
-    },
     icon: {
         color: theme.palette.info.main,
         cursor: 'pointer'
@@ -40,7 +35,7 @@ const ClipboardCopyField = props => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
                 setTimeout(() => {
-                  setIsCopied(false);
+                    setIsCopied(false);
                 }, 1500);
             })
             .catch((err) => {

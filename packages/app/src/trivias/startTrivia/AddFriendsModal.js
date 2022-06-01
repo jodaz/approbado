@@ -76,6 +76,9 @@ const validate = (values) => {
     if (!values.user_ids) {
         errors.user_ids = "Ingrese al menos un participante.";
     }
+    if (!values.link) {
+        errors.link = "Espere la carga del link.";
+    }
 
     return errors;
 }
@@ -86,16 +89,24 @@ const AddFriendsModal = props => {
     const [addFriends, setAddFriends] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const [users, setUsers] = React.useState([])
+    const [link, setLink] = React.useState('')
 
     const fetchUsers = React.useCallback(async () => {
         const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
         setUsers(data)
     }, []);
 
+    const fetchLink = React.useCallback(async () => {
+        const { data } = await axios.get('/trivias/grupal/link')
+
+        setLink(data)
+    }, [])
+
     const handleClickOpen = () => {
         setOpen(true);
         fetchUsers();
     };
+
     const handleClose = e => {
         setOpen(false);
     };
@@ -109,6 +120,10 @@ const AddFriendsModal = props => {
             }
         }
     }, []);
+
+    React.useEffect(() => {
+        fetchLink();
+    }, [])
 
     return (
         <>
@@ -149,7 +164,7 @@ const AddFriendsModal = props => {
                     <Form
                         onSubmit={handleSubmit}
                         validate={validate}
-                        initialValues={{ link: 'approbado/sala/34fkjnr54ef' }}
+                        initialValues={{ link: link }}
                         render={ ({ handleSubmit, submitting }) => (
                             <Box
                                 width='100%'
