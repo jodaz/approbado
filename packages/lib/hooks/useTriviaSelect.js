@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    SET_ROOM,
     setTrivia,
     unsetTrivia,
     setQuestions,
@@ -29,12 +30,13 @@ export const useTriviaDispatch = () => {
         unsetQuestions: data => dispatch(unsetQuestions(data)),
         passQuestion: () => dispatch(passQuestion()),
         unsetAnswer: () => dispatch(unsetAnswerStatus()),
-        setConfigs: data => {
-            console.log(data)
-            return dispatch(setConfigs(data))
-        },
+        setConfigs: data => dispatch(setConfigs(data)),
         setAnswer: data => dispatch(setAnswer(data)),
         getResults: () => dispatch(getResults()),
+        setRoom: data => dispatch({
+            type: SET_ROOM,
+            payload: data
+        }),
         startCounter: mins => dispatch(startCounter(mins * 60))
     }
 }

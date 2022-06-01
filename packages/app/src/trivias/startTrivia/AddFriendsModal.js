@@ -13,9 +13,9 @@ import { Form } from 'react-final-form'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import AutocompleteSelectInput from '@approbado/lib/components/AutocompleteSelectInput'
-import { axios } from '@approbado/lib/providers'
+import { axios, history } from '@approbado/lib/providers'
 import ClipboardCopyField from './ClipboardCopyField'
-import { useTriviaState } from '@approbado/lib/hooks/useTriviaSelect'
+import { useTriviaState, useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
 
 const useStyles = makeStyles(theme => ({
     dialogRoot: {
@@ -89,13 +89,14 @@ const AddFriendsModal = () => {
     const [addFriends, setAddFriends] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const [users, setUsers] = React.useState([])
-    const [link, setLink] = React.useState('')
+    const [link, setLink] = React.useState({ token: '', link: '' })
     const {
         configs: {
             level, type
         },
         selectedSubthemes
     } = useTriviaState()
+    const { setRoom } = useTriviaDispatch()
 
     const fetchUsers = React.useCallback(async () => {
         const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
@@ -119,13 +120,16 @@ const AddFriendsModal = () => {
 
     const handleSubmit = React.useCallback(async (values) => {
         try {
-            const { data } = axios.post('/trivias/grupal', values)
+            const { data } = await axios.post('/trivias/grupal', values)
+            console.log(link)
+            await history.push(`/room/${link.token}`)
+            await setRoom(data)
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, []);
+    }, [link]);
 
     React.useEffect(() => {
         fetchLink();
@@ -171,7 +175,7 @@ const AddFriendsModal = () => {
                         onSubmit={handleSubmit}
                         validate={validate}
                         initialValues={{
-                            link: link,
+                            link: link.link,
                             level_id: level,
                             type: type,
                             subtheme_id: selectedSubthemes[0].id
