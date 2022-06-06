@@ -88,6 +88,7 @@ const Index = () => {
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'center',
+                    width: '100%',
                     padding: '2rem 0'
                 }}>
                     {(loading) && <Spinner />}

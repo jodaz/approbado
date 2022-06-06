@@ -43,6 +43,9 @@ export const index = async (req, res) => {
                         .as('usersReportsCount')
                 ]);
             }
+            if (filter.by_ids) {
+                query.whereIn('id', filter.by_ids)
+            }
             if (filter.gt_date) {
                 query.where('created_at', '>=', `%${filter.gt_date}%`)
             }

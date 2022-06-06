@@ -13,8 +13,6 @@ import configs from '@approbado/lib/configs'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import Skeleton from "@material-ui/lab/Skeleton";
-import { ReactComponent as ActionDelete } from '@approbado/lib/icons/Trash.svg';
-import MenuItem from '@material-ui/core/MenuItem'
 import DeleteNotification from './DeleteNotification'
 
 const useStyles = makeStyles(theme => ({

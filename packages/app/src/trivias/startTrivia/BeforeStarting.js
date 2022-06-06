@@ -3,10 +3,10 @@ import Box from '@material-ui/core/Box';
 import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@approbado/lib/components/Button'
-import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
 import Switch from '@approbado/lib/components/Switch';
 import { history } from '@approbado/lib/providers'
 import { useTriviaDispatch } from '@approbado/lib/hooks/useTriviaSelect'
+import AddFriendsModal from './AddFriendsModal';
 
 const useStyles = makeStyles(theme => ({
     test: {
@@ -29,7 +29,6 @@ const getMaxTime = subthemes => subthemes.map(({ duration }) => duration).reduce
 
 const BeforeStarting = props => {
     const { questions, selectedSubthemes, type, level } = props
-    const [addFriends, setAddFriends] = React.useState(false)
     const [maxTime, setMaxTime] = React.useState(false)
     const classes = useStyles();
     const { setConfigs, startCounter } = useTriviaDispatch();
@@ -82,14 +81,7 @@ const BeforeStarting = props => {
                     {`La trivia consta de ${questions.length} preguntas`}
                 </Box>
             </Box>
-            <Box className={classes.test}>
-                <Box>
-                    <PlusCircleIcon />
-                </Box>
-                <Box className={classes.link} onClick={() => setAddFriends(!addFriends)}>
-                    Agregar amigos
-                </Box>
-            </Box>
+            <AddFriendsModal />
             <Box className={classes.test}>
                 <div>
                     <Switch onClick={handleSetMaxTime} />

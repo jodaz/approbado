@@ -6,11 +6,13 @@ import {
     Award,
     SubthemeFinished
 } from '../models'
+import { APP_DOMAIN } from '../config'
 import {
     validateRequest,
     paginatedQueryResponse,
     sendNotification,
     showResult,
+    getRandomPass,
     MIN_APROBADO
 } from '../utils'
 
@@ -121,7 +123,7 @@ export const storeGrupal = async (req, res) => {
     if (!reqErrors) {
         try {
             const model = await TriviaGrupal.query()
-                .insert(rest)
+                .insertAndFetch(rest)
                 .returning('*')
 
             await model.$relatedQuery('participants').relate(user_ids)
@@ -146,9 +148,14 @@ export const storeGrupal = async (req, res) => {
                 }
             }
 
-            await sendNotification(data_push_notification,user_ids)
+            await sendNotification(data_push_notification, user_ids)
 
-            return res.status(201).json(model)
+            const fetchedModel = await TriviaGrupal.query()
+                .where('id', model.id)
+                .withGraphFetched('[participants,level,subtheme]')
+                .first();
+
+            return res.status(201).json(fetchedModel)
         } catch (error) {
             console.log(error);
 
@@ -274,12 +281,39 @@ export const showGrupal = async (req, res) => {
 
     try {
         const model = await TriviaGrupal.query()
-            .where('link',token)
-            .withGraphFetched('subtheme')
-            .withGraphFetched('participants')
-            .first()
+            .where('link', token)
+            .withGraphFetched('[participants,level,subtheme]')
+            .first();
 
         return res.status(201).json(model)
+    } catch (error) {
+        console.log(error)
+
+        return res.status(500).json({ error: error })
+    }
+}
+
+/**
+ * Generate a link
+ * @param {*} req
+ * @param {*} res Link
+ * @returns
+ */
+export const generateLink = async (req, res) => {
+    try {
+        const randomToken = getRandomPass()
+        const model = await TriviaGrupal.query()
+            .where('link', randomToken)
+            .first()
+
+        if (!model) {
+            const link = `${APP_DOMAIN}/${randomToken}`
+
+            return res.status(201).json({
+                link: link,
+                token: randomToken
+            })
+        }
     } catch (error) {
         console.log(error)
 
