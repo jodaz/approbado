@@ -180,15 +180,27 @@ export const update = async (req, res) => {
     const { id } = req.params
 
     try {
-        const { random_pass, password, ...rest } = req.body;
+        const {
+            random_pass,
+            password,
+            names,
+            email,
+            rol
+        } = req.body;
 
-        let newPassword = random_pass ? getRandomPass() : password;
-        const encryptedPassword = await bcrypt.hash(newPassword, 10)
+        let data = {
+            email: email,
+            names: names,
+            rol: rol
+        }
 
-        const model = await User.query().updateAndFetchById(id, {
-            ...rest,
-            password: encryptedPassword
-        })
+        if (random_pass) {
+            data.password = getRandomPass();
+        } else if (password) {
+            data.password = await bcrypt.hash(password, 10)
+        }
+
+        const model = await User.query().updateAndFetchById(id, data)
 
         if (random_pass) {
             const mailerData = {

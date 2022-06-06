@@ -1,18 +1,16 @@
 import * as React from 'react'
 import {
-    useMutation,
-    TextInput,
     SelectInput,
     BooleanInput,
-    useEditController,
-    useRedirect,
-    useNotify,
-    PasswordInput as RaPasswordInput
+    useNotify
 } from 'react-admin'
-import { useFormState } from 'react-final-form'
 import { Grid } from '@material-ui/core'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import CustomPasswordInput from './CustomPasswordInput'
+import { useHistory, useParams } from 'react-router-dom'
+import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers'
 
 const ACCESS_TYPES = [
     { id: 'Administrador', name: 'Administrador' },
@@ -29,66 +27,47 @@ const validate = (values) => {
   if (!values.email) {
     errors.email = "Ingrese un correo electronico.";
   }
-  if (!values.random_pass && !values.password) {
-    errors.password = "Ingrese una contraseña.";
-  }
 
   return errors;
 };
 
-const PasswordInput = props => {
-    const { values } = useFormState();
-
-    if (!values.random_pass) {
-        return (
-            <InputContainer labelName='Nombre'>
-                <RaPasswordInput
-                    label={false}
-                    source='password'
-                    placeholder="Contraseña"
-                    fullWidth
-                />
-            </InputContainer>
-        )
-    }
-
-    return null;
-}
-
-const UserEdit = props => {
-    const editControllerProps = useEditController(props);
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
+const UserEdit = () => {
     const notify = useNotify();
+    const history = useHistory()
+    const { id } = useParams();
+    const [record, setRecord] = React.useState(null)
 
     const save = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'update',
-                resource: 'users',
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/users/${record.id}`, values)
+
+            if (data) {
+                history.push('/users?tab=admins')
+                notify('Se ha completado el registro con éxito', 'success');
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, []);
+
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/users/${id}`);
+
+        setRecord(data);
+    }, []);
 
     React.useEffect(() => {
-        if (loaded) {
-            notify('Se ha completado la actualización con éxito', 'success')
-            redirect('/users?tab=admins')
-        }
-    }, [loaded])
+        fetchRecord()
+    }, [])
 
-    const { record } = editControllerProps
+    if (!record) return null;
 
     return (
         <BaseForm
             save={save}
             validate={validate}
-            disabled={loading}
             record={record}
             formName='Editar usuario'
             saveButtonLabel='Actualizar'
@@ -97,7 +76,7 @@ const UserEdit = props => {
                 labelName='Nombres'
             >
                 <TextInput
-                    source="names"
+                    name="names"
                     placeholder="Nombres"
                     fullWidth
                 />
@@ -105,7 +84,7 @@ const UserEdit = props => {
             <InputContainer labelName='Correo electrónico'>
                 <TextInput
                     label={false}
-                    source="email"
+                    name="email"
                     placeholder="Correo electronico"
                     fullWidth
                 />
@@ -116,7 +95,7 @@ const UserEdit = props => {
                     label="Generar contraseña y enviar por correo"
                 />
             </Grid>
-            <PasswordInput />
+            <CustomPasswordInput />
             <InputContainer labelName='Tipo de acceso'>
                 <SelectInput
                     label={false}
