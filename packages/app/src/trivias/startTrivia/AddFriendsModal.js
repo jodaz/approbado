@@ -8,7 +8,7 @@ import { makeStyles, alpha } from '@material-ui/core/styles';
 import Button from '@approbado/lib/components/Button'
 import Box from '@material-ui/core/Box';
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { ReactComponent as PlusCircleIcon } from '@approbado/lib/icons/PlusCircle.svg'
+import PlusCircleIcon from '@approbado/lib/icons/PlusCircleIcon'
 import { Form } from 'react-final-form'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
@@ -121,7 +121,6 @@ const AddFriendsModal = () => {
     const handleSubmit = React.useCallback(async (values) => {
         try {
             const { data } = await axios.post('/trivias/grupal', values)
-            console.log(link)
             await history.push(`/room/${link.token}`)
             await setRoom(data)
         } catch (error) {
@@ -164,7 +163,7 @@ const AddFriendsModal = () => {
                             position: 'absolute',
                             right: 8,
                             top: 8,
-                            color: (theme) => theme.palette.grey[500],
+                            color: theme => theme.palette.grey[500],
                         }}
                     >
                         <CloseIcon />
