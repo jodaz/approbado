@@ -23,7 +23,7 @@ const DateInput = ({ submitting }) => {
     return (
         <InputContainer
             disabled={submitting}
-            labelName="Día"
+            label="Día"
             md={6}
             xs={6}
         >

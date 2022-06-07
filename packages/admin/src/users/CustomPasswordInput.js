@@ -7,7 +7,7 @@ const CustomPasswordInput = () => {
 
     if (!values.random_pass) {
         return (
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <PasswordInput
                     label={false}
                     name='password'

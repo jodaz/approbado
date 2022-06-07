@@ -25,7 +25,7 @@ const SubthemesInput = ({ submitting }) => {
     return (
         <InputContainer
             disabled={submitting}
-            labelName="Tema"
+            label="Tema"
             md={12}
             xs={12}
         >

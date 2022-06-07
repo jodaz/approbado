@@ -37,14 +37,14 @@ const LevelCreate = () => {
 
     return (
         <BaseForm save={save} validate={validateLevel} loading={loading} formName='Nuevo nivel'>
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Color'>
+            <InputContainer label='Color'>
                 <CustomColorPicker />
             </InputContainer>
         </BaseForm>

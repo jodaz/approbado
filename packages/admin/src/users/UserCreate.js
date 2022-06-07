@@ -60,7 +60,7 @@ const UserCreate = () => {
             formName='Agregar nuevo usuario'
         >
             <InputContainer
-                labelName='Nombres'
+                label='Nombres'
             >
                 <TextInput
                     name="names"
@@ -68,7 +68,7 @@ const UserCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Correo electrónico'>
+            <InputContainer label='Correo electrónico'>
                 <TextInput
                     label={false}
                     name="email"
@@ -83,7 +83,7 @@ const UserCreate = () => {
                 />
             </Grid>
             <CustomPasswordInput />
-            <InputContainer labelName='Tipo de acceso'>
+            <InputContainer label='Tipo de acceso'>
                 <SelectInput
                     label={false}
                     source="rol"

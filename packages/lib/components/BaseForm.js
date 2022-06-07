@@ -23,7 +23,7 @@ const BaseForm = ({
     return (
         <Box component='div'>
             <Box component='div' padding='2rem 2rem 0 2rem'>
-                { formName && <Box component='h5' fontSize='1.1rem'>{formName}</Box> }
+                { formName && <Box component='h1' fontSize='1.5rem'>{formName}</Box> }
                 <Form
                     onSubmit={save}
                     validate={validate}

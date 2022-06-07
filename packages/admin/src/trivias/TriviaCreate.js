@@ -1,16 +1,14 @@
 import * as React from 'react'
 import {
-    useMutation,
     SelectInput,
-    useCreateController,
-    CreateContextProvider,
-    useRedirect,
-    useNotify,
-    ReferenceInput,
+    useNotify
 } from 'react-admin'
+import { axios } from '@approbado/lib/providers'
+import { useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import TextInput from '@approbado/lib/components/TextInput'
+import CustomSelectInput from '@approbado/lib/components/SelectInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -33,67 +31,64 @@ const validate = (values) => {
     return errors;
 };
 
-const TriviaCreate = props => {
-    const createControllerProps = useCreateController(props);
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
+const TriviaCreate = () => {
     const notify = useNotify();
+    const history = useHistory()
+    const [categories, setCategories] = React.useState([])
 
     const save = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/trivias', values)
+
+            if (data) {
+                history.push(`/trivias/${data.id}/show`)
+                notify(`¡Ha registrado la trivia "${data.name}"!`, 'success')
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, []);
+
+    const fetchCategories = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/configurations/categories')
+
+        setCategories(data)
+    }, [])
 
     React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha registrado la trivia "${data.name}"!`, 'success')
-            redirect(`/trivias/${data.id}/show`)
-        }
-    }, [loaded])
+        fetchCategories();
+    }, [])
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <BaseForm
-                save={save}
-                validate={validate}
-                formName='Crear trivia'
-                loading={loading}
-            >
-                <InputContainer labelName='Nombre'>
-                    <TextInput
-                        name="name"
-                        placeholder="Nombre"
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer labelName='Acceso'>
-                    <SelectInput
-                        source="is_free"
-                        choices={ACCESS_TYPES}
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer labelName='Categoría'>
-                    <ReferenceInput
-                        source='category_id'
-                        reference='configurations/categories'
-                        allowEmpty
-                        fullWidth
-                    >
-                        <SelectInput source="name" emptyText="N/A" />
-                    </ReferenceInput>
-                </InputContainer>
-            </BaseForm>
-        </CreateContextProvider>
+        <BaseForm
+            save={save}
+            validate={validate}
+            formName='Crear trivia'
+        >
+            <InputContainer label='Nombre'>
+                <TextInput
+                    name="name"
+                    placeholder="Nombre"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer label='Acceso'>
+                <SelectInput
+                    source="is_free"
+                    choices={ACCESS_TYPES}
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer label='Categoría'>
+                <CustomSelectInput
+                    name='category_id'
+                    placeholder='Categoría'
+                    options={categories}
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

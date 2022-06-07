@@ -73,7 +73,7 @@ const UserEdit = () => {
             saveButtonLabel='Actualizar'
         >
             <InputContainer
-                labelName='Nombres'
+                label='Nombres'
             >
                 <TextInput
                     name="names"
@@ -81,7 +81,7 @@ const UserEdit = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Correo electrónico'>
+            <InputContainer label='Correo electrónico'>
                 <TextInput
                     label={false}
                     name="email"
@@ -96,7 +96,7 @@ const UserEdit = () => {
                 />
             </Grid>
             <CustomPasswordInput />
-            <InputContainer labelName='Tipo de acceso'>
+            <InputContainer label='Tipo de acceso'>
                 <SelectInput
                     label={false}
                     source="rol"

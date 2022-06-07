@@ -86,7 +86,7 @@ const ResetPassword = () => {
                     </Typography>
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer label='Correo electrónico' md={12}>
                     <TextInput
                         name="email"
                         placeholder="Ingrese su correo electrónico"

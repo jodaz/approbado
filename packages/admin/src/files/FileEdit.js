@@ -63,14 +63,14 @@ const FileEdit = props => {
             loading={loading}
             formName='Editar archivo'
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     source="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Subtema'>
+            <InputContainer label='Subtema'>
                 <ReferenceInput
                     source='subtheme_id'
                     reference='subthemes'
@@ -81,7 +81,7 @@ const FileEdit = props => {
                     <SelectInput source="title" emptyText="N/A" optionText="name" />
                 </ReferenceInput>
             </InputContainer>
-            <InputContainer labelName="" xs={12} md={12}>
+            <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"
                     source='file'

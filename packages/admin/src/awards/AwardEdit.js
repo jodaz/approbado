@@ -62,21 +62,21 @@ const AwardsEdit = props => {
             record={record}
             loading={loading}
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     source="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Ingresa los puntos'>
+            <InputContainer label='Ingresa los puntos'>
                 <NumberInput
                     source="min_points"
                     placeholder="Ingresa los puntos"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Tipo de premio'>
+            <InputContainer label='Tipo de premio'>
                 <SelectInput
                     source="type"
                     choices={ACCESS_TYPES}

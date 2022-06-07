@@ -41,7 +41,7 @@ const CategoryCreate = () => {
             loading={loading}
             formName='Agregar categoría'
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"

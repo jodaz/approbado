@@ -83,7 +83,7 @@ const Login = () => {
                     </Typography>
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer label='Correo electrónico' md={12}>
                     <TextInput
                         name="email"
                         placeholder="Ingrese su correo electrónico"
@@ -91,7 +91,7 @@ const Login = () => {
                         fullWidth
                     />
                 </InputContainer>
-                <InputContainer labelName='Contraseña' md={12}>
+                <InputContainer label='Contraseña' md={12}>
                     <PasswordInput
                         name="password"
                         placeholder="Ingrese su contraseña"

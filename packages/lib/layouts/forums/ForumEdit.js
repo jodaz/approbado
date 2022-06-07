@@ -67,14 +67,14 @@ const ForumEdit = props => {
             record={record}
             validate={validate}
         >
-            <InputContainer labelName='Título' sx={12} md={12}>
+            <InputContainer label='Título' sx={12} md={12}>
                 <TextInput
                     source="message"
                     placeholder="Ingrese un título"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Descripción' sx={12} md={12}>
+            <InputContainer label='Descripción' sx={12} md={12}>
                 <TextInput
                     source="summary"
                     placeholder="Ingrese una descripción (Opcional)"
@@ -82,7 +82,7 @@ const ForumEdit = props => {
                     multiline
                 />
             </InputContainer>
-            <InputContainer labelName='Trivia' sx={12} md={6}>
+            <InputContainer label='Trivia' sx={12} md={6}>
                 <ReferenceInput
                     source="trivia_id"
                     reference="trivias"
@@ -91,7 +91,7 @@ const ForumEdit = props => {
                     <SelectInput />
                 </ReferenceInput>
             </InputContainer>
-            <InputContainer labelName='Categorías' sx={12} md={6}>
+            <InputContainer label='Categorías' sx={12} md={6}>
                 <ReferenceArrayInput
                     source="categories_ids"
                     reference="configurations/categories"

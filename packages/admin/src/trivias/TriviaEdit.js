@@ -71,21 +71,21 @@ const TriviaEdit = ({ record }) => {
 
     return (
         <BaseForm save={save} validate={validate} loading={loading} record={record}>
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Acceso'>
+            <InputContainer label='Acceso'>
                 <SelectInput
                     source="is_free"
                     choices={ACCESS_TYPES}
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Imagen de portada'>
+            <InputContainer label='Imagen de portada'>
                 <Box marginTop='1rem'>
                     <ImageInput
                         source="file"
@@ -101,7 +101,7 @@ const TriviaEdit = ({ record }) => {
                     </Box>
                 </Box>
             </InputContainer>
-            <InputContainer labelName='Categoría'>
+            <InputContainer label='Categoría'>
                 <ReferenceInput
                     source='category_id'
                     reference='configurations/categories'
@@ -110,7 +110,7 @@ const TriviaEdit = ({ record }) => {
                     <SelectInput source="name" />
                 </ReferenceInput>
             </InputContainer>
-            <InputContainer labelName='Planes'>
+            <InputContainer label='Planes'>
                 <ReferenceArrayInput
                     source='plans_ids'
                     reference='memberships/plans'

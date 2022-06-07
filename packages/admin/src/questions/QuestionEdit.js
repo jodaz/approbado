@@ -115,7 +115,7 @@ const QuestionEdit = props => {
                                             Enunciado
                                         </Typography>
                                     </Box>
-                                    <InputContainer labelName='Pregunta' sm={12} md={12}>
+                                    <InputContainer label='Pregunta' sm={12} md={12}>
                                         <TextInput
                                             name="description"
                                             placeholder="Ingresa el enunciado"
@@ -180,7 +180,7 @@ const QuestionEdit = props => {
                                             {'Aclaratorias'}
                                         </Typography>
                                     </Box>
-                                    <InputContainer sm='12' md='6' labelName='Mostrar cuando'>
+                                    <InputContainer sm='12' md='6' label='Mostrar cuando'>
                                         <SelectInput
                                             source="explanation_type"
                                             choices={OPTIONS}
@@ -189,7 +189,7 @@ const QuestionEdit = props => {
                                             emptyText="Sin aclaratoria"
                                         />
                                     </InputContainer>
-                                    <InputContainer sm='12' md='6' labelName='Aclaratoria'>
+                                    <InputContainer sm='12' md='6' label='Aclaratoria'>
                                         <TextInput
                                             name="explanation"
                                             placeholder="Ingrese el texto de la aclaratoria"
@@ -197,7 +197,7 @@ const QuestionEdit = props => {
                                             fullWidth
                                         />
                                     </InputContainer>
-                                    <InputContainer sm='12' md='6' labelName='Archivo de referencia'>
+                                    <InputContainer sm='12' md='6' label='Archivo de referencia'>
                                         <ReferenceInput
                                             source="file_id"
                                             reference="files"
@@ -211,7 +211,7 @@ const QuestionEdit = props => {
                                             />
                                         </ReferenceInput>
                                     </InputContainer>
-                                    <InputContainer labelName='Nivel' sm='12' md='6'>
+                                    <InputContainer label='Nivel' sm='12' md='6'>
                                         <ReferenceInput
                                             source='level_id'
                                             reference='configurations/levels'

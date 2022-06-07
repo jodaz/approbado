@@ -14,7 +14,7 @@ const formatTime = value => {
 const DateInput = ({ submitting }) => (
     <InputContainer
         disabled={submitting}
-        labelName="Hora"
+        label="Hora"
         md={6}
         xs={6}
     >

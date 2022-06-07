@@ -56,7 +56,7 @@ const CategoryEdit = () => {
             loading={loading}
             formName="Editar categoría"
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"

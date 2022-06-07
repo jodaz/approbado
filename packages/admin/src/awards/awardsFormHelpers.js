@@ -15,7 +15,7 @@ export const FileInput = ({ loading }) => {
     if (!values.type) return null;
 
     return (
-        <InputContainer labelName={values.type} md='12'>
+        <InputContainer label={values.type} md='12'>
             {(values.type == 'Certificado') ? (
                 <Box marginTop='1rem'>
                     <UploadFileButton
