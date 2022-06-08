@@ -6,13 +6,13 @@ import Tabs from '@material-ui/core/Tabs'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Route, Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '15rem',
+        minHeight: '8rem',
         width: '100%'
     },
     boxLayoutStyles: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     content: {
-        minHeight: '15rem',
+        minHeight: '10rem',
         paddingTop: '2rem',
         height: '100%'
     },
@@ -53,13 +53,6 @@ function pathnameInPathnames(tags, pathname) {
     return tags.map(({ pathname }) => pathname).includes(pathname)
 }
 
-const Component = props => {
-    const { component } = props
-    const Component = component;
-
-    return Component;
-}
-
 const TabbedList = ({
     tags,
     name,
@@ -71,16 +64,11 @@ const TabbedList = ({
         ? (pathnameInPathnames(tags, query.get('tab')) ? query.get('tab') : null)
         : tags[0].pathname
     ));
-    const tag = tags.filter(tag => tag.pathname === currentTab)[0]
     const classes = useStyles();
 
     const handleChange = (event, newValue) => {
         setCurrentTab(newValue);
     };
-
-    const tabPath = (tabname) => (
-        `${window.location.pathname}?tab=${tabname}`
-    )
 
     if (currentTab == null) return null
 
@@ -88,32 +76,34 @@ const TabbedList = ({
         <Box component='div' className={classes.root}>
             {name && <Typography component='h1' variant='h5'>{name}</Typography>}
             <Box component='div' className={classes.header}>
-                <Tabs
-                    value={currentTab}
-                    indicatorColor="primary"
-                    onChange={handleChange}
-                    className={classes.tabs}
-                    variant="scrollable"
-                    scrollButtons
-                    allowScrollButtonsMobile
-                >
-                    {
-                        tags.map(tag => (
-                            <Tab
-                                key={tag.pathname}
-                                label={tag.name}
-                                value={tag.pathname}
-                                className={classes.tab}
-                                component={Link}
-                                to={tabPath(tag.pathname)}
-                            />
-                        ))
-                    }
-                </Tabs>
+                <Route
+                    path="/"
+                    render={(history) => (
+                        <Tabs
+                            value={currentTab}
+                            indicatorColor="primary"
+                            onChange={handleChange}
+                            className={classes.tabs}
+                            variant="scrollable"
+                            scrollButtons
+                            allowScrollButtonsMobile
+                        >
+                            {
+                                tags.map(tag => (
+                                    <Tab
+                                        key={tag.pathname}
+                                        label={tag.name}
+                                        value={tag.pathname}
+                                        className={classes.tab}
+                                        component={Link}
+                                        to={tag.pathname}
+                                    />
+                                ))
+                            }
+                        </Tabs>
+                    )}
+                />
                 { children && React.cloneElement(children, {})}
-            </Box>
-            <Box component='div' className={classes.content}>
-                <Component {...tag} />
             </Box>
         </Box>
     )

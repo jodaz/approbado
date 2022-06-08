@@ -7,6 +7,7 @@ import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
 import DefaultLayout from './layouts/Default'
 import GameLayout from './layouts/Game'
 import ChatLayout from './layouts/Chat'
+import DashboardLayout from './layouts/Dashboard'
 
 // Views
 import NotificationsView from './notifications'
@@ -17,7 +18,9 @@ import StartTrivia from './trivias/startTrivia'
 import ErrorLayout from '@approbado/lib/layouts/Error'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import ProfileEdit from './profile/EditProfile';
-import Dashboard from './dashboard'
+import TestList from './tests'
+import UserRanking from './ranking'
+import ScheduleForm from './schedule'
 import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Account from './account';
 import Profile from './profile';
@@ -44,7 +47,27 @@ const App = () => (
         <Route path='/auth' render={() => <Authenticate />} />
 
         <Switch>
-            <ProtectedRoute exact path="/" component={() => <Dashboard />} layout={DefaultLayout} />
+            {/**
+             * Dashboard
+             */}
+            <ProtectedRoute
+                exact
+                path="/"
+                component={() => <TestList />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/schedules"
+                component={() => <ScheduleForm />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/ranking"
+                component={() => <UserRanking />}
+                layout={DashboardLayout}
+            />
 
             {/**
              * Account
