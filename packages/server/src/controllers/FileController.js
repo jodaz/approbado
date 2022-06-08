@@ -8,7 +8,7 @@ export const index = async (req, res) => {
 
     try {
         const query = File.query()
-
+        console.log(filter)
         if (filter) {
             if (filter.global_search) {
                 query.where('title', 'ilike', `%${filter.global_search}%`)
