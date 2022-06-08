@@ -76,7 +76,7 @@ const QuestionsUpload = () => {
                     Descargar formato
                 </Link>
             </Box>
-            <InputContainer labelName="" xs={12} md={12}>
+            <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"
                     accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

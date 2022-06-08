@@ -88,7 +88,7 @@ const ScheduleForm = () => {
                                     </Box>
                                     <InputContainer
                                         disabled={submitting}
-                                        labelName='Título de la reunión'
+                                        label='Título de la reunión'
                                         sm={12}
                                         md={12}
                                     >
@@ -102,7 +102,7 @@ const ScheduleForm = () => {
                                     <TimeInput submitting={submitting} />
                                     <InputContainer
                                         disabled={submitting}
-                                        labelName="Participantes"
+                                        label="Participantes"
                                         md={12}
                                         xs={12}
                                     >
@@ -115,7 +115,7 @@ const ScheduleForm = () => {
                                     </InputContainer>
                                     <InputContainer
                                         disabled={submitting}
-                                        labelName="Trivia"
+                                        label="Trivia"
                                         md={12}
                                         xs={12}
                                     >
@@ -128,7 +128,7 @@ const ScheduleForm = () => {
                                     </InputContainer>
                                     <InputContainer
                                         disabled={submitting}
-                                        labelName="Nivel"
+                                        label="Nivel"
                                         md={12}
                                         xs={12}
                                     >
@@ -140,7 +140,7 @@ const ScheduleForm = () => {
                                         />
                                     </InputContainer>
                                     <SubthemesInput submitting={submitting} />
-                                    <InputContainer disabled={submitting} labelName='Descripción' sm={12} md={12}>
+                                    <InputContainer disabled={submitting} label='Descripción' sm={12} md={12}>
                                         <TextInput
                                             name='description'
                                             placeholder='Añadir una descripción'

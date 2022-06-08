@@ -27,6 +27,9 @@ export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
 export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS';
 export const CLEAR_NOTIFICATIONS = 'CLEAR_NOTIFICATIONS';
 export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
+export const SET_ROOM = 'SET_ROOM';
+export const UNSET_CHAT = 'UNSET_CHAT';
+export const SET_CHAT = 'SET_CHAT';
 
 export const unsetSchedule = data => ({
     type: DELETE_SCHEDULE,

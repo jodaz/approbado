@@ -130,6 +130,22 @@ export const validateSendSMSCode = {
 
 export const validateRegisterSchema = {
     ...validateSendSMSCode,
+    user_name: {
+        notEmpty: {
+            errorMessage: 'Ingrese su nombre de usuario.'
+        },
+        custom: {
+            options: async (value) => {
+                const user = await User.query().findOne({
+                    user_name: value
+                });
+
+                if (user) {
+                    throw new Error("El nombre de usuario utilizado ya existe.");
+                }
+            }
+        }
+    },
     code: {
         notEmpty: {
             errorMessage: 'Ingrese el código de verificación para el teléfono'

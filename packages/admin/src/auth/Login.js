@@ -13,9 +13,9 @@ import formStyles from '@approbado/lib/styles/formStyles'
 import { theme } from '@approbado/lib/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
-import { PasswordInput } from 'react-admin'
 import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 import TextInput from '@approbado/lib/components/TextInput'
+import PasswordInput from '@approbado/lib/components/PasswordInput'
 
 const validate = (values) => {
     const errors = {};
@@ -83,7 +83,7 @@ const Login = () => {
                     </Typography>
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer label='Correo electrónico' md={12}>
                     <TextInput
                         name="email"
                         placeholder="Ingrese su correo electrónico"
@@ -91,9 +91,9 @@ const Login = () => {
                         fullWidth
                     />
                 </InputContainer>
-                <InputContainer labelName='Contraseña' md={12}>
+                <InputContainer label='Contraseña' md={12}>
                     <PasswordInput
-                        source="password"
+                        name="password"
                         placeholder="Ingrese su contraseña"
                         disabled={loading}
                         fullWidth

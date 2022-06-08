@@ -8,7 +8,7 @@ import { ReactComponent as GoogleIcon } from "@approbado/lib/icons/GoogleIcon.sv
 
 const Sessions = () => (
     <Grid container spacing={1}>
-        <InputContainer labelName='Email de acceso' sm={12} md={6}>
+        <InputContainer label='Email de acceso' sm={12} md={6}>
             <TextInput name='email' placeholder='hola@email.com' fullWidth />
         </InputContainer>
         <Grid item md={12}>

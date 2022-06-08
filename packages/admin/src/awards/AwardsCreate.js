@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    useRedirect,
     useNotify,
     NumberInput,
     SelectInput
@@ -14,11 +13,12 @@ import isEmpty from 'is-empty'
 import validate from './validateAwardForm'
 import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
 import TextInput from '@approbado/lib/components/TextInput'
+import { useHistory } from 'react-router-dom'
 
 const AwardsCreate = () => {
     const { trivia_id } = useParams()
     const [provider, { data, loading }] = useFileProvider(fileProvider);
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -40,7 +40,7 @@ const AwardsCreate = () => {
     React.useEffect(() => {
         if (!isEmpty(data)) {
             notify(`¡Ha registrado el premio "${data.title}" exitosamente!`, 'success')
-            redirect(`/trivias/${trivia_id}/show?tab=awards`)
+            history.push(`/trivias/${trivia_id}/show?tab=awards`)
         }
     }, [data])
 
@@ -51,21 +51,21 @@ const AwardsCreate = () => {
             formName='Crear premio'
             loading={loading}
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Ingresa los puntos'>
+            <InputContainer label='Ingresa los puntos'>
                 <NumberInput
                     source="min_points"
                     placeholder="Ingresa los puntos"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Tipo de premio'>
+            <InputContainer label='Tipo de premio'>
                 <SelectInput
                     source="type"
                     choices={ACCESS_TYPES}

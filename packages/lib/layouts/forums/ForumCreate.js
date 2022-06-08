@@ -60,14 +60,14 @@ const ForumCreate = () => {
                     content={
                         <Box maxWidth="90em">
                             <Grid container spacing={1}>
-                                <InputContainer labelName='Título' md={12}>
+                                <InputContainer label='Título' md={12}>
                                     <TextInput
                                         source="message"
                                         placeholder="Ingrese un título"
                                         fullWidth
                                     />
                                 </InputContainer>
-                                <InputContainer labelName='Descripción' md={12}>
+                                <InputContainer label='Descripción' md={12}>
                                     <TextInput
                                         source="summary"
                                         placeholder="Ingrese una descripción (Opcional)"
@@ -75,7 +75,7 @@ const ForumCreate = () => {
                                         multiline
                                     />
                                 </InputContainer>
-                                <InputContainer labelName='Trivia'  md={12}>
+                                <InputContainer label='Trivia'  md={12}>
                                     <ReferenceArrayInput
                                         source="trivia_id"
                                         reference="trivias"
@@ -84,7 +84,7 @@ const ForumCreate = () => {
                                         <SelectInput />
                                     </ReferenceArrayInput>
                                 </InputContainer>
-                                <InputContainer labelName='Etiquetas'  md={12}>
+                                <InputContainer label='Etiquetas'  md={12}>
                                     <ReferenceArrayInput
                                         source="categories_ids"
                                         reference="configurations/categories"

@@ -59,7 +59,7 @@ const UpdateProfile = () => {
             record={record}
             validate={validate}
         >
-            <InputContainer labelName='Nombre' md={6} sm={12}>
+            <InputContainer label='Nombre' md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='names'
@@ -67,7 +67,7 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Apellido'  md={6} sm={12}>
+            <InputContainer label='Apellido'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='surnames'
@@ -75,7 +75,7 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Usuario'  md={6} sm={12}>
+            <InputContainer label='Usuario'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='username'
@@ -83,14 +83,14 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Correo electrónico'  md={6} sm={12}>
+            <InputContainer label='Correo electrónico'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='email'
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Ocupación'  md={6} sm={12}>
+            <InputContainer label='Ocupación'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='profession'
@@ -98,14 +98,14 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Teléfono'  md={6} sm={12}>
+            <InputContainer label='Teléfono'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='phone'
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Linkedin'  md={6} sm={12}>
+            <InputContainer label='Linkedin'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='linkedin'
@@ -113,7 +113,7 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Twitter'  md={6} sm={12}>
+            <InputContainer label='Twitter'  md={6} sm={12}>
                 <TextInput
                     label={false}
                     source='twitter'
@@ -121,7 +121,7 @@ const UpdateProfile = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Biografía' xs={12} sm={12} md={12}>
+            <InputContainer label='Biografía' xs={12} sm={12} md={12}>
                 <TextInput
                     label={false}
                     source='twitter'
