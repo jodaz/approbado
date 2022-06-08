@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Grid, InputLabel } from '@material-ui/core'
 import PropTypes from 'prop-types';
 
-const InputContainer = ({ children, labelName, md, xs, sm, ...rest }) => (
+const InputContainer = ({ children, label, md, xs, sm, ...rest }) => (
     <Grid item xs={xs} sm={sm} md={md}>
-        <InputLabel>{labelName}</InputLabel>
+        <InputLabel>{label}</InputLabel>
         {React.cloneElement(children, rest)}
     </Grid>
 )
@@ -16,8 +16,7 @@ InputContainer.propTypes = {
 };
 
 InputContainer.defaultProps = {
-    label: "",
-    labelName: 'Input',
+    label: '',
     children: <React.Fragment />,
     md: 6,
     lg: 3,

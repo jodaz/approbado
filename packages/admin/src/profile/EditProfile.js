@@ -65,14 +65,14 @@ const UpdateProfile = () => {
                             </Box>
                         </Grid>
                         <Grid item md='9' xs='12'>
-                            <InputContainer labelName='Nombre' md={8} sm={8} xs={12}>
+                            <InputContainer label='Nombre' md={8} sm={8} xs={12}>
                                 <TextInput
                                     name='names'
                                     disabled={loading}
                                     fullWidth
                                 />
                             </InputContainer>
-                            <InputContainer labelName='Correo electrónico' md={8} sm={8} xs={12}>
+                            <InputContainer label='Correo electrónico' md={8} sm={8} xs={12}>
                                 <TextInput
                                     name='email'
                                     disabled={loading}

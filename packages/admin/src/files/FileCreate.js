@@ -52,14 +52,14 @@ const FileCreate = () => {
             formName='Crear archivo'
             loading={loading}
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Subtema'>
+            <InputContainer label='Subtema'>
                 <ReferenceInput
                     source='subtheme_id'
                     reference='subthemes'
@@ -70,7 +70,7 @@ const FileCreate = () => {
                     <SelectInput source="title" emptyText="N/A" optionText="name" />
                 </ReferenceInput>
             </InputContainer>
-            <InputContainer labelName="" xs={12} md={12}>
+            <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"
                     accept='application/pdf'

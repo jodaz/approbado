@@ -64,21 +64,21 @@ const SubthemeCreate = () => {
             formName='Crear subtema'
             loading={loading}
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Tiempo límite'>
+            <InputContainer label='Tiempo límite'>
                 <NumberInput
                     source="duration"
                     placeholder="Tiempo límite"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Premio'>
+            <InputContainer label='Premio'>
                 <ReferenceInput
                     source='award_id'
                     reference='awards'

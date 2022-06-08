@@ -188,7 +188,7 @@ const AddFriendsModal = () => {
                             >
                                 <InputContainer
                                     disabled={submitting}
-                                    labelName="Añadir participantes"
+                                    label="Añadir participantes"
                                     md={12}
                                     xs={12}
                                 >
@@ -199,7 +199,7 @@ const AddFriendsModal = () => {
                                         noOptionsText='Sin opciones'
                                     />
                                 </InputContainer>
-                                <InputContainer sx='12' md='12' labelName="Compartir link">
+                                <InputContainer sx='12' md='12' label="Compartir link">
                                     <ClipboardCopyField name="link" disabled />
                                 </InputContainer>
                                 <Link

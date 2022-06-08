@@ -56,21 +56,21 @@ const UpdatePassword = () => {
             loading={loading}
             unresponsive
         >
-            <InputContainer labelName='Contraseña actual' md={8}>
+            <InputContainer label='Contraseña actual' md={8}>
                 <PasswordInput
                     source='curr_password'
                     placeholder="Contraseña actual"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Nueva contraseña' md={8}>
+            <InputContainer label='Nueva contraseña' md={8}>
                 <PasswordInput
                     source='new_password'
                     placeholder="Nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Nueva contraseña' md={8}>
+            <InputContainer label='Nueva contraseña' md={8}>
                 <PasswordInput
                     source='new_password_confirmed'
                     placeholder="Repita la nueva contraseña"

@@ -122,17 +122,17 @@ export default function() {
                                 <Box component="p" marginBottom='2rem' textAlign="center">
                                     Selecciona el rango de fechas y el tipo de pago para crear el reporte.
                                 </Box>
-                                <InputContainer labelName='Tipo de pago' md='12' disabled={submitting}>
+                                <InputContainer label='Tipo de pago' md='12' disabled={submitting}>
                                     <SelectInput
                                         source="payment_method"
                                         choices={TYPES}
                                         fullWidth
                                     />
                                 </InputContainer>
-                                <InputContainer labelName='Desde' md='12' disabled={submitting}>
+                                <InputContainer label='Desde' md='12' disabled={submitting}>
                                     <DateInput source="from" fullWidth />
                                 </InputContainer>
-                                <InputContainer labelName='Hasta' md='12' disabled={submitting}>
+                                <InputContainer label='Hasta' md='12' disabled={submitting}>
                                     <DateInput source="to" fullWidth />
                                 </InputContainer>
                                 <Button

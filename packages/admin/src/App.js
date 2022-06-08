@@ -34,6 +34,7 @@ import TriviaShow from './trivias/TriviaShow';
 import TriviaList from './trivias/TriviaList';
 import UserList from './users/UserList'
 import UserEdit from './users/UserEdit'
+import UserCreate from './users/UserCreate'
 import ReportsView from './reports/ReportsView'
 import ReportShow from './reports/ReportShow'
 import NotFound from './layouts/NotFound'
@@ -80,6 +81,12 @@ const App = () => {
                     resource="users"
                     basePath={routeProps.match.url}
                 />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/users/create'
+                component={() => <UserCreate />}
             />
             <ProtectedRoute layout={Layout} exact path="/users/:id/show" component={() => <UserProfile />} />
             <ProtectedRoute layout={Layout} exact path='/users/:id' component={(routeProps) =>

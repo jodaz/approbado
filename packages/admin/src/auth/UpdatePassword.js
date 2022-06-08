@@ -127,7 +127,7 @@ const UpdatePassword = () => {
                             {(verificationError == undefined)
                                 ? (
                                     <>
-                                        <InputContainer labelName='Nueva contraseña' md={12}>
+                                        <InputContainer label='Nueva contraseña' md={12}>
                                             <TextInput
                                                 name="password"
                                                 placeholder="Ingrese su contraseña"
@@ -135,7 +135,7 @@ const UpdatePassword = () => {
                                                 fullWidth
                                             />
                                         </InputContainer>
-                                        <InputContainer labelName='Confirma tu contraseña' md={12}>
+                                        <InputContainer label='Confirma tu contraseña' md={12}>
                                             <TextInput
                                                 name="password_confirmed"
                                                 placeholder="Repita su contraseña"

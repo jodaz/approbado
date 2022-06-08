@@ -60,42 +60,42 @@ const PlanEdit = props => {
             record={record}
             loading={loading}
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer label='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Ingresa el nombre de la membresía"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Monto'>
+            <InputContainer label='Monto'>
                 <NumberInput
                     source="amount"
                     placeholder="Ingresa el precio de la membresía"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Trivias grupales gratis'>
+            <InputContainer label='Trivias grupales gratis'>
                 <NumberInput
                     source="trivias_in_teams"
                     placeholder="Cantidad"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Duración de la membresía'>
+            <InputContainer label='Duración de la membresía'>
                 <NumberInput
                     source="duration"
                     placeholder="Duración en meses"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Acceso al foro'>
+            <InputContainer label='Acceso al foro'>
                 <SelectInput
                     source="forum_access"
                     choices={ACCESS_TYPES}
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer labelName='Trivias' xs='12' sm='12' md='12'>
+            <InputContainer label='Trivias' xs='12' sm='12' md='12'>
                 <ReferenceArrayInput
                     source="trivia_ids"
                     reference="trivias"

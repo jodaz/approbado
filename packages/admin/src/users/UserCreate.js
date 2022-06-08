@@ -1,19 +1,16 @@
 import * as React from 'react'
 import {
-    useMutation,
-    TextInput,
     SelectInput,
     BooleanInput,
-    useCreateController,
-    CreateContextProvider,
-    useRedirect,
-    useNotify,
-    PasswordInput as RaPasswordInput
+    useNotify
 } from 'react-admin'
-import { useFormState } from 'react-final-form'
 import { Grid } from '@material-ui/core'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers'
+import { useHistory } from 'react-router-dom'
+import CustomPasswordInput from './CustomPasswordInput'
 
 const ACCESS_TYPES = [
     { id: 'Administrador', name: 'Administrador' },
@@ -37,94 +34,64 @@ const validate = (values) => {
     return errors;
 };
 
-const PasswordInput = props => {
-    const { values } = useFormState();
-
-    if (!values.random_pass) {
-        return (
-            <InputContainer labelName='Nombre'>
-                <RaPasswordInput
-                    label={false}
-                    source='password'
-                    placeholder="Contraseña"
-                    fullWidth
-                />
-            </InputContainer>
-        )
-    }
-
-    return null;
-}
-
-const UserCreate = props => {
-    const createControllerProps = useCreateController(props);
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
+const UserCreate = () => {
     const notify = useNotify();
+    const history = useHistory()
 
     const save = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'create',
-                resource: 'users',
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/users', values)
+
+            if (data) {
+                history.push('/users?tab=admins')
+                notify('Se ha completado el registro con éxito', 'success');
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify('Se ha completado el registro con éxito', 'success');
-            redirect('/users?tab=admins')
-        }
-    }, [loaded])
+    }, []);
 
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <BaseForm
-                save={save}
-                validate={validate}
-                loading={loading}
-                formName='Agregar nuevo usuario'
+        <BaseForm
+            save={save}
+            validate={validate}
+            formName='Agregar nuevo usuario'
+        >
+            <InputContainer
+                label='Nombres'
             >
-                <InputContainer
-                    labelName='Nombres'
-                >
-                    <TextInput
-                        source="names"
-                        placeholder="Nombres"
-                        fullWidth
-                    />
-                </InputContainer>
-                <InputContainer labelName='Correo electrónico'>
-                    <TextInput
-                        label={false}
-                        source="email"
-                        placeholder="Correo electronico"
-                        fullWidth
-                    />
-                </InputContainer>
-                <Grid item xs={12}>
-                    <BooleanInput
-                        source="random_pass"
-                        label="Generar contraseña y enviar por correo"
-                    />
-                </Grid>
-                <PasswordInput />
-                <InputContainer labelName='Tipo de acceso'>
-                    <SelectInput
-                        label={false}
-                        source="rol"
-                        choices={ACCESS_TYPES}
-                        fullWidth
-                    />
-                </InputContainer>
-            </BaseForm>
-        </CreateContextProvider>
+                <TextInput
+                    name="names"
+                    placeholder="Nombres"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer label='Correo electrónico'>
+                <TextInput
+                    label={false}
+                    name="email"
+                    placeholder="Correo electronico"
+                    fullWidth
+                />
+            </InputContainer>
+            <Grid item xs={12}>
+                <BooleanInput
+                    source="random_pass"
+                    label="Generar contraseña y enviar por correo"
+                />
+            </Grid>
+            <CustomPasswordInput />
+            <InputContainer label='Tipo de acceso'>
+                <SelectInput
+                    label={false}
+                    source="rol"
+                    choices={ACCESS_TYPES}
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 
