@@ -1,8 +1,4 @@
 import * as React from 'react';
-import {
-    useRedirect,
-    useShowController
-} from 'react-admin'
 import { useParams } from 'react-router-dom'
 import LayerIcon from '@approbado/lib/icons/LayerIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
@@ -11,11 +7,13 @@ import SubthemeEdit from './SubthemeEdit'
 import TabbedList from '@approbado/lib/components/TabbedList'
 import QuestionsList from '../questions/QuestionsList'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import { useHistory } from 'react-router-dom'
 import Header from '../components/Header'
 import Box from '@material-ui/core/Box'
+import { axios } from '@approbado/lib/providers'
 
 const OptionsMenu = props => {
-    const redirect = useRedirect();
+    const history = useHistory();
     const { trivia_id } = props;
 
     return (
@@ -26,7 +24,7 @@ const OptionsMenu = props => {
                 confirmTitle='Eliminar subtema'
                 confirmContent={'¿Está seguro que desea eliminar este subtema?'}
                 label={'Eliminar'}
-                customAction={() => redirect(`/trivias/${trivia_id}/show`)}
+                customAction={() => history.push(`/trivias/${trivia_id}/show`)}
                 {...props}
             />
         </OptionsCardMenu>
@@ -48,15 +46,18 @@ const tags = record => ([
 
 const SubthemeShow = () => {
     const { subtheme_id, trivia_id } = useParams();
-    const showControllerProps = useShowController({
-        basePath: 'subthemes',
-        resource: 'subthemes',
-        id: subtheme_id
-    })
+    const [record, setRecord] = React.useState({})
 
-    const { record, loaded } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`subthemes/${subtheme_id}`)
+            setRecord(data)
+    }, [])
 
-    if (!loaded) return null;
+    React.useEffect(() => {
+        fetchRecord()
+    }, [])
+
+    if (!record) return null;
 
     return (
         <Box marginTop='2rem'>

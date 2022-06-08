@@ -46,7 +46,8 @@ const Select = props => (
 );
 
 ControllableSelectInput.defaultProps = {
-    property: 'name'
+    property: 'name',
+    options: []
 }
 
 export default Select;
