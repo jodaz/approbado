@@ -1,8 +1,5 @@
 import * as React from 'react'
-import {
-    SelectInput,
-    useNotify
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { axios } from '@approbado/lib/providers'
 import { useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
@@ -75,10 +72,9 @@ const TriviaCreate = () => {
                 />
             </InputContainer>
             <InputContainer label='Acceso'>
-                <SelectInput
-                    source="is_free"
-                    choices={ACCESS_TYPES}
-                    fullWidth
+                <CustomSelectInput
+                    name="is_free"
+                    options={ACCESS_TYPES}
                 />
             </InputContainer>
             <InputContainer label='Categoría'>
