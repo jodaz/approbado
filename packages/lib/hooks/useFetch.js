@@ -23,7 +23,7 @@ const getQueryFromParams = ({
     return query;
 }
 
-const useFetch = (url, params) => {
+const useFetch = (url, params = {}) => {
     const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(false)
     const [data, setData] = React.useState([])

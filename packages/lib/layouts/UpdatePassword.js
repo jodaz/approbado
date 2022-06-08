@@ -1,10 +1,8 @@
 import * as React from 'react'
-import {
-    PasswordInput,
-    useNotify
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import PasswordInput from '@approbado/lib/components/PasswordInput'
 import { axios } from '@approbado/lib/providers';
 
 const validate = values => {

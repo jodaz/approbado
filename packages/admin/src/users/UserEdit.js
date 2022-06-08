@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    SelectInput,
     BooleanInput,
     useNotify
 } from 'react-admin'
@@ -11,6 +10,7 @@ import CustomPasswordInput from './CustomPasswordInput'
 import { useHistory, useParams } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
 import { axios } from '@approbado/lib/providers'
+import SelectInput from '@approbado/lib/components/SelectInput'
 
 const ACCESS_TYPES = [
     { id: 'Administrador', name: 'Administrador' },
@@ -99,8 +99,8 @@ const UserEdit = () => {
             <InputContainer label='Tipo de acceso'>
                 <SelectInput
                     label={false}
-                    source="rol"
-                    choices={ACCESS_TYPES}
+                    options={ACCESS_TYPES}
+                    name='rol'
                     fullWidth
                 />
             </InputContainer>

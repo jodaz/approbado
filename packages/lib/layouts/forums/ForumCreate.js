@@ -8,7 +8,6 @@ import {
     useMutation,
     useRedirect,
     useNotify,
-    SelectArrayInput,
     ReferenceArrayInput,
     SelectInput
 } from 'react-admin'

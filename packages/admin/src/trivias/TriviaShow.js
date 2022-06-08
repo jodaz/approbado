@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useRedirect, useShowController } from 'react-admin'
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
 import TabbedList from '@approbado/lib/components/TabbedList'
 import Box from '@material-ui/core/Box';
@@ -7,7 +6,9 @@ import Header from '../components/Header'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
-
+import { axios } from '@approbado/lib/providers';
+import { useHistory, useParams } from 'react-router-dom'
+import Spinner from '@approbado/lib/components/Spinner'
 // Components
 import TriviaEdit from './TriviaEdit'
 import SubthemesList from '../subthemes/SubthemesList'
@@ -44,7 +45,7 @@ const tags = record => ([
 ])
 
 const OptionsMenu = props => {
-    const redirect = useRedirect();
+    const history = useHistory();
 
     return (
         <OptionsCardMenu icon={<More />}>
@@ -54,19 +55,28 @@ const OptionsMenu = props => {
                 confirmTitle='Eliminar trivia'
                 confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
                 label={'Eliminar'}
-                customAction={() => redirect('/trivias')}
+                customAction={() => history.push('/trivias')}
                 {...props}
             />
         </OptionsCardMenu>
     )
 };
 
-const TriviaShow = props => {
-    const showControllerProps = useShowController(props)
+const TriviaShow = () => {
+    const { id } = useParams();
+    const [record, setRecord] = React.useState({})
 
-    const { record, loaded } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/trivias/${id}`)
 
-    if (!loaded) return null;
+        setRecord(data)
+    }, [])
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!record) return <Spinner />;
 
     return (
         <Box display="flex" marginTop="2rem" flexDirection='column'>
@@ -81,11 +91,6 @@ const TriviaShow = props => {
             />
         </Box>
     )
-}
-
-TriviaShow.defaultProps = {
-    basePath: 'trivias',
-    resource: 'trivias'
 }
 
 export default TriviaShow;
