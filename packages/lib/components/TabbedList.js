@@ -50,13 +50,16 @@ const TabbedList = ({
     name,
     children
 }) => {
-    const location = useLocation();
-    const [currentTab, setCurrentTab] = React.useState(location.pathname);
+    const { pathname } = useLocation();
+    const [currentTab, setCurrentTab] = React.useState(pathname);
     const classes = useStyles();
 
-    const handleChange = (event, newValue) => {
-        setCurrentTab(newValue);
-    };
+    React.useEffect(() => {
+        if (pathname) {
+            setCurrentTab(pathname)
+        }
+    }, [pathname])
+
 
     if (currentTab == null) return null
 
@@ -70,7 +73,6 @@ const TabbedList = ({
                         <Tabs
                             value={currentTab}
                             indicatorColor="primary"
-                            onChange={handleChange}
                             className={classes.tabs}
                             variant="scrollable"
                             scrollButtons
