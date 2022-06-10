@@ -1,13 +1,13 @@
 import * as React from 'react';
 import SettingsIcon from '@approbado/lib/icons/SettingsIcon';
 import MenuItemLink from '@approbado/lib/components/MenuItemLink'
-import users from '../users';
-import trivias from '../trivias'
+import InformationIcon from '@approbado/lib/icons/InformationIcon'
 import LogoutButton from '@approbado/lib/components/LogoutButton'
+import UsersIcon from '@approbado/lib/icons/UsersIcon'
 import HomeIcon from '@approbado/lib/icons/HomeIcon';
 import DollarIcon from '@approbado/lib/icons/DollarIcon';
 import Typography from '@material-ui/core/Typography'
-import reports from '../reports';
+import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -21,17 +21,17 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
             exact
         />
         <MenuItemLink
-            to='/trivias'
-            primaryText={trivias.options.label}
-            leftIcon={<trivias.icon />}
+            to="/trivias"
+            primaryText='Trivias'
+            leftIcon={<BalanceIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
         />
         <MenuItemLink
             to='/users'
-            primaryText={users.options.label}
-            leftIcon={<users.icon />}
+            primaryText='Usuarios'
+            leftIcon={<UsersIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
@@ -46,8 +46,8 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
         />
         <MenuItemLink
             to='/reports'
-            primaryText={reports.options.label}
-            leftIcon={<reports.icon />}
+            primaryText='Reportes'
+            leftIcon={<InformationIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}

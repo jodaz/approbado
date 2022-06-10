@@ -1,26 +1,27 @@
 import * as React from 'react'
+// Components
 import Admin from '../layouts/Admin'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [
     {
-        name: 'Pagos',
-        pathname: 'payments'
+        name: 'Registrados',
+        pathname: 'clients'
     },
     {
-        name: 'Planes',
-        pathname: 'plans'
+        name: 'Moderadores',
+        pathname: 'admins'
     },
 ]
 
-const Memberships = ({ children }) => (
+const UserListLayout = ({ children }) => (
     <Admin>
         <TabbedList
             tags={tags}
-            name='Pagos y membresías'
+            name='Usuarios'
         />
         {children}
     </Admin>
 )
 
-export default Memberships
+export default UserListLayout

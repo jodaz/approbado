@@ -1,7 +1,4 @@
 import * as React from 'react';
-import {
-    useShowController
-} from 'react-admin'
 import Box from '@material-ui/core/Box';
 import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
@@ -11,12 +8,12 @@ import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
-import Spinner from '@approbado/lib/components/Spinner'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
 import CommentList from '@approbado/lib/layouts/comments/CommentList'
-
+import { axios } from '@approbado/lib/providers';
+import { useParams } from 'react-router-dom'
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
@@ -63,9 +60,10 @@ const emptyTitle = ({ is_registered }) => (
     (!is_registered) ? 'Sin comentarios' : 'Sé el primero en comentar'
 )
 
-const ForumShow = props => {
+const ForumShow = () => {
     const { user } = useUserState();
-    const showControllerProps = useShowController(props)
+    const { id } = useParams();
+    const [record, setRecord] = React.useState(null)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -74,9 +72,17 @@ const ForumShow = props => {
     });
     const { setDialog } = useDialogDispatch('forums.warning')
 
-    const { record, loading } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/forums/${id}`);
 
-    if (loading) return <Spinner />;
+        setRecord(data);
+    }, []);
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!record) return null;
 
     return (
         <Box className={classes.root} paddingBottom="5rem">

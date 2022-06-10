@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useRedirect, useShowController } from 'react-admin'
 import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
 import TabbedList from '@approbado/lib/components/TabbedList'
 import Box from '@material-ui/core/Box';
@@ -7,44 +6,35 @@ import Header from '../components/Header'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
+import Admin from '../layouts/Admin';
+import { axios } from '@approbado/lib/providers';
+import { useHistory, useParams } from 'react-router-dom'
 
-// Components
-import TriviaEdit from './TriviaEdit'
-import SubthemesList from '../subthemes/SubthemesList'
-import AwardsList from '../awards/AwardsList'
-import FilesList from '../files/FilesList'
-import QuestionsList from '../questions/QuestionsList'
-
-const tags = record => ([
+const tags = id => ([
     {
         name: 'Subtemas',
-        pathname: 'subthemes',
-        component: <SubthemesList record={record} />
+        pathname: `/trivias/${id}/subthemes`
     },
     {
         name: 'Archivos',
-        pathname: 'files',
-        component: <FilesList record={record} />
+        pathname: `/trivias/${id}/files`
     },
     {
         name: 'Premios',
-        pathname: 'awards',
-        component: <AwardsList record={record} />
+        pathname: `/trivias/${id}/awards`
     },
     {
         name: 'Preguntas',
-        pathname: 'questions',
-        component: <QuestionsList record={record} filter={{ trivia_id: record.id }} />
+        pathname: `/trivias/${id}/questions`,
     },
     {
         name: 'General',
-        pathname: 'general',
-        component: <TriviaEdit record={record} />
+        pathname: `/trivias/${id}`
     },
 ])
 
 const OptionsMenu = props => {
-    const redirect = useRedirect();
+    const history = useHistory();
 
     return (
         <OptionsCardMenu icon={<More />}>
@@ -54,32 +44,48 @@ const OptionsMenu = props => {
                 confirmTitle='Eliminar trivia'
                 confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
                 label={'Eliminar'}
-                customAction={() => redirect('/trivias')}
+                customAction={() => history.push('/trivias')}
                 {...props}
             />
         </OptionsCardMenu>
     )
 };
 
-const TriviaShow = props => {
-    const showControllerProps = useShowController(props)
+const TriviaShow = ({ children }) => {
+    const { id } = useParams();
+    const [record, setRecord] = React.useState(null)
 
-    const { record, loaded } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/trivias/${id}`);
 
-    if (!loaded) return null;
+        setRecord(data);
+    }, []);
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!record) return null;
 
     return (
-        <Box display="flex" marginTop="2rem" flexDirection='column'>
-            <Header
-                record={record}
-                icon={<BalanceIcon />}
-                name='Trivia'
-                menu={<OptionsMenu record={record} />}
-            />
-            <TabbedList
-                tags={tags(record)}
-            />
-        </Box>
+        <Admin>
+            <Box display="flex" marginTop="2rem" flexDirection='column'>
+                <Header
+                    record={record}
+                    icon={<BalanceIcon />}
+                    name='Trivia'
+                    menu={<OptionsMenu record={record} />}
+                />
+                <TabbedList
+                    tags={tags(id)}
+                />
+                {React.Children.map(children, child => (
+                    React.cloneElement(child, {
+                        record: record
+                    })
+                ))}
+            </Box>
+        </Admin>
     )
 }
 

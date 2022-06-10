@@ -4,8 +4,7 @@ import {
     useNotify,
     useRefresh,
     ReferenceInput,
-    SelectInput,
-    NumberInput
+    SelectInput
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -56,7 +55,6 @@ const SubthemeEdit = ({ record }) => {
     return (
         <BaseForm
             save={save}
-            loading={loading}
             record={record}
             validate={validate}
         >
@@ -68,8 +66,9 @@ const SubthemeEdit = ({ record }) => {
                 />
             </InputContainer>
             <InputContainer label='Tiempo límite'>
-                <NumberInput
-                    source="duration"
+                <TextInput
+                    type='number'
+                    name="duration"
                     placeholder="Tiempo límite"
                     fullWidth
                 />

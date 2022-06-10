@@ -1,27 +1,25 @@
-import UpdatePassword from '@approbado/lib/layouts/UpdatePassword'
-import EditProfile from './EditProfile'
 import TabbedList from '@approbado/lib/components/TabbedList'
+import Admin from '../layouts/Admin'
 
 const tags = [
     {
         name: 'General',
-        pathname: 'general',
-        component: <EditProfile />
+        pathname: '/profile/about'
     },
     {
         name: 'Actualizar contraseña',
-        pathname: 'update password',
-        component: <UpdatePassword />
+        pathname: '/profile/security'
     },
 ]
 
-const Profile = () => {
-    return (
+const Profile = ({ children }) => (
+    <Admin>
         <TabbedList
             tags={tags}
             name='Perfil'
         />
-    );
-}
+        {children}
+    </Admin>
+);
 
 export default Profile

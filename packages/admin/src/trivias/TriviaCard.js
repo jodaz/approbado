@@ -47,7 +47,7 @@ const TriviaCard = ({ data, id }) => {
     const classes = { ...cardStyles(), ...useStyles() };
     const history = useHistory();
 
-    const handleRedirect = () => history.push(`/trivias/${id}/show`)
+    const handleRedirect = () => history.push(`/trivias/${id}`)
 
     return (
         <Card className={classes.root} onClick={handleRedirect}>
