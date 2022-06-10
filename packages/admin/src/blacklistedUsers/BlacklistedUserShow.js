@@ -62,7 +62,7 @@ const BlacklistedUserShow = () => {
         fetchRecord();
     }, [])
 
-    if (!record) return <Spinner />;
+    if (!Object.entries(record).length) return <Spinner />;
 
     const { names, user_name, id, picture } = record
 

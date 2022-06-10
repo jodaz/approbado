@@ -70,7 +70,7 @@ const ReportShow = () => {
         fetchRecord();
     }, [])
 
-    if (!record) return <Spinner />;
+    if (!Object.entries(record).length) return <Spinner />;
 
     return (
         <Box>

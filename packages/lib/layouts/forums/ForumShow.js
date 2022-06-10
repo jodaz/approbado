@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {
-    useShowController
-} from 'react-admin'
+import { axios } from '@approbado/lib/providers';
 import Box from '@material-ui/core/Box';
 import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
@@ -63,9 +61,8 @@ const emptyTitle = ({ is_registered }) => (
     (!is_registered) ? 'Sin comentarios' : 'Sé el primero en comentar'
 )
 
-const ForumShow = props => {
+const ForumShow = () => {
     const { user } = useUserState();
-    const showControllerProps = useShowController(props)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -73,10 +70,20 @@ const ForumShow = props => {
         isXSmall: isXSmall
     });
     const { setDialog } = useDialogDispatch('forums.warning')
+    const { id } = useParams();
+    const [record, setRecord] = React.useState({})
 
-    const { record, loading } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/forums/${id}`)
 
-    if (loading) return <Spinner />;
+        setRecord(data)
+    }, [])
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!Object.entries(record).length) return <Spinner />;
 
     return (
         <Box className={classes.root} paddingBottom="5rem">

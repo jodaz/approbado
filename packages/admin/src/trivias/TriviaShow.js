@@ -76,7 +76,7 @@ const TriviaShow = () => {
         fetchRecord();
     }, [])
 
-    if (!record) return <Spinner />;
+    if (!Object.entries(record).length) return <Spinner />;
 
     return (
         <Box display="flex" marginTop="2rem" flexDirection='column'>
