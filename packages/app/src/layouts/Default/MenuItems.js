@@ -11,7 +11,7 @@ import MessageIcon from '@approbado/lib/icons/MessageIcon'
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
         <MenuItemLink
-            to="/"
+            to="/dashboard"
             primaryText='Inicio'
             leftIcon={<HomeIcon />}
             onClick={onMenuClick}

@@ -45,25 +45,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
-
-function pathnameInPathnames(tags, pathname) {
-    return tags.map(({ pathname }) => pathname).includes(pathname)
-}
-
 const TabbedList = ({
     tags,
     name,
     children
 }) => {
-    let query = useQuery();
-    const [currentTab, setCurrentTab] = React.useState(() => (
-        query.get('tab')
-        ? (pathnameInPathnames(tags, query.get('tab')) ? query.get('tab') : null)
-        : tags[0].pathname
-    ));
+    const location = useLocation();
+    const [currentTab, setCurrentTab] = React.useState(location.pathname);
     const classes = useStyles();
 
     const handleChange = (event, newValue) => {
@@ -78,7 +66,7 @@ const TabbedList = ({
             <Box component='div' className={classes.header}>
                 <Route
                     path="/"
-                    render={(history) => (
+                    render={() => (
                         <Tabs
                             value={currentTab}
                             indicatorColor="primary"

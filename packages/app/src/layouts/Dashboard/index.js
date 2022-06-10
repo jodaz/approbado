@@ -10,19 +10,19 @@ import Default from '../Default'
 const tags = [
     {
         name: 'Pruebas',
-        pathname: '/'
+        pathname: '/dashboard'
     },
     {
         name: 'Agenda',
-        pathname: 'schedules'
+        pathname: '/dashboard/schedules'
     },
     {
         name: 'Puntajes',
-        pathname: 'ranking'
+        pathname: '/dashboard/ranking'
     },
     {
         name: 'Pruebas realizadas',
-        pathname: 'tests-made'
+        pathname: '/dashboard/completed'
     }
 ]
 

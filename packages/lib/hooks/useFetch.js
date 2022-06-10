@@ -32,12 +32,6 @@ const useFetch = (url, params) => {
     const [data, setData] = React.useState([])
     const [hasMore, setHasMore] = React.useState(null)
     const [total, setTotal] = React.useState(null)
-    const {
-        perPage,
-        page,
-        filter,
-        sort
-    } = params
 
     React.useEffect(() => {
         if (hasMore == null || hasMore == true) {
@@ -62,7 +56,7 @@ const useFetch = (url, params) => {
                 setError(true)
             })
         }
-    }, [page, perPage, filter, sort])
+    }, [params])
 
     return { loading, error, data, hasMore, total }
 }

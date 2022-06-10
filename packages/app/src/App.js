@@ -1,6 +1,6 @@
 import * as React from 'react'
 // Other resources
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
 
 // Layouts
@@ -20,6 +20,7 @@ import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import ProfileEdit from './profile/EditProfile';
 import TestList from './tests'
 import UserRanking from './ranking'
+import CompletedGames from './completedGames'
 import ScheduleForm from './schedule'
 import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Account from './account';
@@ -50,22 +51,29 @@ const App = () => (
             {/**
              * Dashboard
              */}
+            <Redirect exact from='/' to='/dashboard' />
             <ProtectedRoute
                 exact
-                path="/"
+                path="/dashboard"
                 component={() => <TestList />}
                 layout={DashboardLayout}
             />
             <ProtectedRoute
                 exact
-                path="/schedules"
+                path="/dashboard/schedules"
                 component={() => <ScheduleForm />}
                 layout={DashboardLayout}
             />
             <ProtectedRoute
                 exact
-                path="/ranking"
+                path="/dashboard/ranking"
                 component={() => <UserRanking />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/dashboard/completed"
+                component={() => <CompletedGames />}
                 layout={DashboardLayout}
             />
 
