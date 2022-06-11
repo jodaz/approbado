@@ -256,7 +256,11 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
-        const model = await Schedule.query().findById(id)
+        const model = await Schedule.query()
+            .findById(id)
+            .withGraphFetched('participants')
+
+        model.users_ids = model.participants
 
         return res.status(201).json(model)
     } catch(error){

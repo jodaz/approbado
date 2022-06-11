@@ -60,7 +60,7 @@ const App = () => (
             />
             <ProtectedRoute
                 exact
-                path="/dashboard/schedules"
+                path="/dashboard/schedules/:id?"
                 component={() => <ScheduleForm />}
                 layout={DashboardLayout}
             />

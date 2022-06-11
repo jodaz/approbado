@@ -8,45 +8,64 @@ import { Field } from 'react-final-form'
 const ControllableSelectInput = props => {
     const {
         meta: { touched, error, submitError, initial } = { touched, initial, error, submitError },
-        input: { onChange, value, ...restInputProps },
+        input: { onChange, value, multiple, ...restInputProps },
         meta,
         options,
         property,
-        inputProps
+        inputProps,
+        ...rest
     } = props;
+    const [defaultValue] = React.useState((() => {
+        if (multiple && value.length && options.length) {
+            return options.filter(item => value.includes(item))
+                .filter((item, index, self) => self.indexOf(item) === index);
+        } else if (!multiple && value && options.length) {
+            return options.find(item => item.id == value);
+        } else {
+            return multiple ? [] : null;
+        }
+    })());
+
+    console.log(restInputProps.name, defaultValue, value)
+
+    const handleChange = (event, option) => (onChange(option.id))
+
+    const handleMultipleChange = (event, option) => (onChange(option.map(items => items.id)))
 
     if (!options.length) return null;
 
     return (
-        <FormControl className="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense MuiFormControl-fullWidth">
+        <FormControl className="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense MuiFormControl-fullWidth" style={{ width: '100%' }}>
             <Autocomplete
-                value={value}
+                multiple={multiple}
                 {...restInputProps}
                 options={options}
                 getOptionLabel={option => option[property]}
-                renderInput={(params) => (
+                renderInput={params => (
                     <TextField
                         {...params}
-                        {...inputProps}
+                        InputProps={{ ...params.InputProps, ...inputProps }}
                     />
                 )}
-                onChange={(event, option) => (onChange(option.id))}
-                fullWidth
+                defaultValue={defaultValue}
+                onChange={multiple ? handleMultipleChange : handleChange}
+                {...rest}
             />
             {meta.error && meta.touched && <FormHelperText error>{meta.error}</FormHelperText>}
         </FormControl>
     );
 }
 
-const Select = props => (
-    <Field
-        component={ControllableSelectInput}
-        {...props}
-    />
+const SelectInput = props => (
+    <Field {...props}>
+        {props => (
+            <ControllableSelectInput {...props} />
+        )}
+    </Field>
 );
 
 ControllableSelectInput.defaultProps = {
     property: 'name'
 }
 
-export default Select;
+export default SelectInput;

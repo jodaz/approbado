@@ -94,7 +94,7 @@ const ScheduledTriviaCard = props => {
                     className={classes.header}
                     action={
                         <OptionsCardMenu icon={<MoreIcon />}>
-                            <EditEvent />
+                            <EditEvent {...props} />
                             <DeleteEvent {...props} />
                         </OptionsCardMenu>
                     }

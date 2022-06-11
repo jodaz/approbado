@@ -1,42 +1,38 @@
 import * as React from 'react'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { useFormState } from 'react-final-form'
-import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import { axios } from '@approbado/lib/providers'
 import SelectInput from '@approbado/lib/components/SelectInput'
 import Box from '@material-ui/core/Box'
+import IdeaIcon from '@approbado/lib/icons/IdeaIcon'
 
 const SubthemesInput = ({ submitting }) => {
-    const { values: { trivia_id } } = useFormState();
-    const [subthemes, setSubthemes] = React.useState([])
+    const [levels, setLevels] = React.useState([])
 
-    const fetchSubthemes = React.useCallback(async (trivia) => {
-        const { data: { data } } = await axios.get(`/subthemes?filter[trivia_id]=${trivia}`)
-        setSubthemes(data)
+    const fetchLevels = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/configurations/levels')
+        setLevels(data)
     }, []);
 
     React.useEffect(() => {
-        if (trivia_id) {
-            fetchSubthemes(trivia_id);
-        }
-    }, [trivia_id])
+        fetchLevels();
+    }, [])
 
-    if (!trivia_id) return null;
+    if (!Object.entries(levels).length) return null;
 
     return (
         <InputContainer
             disabled={submitting}
-            label="Tema"
+            label="Nivel"
             md={12}
             xs={12}
         >
             <SelectInput
-                name='subtheme_id'
-                options={subthemes}
+                name='level_id'
+                options={levels}
                 inputProps={{
                     startAdornment: (
                         <Box marginLeft='6px' display='flex'>
-                            <LayerIcon />
+                            <IdeaIcon />
                         </Box>
                     )
                 }}
