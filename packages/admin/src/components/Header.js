@@ -1,13 +1,9 @@
 import * as React from 'react';
-import { useRedirect } from 'react-admin'
 import { makeStyles } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import DeleteButton from '@approbado/lib/components/DeleteButton'
-import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
-import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,24 +25,6 @@ const useStyles = makeStyles(theme => ({
         marginRight: '0.5rem'
     }
 }))
-
-const OptionsMenu = props => {
-    const redirect = useRedirect();
-
-    return (
-        <OptionsCardMenu icon={<More />}>
-            <DeleteButton
-                basePath='trivias'
-                confirmColor='warning'
-                confirmTitle='Eliminar trivia'
-                confirmContent={'¿Está seguro que desea eliminar esta trivia?'}
-                label={'Eliminar'}
-                customAction={() => redirect('/trivias')}
-                {...props}
-            />
-        </OptionsCardMenu>
-    )
-};
 
 const TriviaShowHeader = ({ record, icon, name, menu }) => {
     const classes = useStyles();

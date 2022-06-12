@@ -94,12 +94,6 @@ const App = () => {
             <ProtectedRoute
                 layout={Layout}
                 exact
-                path="/profile"
-                component={() => <Profile />}
-            />
-            <ProtectedRoute
-                layout={Layout}
-                exact
                 path="/error"
                 component={() => <ErrorLayout />}
             />

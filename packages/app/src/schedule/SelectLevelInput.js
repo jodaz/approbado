@@ -5,7 +5,7 @@ import SelectInput from '@approbado/lib/components/SelectInput'
 import Box from '@material-ui/core/Box'
 import IdeaIcon from '@approbado/lib/icons/IdeaIcon'
 
-const SubthemesInput = ({ submitting }) => {
+const SelectLevelInput = ({ submitting }) => {
     const [levels, setLevels] = React.useState([])
 
     const fetchLevels = React.useCallback(async () => {
@@ -41,4 +41,4 @@ const SubthemesInput = ({ submitting }) => {
     )
 }
 
-export default SubthemesInput
+export default SelectLevelInput

@@ -6,22 +6,7 @@ import TextInput from '@approbado/lib/components/TextInput'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import { axios } from '@approbado/lib/providers'
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.duration) {
-        errors.duration = "Ingrese un tiempo límite.";
-    }
-    if (!values.award_id) {
-        errors.award_id = "Seleccione un premio.";
-    }
-
-    return errors;
-};
+import validate from './subthemeValidations'
 
 const SubthemeEdit = ({ record }) => {
     const notify = useNotify();

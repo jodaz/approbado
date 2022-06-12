@@ -6,15 +6,15 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 const tags = [
     {
         name: 'Nuevos',
-        pathname: 'recent'
+        pathname: '/reports/recent'
     },
     {
         name: 'Lista negra',
-        pathname: 'blacklisted'
+        pathname: '/reports/blacklisted'
     },
     {
         name: 'Restringidos',
-        pathname: 'restricted'
+        pathname: '/reports/restricted'
     },
 ]
 

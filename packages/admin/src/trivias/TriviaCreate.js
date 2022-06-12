@@ -5,33 +5,18 @@ import { useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import TextInput from '@approbado/lib/components/TextInput'
-import CustomSelectInput from '@approbado/lib/components/SelectInput'
+import SelectInput from '@approbado/lib/components/SelectInput'
+import SelectCategoryInput from './SelectCategoryInput'
+import validate from './validateTrivias'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
     { id: '0', name: 'De pago' }
 ]
 
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.category_id) {
-        errors.category_id = "Seleccione una categoría.";
-    }
-    if (!values.is_free) {
-        errors.is_free = "Seleccione un acceso.";
-    }
-
-    return errors;
-};
-
 const TriviaCreate = () => {
     const notify = useNotify();
     const history = useHistory()
-    const [categories, setCategories] = React.useState([])
 
     const save = React.useCallback(async (values) => {
         try {
@@ -48,16 +33,6 @@ const TriviaCreate = () => {
         }
     }, []);
 
-    const fetchCategories = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/configurations/categories')
-
-        setCategories(data)
-    }, [])
-
-    React.useEffect(() => {
-        fetchCategories();
-    }, [])
-
     return (
         <BaseForm
             save={save}
@@ -72,18 +47,12 @@ const TriviaCreate = () => {
                 />
             </InputContainer>
             <InputContainer label='Acceso'>
-                <CustomSelectInput
+                <SelectInput
                     name="is_free"
                     options={ACCESS_TYPES}
                 />
             </InputContainer>
-            <InputContainer label='Categoría'>
-                <CustomSelectInput
-                    name='category_id'
-                    placeholder='Categoría'
-                    options={categories}
-                />
-            </InputContainer>
+            <SelectCategoryInput />
         </BaseForm>
     )
 }

@@ -6,11 +6,11 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 const tags = [
     {
         name: 'Categorías',
-        pathname: 'categories'
+        pathname: '/configurations/categories'
     },
     {
         name: 'Niveles',
-        pathname: 'levels'
+        pathname: '/configurations/levels'
     },
 ]
 

@@ -58,7 +58,7 @@ const FileCreate = () => {
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
             notify(`¡Ha registrado el archivo "${fileDataResponse.title}" exitosamente!`, 'success')
-            history.push(`/trivias/${trivia_id}/show?tab=files`)
+            history.push(`/trivias/${trivia_id}/files`)
         }
     }, [fileDataResponse])
 

@@ -104,7 +104,7 @@ const QuestionCreate = () => {
 
             if (data) {
                 notify('¡Has creado una nueva pregunta!', 'success')
-                history.push(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show?tab=questions`)
+                history.push(`/trivias/${trivia_id}/subthemes/${subtheme_id}/questions`)
             }
         } catch (error) {
             if (error.response.data.errors) {

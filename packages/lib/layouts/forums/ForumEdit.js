@@ -1,9 +1,7 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useNotify,
-    useRedirect,
     SelectInput,
     ReferenceInput,
     useEditController,
@@ -12,6 +10,8 @@ import {
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
+import { useHistory } from 'react-router-dom'
+import TextInput from '@approbado/lib/components/TextInput'
 
 const validate = values => {
     const errors = {};
@@ -33,7 +33,7 @@ const ForumEdit = props => {
     const editControllerProps = useEditController(props);
     const [mutate, { data, loading, loaded }] = useMutation();
     const notify = useNotify();
-    const redirect = useRedirect()
+    const history = useHistory()
 
     const save = React.useCallback(async values => {
         try {
@@ -52,7 +52,7 @@ const ForumEdit = props => {
     React.useEffect(() => {
         if (loaded) {
             notify('Se ha completado la actualización con éxito', 'success')
-            redirect(`/forums/${record.id}/show`)
+            history.push(`/forums/${record.id}/show`)
         }
     }, [loaded])
 
@@ -69,14 +69,14 @@ const ForumEdit = props => {
         >
             <InputContainer label='Título' sx={12} md={12}>
                 <TextInput
-                    source="message"
+                    name="message"
                     placeholder="Ingrese un título"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Descripción' sx={12} md={12}>
                 <TextInput
-                    source="summary"
+                    name="summary"
                     placeholder="Ingrese una descripción (Opcional)"
                     fullWidth
                     multiline

@@ -1,35 +1,27 @@
 import * as React from 'react'
-import {
-    TextInput,
-    useRedirect,
-    useNotify,
-    NumberInput,
-    SelectInput,
-    useEditController
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
-import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
 import validate from './validateAwardForm'
 import Spinner from '@approbado/lib/components/Spinner'
 import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
+import { useHistory, useParams } from 'react-router-dom'
+import { axios } from '@approbado/lib/providers'
+import TextInput from '@approbado/lib/components/TextInput'
+import SelectInput from '@approbado/lib/components/SelectInput'
 
-const AwardsEdit = props => {
+const AwardsEdit = () => {
     const { award_id, trivia_id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: award_id
-    });
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
-    const redirect = useRedirect()
+    const [record, setRecord] = React.useState({})
+    const history = useHistory();
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         const data = { id: award_id, data: values };
-
         try {
             await provider({
                 resource: 'awards',
@@ -41,18 +33,27 @@ const AwardsEdit = props => {
                 return error.response.data.errors;
             }
         }
-    }, [provider, trivia_id])
+    }, [provider])
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
             notify(`¡Ha actualizado el premio "${fileDataResponse.title}" exitosamente!`, 'success')
-            redirect(`/trivias/${trivia_id}/show?tab=awards`)
+            history.push(`/trivias/${trivia_id}/awards`)
         }
     }, [fileDataResponse])
 
-    const { record, loading: isRecordFetched } = editControllerProps
 
-    if (isRecordFetched) return <Spinner />
+    React.useEffect(async () => {
+        if (award_id) {
+            const { data } = await axios.get(`/awards/${award_id}`)
+
+            if (Object.entries(data).length) {
+                setRecord(data)
+            }
+        }
+    }, [award_id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm
@@ -64,33 +65,29 @@ const AwardsEdit = props => {
         >
             <InputContainer label='Nombre'>
                 <TextInput
-                    source="title"
+                    name="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Ingresa los puntos'>
-                <NumberInput
-                    source="min_points"
+                <TextInput
+                    type='number'
+                    name="min_points"
                     placeholder="Ingresa los puntos"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Tipo de premio'>
                 <SelectInput
-                    source="type"
-                    choices={ACCESS_TYPES}
+                    name="type"
+                    options={ACCESS_TYPES}
                     fullWidth
                 />
             </InputContainer>
             <FileInput />
         </BaseForm>
     )
-}
-
-AwardsEdit.defaultProps = {
-    basePath: '/awards',
-    resource: 'awards'
 }
 
 export default AwardsEdit

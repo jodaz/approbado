@@ -4,7 +4,6 @@ import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import PasswordInput from '@approbado/lib/components/PasswordInput'
 import { axios } from '@approbado/lib/providers';
-import PasswordInput from '../components/PasswordInput';
 
 const validate = values => {
     const errors = {};

@@ -1,11 +1,10 @@
 import * as React from 'react'
 import {
-    useRedirect,
     useNotify
 } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
@@ -28,7 +27,7 @@ const validate = (values) => {
 const QuestionsUpload = () => {
     const { trivia_id, subtheme_id } = useParams()
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -50,7 +49,7 @@ const QuestionsUpload = () => {
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
             notify('¡Ha subido nuevas preguntas a la trivia!', 'success')
-            redirect(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show`)
+            history.push(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show`)
         }
     }, [fileDataResponse])
 

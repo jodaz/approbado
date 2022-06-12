@@ -3,7 +3,6 @@ import {
     useMutation,
     NumberInput,
     ReferenceArrayInput,
-    useRedirect,
     useEditController,
     SelectInput
 } from 'react-admin'
@@ -11,7 +10,7 @@ import { validatePlan } from './plansValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
 
 const ACCESS_TYPES = [
@@ -26,7 +25,7 @@ const PlanEdit = props => {
         id: id
     });
     const [mutate, { data, loading }] = useMutation();
-    const redirect = useRedirect()
+    const history = useHistory()
 
     const save = React.useCallback(async (values) => {
         try {
@@ -44,9 +43,9 @@ const PlanEdit = props => {
 
     React.useEffect(() => {
         if (data) {
-            return () => redirect('/configurations')
+            return () => history.push('/configurations')
         }
-    }, [data, redirect])
+    }, [data])
 
     const { record, loading: loadingRecord } = editControllerProps;
 

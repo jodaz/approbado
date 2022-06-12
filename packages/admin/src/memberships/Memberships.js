@@ -5,11 +5,11 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 const tags = [
     {
         name: 'Pagos',
-        pathname: 'payments'
+        pathname: '/memberships/payments'
     },
     {
         name: 'Planes',
-        pathname: 'plans'
+        pathname: '/memberships/plans'
     },
 ]
 

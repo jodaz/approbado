@@ -6,11 +6,11 @@ import TabbedList from '@approbado/lib/components/TabbedList'
 const tags = [
     {
         name: 'Registrados',
-        pathname: 'clients'
+        pathname: '/users/clients'
     },
     {
         name: 'Moderadores',
-        pathname: 'admins'
+        pathname: '/users/admins'
     },
 ]
 

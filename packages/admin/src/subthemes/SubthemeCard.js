@@ -28,7 +28,7 @@ const SubthemeCard = ({ data, id }) => {
     const classes = cardStyles();
     const history = useHistory();
 
-    const handleRedirect = () => history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}/show`)
+    const handleRedirect = () => history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}`)
 
     return (
         <Card className={classes.root} key={id} onClick={handleRedirect}>

@@ -37,7 +37,7 @@ const AwardsCreate = () => {
     React.useEffect(() => {
         if (!isEmpty(data)) {
             notify(`¡Ha registrado el premio "${data.title}" exitosamente!`, 'success')
-            history.push(`/trivias/${trivia_id}/show?tab=awards`)
+            history.push(`/trivias/${trivia_id}/awards`)
         }
     }, [data])
 

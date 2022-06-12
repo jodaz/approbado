@@ -4,9 +4,7 @@ import { useDialogState, useDialogDispatch } from "@approbado/lib/hooks/useDialo
 import { FormWithRedirect } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import {
-    TextInput,
     useMutation,
-    useRedirect,
     useNotify,
     ReferenceArrayInput,
     SelectInput
@@ -15,12 +13,14 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import { useUserDispatch } from '@approbado/lib/hooks/useUserState'
 import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
+import TextInput from '@approbado/lib/components/TextInput'
 
+import { useHistory } from 'react-router-dom'
 const ForumCreate = () => {
     const status = useDialogState('forums.create');
     const { unsetDialog } = useDialogDispatch('forums.create');
     const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
     const { fetchUser } = useUserDispatch();
 
@@ -41,7 +41,7 @@ const ForumCreate = () => {
     React.useEffect(() => {
         if (loaded) {
             notify('Se ha completado el registro con éxito', 'success');
-            redirect(`/forums/${data.id}/show`);
+            history.push(`/forums/${data.id}/show`);
             unsetDialog();
             fetchUser();
         }
@@ -61,14 +61,14 @@ const ForumCreate = () => {
                             <Grid container spacing={1}>
                                 <InputContainer label='Título' md={12}>
                                     <TextInput
-                                        source="message"
+                                        name="message"
                                         placeholder="Ingrese un título"
                                         fullWidth
                                     />
                                 </InputContainer>
                                 <InputContainer label='Descripción' md={12}>
                                     <TextInput
-                                        source="summary"
+                                        name="summary"
                                         placeholder="Ingrese una descripción (Opcional)"
                                         fullWidth
                                         multiline
