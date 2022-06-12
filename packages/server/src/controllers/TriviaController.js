@@ -270,7 +270,7 @@ export const show = async (req, res) => {
         .first();
 
     if (model) {
-        model.plans_ids = model.plans.map(item => item.id)
+        model.plans_ids = model.plans
     }
 
     return res.status(201).json(model)
