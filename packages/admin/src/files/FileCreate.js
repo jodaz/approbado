@@ -9,29 +9,7 @@ import isEmpty from 'is-empty'
 import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 import validate from './validateFileForm'
 import TextInput from '@approbado/lib/components/TextInput'
-import SelectInput from '@approbado/lib/components/SelectInput'
-import useFetch from '@approbado/lib/hooks/useFetch'
-
-const SelectSubthemeInput = ({ trivia_id }) => {
-    const {
-        total,
-        data
-    } = useFetch('/subthemes', {
-        filter: { trivia_id: trivia_id }
-    })
-
-    if (!total) return null;
-
-    return (
-        <InputContainer label='Subtema'>
-            <SelectInput
-                name='file_id'
-                placeholder='Seleccione'
-                options={data}
-            />
-        </InputContainer>
-    )
-}
+import SelectSubthemeInput from './SelectSubthemeInput'
 
 const FileCreate = () => {
     const { trivia_id } = useParams()
@@ -76,7 +54,7 @@ const FileCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <SelectSubthemeInput trivia_id={trivia_id} />
+            <SelectSubthemeInput />
             <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"

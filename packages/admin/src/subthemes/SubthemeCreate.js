@@ -5,19 +5,24 @@ import TextInput from '@approbado/lib/components/TextInput'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import { axios } from '@approbado/lib/providers'
-import SelectSubthemeInput from './SelectSubthemeInput'
+import SelectAwardInput from './SelectAwardInput'
 import validate from './subthemeValidations'
+import { useParams } from 'react-router-dom'
 
 const SubthemeCreate = () => {
+    const { trivia_id } = useParams()
     const notify = useNotify();
     const history = useHistory()
 
     const save = React.useCallback(async (values) => {
         try {
-            const { data } = await axios.post('/subthemes', values)
+            const { data } = await axios.post('/subthemes', {
+                trivia_id: trivia_id,
+                ...values
+            });
 
             if (data) {
-                history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}/show`)
+                history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}`)
                 notify(`¡Ha creado el subtema "${data.name}"!`, 'success')
             }
         } catch (error) {
@@ -48,7 +53,7 @@ const SubthemeCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <SelectSubthemeInput />
+            <SelectAwardInput />
         </BaseForm>
     )
 }

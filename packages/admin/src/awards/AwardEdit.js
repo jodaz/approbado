@@ -42,7 +42,6 @@ const AwardsEdit = () => {
         }
     }, [fileDataResponse])
 
-
     React.useEffect(async () => {
         if (award_id) {
             const { data } = await axios.get(`/awards/${award_id}`)

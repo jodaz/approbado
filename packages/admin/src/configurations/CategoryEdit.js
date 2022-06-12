@@ -6,6 +6,7 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import { useHistory, useParams } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
 import { axios } from '@approbado/lib/providers';
+import Spinner from '@approbado/lib/components/Spinner'
 
 const CategoryEdit = () => {
     const { id } = useParams();
@@ -43,6 +44,8 @@ const CategoryEdit = () => {
             }
         }
     }, [id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm

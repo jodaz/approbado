@@ -10,7 +10,7 @@ const SelectSubthemeInput = ({ disabled }) => {
     const [options, setOptions] = React.useState([])
 
     const fetchOptions = React.useCallback(async () => {
-        const { data: { data } } = await axios.get(`awards?filter%5Btrivia_id%5D=${trivia_id}`)
+        const { data: { data } } = await axios.get(`subthemes?filter%5Btrivia_id%5D=${trivia_id}`)
         setOptions(data)
     }, []);
 
@@ -19,17 +19,16 @@ const SelectSubthemeInput = ({ disabled }) => {
     }, [])
 
     return (
-        <InputContainer disabled={disabled} label="Premio" md={6} xs={6}>
+        <InputContainer disabled={disabled} label="Subtema" md={6} xs={6}>
             {(!Object.entries(options).length) ? (
                 <Box marginTop='0.5rem' fontSize='0.9rem' fontWeight={300}>
                     Sin datos
                 </Box>
             ) : (
                 <SelectInput
-                    name='award_id'
-                    placeholder='Premio'
+                    name='subtheme_id'
+                    placeholder='Subtema'
                     options={options}
-                    property='title'
                 />
             )}
         </InputContainer>

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import SelectInput from '@approbado/lib/components/SelectInput'
 import { useNotify } from 'react-admin'
 import { useHistory } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
@@ -7,10 +6,10 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import { axios } from '@approbado/lib/providers'
 import validate from './subthemeValidations'
+import SelectAwardInput from './SelectAwardInput'
 
 const SubthemeEdit = ({ record }) => {
     const notify = useNotify();
-    const [awards, setAwards] = React.useState([])
     const history = useHistory()
 
     const save = React.useCallback(async (values) => {
@@ -18,25 +17,14 @@ const SubthemeEdit = ({ record }) => {
             const { data } = await axios.put(`subthemes/${record.id}`, values)
 
             if (data) {
-                history.push(`/trivias/${record.trivia_id}/subthemes/${data.id}/show`)
-                notify(`¡Ha creado el subtema "${data.name}"!`, 'success')
+                history.push(`/trivias/${record.trivia_id}/subthemes/${data.id}`)
+                notify(`¡Ha actualizado el subtema "${data.name}"!`, 'success')
             }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [])
-
-    const fetchAwards = React.useCallback(async () => {
-        const { data: { data }} =
-            await axios.get(`awards?filter%5Btrivia_id%5D=${record.trivia_id}`)
-
-        setAwards(data)
-    }, [])
-
-    React.useEffect(() => {
-        fetchAwards();
     }, [])
 
     return (
@@ -60,14 +48,7 @@ const SubthemeEdit = ({ record }) => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Premio'>
-                <SelectInput
-                    name='award_id'
-                    placeholder='Premio'
-                    options={awards}
-                    property='title'
-                />
-            </InputContainer>
+            <SelectAwardInput />
         </BaseForm>
     )
 }

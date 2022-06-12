@@ -7,6 +7,7 @@ import CustomColorPicker from './CustomColorPicker'
 import TextInput from '@approbado/lib/components/TextInput'
 import { useHistory, useParams } from 'react-router-dom'
 import { axios } from '@approbado/lib/providers';
+import Spinner from '@approbado/lib/components/Spinner'
 
 const LevelEdit = () => {
     const { id } = useParams();
@@ -44,6 +45,8 @@ const LevelEdit = () => {
             }
         }
     }, [id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Confirm from '@approbado/lib/layouts/Confirm';
 import { useDialogState, useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
-import { FormWithRedirect } from 'react-admin'
+import { Form } from 'react-final-form'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import {
     useMutation,
@@ -48,10 +48,10 @@ const ForumCreate = () => {
     }, [loaded])
 
     return (
-        <FormWithRedirect
-            save={save}
+        <Form
+            onSubmit={save}
             disabled={loading}
-            render={ ({ handleSubmitWithRedirect }) => (
+            render={ ({ handleSubmit }) => (
                 <Confirm
                     isOpen={status}
                     loading={loading}
@@ -96,7 +96,7 @@ const ForumCreate = () => {
                         </Box>
                     }
                     onConfirm={async () => {
-                        await handleSubmitWithRedirect();
+                        await handleSubmit();
                     }}
                     onClose={unsetDialog}
                     confirmColor='primary'
