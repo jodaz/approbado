@@ -9,12 +9,11 @@ import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
-import Spinner from '@approbado/lib/components/Spinner'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
 import CommentList from '@approbado/lib/layouts/comments/CommentList'
-
+import { useParams } from 'react-router-dom'
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"

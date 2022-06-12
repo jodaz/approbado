@@ -5,14 +5,22 @@ import EmptySchedule from './EmptySchedule'
 import ScheduledTriviaCard from './ScheduledTriviaCard'
 import Spinner from '@approbado/lib/components/Spinner'
 import { useSchedulesState, useSchedulesDispatch } from '@approbado/lib/hooks/useSchedules'
+import useFetch from '@approbado/lib/hooks/useFetch'
 
 const Schedule = ({ isSmall, user }) => {
     const data = useSchedulesState();
-    const { fetchSchedules, loading } = useSchedulesDispatch();
+    const {
+        loading,
+        error,
+        data: fetchedData
+    } = useFetch(`/schedules/user/${user.id}`);
+    const { setSchedules } = useSchedulesDispatch();
 
     React.useEffect(() => {
-        fetchSchedules(user.id);
-    }, [])
+        if (fetchedData.length) {
+            setSchedules(fetchedData);
+        }
+    }, [fetchedData])
 
     if (isSmall) return null;
 

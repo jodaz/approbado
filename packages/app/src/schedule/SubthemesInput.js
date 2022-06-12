@@ -1,9 +1,10 @@
 import * as React from 'react'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { useFormState, Field } from 'react-final-form'
-import Select from './Select'
+import { useFormState } from 'react-final-form'
 import LayerIcon from '@approbado/lib/icons/LayerIcon';
 import { axios } from '@approbado/lib/providers'
+import SelectInput from '@approbado/lib/components/SelectInput'
+import Box from '@material-ui/core/Box'
 
 const SubthemesInput = ({ submitting }) => {
     const { values: { trivia_id } } = useFormState();
@@ -29,11 +30,16 @@ const SubthemesInput = ({ submitting }) => {
             md={12}
             xs={12}
         >
-            <Field
-                component={Select}
+            <SelectInput
                 name='subtheme_id'
                 options={subthemes}
-                icon={<LayerIcon />}
+                inputProps={{
+                    startAdornment: (
+                        <Box marginLeft='6px' display='flex'>
+                            <LayerIcon />
+                        </Box>
+                    )
+                }}
             />
         </InputContainer>
     )

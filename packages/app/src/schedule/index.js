@@ -4,11 +4,9 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import { Form, Field } from 'react-final-form'
 import Button from '@approbado/lib/components/Button'
 import Checkbox from '@approbado/lib/components/Checkbox'
-import Select from './Select'
 import validateSchedule from './validateSchedule'
-import BalanceIcon from '@approbado/lib/icons/BalanceIcon';
-import IdeaIcon from '@approbado/lib/icons/IdeaIcon';
-import AutocompleteSelectInput from './AutocompleteSelectInput'
+import SelectTriviasInput from './SelectTriviasInput'
+import SelectLevelsInput from './SelectLevelInput'
 import { axios } from '@approbado/lib/providers'
 import TextInput from '@approbado/lib/components/TextInput'
 import MuiDatepicker from './MuiDatepicker'
@@ -20,30 +18,16 @@ import TimeInput from './TimeInput'
 import SuccessDialog from './SuccessDialog'
 import { useSchedulesDispatch } from '@approbado/lib/hooks/useSchedules'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
+import { useParams } from 'react-router-dom'
+import SelectUsersInput from './SelectUsersInput'
 
 const ScheduleForm = () => {
-    const [trivias, setTrivias] = React.useState([])
-    const [levels, setLevels] = React.useState([])
-    const [users, setUsers] = React.useState([])
+    const { id } = useParams();
     const [openDialog, setOpenDialog] = React.useState(false)
     const schedules = useSchedulesState();
     const { fetchSchedules } = useSchedulesDispatch();
+    const [record, setRecord] = React.useState({})
     const { user } = useUserState();
-
-    const fetchTrivias = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/trivias')
-        setTrivias(data)
-    }, []);
-
-    const fetchLevels = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/configurations/levels')
-        setLevels(data)
-    }, []);
-
-    const fetchUsers = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
-        setUsers(data)
-    }, []);
 
     const handleSubmit = async (values) => {
         const { time, day, starts_at, notify_before, ...rest } = values;
@@ -64,17 +48,26 @@ const ScheduleForm = () => {
         }
     }
 
-    React.useEffect(() => {
-        fetchTrivias();
-        fetchLevels();
-        fetchUsers();
-    }, [])
+    const fetchRecord = React.useCallback(async (scheduleID) => {
+        const { data } = await axios.get(`/schedules/${scheduleID}`);
+
+        setRecord(data);
+    }, []);
+
+    React.useEffect(async () => {
+        if (id) {
+            await fetchRecord(id);
+        }
+    }, [id])
+
+    if (id && !Object.entries(record).length) return null;
 
     return (
         <>
             <Form
                 onSubmit={handleSubmit}
                 validate={validateSchedule}
+                initialValues={record}
                 render={({ handleSubmit, submitting, form }) => (
                     <form onSubmit={handleSubmit} noValidate>
                         <Grid container>
@@ -100,45 +93,9 @@ const ScheduleForm = () => {
                                     </InputContainer>
                                     <DateInput name="starts_at" submitting={submitting} />
                                     <TimeInput submitting={submitting} />
-                                    <InputContainer
-                                        disabled={submitting}
-                                        label="Participantes"
-                                        md={12}
-                                        xs={12}
-                                    >
-                                        <Field
-                                            component={AutocompleteSelectInput}
-                                            name='users_ids'
-                                            options={users}
-                                            placeholder='Ingresar jugadores (máx: 5)'
-                                        />
-                                    </InputContainer>
-                                    <InputContainer
-                                        disabled={submitting}
-                                        label="Trivia"
-                                        md={12}
-                                        xs={12}
-                                    >
-                                        <Field
-                                            component={Select}
-                                            name='trivia_id'
-                                            options={trivias}
-                                            icon={<BalanceIcon />}
-                                        />
-                                    </InputContainer>
-                                    <InputContainer
-                                        disabled={submitting}
-                                        label="Nivel"
-                                        md={12}
-                                        xs={12}
-                                    >
-                                        <Field
-                                            component={Select}
-                                            name='level_id'
-                                            options={levels}
-                                            icon={<IdeaIcon />}
-                                        />
-                                    </InputContainer>
+                                    <SelectUsersInput />
+                                    <SelectTriviasInput />
+                                    <SelectLevelsInput />
                                     <SubthemesInput submitting={submitting} />
                                     <InputContainer disabled={submitting} label='Descripción' sm={12} md={12}>
                                         <TextInput

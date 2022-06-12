@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import BalanceIcon from '@approbado/lib/icons/BalanceIcon'
 import DeleteButton from '@approbado/lib/components/DeleteButton'
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
@@ -14,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         borderRadius: '8px !important',
         background: theme.palette.background.dark,
-        height: '8rem'
+        minHeight: '8rem'
     },
     cardHeader: {
         padding: '1em !important'

@@ -1,12 +1,13 @@
 import * as React from 'react'
 // Other resources
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
 
 // Layouts
 import DefaultLayout from './layouts/Default'
 import GameLayout from './layouts/Game'
 import ChatLayout from './layouts/Chat'
+import DashboardLayout from './layouts/Dashboard'
 
 // Views
 import NotificationsView from './notifications'
@@ -17,7 +18,10 @@ import StartTrivia from './trivias/startTrivia'
 import ErrorLayout from '@approbado/lib/layouts/Error'
 import UserProfile from '@approbado/lib/layouts/profile/UserProfile'
 import ProfileEdit from './profile/EditProfile';
-import Dashboard from './dashboard'
+import TestList from './tests'
+import UserRanking from './ranking'
+import CompletedGames from './completedGames'
+import ScheduleForm from './schedule'
 import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Account from './account';
 import Profile from './profile';
@@ -44,7 +48,34 @@ const App = () => (
         <Route path='/auth' render={() => <Authenticate />} />
 
         <Switch>
-            <ProtectedRoute exact path="/" component={() => <Dashboard />} layout={DefaultLayout} />
+            {/**
+             * Dashboard
+             */}
+            <Redirect exact from='/' to='/dashboard' />
+            <ProtectedRoute
+                exact
+                path="/dashboard"
+                component={() => <TestList />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/dashboard/schedules/:id?"
+                component={() => <ScheduleForm />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/dashboard/ranking"
+                component={() => <UserRanking />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/dashboard/completed"
+                component={() => <CompletedGames />}
+                layout={DashboardLayout}
+            />
 
             {/**
              * Account
