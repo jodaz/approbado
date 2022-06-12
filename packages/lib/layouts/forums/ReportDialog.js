@@ -10,7 +10,7 @@ import Spinner from '@approbado/lib/components/Spinner'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import MenuButton from '@approbado/lib/components/MenuButton'
+import MenuItem from '@material-ui/core/MenuItem'
 import InformationIcon from '@approbado/lib/icons/InformationIcon'
 import { makeStyles } from '@material-ui/core/styles';
 import useSpinnerStyles from '@approbado/lib/styles/useSpinnerStyles'
@@ -22,7 +22,7 @@ const payload = {
 };
 
 const useStyles = makeStyles(
-    theme => ({
+    () => ({
         title: {
             display: 'flex',
             justifyContent: 'space-between',
@@ -95,7 +95,7 @@ export default function ReportDialog({ post_id }) {
 
     return (
         <div>
-            <MenuButton
+            <MenuItem
                 label="Reportar"
                 icon={<InformationIcon />}
                 onClick={handleClickOpen}

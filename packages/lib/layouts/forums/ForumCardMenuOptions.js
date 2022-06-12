@@ -1,11 +1,10 @@
 import * as React from 'react';
 import OptionsCardMenu from '@approbado/lib/components/OptionsCardMenu';
 import DeleteButton from '@approbado/lib/components/DeleteButton'
-import MenuButton from '@approbado/lib/components/MenuButton'
+import LinkButton from '@approbado/lib/components/LinkButton'
 
 // Icons
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon'
-import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
 import ReportDialog from './ReportDialog'
 
 const ForumCardMenuOptions = React.forwardRef((props, ref) => {
@@ -14,11 +13,7 @@ const ForumCardMenuOptions = React.forwardRef((props, ref) => {
     return (
         <OptionsCardMenu ref={ref}>
             {(user.id == record.owner.id) && (
-                <MenuButton
-                    label="Editar"
-                    onClick={() => history.push(`/forums/${record.id}`)}
-                    icon={<EditIcon />}
-                />
+                <LinkButton to={`/forums/${record.id}`} />
             )}
             {(user.id == record.owner.id) && (
                 <DeleteButton

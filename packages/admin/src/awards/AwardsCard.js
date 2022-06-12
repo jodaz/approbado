@@ -12,16 +12,12 @@ import Dot from '@approbado/lib/components/Dot';
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 import { ReactComponent as Certificate } from '@approbado/lib/icons/Certificate.svg'
 // Edit button
-import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
-import { history } from '@approbado/lib/providers'
-import MenuButton from '@approbado/lib/components/MenuButton'
+import LinkButton from '@approbado/lib/components/LinkButton'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
-        <MenuButton
-            label="Editar"
-            onClick={() => history.push(`/trivias/${props.record.trivia_id}/awards/${props.record.id}`)}
-            icon={<EditIcon />}
+        <LinkButton
+            to={`/trivias/${props.record.trivia_id}/awards/${props.record.id}`}
         />
         <DeleteButton
             basePath='awards'
@@ -41,7 +37,7 @@ const AwardCard = ({ data, id }) => {
         <Card className={classes.root} key={id}>
             <CardHeader
                 avatar={
-                    (data.type == 'Insignia') ? (
+                    (data.type === 'Insignia') ? (
                         <Avatar
                             src={`${process.env.REACT_APP_API_DOMAIN}/${data.file}`}
                             alt='icon'
