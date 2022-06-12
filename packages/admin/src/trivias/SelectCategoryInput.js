@@ -21,7 +21,7 @@ const SelectCategoryInput = ({ disabled }) => {
             disabled={disabled}
             label="Categoría"
             md={6}
-            xs={6}
+            xs={12}
         >
             {(!Object.entries(options).length) ? (
                 <Box marginTop='0.5rem' fontSize='0.9rem' fontWeight={300}>

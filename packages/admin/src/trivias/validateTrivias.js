@@ -12,7 +12,7 @@ export const validate = values => {
     if (!values.is_free) {
         errors.is_free = "Seleccione un acceso.";
     }
-    if (values.plans_ids) {
+    if (!values.plans_ids) {
         errors.plans_ids = "Seleccione un plan.";
     }
 

@@ -73,6 +73,10 @@ export const show = async (req, res) => {
         const model = await Plan.query().findById(id)
             .withGraphFetched('trivias')
 
+        if (model) {
+            model.trivia_ids = model.trivias
+        }
+
         return res.status(201).json(model)
     } catch (error) {
         console.log(error)

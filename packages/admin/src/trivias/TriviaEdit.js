@@ -14,6 +14,7 @@ import TextInput from '@approbado/lib/components/TextInput'
 import SelectCategoryInput from './SelectCategoryInput';
 import SelectInput from '@approbado/lib/components/SelectInput'
 import validate from './validateTrivias'
+import SelectPlansInput from './SelectPlansInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -81,16 +82,7 @@ const TriviaEdit = ({ record }) => {
                 </Box>
             </InputContainer>
             <SelectCategoryInput />
-            {/* <InputContainer label='Planes'>
-                <ReferenceArrayInput
-                    source='plans_ids'
-                    reference='memberships/plans'
-                    allowEmpty
-                    fullWidth
-                >
-                    <MultipleSelectTag />
-                </ReferenceArrayInput>
-            </InputContainer> */}
+            <SelectPlansInput />
         </BaseForm>
     )
 }

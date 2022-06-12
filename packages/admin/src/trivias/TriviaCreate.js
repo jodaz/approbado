@@ -8,6 +8,7 @@ import TextInput from '@approbado/lib/components/TextInput'
 import SelectInput from '@approbado/lib/components/SelectInput'
 import SelectCategoryInput from './SelectCategoryInput'
 import validate from './validateTrivias'
+import SelectPlansInput from './SelectPlansInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
@@ -53,13 +54,9 @@ const TriviaCreate = () => {
                 />
             </InputContainer>
             <SelectCategoryInput />
+            <SelectPlansInput />
         </BaseForm>
     )
-}
-
-TriviaCreate.defaultProps = {
-    basePath: 'trivias',
-    resource: 'trivias'
 }
 
 export default TriviaCreate

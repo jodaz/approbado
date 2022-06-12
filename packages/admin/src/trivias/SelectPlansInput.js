@@ -29,30 +29,25 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const SelectTriviasInput = ({ submitting }) => {
+const SelectPlansInput = ({ submitting }) => {
     const classes = useStyles();
     const [options, setOptions] = React.useState([])
 
-    const fetchTrivias = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/trivias')
+    const fetchPlans = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/memberships/plans')
         setOptions(data)
     }, []);
 
     React.useEffect(() => {
-        fetchTrivias();
+        fetchPlans();
     }, [])
 
     if (!options.length) return null;
 
     return (
-        <InputContainer
-            disabled={submitting}
-            label="Trivias"
-            md={12}
-            xs={12}
-        >
+        <InputContainer disabled={submitting} label="Planes" md={6} xs={12}>
             <SelectInput
-                name='trivia_ids'
+                name='plans_ids'
                 options={options}
                 multiple
                 property='name'
@@ -91,4 +86,4 @@ const SelectTriviasInput = ({ submitting }) => {
     )
 }
 
-export default SelectTriviasInput
+export default SelectPlansInput
