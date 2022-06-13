@@ -17,7 +17,7 @@ const SelectTriviaInput = ({ disabled }) => {
     }, [])
 
     return (
-        <InputContainer disabled={disabled} label="Trivia" xs={12}>
+        <InputContainer disabled={disabled} label="Trivia" xs={12} md={6}>
             {(!Object.entries(options).length) ? (
                 <Box marginTop='0.5rem' fontSize='0.9rem' fontWeight={300}>
                     Sin datos

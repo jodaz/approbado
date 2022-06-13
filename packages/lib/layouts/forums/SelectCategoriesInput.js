@@ -48,7 +48,7 @@ const SelectCategoriesInput = ({ submitting }) => {
         <InputContainer
             disabled={submitting}
             label="Etiquetas"
-            md={12}
+            md={6}
             xs={12}
         >
             <SelectInput

@@ -1,12 +1,12 @@
 import DefaultForumLayout from "@approbado/lib/layouts/forums/ForumLayout";
-import Admin from "../layouts/Admin";
+import DefaultLayout from "../Default";
 
 const ForumLayout = ({ children }) => (
-    <Admin>
+    <DefaultLayout>
         <DefaultForumLayout>
             {children}
         </DefaultForumLayout>
-    </Admin>
+    </DefaultLayout>
 )
 
 export default ForumLayout

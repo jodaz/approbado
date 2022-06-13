@@ -14,6 +14,7 @@ import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
 import CommentList from '@approbado/lib/layouts/comments/CommentList'
 import { useParams } from 'react-router-dom'
+import LinkButton from '@approbado/lib/components/LinkButton'
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
@@ -91,7 +92,7 @@ const ForumShow = () => {
                 {(user.is_registered) && (
                     <Box display="flex" justifyContent="space-between" width="100%">
                         <BackButton />
-                        {(record.owner.id != user.id) && (
+                        {(record.owner.id != user.id) ? (
                             <Link
                                 to='/forums'
                                 color='info'
@@ -102,6 +103,8 @@ const ForumShow = () => {
                             >
                                 Iniciar un debate
                             </Link>
+                        ) : (
+                            <LinkButton to={`/forums/${record.id}/edit`} />
                         )}
                     </Box>
                 )}

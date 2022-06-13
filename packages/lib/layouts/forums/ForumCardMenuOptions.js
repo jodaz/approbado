@@ -8,12 +8,12 @@ import ProfileIcon from '@approbado/lib/icons/ProfileIcon'
 import ReportDialog from './ReportDialog'
 
 const ForumCardMenuOptions = React.forwardRef((props, ref) => {
-    const { record, user, history } = props;
+    const { record, user } = props;
 
     return (
         <OptionsCardMenu ref={ref}>
             {(user.id == record.owner.id) && (
-                <LinkButton to={`/forums/${record.id}`} />
+                <LinkButton to={`/forums/${record.id}/edit`} />
             )}
             {(user.id == record.owner.id) && (
                 <DeleteButton
@@ -22,14 +22,13 @@ const ForumCardMenuOptions = React.forwardRef((props, ref) => {
                     confirmColor='warning'
                     confirmTitle='Eliminar foro'
                     confirmContent='¿Está seguro que desea eliminar este foro?'
-                    label='Eliminar'
                     {...record}
                 />
             )}
             {(user.id != record.owner.id) && (
-                <MenuButton
+                <LinkButton
                     label="Ver perfil"
-                    onClick={() => history.push(`/users/${record.owner.id}/show`)}
+                    to={`/users/${record.owner.id}/show`}
                     icon={<ProfileIcon />}
                 />
             )}

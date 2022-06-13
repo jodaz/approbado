@@ -42,8 +42,6 @@ import ReportsView from './reports/ReportsView'
 import ReportShow from './reports/ReportShow'
 import NotFound from './layouts/NotFound'
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
-import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
-import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 import LevelList from './configurations/LevelsList';
 import CategoryList from './configurations/CategoryList';
@@ -58,7 +56,9 @@ import TriviaEdit from './trivias/TriviaEdit'
 import SubthemesList from './subthemes/SubthemesList'
 import AwardsList from './awards/AwardsList'
 import FilesList from './files/FilesList'
+import ForumLayout from './forums'
 import QuestionsList from './questions/QuestionsList'
+import ForumList from '@approbado/lib/layouts/forums/ForumList';
 
 const App = () => {
     return (
@@ -136,14 +136,12 @@ const App = () => {
                 path="/reports/restricted"
                 component={() => <RestrictedUsers />}
             />
-            <ProtectedRoute layout={Layout} exact path='/reports/:id' component={(routeProps) =>
-                <ReportShow
-                    resource="reports"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/reports/:id'
+                component={() => <ReportShow />}
+            />
 
             {/**
              * Users
@@ -228,24 +226,30 @@ const App = () => {
                 path="/configurations/categories"
                 component={() => <CategoryList />}
             />
-            <ProtectedRoute layout={Layout} exact path="/configurations/levels/create" component={() => <LevelsCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/configurations/categories/create" component={() => <CategoryCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/configurations/categories/:id" component={(routeProps) =>
-                <CategoryEdit
-                    resource="configurations/categories"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
-            <ProtectedRoute layout={Layout} exact path="/configurations/levels/:id" component={(routeProps) =>
-                <LevelEdit
-                    resource="configurations/levels"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/levels/create"
+                component={() => <LevelsCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/categories/create"
+                component={() => <CategoryCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/categories/:id"
+                component={() => <CategoryEdit />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/levels/:id"
+                component={() => <LevelEdit />}
+            />
 
             {/**
              * Trivias
@@ -356,25 +360,39 @@ const App = () => {
             {/**
              * Forum
              */}
-            <ProtectedRoute
-                exact
-                path="/forums"
-                component={() => <ForumsView />}
-                layout={Layout}
-            />
-            <ProtectedRoute
-                exact
-                path="/forums/:id"
-                component={<ForumEdit />}
-                layout={Layout}
-            />
-            <ProtectedRoute
-                exact
-                path="/forums/:id/show"
-                component={<ForumShow />}
-                layout={Layout}
-            />
-            <ProtectedRoute exact path="/comments/:id/show" component={() => <CommentShow />} layout={Layout} />
+            <Switch>
+                <Redirect exact from='/forums' to='/forums/top' />
+                <ProtectedRoute
+                    exact
+                    path="/forums/top"
+                    component={() => <ForumList sort={{ field: 'comments', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/new"
+                    component={() => <ForumList sort={{ field: 'created_at', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/unanswered"
+                    component={() => <ForumList filter={{ unanswered: true }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/:id"
+                    component={() => <ForumShow  />}
+                    layout={Layout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/comments/:id/show"
+                    component={() => <CommentShow />}
+                    layout={Layout}
+                />
+            </Switch>
             <Route path='/*' render={() => <NotFound />} />
         </Switch>
     )

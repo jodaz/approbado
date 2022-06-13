@@ -37,7 +37,7 @@ const useFetch = (url, params = {}) => {
         if (hasMore == null || hasMore == true) {
             setLoading(true)
             setError(false)
-            console.log("laksfjakfj")
+
             axios({
                 method: 'GET',
                 url: url,

@@ -8,6 +8,7 @@ import DefaultLayout from './layouts/Default'
 import GameLayout from './layouts/Game'
 import ChatLayout from './layouts/Chat'
 import DashboardLayout from './layouts/Dashboard'
+import ForumLayout from './layouts/Forum'
 
 // Views
 import NotificationsView from './notifications'
@@ -27,10 +28,10 @@ import Account from './account';
 import Profile from './profile';
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
 import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
-import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
 import SelectMessageAlert from './layouts/Chat/SelectMessageAlert'
 import Chatbox from './chatbox'
+import ForumList from '@approbado/lib/layouts/forums/ForumList';
 
 import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
@@ -80,26 +81,89 @@ const App = () => (
             {/**
              * Account
              */}
-            <ProtectedRoute exact path="/account" component={() => <Account />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/profile/edit" component={() => <ProfileEdit />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/profile" component={() => <Profile />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/error" component={() => <ErrorLayout />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/users/:id/show" component={() => <UserProfile />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/notifications" component={() => <NotificationsView />} layout={DefaultLayout} />
+            <ProtectedRoute
+                exact
+                path="/account"
+                component={() => <Account />}
+                layout={DefaultLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/profile/edit"
+                component={() => <ProfileEdit />}
+                layout={DefaultLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/profile"
+                component={() => <Profile />}
+                layout={DefaultLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/error"
+                component={() => <ErrorLayout />}
+                layout={DefaultLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/users/:id/show"
+                component={() => <UserProfile />}
+                layout={DefaultLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/notifications"
+                component={() => <NotificationsView />}
+                layout={DefaultLayout}
+            />
 
             {/**
              * Forum
              */}
-            <ProtectedRoute exact path="/forums" component={() => <ForumsView />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/forums/:id" component={() => <ForumEdit />} layout={DefaultLayout} />
-            <ProtectedRoute exact path="/forums/:id/show" component={(routeProps) =>
-                <ForumShow
-                    resource={'forums'}
-                    basePath={routeProps.match.url}
-                />}
-                layout={DefaultLayout}
-            />
-            <ProtectedRoute exact path="/comments/:id/show" component={() => <CommentShow />} layout={DefaultLayout} />
+
+            <Switch>
+                {/**
+                 * Forums
+                 */}
+                <Redirect exact from='/forums' to='/forums/top' />
+                <ProtectedRoute
+                    exact
+                    path="/forums/top"
+                    component={() => <ForumList sort={{ field: 'comments', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/new"
+                    component={() => <ForumList sort={{ field: 'created_at', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/unanswered"
+                    component={() => <ForumList filter={{ unanswered: true }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/:id"
+                    component={() => <ForumShow  />}
+                    layout={DefaultLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/:id/edit"
+                    component={() => <ForumEdit />}
+                    layout={DefaultLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/comments/:id/show"
+                    component={() => <CommentShow />}
+                    layout={Layout}
+                />
+            </Switch>
 
             {/**
              * Trivias

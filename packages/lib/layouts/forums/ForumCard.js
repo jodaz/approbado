@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import PostDescription from './PostDescription'
 import ForumCardMenuOptions from './ForumCardMenuOptions';
 import Avatar from '@material-ui/core/Avatar';
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,35 +48,64 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ForumCard = ({ data, user }) => {
+const ForumCard = ({ data, user, rootRef }) => {
     const classes = useStyles();
+    const loading = data == null;
     const history = useHistory();
     const ref = React.createRef();
 
-    const redirect = () => history.push(`/forums/${data.id}/show`)
+    const redirect = () => history.push(`/forums/${data.id}`)
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} ref={rootRef}>
             <CardHeader
-                action={<ForumCardMenuOptions record={data} user={user} ref={ref} history={history} />}
+                action={
+                    <>
+                        {!loading && (
+                            <ForumCardMenuOptions record={data} user={user} ref={ref} />
+                        )}
+                    </>
+                }
                 title={
-                    <Typography component="div" onClick={redirect}>
-                        <Box className={classes.title} sx={{ fontSize: '1rem'}}>
-                            {data.message}
-                        </Box>
-                    </Typography>
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                        <Typography component="div" onClick={redirect}>
+                            <Box className={classes.title} sx={{ fontSize: '1rem'}}>
+                                {data.message}
+                            </Box>
+                        </Typography>
+                    )
                 }
                 avatar={
-                    <Avatar
-                        aria-label="recipe"
-                        src={`${process.env.REACT_APP_API_DOMAIN}/${data.owner.picture}`}
-                    />
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        variant="circle"
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                        <Avatar
+                            aria-label="recipe"
+                            src={`${process.env.REACT_APP_API_DOMAIN}/${data.owner.picture}`}
+                        />
+                    )
                 }
                 className={classes.header}
             />
-            <CardContent className={classes.content} onClick={redirect}>
-                <PostDescription record={data} />
-            </CardContent>
+            <>
+                {!loading && (
+                    <CardContent className={classes.content} onClick={redirect}>
+                        <PostDescription record={data} />
+                    </CardContent>
+                )}
+            </>
         </Card>
     );
 }
