@@ -175,14 +175,8 @@ const App = () => {
                 layout={Layout}
                 exact
                 path='/users/:id'
-                component={(routeProps) =>
-                <UserEdit
-                    resource="users"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+                component={() => <UserEdit /> }
+            />
 
             {/**
              * Plans and memberships
@@ -200,15 +194,18 @@ const App = () => {
                 path="/memberships/plans"
                 component={() => <PlansList />}
             />
-            <ProtectedRoute layout={Layout} exact path="/memberships/plans/create" component={() => <PlanCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/memberships/plans/:id" component={(routeProps) =>
-                <PlanEdit
-                    resource="memberships/plans"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/memberships/plans/create"
+                component={() => <PlanCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/memberships/plans/:id"
+                component={() => <PlanEdit resource="memberships/plans" /> }
+            />
 
             {/**
              * Settings
@@ -254,11 +251,11 @@ const App = () => {
             {/**
              * Trivias
              */}
-            <ProtectedRoute layout={Layout} exact path='/trivias' component={(routeProps) =>
-                <TriviaList
-                    resource="trivias"
-                    basePath={routeProps.match.url}
-                />}
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/trivias'
+                component={() => <TriviaList />}
             />
             <ProtectedRoute
                 layout={Layout}

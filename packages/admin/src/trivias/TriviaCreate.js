@@ -24,7 +24,7 @@ const TriviaCreate = () => {
             const { data } = await axios.post('/trivias', values)
 
             if (data) {
-                history.push(`/trivias/${data.id}/show`)
+                history.push(`/trivias/${data.id}`)
                 notify(`¡Ha registrado la trivia "${data.name}"!`, 'success')
             }
         } catch (error) {

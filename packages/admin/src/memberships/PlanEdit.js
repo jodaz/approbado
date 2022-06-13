@@ -23,7 +23,14 @@ const PlanEdit = () => {
 
     const save = React.useCallback(async (values) => {
         try {
-            const { data } = await axios.put(`/memberships/plans/${record.id}`, values)
+            const { trivia_ids, trivias, ...rest } = values;
+
+            const triviasIds = trivia_ids.map(item => item.id);
+
+            const { data } = await axios.put(`/memberships/plans/${record.id}`, {
+                trivia_ids: triviasIds,
+                ...rest
+            })
 
             if (data) {
                 history.push('/memberships/plans')

@@ -28,12 +28,13 @@ const TriviaEdit = ({ record }) => {
 
     const save = React.useCallback(async values => {
         try {
+            const { plans, ...rest } = values
             await provider({
                 resource: 'trivias',
                 type: 'update',
                 payload: {
                     id: record.id,
-                    data: values
+                    data: rest
                 }
             });
         } catch (error) {

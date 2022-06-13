@@ -161,7 +161,7 @@ const App = () => (
                     exact
                     path="/comments/:id/show"
                     component={() => <CommentShow />}
-                    layout={Layout}
+                    layout={DefaultLayout}
                 />
             </Switch>
 

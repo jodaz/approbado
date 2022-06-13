@@ -102,9 +102,13 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
+            const { plans_ids, ...rest } = req.body
+
             const model = await Trivia.query()
-                .insert(req.body)
+                .insert(rest)
                 .returning('*')
+
+            await model.$relatedQuery('plans').relate(plans_ids)
 
             return res.status(201).json(model)
         } catch (error) {
@@ -233,10 +237,10 @@ export const update = async (req, res) => {
 
     const { id } = req.params
 
-    const { plans_ids, ...rest } = req.body
-
     if (!reqErrors) {
         try {
+            const { plans_ids, ...rest } = req.body
+            console.log(plans_ids)
             const model = await Trivia.query()
                 .updateAndFetchById(id, {
                     cover: (req.file) ? req.file.path : '',

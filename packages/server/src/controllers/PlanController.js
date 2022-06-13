@@ -55,8 +55,13 @@ export const update = async (req, res) => {
     const { id } = req.params
 
     try {
+        const { trivia_ids, ...rest } = req.body;
+        console.log(trivia_ids);
         const model = await Plan.query()
-            .updateAndFetchById(id, req.body)
+            .updateAndFetchById(id, rest)
+            .returning('*')
+
+        await model.$relatedQuery('trivias').relate(trivia_ids)
 
         return res.status(201).json(model)
     } catch (error) {
