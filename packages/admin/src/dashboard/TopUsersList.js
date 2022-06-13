@@ -2,37 +2,12 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import UserCard from './UserCard'
-import Spinner from '@approbado/lib/components/Spinner'
 import useFetch from '@approbado/lib/hooks/useFetch'
 import ErrorMessage from '@approbado/lib/components/ErrorMessage'
-
-const initialState = {
-    'users': {
-        title: 'Usuarios registrados',
-        loading: true,
-        total: 0,
-        linkText: 'Ver usuarios',
-        link: '/users'
-    },
-    'memberships': {
-        title: 'Membresías activas',
-        loading: true,
-        total: 0,
-        linkText: 'Ver usuarios suscritos',
-        link: '/users'
-    },
-    'trivias': {
-        title: 'Trivias publicadas',
-        loading: true,
-        total: 0,
-        linkText: 'Editar trivias',
-        link: '/trivias'
-    },
-};
+import Box from '@material-ui/core/Box'
 
 const TopUsersList = () => {
     const {
-        loading,
         total,
         data,
         error
@@ -51,27 +26,32 @@ const TopUsersList = () => {
                 </Typography>
             </Grid>
 
-            {(total || loading == false) ? (
-                <Grid container>
-                    {data.map((user, i) =>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <UserCard data={user} index={i} />
-                        </Grid>
-                    )}
-                </Grid>
-            ) : (
-                <ErrorMessage>
-                    Aún no tenemos usuarios destacados.
-                </ErrorMessage>
-            )}
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
+                paddingTop: '1rem'
+            }}>
+                {(total) ? (
+                    <Grid container>
+                        {data.map((user, i) =>
+                            <Grid item xs={12} sm={6} md={4}>
+                                <UserCard data={user} index={i} />
+                            </Grid>
+                        )}
+                    </Grid>
+                ) : (
+                    <ErrorMessage>
+                        Aún no tenemos usuarios destacados.
+                    </ErrorMessage>
+                )}
 
-            {(error) && (
-                <ErrorMessage>
-                    Ha ocurrido un error en su solicitud.
-                </ErrorMessage>
-            )}
-
-            {(loading) && <Spinner />}
+                {(error) && (
+                    <ErrorMessage>
+                        Ha ocurrido un error en su solicitud.
+                    </ErrorMessage>
+                )}
+            </Box>
         </Grid>
     )
 }

@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondary.main,
         justifyContent: 'center',
         height: 120,
+        padding: '1rem 0',
         [theme.breakpoints.up('sm')]: {
             height: 175
         }
