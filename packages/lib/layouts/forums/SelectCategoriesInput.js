@@ -6,8 +6,6 @@ import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip';
 import CloseIcon from '@approbado/lib/icons/CloseIcon'
 import { makeStyles } from '@material-ui/core'
-import Avatar from '@material-ui/core/Avatar';
-import configs from '@approbado/lib/configs'
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
@@ -31,62 +29,50 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const SelectUsersInput = ({ submitting }) => {
+const SelectCategoriesInput = ({ submitting }) => {
     const classes = useStyles();
-    const [users, setUsers] = React.useState([])
+    const [options, setOptions] = React.useState([])
 
-    const fetchUsers = React.useCallback(async () => {
-        const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
-        setUsers(data)
+    const fetchOptions = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/configurations/categories')
+        setOptions(data)
     }, []);
 
     React.useEffect(() => {
-        fetchUsers();
+        fetchOptions();
     }, [])
 
-    if (!Object.entries(users).length) return null;
+    if (!Object.entries(options).length) return null;
 
     return (
         <InputContainer
             disabled={submitting}
-            label="Participantes"
+            label="Etiquetas"
             md={12}
             xs={12}
         >
             <SelectInput
-                name='users_ids'
-                options={users}
+                name='categories_ids'
+                options={options}
                 multiple
-                property='names'
                 renderOption={(option, { selected }) => (
                     <Box className={classes.userCard}>
-                        <Avatar
-                            src={`${configs.SOURCE}/${option.picture}`}
-                            alt='photo_profile'
-                        />
                         <Box className={classes.userInfo}>
                             <Box sx={{
                                 fontSize: '0.9rem',
                                 fontSize: '1rem',
                                 fontWeight: 600
                             }}>
-                                {option.names}
-                            </Box>
-                            <Box sx={{
-                                fontSize: '0.8rem',
-                                fontWeight: 600,
-                                color: '#6D6D6D'
-                            }}>
-                                {option.email}
+                                {option.name}
                             </Box>
                         </Box >
                     </Box>
                 )}
-                getOptionSelected={(option, value) => option.names === value.names}
+                getOptionSelected={(option, value) => option.name === value.name}
                 renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
                         <Chip
-                            label={option.names}
+                            label={option.name}
                             size="small"
                             classes={{ root: classes.chip }}
                             deleteIcon={<CloseIcon />}
@@ -104,4 +90,4 @@ const SelectUsersInput = ({ submitting }) => {
     )
 }
 
-export default SelectUsersInput
+export default SelectCategoriesInput
