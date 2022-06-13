@@ -1,10 +1,8 @@
 import * as React from 'react'
-import {
-    PasswordInput,
-    useNotify
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
+import PasswordInput from '@approbado/lib/components/PasswordInput'
 import { axios } from '@approbado/lib/providers';
 
 const validate = values => {
@@ -30,18 +28,13 @@ const validate = values => {
 };
 
 const UpdatePassword = () => {
-    const [loading, setLoading] = React.useState(false)
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
-        setLoading(true)
-
         try {
             await axios.post('update-password', values);
             notify('Hemos cambiado tu contraseña con éxito', 'success')
-            setLoading(false)
         } catch (error) {
-            setLoading(false)
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
@@ -53,26 +46,25 @@ const UpdatePassword = () => {
             save={save}
             validate={validate}
             saveButtonLabel='Actualizar'
-            loading={loading}
             unresponsive
         >
             <InputContainer label='Contraseña actual' md={8}>
                 <PasswordInput
-                    source='curr_password'
+                    name='curr_password'
                     placeholder="Contraseña actual"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Nueva contraseña' md={8}>
                 <PasswordInput
-                    source='new_password'
+                    name='new_password'
                     placeholder="Nueva contraseña"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Nueva contraseña' md={8}>
                 <PasswordInput
-                    source='new_password_confirmed'
+                    name='new_password_confirmed'
                     placeholder="Repita la nueva contraseña"
                     fullWidth
                 />

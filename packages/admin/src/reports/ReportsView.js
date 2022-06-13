@@ -1,33 +1,31 @@
 import * as React from 'react'
 // Components
-import RecentReports from '../components/RecentReports'
-import RestrictedUsers from '../restrictedUsers'
-import BlacklistedUsers from '../blacklistedUsers'
+import Admin from '../layouts/Admin'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [
     {
         name: 'Nuevos',
-        pathname: 'recent',
-        component: <RecentReports />
+        pathname: '/reports/recent'
     },
     {
         name: 'Lista negra',
-        pathname: 'blacklisted',
-        component: <BlacklistedUsers />
+        pathname: '/reports/blacklisted'
     },
     {
         name: 'Restringidos',
-        pathname: 'restricted',
-        component: <RestrictedUsers />
+        pathname: '/reports/restricted'
     },
 ]
 
-const ReportsList = () => (
-    <TabbedList
-        tags={tags}
-        name='Reportes del foro'
-    />
+const ReportsList = ({ children }) => (
+    <Admin>
+        <TabbedList
+            tags={tags}
+            name='Reportes del foro'
+        />
+        {children}
+    </Admin>
 )
 
 export default ReportsList

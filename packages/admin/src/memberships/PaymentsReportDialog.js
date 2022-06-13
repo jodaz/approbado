@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-    DateInput,
-    FormWithRedirect,
-    SelectInput
-} from 'react-admin'
+import { DateInput } from 'react-admin'
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,6 +12,8 @@ import InputContainer from '@approbado/lib/components/InputContainer'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
 import { ReactComponent as DownloadIcon } from '@approbado/lib/icons/download.svg'
+import { Form } from 'react-final-form'
+import SelectInput from '@approbado/lib/components/SelectInput';
 
 const TYPES = [
     { id: 'none', name: 'none' },
@@ -111,10 +109,10 @@ export default function() {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent className={classes.content}>
-                    <FormWithRedirect
-                        save={handleSubmit}
+                    <Form
+                        onSubmit={handleSubmit}
                         validate={validate}
-                        render={ ({ handleSubmitWithRedirect, submitting }) => (
+                        render={ ({ handleSubmit, submitting }) => (
                             <Box width='20rem' display='flex' justifyContent="center" flexDirection='column'>
                                 <Box component="h3" textAlign="center">
                                     Reporte
@@ -123,11 +121,7 @@ export default function() {
                                     Selecciona el rango de fechas y el tipo de pago para crear el reporte.
                                 </Box>
                                 <InputContainer label='Tipo de pago' md='12' disabled={submitting}>
-                                    <SelectInput
-                                        source="payment_method"
-                                        choices={TYPES}
-                                        fullWidth
-                                    />
+                                    <SelectInput name="payment_method" options={TYPES} />
                                 </InputContainer>
                                 <InputContainer label='Desde' md='12' disabled={submitting}>
                                     <DateInput source="from" fullWidth />
@@ -140,7 +134,7 @@ export default function() {
                                     onClick={event => {
                                         if (event) {
                                             event.preventDefault();
-                                            handleSubmitWithRedirect();
+                                            handleSubmit();
                                         }
                                     }}
                                     unresponsive

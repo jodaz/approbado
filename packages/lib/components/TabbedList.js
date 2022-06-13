@@ -6,13 +6,13 @@ import Tabs from '@material-ui/core/Tabs'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PropTypes from 'prop-types';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Route, Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '15rem',
+        minHeight: '8rem',
         width: '100%'
     },
     boxLayoutStyles: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     content: {
-        minHeight: '15rem',
+        minHeight: '10rem',
         paddingTop: '2rem',
         height: '100%'
     },
@@ -45,42 +45,21 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
-
-function pathnameInPathnames(tags, pathname) {
-    return tags.map(({ pathname }) => pathname).includes(pathname)
-}
-
-const Component = props => {
-    const { component } = props
-    const Component = component;
-
-    return Component;
-}
-
 const TabbedList = ({
     tags,
     name,
     children
 }) => {
-    let query = useQuery();
-    const [currentTab, setCurrentTab] = React.useState(() => (
-        query.get('tab')
-        ? (pathnameInPathnames(tags, query.get('tab')) ? query.get('tab') : null)
-        : tags[0].pathname
-    ));
-    const tag = tags.filter(tag => tag.pathname === currentTab)[0]
+    const { pathname } = useLocation();
+    const [currentTab, setCurrentTab] = React.useState(pathname);
     const classes = useStyles();
 
-    const handleChange = (event, newValue) => {
-        setCurrentTab(newValue);
-    };
+    React.useEffect(() => {
+        if (pathname) {
+            setCurrentTab(pathname)
+        }
+    }, [pathname])
 
-    const tabPath = (tabname) => (
-        `${window.location.pathname}?tab=${tabname}`
-    )
 
     if (currentTab == null) return null
 
@@ -88,32 +67,33 @@ const TabbedList = ({
         <Box component='div' className={classes.root}>
             {name && <Typography component='h1' variant='h5'>{name}</Typography>}
             <Box component='div' className={classes.header}>
-                <Tabs
-                    value={currentTab}
-                    indicatorColor="primary"
-                    onChange={handleChange}
-                    className={classes.tabs}
-                    variant="scrollable"
-                    scrollButtons
-                    allowScrollButtonsMobile
-                >
-                    {
-                        tags.map(tag => (
-                            <Tab
-                                key={tag.pathname}
-                                label={tag.name}
-                                value={tag.pathname}
-                                className={classes.tab}
-                                component={Link}
-                                to={tabPath(tag.pathname)}
-                            />
-                        ))
-                    }
-                </Tabs>
+                <Route
+                    path="/"
+                    render={() => (
+                        <Tabs
+                            value={currentTab}
+                            indicatorColor="primary"
+                            className={classes.tabs}
+                            variant="scrollable"
+                            scrollButtons
+                            allowScrollButtonsMobile
+                        >
+                            {
+                                tags.map(tag => (
+                                    <Tab
+                                        key={tag.pathname}
+                                        label={tag.name}
+                                        value={tag.pathname}
+                                        className={classes.tab}
+                                        component={Link}
+                                        to={tag.pathname}
+                                    />
+                                ))
+                            }
+                        </Tabs>
+                    )}
+                />
                 { children && React.cloneElement(children, {})}
-            </Box>
-            <Box component='div' className={classes.content}>
-                <Component {...tag} />
             </Box>
         </Box>
     )

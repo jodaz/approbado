@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FormWithRedirect, useNotify } from 'react-admin'
+import { useNotify } from 'react-admin'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Grid from '@material-ui/core/Grid'
 import { fileProvider } from '@approbado/lib/providers'
@@ -10,6 +10,7 @@ import Button from '@approbado/lib/components/Button'
 import isEmpty from 'is-empty'
 import { useUserDispatch, useUserState } from '@approbado/lib/hooks/useUserState'
 import TextInput from '@approbado/lib/components/TextInput'
+import { Form } from 'react-final-form'
 
 const validate = values => {
     const errors = {};
@@ -47,12 +48,13 @@ const UpdateProfile = () => {
 
     return (
         <Box paddingTop='2rem'>
-            <FormWithRedirect
-                record={user}
+            <Form
+                initialValues={user}
                 save={save}
                 disabled={loading}
                 validate={validate}
-                render={ ({ handleSubmitWithRedirect }) => (
+                onSubmit={save}
+                render={ ({ handleSubmit }) => (
                     <Grid container spacing='5'>
                         <Grid item md='3' xs='12'>
                             <Box width='100%' display='flex' justifyContent="center">
@@ -85,7 +87,7 @@ const UpdateProfile = () => {
                                     onClick={event => {
                                         if (event) {
                                             event.preventDefault();
-                                            handleSubmitWithRedirect();
+                                            handleSubmit();
                                         }
                                     }}
                                     unresponsive

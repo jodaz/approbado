@@ -8,28 +8,24 @@ import Button from '@approbado/lib/components/Button'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 import ForumCreate from './ForumCreate'
 import TopContributors from './TopContributors'
-import ForumsListView from '@approbado/lib/layouts/forums/ForumsListView'
 import ForumWarning from './ForumWarning'
 
 const tags = [
     {
         name: 'Populares',
-        pathname: 'top',
-        component: <ForumsListView perPage='5' sort={{ field: 'comments', order: 'DESC' }} />
+        pathname: '/forums/top'
     },
     {
         name: 'Nuevos',
-        pathname: 'new',
-        component: <ForumsListView perPage='5' sort={{ field: 'created_at', order: 'DESC' }} />
+        pathname: '/forums/new',
     },
     {
         name: 'No respondidos',
-        pathname: 'unanswered',
-        component: <ForumsListView perPage='5' filter={{ unanswered: true }} />
+        pathname: '/forums/unanswered'
     },
 ]
 
-const ForumsView = () => {
+const DefaultForumLayout = ({ children }) => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     )
@@ -56,6 +52,7 @@ const ForumsView = () => {
                     </Box>
                 </Box>
                 <TabbedList tags={tags} />
+                {children}
             </Box>
             <TopContributors isXSmall={isXSmall} />
             <ForumCreate />
@@ -64,4 +61,4 @@ const ForumsView = () => {
     )
 }
 
-export default ForumsView
+export default DefaultForumLayout

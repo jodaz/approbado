@@ -3,7 +3,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Link from '@material-ui/core/Link';
-import { useShowController } from 'react-admin'
 import Spinner from '@approbado/lib/components/Spinner'
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import RecentReports from '../components/RecentReports'
@@ -11,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import configs from '@approbado/lib/configs'
 import RestrictButton from '../components/RestrictButton'
+import { axios } from '@approbado/lib/providers';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -50,15 +50,19 @@ const useStyles = makeStyles(theme => ({
 const BlacklistedUserShow = () => {
     const classes = useStyles();
     const { id: userId } = useParams();
-    const showControllerProps = useShowController({
-        id: userId,
-        resource: 'blacklisted-users',
-        basePath: '/blacklisted-users'
-    })
+    const [record, setRecord] = React.useState({})
 
-    const { record, loaded } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/blacklisted-users/${userId}`)
 
-    if (!loaded) return <Spinner />;
+        setRecord(data)
+    }, [])
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!Object.entries(record).length) return <Spinner />;
 
     const { names, user_name, id, picture } = record
 

@@ -1,26 +1,26 @@
 import * as React from 'react'
-import PlansList from './PlansList'
-import PaymentsList from './PaymentsList'
+import Admin from '../layouts/Admin'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [
     {
         name: 'Pagos',
-        pathname: 'payments',
-        component: <PaymentsList />
+        pathname: '/memberships/payments'
     },
     {
         name: 'Planes',
-        pathname: 'plans',
-        component: <PlansList />
+        pathname: '/memberships/plans'
     },
 ]
 
-const Memberships = () => (
-    <TabbedList
-        tags={tags}
-        name='Pagos y membresías'
-    />
+const Memberships = ({ children }) => (
+    <Admin>
+        <TabbedList
+            tags={tags}
+            name='Pagos y membresías'
+        />
+        {children}
+    </Admin>
 )
 
 export default Memberships

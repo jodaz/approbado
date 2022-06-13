@@ -1,6 +1,6 @@
 import * as React from 'react'
 // Layout and theme
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import ProtectedRoute from '@approbado/lib/components/ProtectedRoute';
 import Layout from './layouts/Admin'
 // Components
@@ -12,6 +12,8 @@ import CategoryCreate from './configurations/CategoryCreate'
 import CategoryEdit from './configurations/CategoryEdit'
 import LevelEdit from './configurations/LevelEdit'
 import Profile from './profile'
+import UpdateProfilePassword from '@approbado/lib/layouts/UpdatePassword'
+import ProfileEdit from './profile/EditProfile'
 import Memberships from './memberships/Memberships';
 import PlanCreate from './memberships/PlanCreate';
 import PlanEdit from './memberships/PlanEdit';
@@ -20,6 +22,7 @@ import ErrorLayout from '@approbado/lib/layouts/Error'
 import UpdatePassword from './auth/UpdatePassword';
 import SubthemeCreate from './subthemes/SubthemeCreate'
 import SubthemeShow from './subthemes/SubthemeShow';
+import SubthemeEdit from './subthemes/SubthemeEdit';
 import AwardsCreate from './awards/AwardsCreate'
 import FileCreate from './files/FileCreate'
 import FileEdit from './files/FileEdit'
@@ -30,57 +33,131 @@ import BlacklistedUserShow from './blacklistedUsers/BlacklistedUserShow'
 import QuestionEdit from './questions/QuestionEdit'
 import AwardEdit from './awards/AwardEdit'
 import TriviaCreate from './trivias/TriviaCreate';
-import TriviaShow from './trivias/TriviaShow';
+import TriviaShowLayout from './trivias/TriviaShow';
 import TriviaList from './trivias/TriviaList';
-import UserList from './users/UserList'
+import UserListLayout from './users/UserListLayout'
 import UserEdit from './users/UserEdit'
 import UserCreate from './users/UserCreate'
 import ReportsView from './reports/ReportsView'
 import ReportShow from './reports/ReportShow'
 import NotFound from './layouts/NotFound'
 import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
-import ForumEdit from '@approbado/lib/layouts/forums/ForumEdit'
-import ForumsView from '@approbado/lib/layouts/forums/ForumsView'
 import CommentShow from '@approbado/lib/layouts/comments/CommentShow'
+import LevelList from './configurations/LevelsList';
+import CategoryList from './configurations/CategoryList';
+import PaymentsList from './memberships/PaymentsList';
+import PlansList from './memberships/PlansList';
+import AdminUsersList from './users/AdminUsersList'
+import RegisteredUsersList from './users/RegisteredUsersList'
+import RecentReports from './components/RecentReports'
+import RestrictedUsers from './restrictedUsers'
+import BlacklistedUsers from './blacklistedUsers'
+import TriviaEdit from './trivias/TriviaEdit'
+import SubthemesList from './subthemes/SubthemesList'
+import AwardsList from './awards/AwardsList'
+import FilesList from './files/FilesList'
+import ForumLayout from './forums'
+import QuestionsList from './questions/QuestionsList'
+import ForumList from '@approbado/lib/layouts/forums/ForumList';
 
 const App = () => {
     return (
         <Switch>
-            <Route exact path='/login' render={() => <Login />} />
-            <Route exact path="/reset-password" render={() => <ResetPassword />} />
-            <Route exact path="/update-password" render={() => <UpdatePassword />} />
+            <Route
+                exact
+                path='/login'
+                render={() => <Login />}
+            />
+            <Route
+                exact
+                path="/reset-password"
+                render={() => <ResetPassword />}
+            />
+            <Route
+                exact
+                path="/update-password"
+                render={() => <UpdatePassword />}
+            />
 
-            <ProtectedRoute layout={Layout} exact path="/" component={() => <Dashboard />} />
-            <ProtectedRoute layout={Layout} exact path="/reports/users/:id/show" component={() => <BlacklistedUserShow />} />
-            <ProtectedRoute layout={Layout} exact path="/profile" component={() => <Profile />} />
-            <ProtectedRoute layout={Layout} exact path="/error" component={() => <ErrorLayout />} />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/"
+                component={() => <Dashboard />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/reports/users/:id/show"
+                component={() => <BlacklistedUserShow />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/error"
+                component={() => <ErrorLayout />}
+            />
+            {/**
+             * Account
+             */}
+            <Redirect exact from='/profile' to='/profile/about' />
+            <ProtectedRoute
+                layout={Profile}
+                exact
+                path="/profile/about"
+                component={() => <ProfileEdit />}
+            />
+            <ProtectedRoute
+                layout={Profile}
+                exact
+                path="/profile/security"
+                component={() => <UpdateProfilePassword />}
+            />
 
             {/**
              * Reports
              */}
-            <ProtectedRoute layout={Layout} exact path='/reports' component={(routeProps) =>
-                <ReportsView
-                    resource="reports"
-                    basePath={routeProps.match.url}
-                />}
+            <Redirect exact from='/reports' to='/reports/recent' />
+            <ProtectedRoute
+                layout={ReportsView}
+                exact
+                path="/reports/recent"
+                component={() => <RecentReports />}
             />
-            <ProtectedRoute layout={Layout} exact path='/reports/:id' component={(routeProps) =>
-                <ReportShow
-                    resource="reports"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={ReportsView}
+                exact
+                path="/reports/blacklisted"
+                component={() => <BlacklistedUsers />}
+            />
+            <ProtectedRoute
+                layout={ReportsView}
+                exact
+                path="/reports/restricted"
+                component={() => <RestrictedUsers />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/reports/:id'
+                component={() => <ReportShow />}
+            />
 
             {/**
              * Users
              */}
-            <ProtectedRoute layout={Layout} exact path='/users' component={(routeProps) =>
-                <UserList
-                    resource="users"
-                    basePath={routeProps.match.url}
-                />}
+            <Redirect exact from='/users' to='/users/clients' />
+            <ProtectedRoute
+                layout={UserListLayout}
+                exact
+                path="/users/clients"
+                component={() => <RegisteredUsersList />}
+            />
+            <ProtectedRoute
+                layout={UserListLayout}
+                exact
+                path="/users/admins"
+                component={() => <AdminUsersList />}
             />
             <ProtectedRoute
                 layout={Layout}
@@ -88,101 +165,231 @@ const App = () => {
                 path='/users/create'
                 component={() => <UserCreate />}
             />
-            <ProtectedRoute layout={Layout} exact path="/users/:id/show" component={() => <UserProfile />} />
-            <ProtectedRoute layout={Layout} exact path='/users/:id' component={(routeProps) =>
-                <UserEdit
-                    resource="users"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/users/:id/show"
+                component={() => <UserProfile />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/users/:id'
+                component={() => <UserEdit /> }
+            />
 
             {/**
              * Plans and memberships
              */}
-            <ProtectedRoute layout={Layout} exact path="/memberships" component={() => <Memberships />} />
-            <ProtectedRoute layout={Layout} exact path="/memberships/plans/create" component={() => <PlanCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/memberships/plans/:id" component={(routeProps) =>
-                <PlanEdit
-                    resource="memberships/plans"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <Redirect exact from='/memberships' to='/memberships/payments' />
+            <ProtectedRoute
+                layout={Memberships}
+                exact
+                path="/memberships/payments"
+                component={() => <PaymentsList />}
+            />
+            <ProtectedRoute
+                layout={Memberships}
+                exact
+                path="/memberships/plans"
+                component={() => <PlansList />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/memberships/plans/create"
+                component={() => <PlanCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/memberships/plans/:id"
+                component={() => <PlanEdit resource="memberships/plans" /> }
+            />
 
             {/**
              * Settings
              */}
-            <ProtectedRoute layout={Layout} exact path="/configurations" component={() => <Configurations />} />
-            <ProtectedRoute layout={Layout} exact path="/configurations/levels/create" component={() => <LevelsCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/configurations/categories/create" component={() => <CategoryCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/configurations/categories/:id" component={(routeProps) =>
-                <CategoryEdit
-                    resource="configurations/categories"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
-            <ProtectedRoute layout={Layout} exact path="/configurations/levels/:id" component={(routeProps) =>
-                <LevelEdit
-                    resource="configurations/levels"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <Redirect exact from='/configurations' to='/configurations/categories' />
+            <ProtectedRoute
+                layout={Configurations}
+                exact
+                path="/configurations/levels"
+                component={() => <LevelList />}
+            />
+            <ProtectedRoute
+                layout={Configurations}
+                exact
+                path="/configurations/categories"
+                component={() => <CategoryList />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/levels/create"
+                component={() => <LevelsCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/categories/create"
+                component={() => <CategoryCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/categories/:id"
+                component={() => <CategoryEdit />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/configurations/levels/:id"
+                component={() => <LevelEdit />}
+            />
 
             {/**
              * Trivias
              */}
-            <ProtectedRoute layout={Layout} exact path='/trivias' component={(routeProps) =>
-                <TriviaList
-                    resource="trivias"
-                    basePath={routeProps.match.url}
-                />}
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/trivias'
+                component={() => <TriviaList />}
             />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create" component={() => <QuestionsCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload" component={() => <QuestionsUpload />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id" component={() => <QuestionEdit />} />
-            <ProtectedRoute layout={Layout} exact path='/trivias/create' component={() => <TriviaCreate />} />
-            <ProtectedRoute layout={Layout} exact path='/trivias/:id/show' component={(routeProps) =>
-                <TriviaShow
-                    resource="trivias"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/create" component={() => <SubthemeCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/awards/create" component={() => <AwardsCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/files/create" component={() => <FileCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/files/:file_id" component={() => <FileEdit />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/awards/:award_id" component={() => <AwardEdit />} />
-            <ProtectedRoute layout={Layout} exact path="/trivias/:trivia_id/subthemes/:subtheme_id/show" component={(routeProps) =>
-                <SubthemeShow
-                    resource="trivias"
-                    basePath={routeProps.match.url}
-                    id={decodeURIComponent((routeProps.match).params.id)}
-                    {...routeProps}
-                />
-            } />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/create"
+                component={() => <QuestionsCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/upload"
+                component={() => <QuestionsUpload />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/subthemes/:subtheme_id/questions/:question_id"
+                component={() => <QuestionEdit />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path='/trivias/create'
+                component={() => <TriviaCreate />}
+            />
+            <ProtectedRoute
+                layout={TriviaShowLayout}
+                exact
+                path='/trivias/:id'
+                component={TriviaEdit}
+            />
+            <ProtectedRoute
+                layout={TriviaShowLayout}
+                exact
+                path='/trivias/:id/files'
+                component={FilesList}
+            />
+            <ProtectedRoute
+                layout={TriviaShowLayout}
+                exact
+                path='/trivias/:id/questions'
+                component={QuestionsList}
+            />
+            <ProtectedRoute
+                layout={TriviaShowLayout}
+                exact
+                path='/trivias/:id/awards'
+                component={AwardsList}
+            />
+            <ProtectedRoute
+                layout={TriviaShowLayout}
+                exact
+                path='/trivias/:id/subthemes'
+                component={SubthemesList}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/subthemes/create"
+                component={() => <SubthemeCreate />}
+            />
+            <ProtectedRoute
+                layout={SubthemeShow}
+                exact
+                path='/trivias/:trivia_id/subthemes/:subtheme_id/questions'
+                component={QuestionsList}
+            />
+            <ProtectedRoute
+                layout={SubthemeShow}
+                exact
+                path='/trivias/:trivia_id/subthemes/:subtheme_id'
+                component={SubthemeEdit}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/awards/create"
+                component={() => <AwardsCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/files/create"
+                component={() => <FileCreate />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/files/:file_id"
+                component={() => <FileEdit />}
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/trivias/:trivia_id/awards/:award_id"
+                component={() => <AwardEdit />}
+            />
 
             {/**
              * Forum
              */}
-            <ProtectedRoute exact path="/forums" component={() => <ForumsView />} layout={Layout} />
-            <ProtectedRoute exact path="/forums/:id" component={() => <ForumEdit />} layout={Layout} />
-            <ProtectedRoute exact path="/forums/:id/show" component={(routeProps) =>
-                <ForumShow
-                    resource={'forums'}
-                    basePath={routeProps.match.url}
-                />}
-                layout={Layout}
-            />
-            <ProtectedRoute exact path="/comments/:id/show" component={() => <CommentShow />} layout={Layout} />
+            <Switch>
+                <Redirect exact from='/forums' to='/forums/top' />
+                <ProtectedRoute
+                    exact
+                    path="/forums/top"
+                    component={() => <ForumList sort={{ field: 'comments', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/new"
+                    component={() => <ForumList sort={{ field: 'created_at', order: 'DESC' }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/unanswered"
+                    component={() => <ForumList filter={{ unanswered: true }} />}
+                    layout={ForumLayout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/forums/:id"
+                    component={() => <ForumShow  />}
+                    layout={Layout}
+                />
+                <ProtectedRoute
+                    exact
+                    path="/comments/:id/show"
+                    component={() => <CommentShow />}
+                    layout={Layout}
+                />
+            </Switch>
             <Route path='/*' render={() => <NotFound />} />
         </Switch>
     )

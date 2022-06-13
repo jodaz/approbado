@@ -1,17 +1,13 @@
 import * as React from 'react'
-import {
-    useMutation,
-    TextInput,
-    useNotify,
-    useRedirect,
-    SelectInput,
-    ReferenceInput,
-    useEditController,
-    ReferenceArrayInput
-} from 'react-admin'
+import { useNotify } from 'react-admin'
+import { useHistory, useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag';
+import SelectCategoriesInput from './SelectCategoriesInput'
+import SelectTriviaInput from './SelectTriviaInput'
+import TextInput from '@approbado/lib/components/TextInput'
+import Spinner from '../../components/Spinner'
+import { axios } from '../../providers'
 
 const validate = values => {
     const errors = {};
@@ -29,77 +25,62 @@ const validate = values => {
     return errors;
 };
 
-const ForumEdit = props => {
-    const editControllerProps = useEditController(props);
-    const [mutate, { data, loading, loaded }] = useMutation();
+const ForumEdit = () => {
+    const { id } = useParams();
+    const [record, setRecord] = React.useState({})
+    const history = useHistory()
     const notify = useNotify();
-    const redirect = useRedirect()
 
-    const save = React.useCallback(async values => {
+    const save = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'update',
-                resource: 'forums',
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`forums/${record.id}`, values)
+
+            if (data) {
+                notify('Se ha completado la actualización con éxito', 'success')
+                history.push(`/forums/${record.id}/show`)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [])
 
-    React.useEffect(() => {
-        if (loaded) {
-            notify('Se ha completado la actualización con éxito', 'success')
-            redirect(`/forums/${record.id}/show`)
+    React.useEffect(async () => {
+        if (id) {
+            const { data } = await axios.get(`/forums/${id}`)
+
+            if (data) {
+                setRecord(data)
+            }
         }
-    }, [loaded])
+    }, [id])
 
-    const { record, loading: loadingRecord } = editControllerProps;
-
-    if (loadingRecord) return null
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm
             save={save}
-            disabled={loading}
             record={record}
             validate={validate}
         >
-            <InputContainer label='Título' sx={12} md={12}>
+            <InputContainer label='Título' sx={12} md={6}>
                 <TextInput
-                    source="message"
+                    name="message"
                     placeholder="Ingrese un título"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Descripción' sx={12} md={12}>
+            <InputContainer label='Descripción' sx={12} md={6}>
                 <TextInput
-                    source="summary"
+                    name="summary"
                     placeholder="Ingrese una descripción (Opcional)"
                     fullWidth
                     multiline
                 />
             </InputContainer>
-            <InputContainer label='Trivia' sx={12} md={6}>
-                <ReferenceInput
-                    source="trivia_id"
-                    reference="trivias"
-                    fullWidth
-                >
-                    <SelectInput />
-                </ReferenceInput>
-            </InputContainer>
-            <InputContainer label='Categorías' sx={12} md={6}>
-                <ReferenceArrayInput
-                    source="categories_ids"
-                    reference="configurations/categories"
-                    fullWidth
-                >
-                    <MultipleSelectTag value={record.categories} />
-                </ReferenceArrayInput>
-            </InputContainer>
+            <SelectTriviaInput />
+            <SelectCategoriesInput />
         </BaseForm>
     )
 }

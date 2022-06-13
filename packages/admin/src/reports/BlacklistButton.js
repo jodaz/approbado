@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { alpha } from '@material-ui/core'
 import styled from '@material-ui/styles/styled';
-import { useMutation, useNotify, useRedirect } from 'react-admin'
+import { useMutation, useNotify } from 'react-admin'
 import Button from '@material-ui/core/Button';
 import Confirm from '@approbado/lib/layouts/Confirm';
+import { useHistory } from 'react-router-dom'
 
 const CustomizedButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.background.dark,
@@ -14,7 +15,7 @@ const CustomizedButton = styled(Button)(({ theme }) => ({
 }));
 
 const DeleteReportButton = ({ id, owner: user }) => {
-    const redirect = useRedirect();
+    const history = useHistory();
     const notify = useNotify()
     const [open, setOpen] = React.useState(false);
     const [mutate, { loaded, loading }] = useMutation();
@@ -35,7 +36,7 @@ const DeleteReportButton = ({ id, owner: user }) => {
 
     React.useEffect(() => {
         if (loaded) {
-            redirect(`/reports/${id}/show`)
+            history.push(`/reports/${id}/show`)
             notify(`¡El usuario @${user.user_name} ahora está en la lista negra!`, 'success')
         }
     }, [loaded])

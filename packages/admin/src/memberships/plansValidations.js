@@ -3,6 +3,8 @@ export const validatePlan = (values) => {
 
     if (!values.name) {
         errors.name = "Ingrese un nombre para el plan.";
+    } else if (values.name.length < 6) {
+        errors.name = 'El nombre debe tener al menos 6 caracteres'
     }
     if (!values.duration && values.amount != 0) {
         errors.duration = "Ingrese la duración de la membresía.";

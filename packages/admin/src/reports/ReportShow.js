@@ -6,12 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactComponent as TagIcon } from '@approbado/lib/icons/Tag.svg'
 import Link from '@material-ui/core/Link';
-import { useShowController } from 'react-admin'
 import { useConvertPostgresDate } from '@approbado/lib/hooks/useConvertPostgresDate'
 import Spinner from '@approbado/lib/components/Spinner'
 import Overview from './Overview'
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import Analytics from './Analytics'
+import { axios } from '@approbado/lib/providers';
+import { useParams } from 'react-router-dom'
 
 const tags = record => ([
     {
@@ -54,13 +55,22 @@ const Date = ({ created_at }) => {
     )
 }
 
-const ReportShow = props => {
+const ReportShow = () => {
     const classes = useStyles();
-    const showControllerProps = useShowController(props)
+    const { id } = useParams();
+    const [record, setRecord] = React.useState({})
 
-    const { record, loaded } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/reports/${id}`)
 
-    if (!loaded) return <Spinner />;
+        setRecord(data)
+    }, [])
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!Object.entries(record).length) return <Spinner />;
 
     return (
         <Box>

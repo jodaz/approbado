@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    SelectInput,
     BooleanInput,
     useNotify
 } from 'react-admin'
@@ -8,6 +7,7 @@ import { Grid } from '@material-ui/core'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import TextInput from '@approbado/lib/components/TextInput'
+import SelectInput from '@approbado/lib/components/SelectInput'
 import { axios } from '@approbado/lib/providers'
 import { useHistory } from 'react-router-dom'
 import CustomPasswordInput from './CustomPasswordInput'
@@ -86,8 +86,8 @@ const UserCreate = () => {
             <InputContainer label='Tipo de acceso'>
                 <SelectInput
                     label={false}
-                    source="rol"
-                    choices={ACCESS_TYPES}
+                    options={ACCESS_TYPES}
+                    name='rol'
                     fullWidth
                 />
             </InputContainer>

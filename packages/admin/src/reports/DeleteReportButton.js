@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { alpha } from '@material-ui/core'
 import styled from '@material-ui/styles/styled';
-import { useMutation, useNotify, useRedirect } from 'react-admin'
+import { useMutation, useNotify } from 'react-admin'
 import Button from '@material-ui/core/Button';
 import Confirm from '@approbado/lib/layouts/Confirm';
+import { useHistory } from 'react-router-dom'
 
 const CustomizedButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.error.main,
@@ -15,7 +16,7 @@ const CustomizedButton = styled(Button)(({ theme }) => ({
 }));
 
 const DeleteReportButton = ({ id }) => {
-    const redirect = useRedirect();
+    const history = useHistory();
     const notify = useNotify()
     const [open, setOpen] = React.useState(false);
     const [handleDelete, { loaded, loading }] = useMutation({
@@ -26,7 +27,7 @@ const DeleteReportButton = ({ id }) => {
 
     React.useEffect(() => {
         if (loaded) {
-            redirect('/reports')
+            history.push('/reports')
             notify('¡La publicación ha sido eliminada!', 'success')
         }
     }, [loaded])

@@ -1,14 +1,14 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core'
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import FormHelperText from '@material-ui/core/FormHelperText'
-import FormControl from '@material-ui/core/FormControl'
-import configs from '@approbado/lib/configs'
+import * as React from 'react'
+import InputContainer from '@approbado/lib/components/InputContainer'
+import { axios } from '@approbado/lib/providers'
+import SelectInput from '@approbado/lib/components/SelectInput'
+import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip';
 import CloseIcon from '@approbado/lib/icons/CloseIcon'
+import { makeStyles } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar';
+import configs from '@approbado/lib/configs'
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
     userCard: {
@@ -31,35 +31,33 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Select = props => {
+const SelectUsersInput = ({ submitting }) => {
     const classes = useStyles();
-    const {
-        meta: { touched, error, submitError, initial } = { touched, initial, error, submitError },
-        input: { value: defaultValue, onChange,  name },
-        meta,
-        options
-    } = props;
-    const [value, setValue] = React.useState([]);
-    const [inputValue, setInputValue] = React.useState('');
-    const [open, setOpen] = React.useState(false);
+    const [users, setUsers] = React.useState([])
+
+    const fetchUsers = React.useCallback(async () => {
+        const { data: { data } } = await axios.get('/users?filter[is_registered]=true')
+        setUsers(data)
+    }, []);
+
+    React.useEffect(() => {
+        fetchUsers();
+    }, [])
+
+    if (!Object.entries(users).length) return null;
 
     return (
-        <FormControl className="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense MuiFormControl-fullWidth">
-            <Autocomplete
-                name={name}
-                open={open}
-                fullWidth
+        <InputContainer
+            disabled={submitting}
+            label="Participantes"
+            md={12}
+            xs={12}
+        >
+            <SelectInput
+                name='users_ids'
+                options={users}
                 multiple
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
-                getOptionSelected={(option, value) => option.names === value.names}
-                getOptionLabel={option => option.names}
-                options={options}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                    />
-                )}
+                property='names'
                 renderOption={(option, { selected }) => (
                     <Box className={classes.userCard}>
                         <Avatar
@@ -84,6 +82,7 @@ const Select = props => {
                         </Box >
                     </Box>
                 )}
+                getOptionSelected={(option, value) => option.names === value.names}
                 renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
                         <Chip
@@ -95,27 +94,14 @@ const Select = props => {
                         />
                     ))
                 }
-                value={value}
-                onChange={async (event, newValue) => {
-                    await setValue(newValue);
-
-                    const ids = await newValue.map(item => item.id);
-                    await onChange(ids)
-                }}
-                inputValue={inputValue}
-                onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                }}
-                disableClearable
+                renderInput={params => (
+                    <TextField
+                        {...params}
+                    />
+                )}
             />
-            {meta.error && meta.touched && <FormHelperText error>{meta.error}</FormHelperText>}
-        </FormControl>
-    );
+        </InputContainer>
+    )
 }
 
-Select.defaultProps = {
-    icon: <></>,
-    options: []
-}
-
-export default Select;
+export default SelectUsersInput

@@ -1,8 +1,8 @@
 import * as React from 'react'
-import ForumsListView from '@approbado/lib/layouts/forums/ForumsListView'
+import ForumList from '@approbado/lib/layouts/forums/ForumList';
 
 const Publications = ({ id }) => (
-    <ForumsListView filter={{ user_id: id }} />
+    <ForumList filter={{ user_id: id }} />
 );
 
 export default Publications;

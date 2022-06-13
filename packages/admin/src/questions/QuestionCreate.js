@@ -1,13 +1,7 @@
 import * as React from 'react'
-import {
-    useMutation,
-    useRedirect,
-    SelectInput,
-    useNotify,
-    ReferenceInput,
-    BooleanInput
-} from 'react-admin'
-import { useParams } from 'react-router-dom'
+import { useNotify, BooleanInput } from 'react-admin'
+import { axios } from '@approbado/lib/providers'
+import { useParams, useHistory } from 'react-router-dom'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -22,6 +16,8 @@ import { makeStyles } from '@material-ui/core'
 import { unmarkOptions, validate } from './questionsFormUtils'
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextInput from '@approbado/lib/components/TextInput'
+import SelectInput from '@approbado/lib/components/SelectInput'
+import useFetch from '@approbado/lib/hooks/useFetch'
 
 const OPTIONS = [
     { id: '1', name: 'Respuesta correcta' },
@@ -46,36 +42,76 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+const SelectFileInput = ({ trivia_id }) => {
+    const {
+        total,
+        data
+    } = useFetch('/files', {
+        filter: { trivia_id: trivia_id }
+    })
+
+    if (!total) return null;
+
+    return (
+        <InputContainer
+            sm='12'
+            md='6'
+            label='Archivo de referencia'
+        >
+            <SelectInput
+                name='file_id'
+                placeholder='Seleccione'
+                options={data}
+                property='title'
+            />
+        </InputContainer>
+    )
+}
+
+const SelectLevelInput = () => {
+    const {
+        total,
+        data
+    } = useFetch('/configurations/levels')
+
+    if (!total) return null;
+
+    return (
+        <InputContainer
+            sm='12'
+            md='6'
+            label='Nivel'
+        >
+            <SelectInput
+                name='level_id'
+                placeholder='Seleccione'
+                options={data}
+            />
+        </InputContainer>
+    )
+}
+
 const QuestionCreate = () => {
     const { subtheme_id, trivia_id } = useParams()
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
     const initialFormState = { options: [{}] };
     const classes = useStyles();
 
     const save = React.useCallback(async (values) => {
-        const data = { subtheme_id: subtheme_id, ...values };
-
         try {
-            await mutate({
-                type: 'create',
-                resource: 'questions',
-                payload: { data: data }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/questions', values)
+
+            if (data) {
+                notify('¡Has creado una nueva pregunta!', 'success')
+                history.push(`/trivias/${trivia_id}/subthemes/${subtheme_id}/questions`)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate, subtheme_id])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify('¡Has creado una nueva pregunta!', 'success')
-            redirect(`/trivias/${trivia_id}/subthemes/${subtheme_id}/show?tab=questions`)
-        }
-    }, [loaded])
+    }, []);
 
     return (
         <Box component='div'>
@@ -93,7 +129,8 @@ const QuestionCreate = () => {
                         mutators: { push, unmarkOptions }
                     },
                     values,
-                    errors
+                    errors,
+                    submitting
             }) => {
                     return (
                         <form onSubmit={handleSubmit}>
@@ -109,7 +146,7 @@ const QuestionCreate = () => {
                                         <TextInput
                                             name="description"
                                             placeholder="Ingresa el enunciado"
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -124,11 +161,11 @@ const QuestionCreate = () => {
                                                             placeholder="Ingrese la respuesta"
                                                             fullWidth
                                                             label=""
-                                                            disabled={loading}
+                                                            disabled={submitting}
                                                         />
                                                         <Box width="100%" display="flex" justifyContent="space-between">
                                                             <BooleanInput
-                                                                source={`${name}.is_right`}
+                                                                name={`${name}.is_right`}
                                                                 label="Opción correcta"
                                                                 onClick={unmarkOptions}
                                                             />
@@ -171,9 +208,9 @@ const QuestionCreate = () => {
                                     </Box>
                                     <InputContainer sm='12' md='6' label='Mostrar cuando'>
                                         <SelectInput
-                                            source="explanation_type"
-                                            choices={OPTIONS}
-                                            disabled={loading}
+                                            name="explanation_type"
+                                            options={OPTIONS}
+                                            disabled={submitting}
                                             fullWidth
                                         />
                                     </InputContainer>
@@ -181,38 +218,16 @@ const QuestionCreate = () => {
                                         <TextInput
                                             name="explanation"
                                             placeholder="Ingrese el texto de la aclaratoria"
-                                            disabled={loading}
+                                            disabled={submitting}
                                             fullWidth
                                         />
                                     </InputContainer>
-                                    <InputContainer sm='12' md='6' label='Archivo de referencia'>
-                                        <ReferenceInput
-                                            source="file_id"
-                                            reference="files"
-                                            disabled={loading}
-                                            fullWidth
-                                            allowEmpty
-                                        >
-                                            <SelectInput
-                                                optionText="title"
-                                                emptyText="N/A"
-                                            />
-                                        </ReferenceInput>
-                                    </InputContainer>
-                                    <InputContainer label='Nivel' sm='12' md='6'>
-                                        <ReferenceInput
-                                            source='level_id'
-                                            reference='configurations/levels'
-                                            allowEmpty
-                                            fullWidth
-                                        >
-                                            <SelectInput source="name" emptyText="N/A" />
-                                        </ReferenceInput>
-                                    </InputContainer>
+                                    <SelectFileInput trivia_id={trivia_id} />
+                                    <SelectLevelInput />
                                     <Grid container>
                                         <Grid item xs={12} sm={12} md={4} lg={3}>
                                             <CustomCreateButton
-                                                disabled={loading}
+                                                disabled={submitting}
                                                 onClick={event => {
                                                     if (event) {
                                                         event.preventDefault();

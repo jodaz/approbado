@@ -2,7 +2,7 @@ export const createSubthemeSchema = {
     name: {
         isLength: {
             options: { min: 6 },
-            errorMessage: 'El nombre debe tener al menos 5 caracteres'
+            errorMessage: 'El nombre debe tener al menos 6 caracteres'
         }
     },
     duration: {

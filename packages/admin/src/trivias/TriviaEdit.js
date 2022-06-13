@@ -1,10 +1,7 @@
 import * as React from 'react'
 import {
-    SelectInput,
     useNotify,
-    ReferenceInput,
-    useRefresh,
-    ReferenceArrayInput
+    useRefresh
 } from 'react-admin'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -13,32 +10,16 @@ import { useFileProvider } from '@jodaz_/file-provider'
 import ImageInput from '@approbado/lib/components/ImageInput'
 import Box from '@material-ui/core/Box'
 import isEmpty from 'is-empty'
-import MultipleSelectTag from '@approbado/lib/components/MultipleSelectTag'
 import TextInput from '@approbado/lib/components/TextInput'
+import SelectCategoryInput from './SelectCategoryInput';
+import SelectInput from '@approbado/lib/components/SelectInput'
+import validate from './validateTrivias'
+import SelectPlansInput from './SelectPlansInput'
 
 const ACCESS_TYPES = [
     { id: '1', name: 'Gratis' },
     { id: '0', name: 'De pago' }
 ]
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.category_id) {
-        errors.category_id = "Seleccione una categoría.";
-    }
-    if (!values.is_free) {
-        errors.is_free = "Seleccione un acceso.";
-    }
-    if (values.plans_ids) {
-        errors.plans_ids = "Seleccione un plan.";
-    }
-
-    return errors;
-};
 
 const TriviaEdit = ({ record }) => {
     const notify = useNotify();
@@ -47,12 +28,13 @@ const TriviaEdit = ({ record }) => {
 
     const save = React.useCallback(async values => {
         try {
+            const { plans, ...rest } = values
             await provider({
                 resource: 'trivias',
                 type: 'update',
                 payload: {
                     id: record.id,
-                    data: values
+                    data: rest
                 }
             });
         } catch (error) {
@@ -80,9 +62,8 @@ const TriviaEdit = ({ record }) => {
             </InputContainer>
             <InputContainer label='Acceso'>
                 <SelectInput
-                    source="is_free"
-                    choices={ACCESS_TYPES}
-                    fullWidth
+                    name="is_free"
+                    options={ACCESS_TYPES}
                 />
             </InputContainer>
             <InputContainer label='Imagen de portada'>
@@ -101,25 +82,8 @@ const TriviaEdit = ({ record }) => {
                     </Box>
                 </Box>
             </InputContainer>
-            <InputContainer label='Categoría'>
-                <ReferenceInput
-                    source='category_id'
-                    reference='configurations/categories'
-                    fullWidth
-                >
-                    <SelectInput source="name" />
-                </ReferenceInput>
-            </InputContainer>
-            <InputContainer label='Planes'>
-                <ReferenceArrayInput
-                    source='plans_ids'
-                    reference='memberships/plans'
-                    allowEmpty
-                    fullWidth
-                >
-                    <MultipleSelectTag />
-                </ReferenceArrayInput>
-            </InputContainer>
+            <SelectCategoryInput />
+            <SelectPlansInput />
         </BaseForm>
     )
 }

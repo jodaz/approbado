@@ -1,40 +1,37 @@
 import * as React from 'react'
 import { axios } from '@approbado/lib/providers'
 
-const getQueryFromParams = ({
-    perPage, page, sort, filter
-}) => {
-    const query = {
-        page: page + (-1),
-        perPage: perPage
+const getQueryFromParams = (params = {}) => {
+    const query = {};
+
+    if (params["page"] != undefined) {
+        query.page = params.page + (-1)
+    }
+    if ("perPage" in params) {
+        query.perPage = params.perPage
+    }
+    if ("filter" in params) {
+        // Add all filter params to query.
+        Object.keys(params.filter || {}).forEach((key) => {
+            query[`filter[${key}]`] = params.filter[key];
+        });
     }
 
-    // Add all filter params to query.
-    Object.keys(filter || {}).forEach((key) => {
-        query[`filter[${key}]`] = filter[key];
-    });
-
     // Add sort parameter
-    if (sort && sort.field) {
-        query.sort = sort.field;
-        query.order = sort.order === 'ASC' ? 'asc' : 'desc';
+    if (params.sort && params.sort.field) {
+        query.sort = params.sort.field;
+        query.order = params.sort.order === 'ASC' ? 'asc' : 'desc';
     }
 
     return query;
 }
 
-const useFetch = (url, params) => {
+const useFetch = (url, params = {}) => {
     const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(false)
     const [data, setData] = React.useState([])
     const [hasMore, setHasMore] = React.useState(null)
     const [total, setTotal] = React.useState(null)
-    const {
-        perPage,
-        page,
-        filter,
-        sort
-    } = params
 
     React.useEffect(() => {
         if (hasMore == null || hasMore == true) {
@@ -59,7 +56,7 @@ const useFetch = (url, params) => {
                 setError(true)
             })
         }
-    }, [page, perPage, filter, sort])
+    }, [params.perPage, params.page, hasMore])
 
     return { loading, error, data, hasMore, total }
 }

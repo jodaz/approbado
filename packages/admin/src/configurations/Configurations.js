@@ -1,27 +1,27 @@
 import * as React from 'react'
 // Components
-import LevelsList from './LevelsList'
-import CategoriesList from './CategoryList'
+import Admin from '../layouts/Admin'
 import TabbedList from '@approbado/lib/components/TabbedList'
 
 const tags = [
     {
         name: 'Categorías',
-        pathname: 'categories',
-        component: <CategoriesList />
+        pathname: '/configurations/categories'
     },
     {
         name: 'Niveles',
-        pathname: 'levels',
-        component: <LevelsList />
+        pathname: '/configurations/levels'
     },
 ]
 
-const Configurations = () => (
-    <TabbedList
-        tags={tags}
-        name='Configuraciones'
-    />
+const Configurations = ({ children }) => (
+    <Admin>
+        <TabbedList
+            tags={tags}
+            name='Configuraciones'
+        />
+        {children}
+    </Admin>
 )
 
 export default Configurations

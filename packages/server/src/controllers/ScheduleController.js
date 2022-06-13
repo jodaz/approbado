@@ -94,7 +94,7 @@ export const byUserId = async (req, res) => {
             schedule.color  = '#F6FA00'
         })
 
-        return res.status(200).json(schedules)
+        return res.status(200).json({ data: schedules, total: schedules.length })
     } catch(error){
         console.log(error)
         return res.status(500).json(error)
@@ -256,7 +256,11 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
-        const model = await Schedule.query().findById(id)
+        const model = await Schedule.query()
+            .findById(id)
+            .withGraphFetched('participants')
+
+        model.users_ids = model.participants
 
         return res.status(201).json(model)
     } catch(error){

@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-    useNotify,
-    NumberInput,
-    SelectInput
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { useParams } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
@@ -13,6 +9,7 @@ import isEmpty from 'is-empty'
 import validate from './validateAwardForm'
 import { FileInput, ACCESS_TYPES } from './awardsFormHelpers'
 import TextInput from '@approbado/lib/components/TextInput'
+import SelectInput from '@approbado/lib/components/SelectInput'
 import { useHistory } from 'react-router-dom'
 
 const AwardsCreate = () => {
@@ -40,7 +37,7 @@ const AwardsCreate = () => {
     React.useEffect(() => {
         if (!isEmpty(data)) {
             notify(`¡Ha registrado el premio "${data.title}" exitosamente!`, 'success')
-            history.push(`/trivias/${trivia_id}/show?tab=awards`)
+            history.push(`/trivias/${trivia_id}/awards`)
         }
     }, [data])
 
@@ -59,16 +56,17 @@ const AwardsCreate = () => {
                 />
             </InputContainer>
             <InputContainer label='Ingresa los puntos'>
-                <NumberInput
-                    source="min_points"
+                <TextInput
+                    type='number'
+                    name="min_points"
                     placeholder="Ingresa los puntos"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer label='Tipo de premio'>
                 <SelectInput
-                    source="type"
-                    choices={ACCESS_TYPES}
+                    name="type"
+                    options={ACCESS_TYPES}
                     fullWidth
                 />
             </InputContainer>

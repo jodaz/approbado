@@ -1,68 +1,42 @@
 import * as React from 'react'
-import {
-    useMutation,
-    useRedirect,
-    useNotify,
-    ReferenceInput,
-    SelectInput,
-    NumberInput
-} from 'react-admin'
-import { useParams } from 'react-router-dom'
-import BaseForm from '@approbado/lib/components/BaseForm'
-import InputContainer from '@approbado/lib/components/InputContainer'
+import { useNotify } from 'react-admin'
+import { useHistory } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.duration) {
-        errors.duration = "Ingrese un tiempo límite.";
-    }
-    if (!values.award_id) {
-        errors.award_id = "Seleccione un premio.";
-    }
-
-    return errors;
-};
+import InputContainer from '@approbado/lib/components/InputContainer'
+import BaseForm from '@approbado/lib/components/BaseForm'
+import { axios } from '@approbado/lib/providers'
+import SelectAwardInput from './SelectAwardInput'
+import validate from './subthemeValidations'
+import { useParams } from 'react-router-dom'
 
 const SubthemeCreate = () => {
     const { trivia_id } = useParams()
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
     const notify = useNotify();
+    const history = useHistory()
 
     const save = React.useCallback(async (values) => {
-        const data = { trivia_id: trivia_id, ...values };
-
         try {
-            await mutate({
-                type: 'create',
-                resource: 'subthemes',
-                payload: { data: data }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/subthemes', {
+                trivia_id: trivia_id,
+                ...values
+            });
+
+            if (data) {
+                history.push(`/trivias/${data.trivia_id}/subthemes/${data.id}`)
+                notify(`¡Ha creado el subtema "${data.name}"!`, 'success')
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate, trivia_id])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify(`¡Ha creado el subtema "${data.name}"!`, 'success')
-            redirect(`/trivias/${trivia_id}/subthemes/${data.id}/show`)
-        }
-    }, [loaded])
+    }, [])
 
     return (
         <BaseForm
             save={save}
             validate={validate}
             formName='Crear subtema'
-            loading={loading}
         >
             <InputContainer label='Nombre'>
                 <TextInput
@@ -72,23 +46,14 @@ const SubthemeCreate = () => {
                 />
             </InputContainer>
             <InputContainer label='Tiempo límite'>
-                <NumberInput
-                    source="duration"
+                <TextInput
+                    type='number'
+                    name="duration"
                     placeholder="Tiempo límite"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Premio'>
-                <ReferenceInput
-                    source='award_id'
-                    reference='awards'
-                    filter={{ trivia_id: trivia_id }}
-                    fullWidth
-                    allowEmpty
-                >
-                    <SelectInput source="title" emptyText="N/A" optionText="title" />
-                </ReferenceInput>
-            </InputContainer>
+            <SelectAwardInput />
         </BaseForm>
     )
 }

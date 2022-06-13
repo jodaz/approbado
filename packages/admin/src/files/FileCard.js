@@ -9,16 +9,13 @@ import cardStyles from '@approbado/lib/styles/cardStyles'
 import { ReactComponent as Subtract } from '@approbado/lib/icons/Subtract.svg'
 import { ReactComponent as More } from '@approbado/lib/icons/More.svg'
 import Link from '@material-ui/core/Link'
-import { ReactComponent as EditIcon } from '@approbado/lib/icons/Edit.svg'
-import { history } from '@approbado/lib/providers'
-import MenuButton from '@approbado/lib/components/MenuButton'
+import LinkButton from '@approbado/lib/components/LinkButton'
 
 const OptionsMenu = props => (
     <OptionsCardMenu icon={<More />}>
-        <MenuButton
+        <LinkButton
             label="Editar"
-            onClick={() => history.push(`/trivias/${props.trivia_id}/files/${props.record.id}`)}
-            icon={<EditIcon />}
+            to={`/trivias/${props.trivia_id}/files/${props.record.id}`}
         />
         <DeleteButton
             basePath='files'

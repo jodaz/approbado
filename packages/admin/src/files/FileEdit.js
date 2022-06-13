@@ -1,30 +1,23 @@
 import * as React from 'react'
-import {
-    TextInput,
-    useRedirect,
-    useNotify,
-    SelectInput,
-    ReferenceInput,
-    useEditController
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 import isEmpty from 'is-empty'
 import validate from './validateFileForm'
 import Spinner from '@approbado/lib/components/Spinner'
+import SelectSubthemeInput from './SelectSubthemeInput'
+import TextInput from '@approbado/lib/components/TextInput'
+import { axios } from '@approbado/lib/providers'
 
-const FileEdit = props => {
+const FileEdit = () => {
     const { file_id, trivia_id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: file_id
-    });
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
-    const redirect = useRedirect()
+    const [record, setRecord] = React.useState({})
+    const history = useHistory();
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -46,13 +39,21 @@ const FileEdit = props => {
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
             notify(`¡Ha actualizado el archivo "${fileDataResponse.title}" exitosamente!`, 'success')
-            redirect(`/trivias/${trivia_id}/show?tab=files`)
+            history.push(`/trivias/${trivia_id}/files`)
         }
     }, [fileDataResponse])
 
-    const { record, loading: isRecordFetched } = editControllerProps
+    React.useEffect(async () => {
+        if (file_id) {
+            const { data } = await axios.get(`/files/${file_id}`)
 
-    if (isRecordFetched) return <Spinner />
+            if (Object.entries(data).length) {
+                setRecord(data)
+            }
+        }
+    }, [file_id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm
@@ -65,22 +66,12 @@ const FileEdit = props => {
         >
             <InputContainer label='Nombre'>
                 <TextInput
-                    source="title"
+                    name="title"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Subtema'>
-                <ReferenceInput
-                    source='subtheme_id'
-                    reference='subthemes'
-                    filter={{ trivia_id: trivia_id }}
-                    allowEmpty
-                    fullWidth
-                >
-                    <SelectInput source="title" emptyText="N/A" optionText="name" />
-                </ReferenceInput>
-            </InputContainer>
+            <SelectSubthemeInput />
             <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"

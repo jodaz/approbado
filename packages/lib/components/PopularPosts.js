@@ -70,7 +70,7 @@ const AsideBar = ({ isXSmall }) => {
                         </Box>
                     </Typography>
                     <div>
-                        {(total || loading == false) ? data.map((post, index) => {
+                        {(total) ? data.map((post, index) => (
                             <Box className={classes.container} key={index}>
                                 <Box className={classes.innerContent}>
                                     <Link
@@ -90,9 +90,9 @@ const AsideBar = ({ isXSmall }) => {
                                     </Box>
                                 </Box>
                             </Box>
-                        }) : (
+                        )) : (
                             <ErrorMessage>
-                                No tiene notificaciones disponibles.
+                                No hay debates disponibles
                             </ErrorMessage>
                         )}
 

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    SelectInput,
     BooleanInput,
     useNotify
 } from 'react-admin'
@@ -11,6 +10,8 @@ import CustomPasswordInput from './CustomPasswordInput'
 import { useHistory, useParams } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
 import { axios } from '@approbado/lib/providers'
+import SelectInput from '@approbado/lib/components/SelectInput'
+import Spinner from '@approbado/lib/components/Spinner'
 
 const ACCESS_TYPES = [
     { id: 'Administrador', name: 'Administrador' },
@@ -35,7 +36,7 @@ const UserEdit = () => {
     const notify = useNotify();
     const history = useHistory()
     const { id } = useParams();
-    const [record, setRecord] = React.useState(null)
+    const [record, setRecord] = React.useState({})
 
     const save = React.useCallback(async (values) => {
         try {
@@ -62,7 +63,7 @@ const UserEdit = () => {
         fetchRecord()
     }, [])
 
-    if (!record) return null;
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm
@@ -99,8 +100,8 @@ const UserEdit = () => {
             <InputContainer label='Tipo de acceso'>
                 <SelectInput
                     label={false}
-                    source="rol"
-                    choices={ACCESS_TYPES}
+                    options={ACCESS_TYPES}
+                    name='rol'
                     fullWidth
                 />
             </InputContainer>

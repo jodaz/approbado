@@ -1,9 +1,12 @@
-import ForumShow from '@approbado/lib/layouts/forums/ForumShow'
+import DefaultForumLayout from "@approbado/lib/layouts/forums/ForumLayout";
+import Admin from "../layouts/Admin";
 
-export default {
-    name: 'forums',
-    show: ForumShow,
-    options: {
-        label: 'Foro'
-    },
-}
+const ForumLayout = ({ children }) => (
+    <Admin>
+        <DefaultForumLayout>
+            {children}
+        </DefaultForumLayout>
+    </Admin>
+)
+
+export default ForumLayout

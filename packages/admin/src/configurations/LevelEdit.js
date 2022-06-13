@@ -1,21 +1,19 @@
 import * as React from 'react'
-import {
-    useRedirect,
-    useNotify
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { validateLevel } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { useParams } from 'react-router-dom'
 import CustomColorPicker from './CustomColorPicker'
 import TextInput from '@approbado/lib/components/TextInput'
+import { useHistory, useParams } from 'react-router-dom'
 import { axios } from '@approbado/lib/providers';
+import Spinner from '@approbado/lib/components/Spinner'
 
 const LevelEdit = () => {
     const { id } = useParams();
     const [loading, setLoading] = React.useState(false)
     const [record, setRecord] = React.useState({})
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -27,7 +25,7 @@ const LevelEdit = () => {
 
             if (data) {
                 notify(`¡Ha editado el nivel "${data.name}!`, 'success');
-                redirect('/configurations?tab=levels')
+                history.push('/configurations?tab=levels')
             }
         } catch (error) {
             setLoading(false)
@@ -47,6 +45,8 @@ const LevelEdit = () => {
             }
         }
     }, [id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm

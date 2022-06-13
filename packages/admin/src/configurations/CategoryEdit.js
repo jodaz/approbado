@@ -1,20 +1,18 @@
 import * as React from 'react'
-import {
-    useRedirect,
-    useNotify
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { validateCategory } from './configurationsValidations';
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
 import { axios } from '@approbado/lib/providers';
+import Spinner from '@approbado/lib/components/Spinner'
 
 const CategoryEdit = () => {
     const { id } = useParams();
     const [loading, setLoading] = React.useState(false)
     const [record, setRecord] = React.useState({})
-    const redirect = useRedirect()
+    const history = useHistory();
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -26,7 +24,7 @@ const CategoryEdit = () => {
 
             if (data) {
                 notify(`¡Ha editado la categoría "${data.name}!`, 'success');
-                redirect('/configurations?tab=categories')
+                history.push('/configurations?tab=categories')
             }
         } catch (error) {
             setLoading(false)
@@ -46,6 +44,8 @@ const CategoryEdit = () => {
             }
         }
     }, [id])
+
+    if (!Object.entries(record).length) return <Spinner />
 
     return (
         <BaseForm

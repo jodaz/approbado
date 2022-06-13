@@ -1,14 +1,13 @@
 import * as React from 'react'
 import {
     useMutation,
-    useRedirect,
     SelectInput,
     useNotify,
     useEditController,
     ReferenceInput,
     BooleanInput
 } from 'react-admin'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -54,7 +53,7 @@ const QuestionEdit = props => {
         id: question_id
     });
     const [mutate, { data, loaded }] = useMutation();
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
     const classes = useStyles();
 
@@ -77,7 +76,7 @@ const QuestionEdit = props => {
     React.useEffect(() => {
         if (loaded) {
             notify(`¡Actualizó la pregunta "${data.description}" exitosamente!`, 'success')
-            redirect(`/trivias/${subtheme_id}/subthemes/${data.subtheme_id}/show?tab=questions`)
+            history.push(`/trivias/${subtheme_id}/subthemes/${data.subtheme_id}/questions`)
         }
     }, [loaded])
 

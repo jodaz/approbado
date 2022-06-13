@@ -11,8 +11,9 @@ import { Field, Form } from 'react-final-form';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Box from '@material-ui/core/Box'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
-import { useMutation, useNotify, useRefresh } from 'react-admin'
+import { useNotify } from 'react-admin'
 import { useParams } from 'react-router-dom'
+import { axios } from '@approbado/lib/providers';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -85,30 +86,27 @@ const CommentContainer = () => {
         focused: focused
     });
     const notify = useNotify();
-    const refresh = useRefresh();
-    const [mutate, { data, loading, loaded }] = useMutation();
     const { id } = useParams()
 
     const handleSubmit = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'create',
-                resource: 'comments',
-                payload: { data: { ...values, parent_id: id } }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/comments', {
+                ...values,
+                parent_id: id
+            })
+
+            if (data) {
+                notify('¡Ha publicado un nuevo comentario!', 'success');
+                unsetDialog();
+                fetchUser();
+            }
         } catch (error) {
+            console.log(error)
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate]);
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify('¡Ha publicado un nuevo comentario!', 'success');
-            refresh();
-        }
-    }, [data, loaded])
+    }, []);
 
     const { picture } = user
 
@@ -116,7 +114,7 @@ const CommentContainer = () => {
         <Form
             onSubmit={handleSubmit}
             validate={validate}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, submitting }) => (
                 <Paper component="form" className={classes.root}>
                     <Avatar
                         src={`${configs.SOURCE}/${picture}`}
@@ -136,7 +134,7 @@ const CommentContainer = () => {
                                     {...inputProps}
                                     {...props}
                                     multiline
-                                    disabled={loading}
+                                    disabled={submitting}
                                 />
                                 {(error && touched) && (
                                     <FormHelperText error style={{ paddingLeft: '0.7rem' }}>
@@ -150,7 +148,7 @@ const CommentContainer = () => {
                         className={classes.sendIcon}
                         aria-label="send"
                         onClick={handleSubmit}
-                        disabled={loading}
+                        disabled={submitting}
                     >
                         <SendIcon />
                     </IconButton>

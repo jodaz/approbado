@@ -1,24 +1,20 @@
 import * as React from 'react'
-import {
-    useRedirect,
-    useNotify,
-    SelectInput,
-    ReferenceInput
-} from 'react-admin'
+import { useNotify } from 'react-admin'
 import { fileProvider } from '@approbado/lib/providers'
 import { useFileProvider } from '@jodaz_/file-provider'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import BaseForm from '@approbado/lib/components/BaseForm'
 import InputContainer from '@approbado/lib/components/InputContainer'
 import isEmpty from 'is-empty'
 import UploadFileButton from '@approbado/lib/components/UploadFileButton'
 import validate from './validateFileForm'
 import TextInput from '@approbado/lib/components/TextInput'
+import SelectSubthemeInput from './SelectSubthemeInput'
 
 const FileCreate = () => {
     const { trivia_id } = useParams()
     const [provider, { data: fileDataResponse, loading }] = useFileProvider(fileProvider);
-    const redirect = useRedirect()
+    const history = useHistory()
     const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
@@ -39,9 +35,8 @@ const FileCreate = () => {
 
     React.useEffect(() => {
         if (!isEmpty(fileDataResponse)) {
-            console.log(fileDataResponse)
             notify(`¡Ha registrado el archivo "${fileDataResponse.title}" exitosamente!`, 'success')
-            redirect(`/trivias/${trivia_id}/show?tab=files`)
+            history.push(`/trivias/${trivia_id}/files`)
         }
     }, [fileDataResponse])
 
@@ -59,17 +54,7 @@ const FileCreate = () => {
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Subtema'>
-                <ReferenceInput
-                    source='subtheme_id'
-                    reference='subthemes'
-                    filter={{ trivia_id: trivia_id }}
-                    allowEmpty
-                    fullWidth
-                >
-                    <SelectInput source="title" emptyText="N/A" optionText="name" />
-                </ReferenceInput>
-            </InputContainer>
+            <SelectSubthemeInput />
             <InputContainer label="" xs={12} md={12}>
                 <UploadFileButton
                     name="file"

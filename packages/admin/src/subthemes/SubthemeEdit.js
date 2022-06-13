@@ -1,62 +1,35 @@
 import * as React from 'react'
-import {
-    useMutation,
-    useNotify,
-    useRefresh,
-    ReferenceInput,
-    SelectInput,
-    NumberInput
-} from 'react-admin'
-import BaseForm from '@approbado/lib/components/BaseForm'
-import InputContainer from '@approbado/lib/components/InputContainer'
+import { useNotify } from 'react-admin'
+import { useHistory } from 'react-router-dom'
 import TextInput from '@approbado/lib/components/TextInput'
-
-const validate = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.duration) {
-        errors.duration = "Ingrese un tiempo límite.";
-    }
-    if (!values.award_id) {
-        errors.award_id = "Seleccione un premio.";
-    }
-
-    return errors;
-};
+import InputContainer from '@approbado/lib/components/InputContainer'
+import BaseForm from '@approbado/lib/components/BaseForm'
+import { axios } from '@approbado/lib/providers'
+import validate from './subthemeValidations'
+import SelectAwardInput from './SelectAwardInput'
 
 const SubthemeEdit = ({ record }) => {
-    const [mutate, { loading, loaded }] = useMutation();
     const notify = useNotify();
-    const refresh = useRefresh()
+    const history = useHistory()
 
-    const save = React.useCallback(async values => {
+    const save = React.useCallback(async (values) => {
         try {
-            await mutate({
-                type: 'update',
-                resource: 'subthemes',
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`subthemes/${record.id}`, values)
+
+            if (data) {
+                history.push(`/trivias/${record.trivia_id}/subthemes/${data.id}`)
+                notify(`¡Ha actualizado el subtema "${data.name}"!`, 'success')
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
-
-    React.useEffect(() => {
-        if (loaded) {
-            notify('Se ha completado la actualización con éxito', 'success')
-            refresh()
-        }
-    }, [loaded])
+    }, [])
 
     return (
         <BaseForm
             save={save}
-            loading={loading}
             record={record}
             validate={validate}
         >
@@ -68,23 +41,14 @@ const SubthemeEdit = ({ record }) => {
                 />
             </InputContainer>
             <InputContainer label='Tiempo límite'>
-                <NumberInput
-                    source="duration"
+                <TextInput
+                    type='number'
+                    name="duration"
                     placeholder="Tiempo límite"
                     fullWidth
                 />
             </InputContainer>
-            <InputContainer label='Premio'>
-                <ReferenceInput
-                    source='award_id'
-                    reference='awards'
-                    filter={{ trivia_id: record.trivia_id }}
-                    fullWidth
-                    allowEmpty
-                >
-                    <SelectInput  emptyText="N/A" source="name" optionText='title' />
-                </ReferenceInput>
-            </InputContainer>
+            <SelectAwardInput />
         </BaseForm>
     )
 }

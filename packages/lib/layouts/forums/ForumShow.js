@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {
-    useShowController
-} from 'react-admin'
+import { axios } from '@approbado/lib/providers';
 import Box from '@material-ui/core/Box';
 import BackButton from './BackButton'
 import Typography from '@material-ui/core/Typography';
@@ -11,16 +9,17 @@ import Avatar from '@material-ui/core/Avatar';
 import PostDescription from './PostDescription'
 import NoContent from '@approbado/lib/components/NoContent'
 import { ReactComponent as ForumIllustration } from '@approbado/lib/illustrations/Forum.svg'
-import Spinner from '@approbado/lib/components/Spinner'
 import Link from '@material-ui/core/Link';
 import LinkBehavior from '@approbado/lib/components/LinkBehavior'
 import CommentInput from '@approbado/lib/layouts/comments/CommentInput'
 import CommentList from '@approbado/lib/layouts/comments/CommentList'
-
+import { useParams } from 'react-router-dom'
+import LinkButton from '@approbado/lib/components/LinkButton'
 // Hooks
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import { useDialogDispatch } from "@approbado/lib/hooks/useDialogStatus"
 import configs from '@approbado/lib/configs'
+import Spinner from '../../components/Spinner';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -63,9 +62,8 @@ const emptyTitle = ({ is_registered }) => (
     (!is_registered) ? 'Sin comentarios' : 'Sé el primero en comentar'
 )
 
-const ForumShow = props => {
+const ForumShow = () => {
     const { user } = useUserState();
-    const showControllerProps = useShowController(props)
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
     )
@@ -73,10 +71,20 @@ const ForumShow = props => {
         isXSmall: isXSmall
     });
     const { setDialog } = useDialogDispatch('forums.warning')
+    const { id } = useParams();
+    const [record, setRecord] = React.useState({})
 
-    const { record, loading } = showControllerProps
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/forums/${id}`)
 
-    if (loading) return <Spinner />;
+        setRecord(data)
+    }, [])
+
+    React.useEffect(() => {
+        fetchRecord();
+    }, [])
+
+    if (!Object.entries(record).length) return <Spinner />;
 
     return (
         <Box className={classes.root} paddingBottom="5rem">
@@ -84,7 +92,7 @@ const ForumShow = props => {
                 {(user.is_registered) && (
                     <Box display="flex" justifyContent="space-between" width="100%">
                         <BackButton />
-                        {(record.owner.id != user.id) && (
+                        {(record.owner.id != user.id) ? (
                             <Link
                                 to='/forums'
                                 color='info'
@@ -95,6 +103,8 @@ const ForumShow = props => {
                             >
                                 Iniciar un debate
                             </Link>
+                        ) : (
+                            <LinkButton to={`/forums/${record.id}/edit`} />
                         )}
                     </Box>
                 )}
