@@ -1,4 +1,4 @@
-import { Sidebar } from 'react-admin';
+import Sidebar from '@approbado/lib/layouts/Sidebar'
 import Menu from '@approbado/lib/layouts/Menu';
 import MenuItems from './MenuItems';
 import { makeStyles } from '@material-ui/core/styles';

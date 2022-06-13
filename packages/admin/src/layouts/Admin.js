@@ -1,9 +1,9 @@
-import { Sidebar } from 'react-admin';
 import Menu from '@approbado/lib/layouts/Menu';
 import MenuItems from './MenuItems';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@approbado/lib/layouts/AppBar';
 import Notification from '@approbado/lib/components/Notification'
+import Sidebar from '@approbado/lib/layouts/Sidebar';
 
 const CustomSidebar = props => <Sidebar {...props} size={200} />;
 

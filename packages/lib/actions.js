@@ -30,6 +30,7 @@ export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
 export const SET_ROOM = 'SET_ROOM';
 export const UNSET_CHAT = 'UNSET_CHAT';
 export const SET_CHAT = 'SET_CHAT';
+export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
 export const unsetSchedule = data => ({
     type: DELETE_SCHEDULE,

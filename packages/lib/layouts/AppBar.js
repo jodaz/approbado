@@ -9,7 +9,6 @@ import {
 // Icons
 import ToggleSidebarButton from './ToggleSidebarButton';
 import GoBackButton from './GoBackButton';
-import { useSelector } from 'react-redux';
 import UserMenu from './UserMenu'
 import { MenuItemLink } from 'react-admin'
 import ProfileIcon from '@approbado/lib/icons/ProfileIcon';
@@ -18,6 +17,7 @@ import Typography from '@material-ui/core/Typography'
 import { useUserState } from '@approbado/lib/hooks/useUserState'
 import LazyLoader from '@approbado/lib/components/LazyLoader'
 import Dot from '@approbado/lib/components/Dot'
+import { useUiState } from '@approbado/lib/hooks/useUI';
 
 const NotificationsButton = React.lazy(() => import('./NotificationsButton'))
 
@@ -91,9 +91,9 @@ const AppBar = props => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
-    const open = useSelector(state => state.admin.ui.sidebarOpen);
+    const { sidebarOpen } = useUiState();
     const classes = useStyles({
-        isOpenSidebar: open,
+        isOpenSidebar: sidebarOpen,
         isXSmall: isXSmall,
         fullWidth: selected
     });

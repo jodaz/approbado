@@ -4,6 +4,7 @@ import userReducer from './userReducer';
 import schedulesReducer from './schedulesReducer';
 import notificationsReducer from './notificationsReducer';
 import chatReducer from './chatReducer';
+import uiReducer from './uiReducer';
 
 export default {
     user: userReducer,
@@ -11,5 +12,6 @@ export default {
     trivia: triviaReducer,
     schedules: schedulesReducer,
     notifications: notificationsReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    ui: uiReducer
 };

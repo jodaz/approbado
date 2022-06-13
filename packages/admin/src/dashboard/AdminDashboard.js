@@ -32,7 +32,6 @@ const initialState = {
 
 const AdminDashboard = () => {
     const [state, setState] = React.useState(initialState);
-    const spinnerClasses = useSpinnerStyles();
 
     const fetchUsers = React.useCallback(async () => {
         const { data: { total } } = await axios.get('users?filter%5Bis_registered%5D=true')

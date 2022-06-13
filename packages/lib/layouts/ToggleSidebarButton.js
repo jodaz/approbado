@@ -4,9 +4,8 @@ import {
     IconButton,
     styled
 } from '@material-ui/core';
-import { toggleSidebar } from 'react-admin';
-import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as MenuIcon } from '@approbado/lib/icons/Menu.svg'
+import { useUiState, useUiDispatch } from '../hooks/useUI';
 
 const CustomIconButton = styled(IconButton)(({ theme }) => ({
     color: `${theme.palette.primary.main} !important`,
@@ -14,16 +13,16 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const ToggleSidebarButton = () => {
-    const open = useSelector(state => state.admin.ui.sidebarOpen);
-    const dispatch = useDispatch();
+    const { sidebarOpen } = useUiState();
+    const { toggleSidebar } = useUiDispatch()
 
     return (
         <Tooltip
-            title={open ? 'Cerrar menú' : 'Abrir menú'}
+            title={sidebarOpen ? 'Cerrar menú' : 'Abrir menú'}
             enterDelay={500}
         >
             <CustomIconButton
-                onClick={() => dispatch(toggleSidebar())}
+                onClick={() => toggleSidebar()}
             >
                 <MenuIcon />
             </CustomIconButton>
