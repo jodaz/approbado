@@ -130,12 +130,12 @@ const ScheduledTriviaCard = props => {
                         </Button>
                         <Description title='Título'>
                             <Box fontWeight='600'>
-                                {subtheme.trivia.name}
+                                {title}
                             </Box>
                         </Description>
                         <Description title='Trivia'>
                             <Box fontWeight='600'>
-                                {title}
+                                {subtheme.trivia.name}
                             </Box>
                         </Description>
                         <Description title='Tema'>
@@ -145,7 +145,7 @@ const ScheduledTriviaCard = props => {
                         </Description>
                         <Description title='Nivel'>
                             <Box fontWeight='600'>
-                                {subtheme.name}
+                                {level.name}
                             </Box>
                         </Description>
                         <Description title='Participantes'>

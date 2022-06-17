@@ -21,7 +21,7 @@ const SubthemesInput = ({ submitting }) => {
         }
     }, [trivia_id])
 
-    if (!trivia_id) return null;
+    if (!trivia_id || !Object.entries(subthemes).length) return null;
 
     return (
         <InputContainer

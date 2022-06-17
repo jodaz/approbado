@@ -65,7 +65,7 @@ const LevelEdit = () => {
                 />
             </InputContainer>
             <InputContainer label='Color'>
-                <CustomColorPicker />
+                <CustomColorPicker label='' />
             </InputContainer>
         </BaseForm>
     )

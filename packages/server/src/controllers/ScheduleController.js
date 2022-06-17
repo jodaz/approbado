@@ -64,7 +64,7 @@ export const byUserId = async (req, res) => {
             }
         } else {
             schedules = await user.$relatedQuery('schedules')
-                            .withGraphFetched(otherModels)
+                .withGraphFetched(otherModels)
         }
 
         for (var i = 0; i < schedules.length; i++) {
@@ -158,7 +158,6 @@ export const get_schedules = async () => {
     }
 }
 
-
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
@@ -194,11 +193,16 @@ export const update = async (req, res) => {
     const { id } = req.params
 
     if (!reqErrors) {
-        const { users_ids, ...schedule } = req.body;
-
         try {
+            const { users_ids, starts_at, trivia_id, ...schedule } = req.body;
+
+            // const date = new Date(starts_at).toISOString()
+
             const model = await Schedule.query()
-                .updateAndFetchById(id, schedule)
+                .updateAndFetchById(id, {
+                    ...schedule
+                })
+                .returning('*')
 
             await model.$relatedQuery('participants').unrelate()
 
@@ -258,7 +262,7 @@ export const show = async (req, res) => {
     try {
         const model = await Schedule.query()
             .findById(id)
-            .withGraphFetched('participants')
+            .withGraphFetched('[participants,subtheme]')
 
         model.users_ids = model.participants
 

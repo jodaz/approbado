@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const SuccessDialog = ({ open, handleClose, ...rest }) => (
+const SuccessDialog = ({ open, handleClose, title, ...rest }) => (
     <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -50,7 +50,7 @@ const SuccessDialog = ({ open, handleClose, ...rest }) => (
                         padding: '1rem'
                     }}>
                         <Box sx={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem' }}>
-                            Acabas de crear una trivia
+                            {title}
                         </Box>
                         <Box sx={{ fontSize: '1rem', fontWeight: 500 }}>
                             Felicidades! Diviertete realizando las increíbles trivias que tenemos para ti
@@ -64,7 +64,7 @@ const SuccessDialog = ({ open, handleClose, ...rest }) => (
 
 SuccessDialog.defaultProps = {
     children: <></>,
-    title: <></>
+    title: 'Acabas de crear una trivia'
 }
 
 export default SuccessDialog

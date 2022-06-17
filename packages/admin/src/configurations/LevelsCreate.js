@@ -37,7 +37,7 @@ const LevelCreate = () => {
                 />
             </InputContainer>
             <InputContainer label='Color'>
-                <CustomColorPicker />
+                <CustomColorPicker label='' />
             </InputContainer>
         </BaseForm>
     )

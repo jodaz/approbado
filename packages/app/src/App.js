@@ -22,7 +22,7 @@ import ProfileEdit from './profile/EditProfile';
 import TestList from './tests'
 import UserRanking from './ranking'
 import CompletedGames from './completedGames'
-import ScheduleForm from './schedule'
+import ScheduleCreate from './schedule/ScheduleCreate'
 import Authenticate from '@approbado/lib/layouts/Authenticate'
 import Account from './account';
 import Profile from './profile';
@@ -37,6 +37,7 @@ import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from "date-fns/locale/es";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import ScheduleEdit from './schedule/ScheduleEdit';
 
 class LocalizedUtils extends DateFnsUtils {
     getDatePickerHeaderText(date) {
@@ -61,8 +62,14 @@ const App = () => (
             />
             <ProtectedRoute
                 exact
-                path="/dashboard/schedules/:id?"
-                component={() => <ScheduleForm />}
+                path="/dashboard/schedules"
+                component={() => <ScheduleCreate />}
+                layout={DashboardLayout}
+            />
+            <ProtectedRoute
+                exact
+                path="/dashboard/schedules/:id"
+                component={() => <ScheduleEdit />}
                 layout={DashboardLayout}
             />
             <ProtectedRoute
