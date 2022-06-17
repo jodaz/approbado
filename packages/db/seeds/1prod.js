@@ -1,10 +1,22 @@
 //@ts-nocheck
 import { USER } from '@approbado/server/dist/config'
-import { User } from '@approbado/server/dist/models'
+import { User, ReportReason } from '@approbado/server/dist/models'
 import bcrypt from 'bcrypt'
+
+const reasons = [
+    'No me interesa este tipo de publicaciones',
+    'No es académico',
+    'Expresa intenciones de discriminación'
+];
 
 export async function seed(knex) {
   const encryptedPassword = await bcrypt.hash(USER.password, 10);
+  await knex('report_reasons').del()
+    .then(async function () {
+        const data = await reasons.map(item => ({ item: item }))
+
+        await ReportReason.query().insert(data)
+  });
 
   // Deletes ALL existing entries
   return knex('users').del()

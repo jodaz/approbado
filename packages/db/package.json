@@ -6,6 +6,7 @@
   "scripts": {
     "db:migrate": "knex migrate:latest --knexfile config/knexfile --esm",
     "seed:run": "knex seed:run --knexfile config/knexfile --esm",
+    "prod:run": "knex seed:run --knexfile config/knexfile --esm --specific=1prod.js",
     "db:rollback": "knex migrate:rollback --knexfile config/knexfile --esm"
   }
 }
