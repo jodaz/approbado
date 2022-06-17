@@ -18,10 +18,11 @@
     "start:frames": "yarn workspace @approbado/frames run start",
     "start:app": "yarn workspace @approbado/app run start",
     "start:admin": "yarn workspace @approbado/admin run start",
-    "db:refresh": "npm run rollback && npm run migrate && npm run seed",
+    "db:refresh": "npm run rollback && npm run migrate",
     "migrate": "yarn workspace @approbado/db run db:migrate",
     "seed": "yarn workspace @approbado/db run seed:run",
     "rollback": "yarn workspace @approbado/db run db:rollback",
+    "prepareProd": "npm run db:refresh && yarn workspace @approbado/db run prod:run",
     "build:all": "concurrently \"npm run build:app\" \"npm run build:admin\" \"npm run build:frames\" && utils/predeploy.sh",
     "deploy": "npm run build:all && utils/deploy.sh"
   },
