@@ -171,14 +171,17 @@ export const store = async (req, res) => {
                 ...schedule,
                 starts_at: date,
                 created_by: req.user.id
-            })
+            }).withGraphFetched('[subtheme.trivia,level]')
+            .returning('*')
+
             await model.$relatedQuery('participants').relate(users_ids)
 
             let participants = await model.$relatedQuery('participants')
-
             const io = req.app.locals.io;
 
             io.emit('new_schedule', { participants: participants })
+
+            model.participants = participants
 
             return res.status(201).json(model)
         } catch(error){
@@ -203,6 +206,7 @@ export const update = async (req, res) => {
                     ...schedule,
                     starts_at: date
                 })
+                .withGraphFetched('[subtheme.trivia,level]')
                 .returning('*')
 
             await model.$relatedQuery('participants').unrelate()
@@ -213,7 +217,9 @@ export const update = async (req, res) => {
 
             const io = req.app.locals.io;
 
-            io.emit('new_schedule',{participants :participants})
+            io.emit('new_schedule',{ participants: participants })
+
+            model.participants = participants
 
             return res.status(201).json(model)
         } catch(error){

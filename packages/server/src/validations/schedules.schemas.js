@@ -27,5 +27,10 @@ export const createScheduleSchema = {
                 }
             }
         }
+    },
+    starts_at: {
+        notEmpty: {
+            errorMessage: 'Ingrese la fecha y hora para la trivia'
+        }
     }
 };
