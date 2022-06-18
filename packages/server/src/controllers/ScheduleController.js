@@ -16,7 +16,6 @@ import {
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
     const query = Schedule.query()
-    const { user } = req;
 
     try {
         if (filter) {
@@ -151,7 +150,7 @@ export const get_schedules = async () => {
                 }
             }
 
-        await sendNotification(data_push_notification,ids)
+            await sendNotification(data_push_notification,ids)
         }
     }catch(error){
         console.log(error)
