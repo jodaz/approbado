@@ -196,11 +196,12 @@ export const update = async (req, res) => {
         try {
             const { users_ids, starts_at, trivia_id, ...schedule } = req.body;
 
-            // const date = new Date(starts_at).toISOString()
+            const date = new Date(starts_at).toISOString()
 
             const model = await Schedule.query()
                 .updateAndFetchById(id, {
-                    ...schedule
+                    ...schedule,
+                    starts_at: date
                 })
                 .returning('*')
 
