@@ -106,7 +106,7 @@ export const store = async (req, res) => {
 
             const io = req.app.locals.io;
 
-            io.emit('new_notification',participants)
+            io.emit('new_notification', participants)
 
             await sendNotification(data_push_notification,ids)
 
@@ -210,7 +210,6 @@ export const update = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
 
 export const updateStatus = async (req, res) => {
     try {
