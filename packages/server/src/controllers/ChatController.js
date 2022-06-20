@@ -137,8 +137,6 @@ export const show = async (req, res) => {
                     participant.id !== currUserId
                 )
             }
-        } else {
-            res.status(404).json({ error: 'notfound' })
         }
 
         return res.status(201).json(model)
