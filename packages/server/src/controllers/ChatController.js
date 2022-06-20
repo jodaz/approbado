@@ -123,9 +123,23 @@ export const show = async (req, res) => {
     const { id } = req.params
 
     try {
+        const { id: currUserId } = req.user;
+
         const model = await Chat.query()
             .findById(id)
             .withGraphFetched('[participants,messages.user]');
+
+        if (model) {
+            if (model.is_private) {
+                model.receptor = model.participants.find(participant => participant.id != currUserId)
+            } else {
+                model.receivers = model.participants.filter(participant =>
+                    participant.id !== currUserId
+                )
+            }
+        } else {
+            res.status(404).json({ error: 'notfound' })
+        }
 
         return res.status(201).json(model)
     } catch (error) {
