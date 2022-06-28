@@ -125,7 +125,7 @@ export const show = async (req, res) => {
 
         const model = await Chat.query()
             .findById(id)
-            .withGraphFetched('[participants,messages.user]');
+            .withGraphFetched('[participants,messages.user,notification]');
 
         if (model) {
             if (model.is_private) {

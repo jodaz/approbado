@@ -34,6 +34,6 @@ export class Chat extends BaseClass {
                 from: 'chats.id',
                 to: 'notifications.chat_id'
             }
-        },
+        }
     })
 }
