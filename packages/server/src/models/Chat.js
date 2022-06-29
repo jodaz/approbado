@@ -34,6 +34,14 @@ export class Chat extends BaseClass {
                 from: 'chats.id',
                 to: 'notifications.chat_id'
             }
+        },
+        chatUser: {
+            relation: BaseClass.HasManyRelation,
+            modelClass: `${__dirname}/ChatUser`,
+            join: {
+                from: 'chats.id',
+                to: 'chats_users.chat_id'
+            }
         }
     })
 }

@@ -125,7 +125,17 @@ export const show = async (req, res) => {
 
         const model = await Chat.query()
             .findById(id)
-            .withGraphFetched('[participants,messages.user,notification]');
+            .withGraphFetched('[participants,messages.user]');
+
+        /**
+         * Add current chat status for this user
+         */
+        const currChatStatus = await model
+            .$relatedQuery('chatUser')
+            .where('user_id', currUserId)
+            .first();
+
+        model.chatStatus = currChatStatus.status;
 
         if (model) {
             if (model.is_private) {
