@@ -1,15 +1,15 @@
 import { Fcm } from '../models'
-import { validateRequest, paginatedQueryResponse } from '../utils'
+import { validateRequest } from '../utils'
 
 export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
-    const { user_id , token } = req.body
+    const { user_id, token } = req.body
 
     if (!reqErrors) {
         try {
             const validate = await Fcm.query()
-                .where('user_id',user_id)
-                .where('token',token)
+                .where('user_id', user_id)
+                .where('token', token)
                 .count()
                 .first()
 
@@ -30,8 +30,8 @@ export const destroy = async (req, res) => {
 
     try {
         const model = await Fcm.query()
-            .where('user_id',user_id)
-            .where('token',token)
+            .where('user_id', user_id)
+            .where('token', token)
             .delete();
 
         return res.json(model);

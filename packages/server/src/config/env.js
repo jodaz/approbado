@@ -34,6 +34,10 @@ export const FB_CREDS = {
     SECRET: process.env.FB_APP_SECRET || ''
 }
 
+export const FIREBASE_CREDS = {
+    KEY: process.env.FIREBASE_KEY_AUTH || ''
+}
+
 export const DB = {
     name: process.env.DB_NAME,
     port: process.env.DB_PORT || '5432',

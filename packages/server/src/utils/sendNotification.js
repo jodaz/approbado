@@ -1,5 +1,6 @@
 import request from 'request'
 import { Fcm } from '../models'
+import { FIREBASE_CREDS } from '../config'
 
 export const sendNotification = async (data,ids) => {
     const tokens = await Fcm.query().select('fcms.token').whereIn('user_id',ids)
@@ -19,7 +20,7 @@ export const sendNotification = async (data,ids) => {
         'title': data.title,
         'body': data.body
     },
-    data : data.data,
+    data: data.data,
         'registration_ids': fcms,
         "priority": "high"
     }
@@ -29,7 +30,7 @@ export const sendNotification = async (data,ids) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'key=AAAAnGbnFjQ:APA91bHlUFbFA5f0ELSf9Qe5OYiWBg4RwMYhbZ20NmA6NdVPYr4Sahr2benC62xRMV0MuBDJHHH4ivOcFV_yJL0EgPv5IAdLqxyPdS_ACoICqwC2s9Er0-vAvaFm7dbqtl98UrWS5q3E', // <- aqui puedes pasar el resultado de tu función que calcula el token
+            'Authorization': `key=${FIREBASE_CREDS.KEY}`, // <- aqui puedes pasar el resultado de tu función que calcula el token
         },
         body: JSON.stringify(send)
     }, function(error, response, body) {

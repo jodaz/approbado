@@ -72,12 +72,13 @@ export const store = async (req, res) => {
 
             for (var i = 0; i < ids.length; i++) {
                 let status = ids[i] == currUserId ? 'accepted' : 'pending'
-                await model.$relatedQuery('participants').relate({ id: ids[i], status: status })
+                await model.$relatedQuery('participants')
+                    .relate({ id: ids[i], status: status })
             }
 
-            const participants =  await model.$relatedQuery('participants')
-                .select('users.id')
-                .where('users.id','!=',currUserId)
+            const participants = await model.$relatedQuery('participants')
+                .select('users.*')
+                .where('users.id', '!=', currUserId)
 
             let data_notification = {
                 data: req.body.is_private ? `<b>${names}</b> te ha enviado una solicitud` : `<b>${names}</b> te ha enviado una invitación`,
@@ -98,15 +99,20 @@ export const store = async (req, res) => {
                 }
             }
 
-            const notification = await Notification.query().insert(data_notification)
+            const notification = await Notification.query()
+                .insert(data_notification)
 
-            await notification.$relatedQuery('users').relate(participants)
+            await notification.$relatedQuery('users')
+                .relate(participants)
 
             const io = req.app.locals.io;
 
             io.emit('new_notification', participants)
 
-            await sendNotification(data_push_notification,ids)
+            await sendNotification(data_push_notification, ids)
+
+            model.chatStatus = 'accepted';
+            model.participants = participants;
 
             return res.status(201).json(model)
         }
@@ -125,7 +131,7 @@ export const show = async (req, res) => {
 
         const model = await Chat.query()
             .findById(id)
-            .withGraphFetched('[participants,messages.user]');
+            .withGraphFetched('[messages.user]');
 
         /**
          * Add current chat status for this user
@@ -137,16 +143,11 @@ export const show = async (req, res) => {
 
         model.chatStatus = currChatStatus.status;
 
-        if (model) {
-            if (model.is_private) {
-                model.receptor = model.participants.find(participant => participant.id != currUserId)
-            } else {
-                model.receivers = model.participants.filter(participant =>
-                    participant.id !== currUserId
-                )
-            }
-        }
+        model.participants = await model.$relatedQuery('participants')
+            .select('users.*')
+            .where('users.id', '!=', currUserId)
 
+        console.log(model)
         return res.status(201).json(model)
     } catch (error) {
         console.log(error)
@@ -192,8 +193,12 @@ export const storeMessage = async (req, res) => {
 
             const io = req.app.locals.io;
 
-            io.emit('new_message', {created_by :currUserId ,chat_id : data.chat_id , participants})
-            io.emit('new_notification',notification)
+            io.emit('new_message', {
+                created_by: currUserId,
+                chat_id : data.chat_id,
+                participants
+            })
+            io.emit('new_notification', notification)
 
             return res.status(201).json(model)
         }
