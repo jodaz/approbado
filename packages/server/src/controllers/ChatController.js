@@ -147,7 +147,6 @@ export const show = async (req, res) => {
             .select('users.*')
             .where('users.id', '!=', currUserId)
 
-        console.log(model)
         return res.status(201).json(model)
     } catch (error) {
         console.log(error)

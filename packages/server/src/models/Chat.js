@@ -28,7 +28,7 @@ export class Chat extends BaseClass {
             }
         },
         notification: {
-            relation: BaseClass.BelongsToOneRelation,
+            relation: BaseClass.HasOneRelation,
             modelClass: `${__dirname}/Notification`,
             join: {
                 from: 'chats.id',

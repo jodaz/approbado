@@ -26,5 +26,13 @@ export class Notification extends BaseClass {
                 to: 'notifications.created_by'
             }
         },
+        chat: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Chat`,
+            join: {
+                from: 'notifications.chat_id',
+                to: 'chats.id'
+            }
+        },
     })
 }
