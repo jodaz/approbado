@@ -131,7 +131,7 @@ export const show = async (req, res) => {
 
         const model = await Chat.query()
             .findById(id)
-            .withGraphFetched('[messages.user]');
+            .withGraphFetched('[messages.user, notification]');
 
         /**
          * Add current chat status for this user
