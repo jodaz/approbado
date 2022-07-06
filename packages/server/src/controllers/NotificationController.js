@@ -7,7 +7,7 @@ export const index = async (req, res) => {
 
     const query = user.$relatedQuery('notifications')
         .orderBy('notifications.created_at','DESC')
-        .withGraphFetched('[user,chat]')
+        .withGraphFetched('[user,chat.chatUser]')
 
     if (filter) {
         // if (filter.name) {
