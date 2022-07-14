@@ -177,7 +177,7 @@ export const storeMessage = async (req, res) => {
 
             const participants = await chat.$relatedQuery('participants')
                 .select('users.id')
-                .where('users.id','!=', currUserId)
+                .where('users.id', '!=', currUserId)
 
             const data_notification = {
                 data : `<b>${names}</b> te ha enviado un mensaje`,
@@ -199,7 +199,9 @@ export const storeMessage = async (req, res) => {
             })
             io.emit('new_notification', notification)
 
-            return res.status(201).json(model)
+            const message = await model.$fetchGraph('user');
+
+            return res.status(201).json(message)
         }
     } catch (error) {
         console.log(error)
