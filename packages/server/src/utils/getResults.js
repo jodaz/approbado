@@ -8,6 +8,7 @@ export const MIN_APROBADO = 75;
  * Get results from a trivia, takes level_id and user_id
  */
 export const showResult = async (subtheme_id, level_id, user_id, res) => {
+    console.log(subtheme_id, level_id, user_id, res);
     try {
         const results = await Question.query()
             .where('level_id', level_id)
