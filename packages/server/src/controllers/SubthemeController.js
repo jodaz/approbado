@@ -1,4 +1,4 @@
-import { Subtheme, SubthemeFinished } from '../models'
+import { Subtheme } from '../models'
 import { validateRequest, paginatedQueryResponse } from '../utils'
 
 export const index = async (req, res) => {
@@ -15,11 +15,11 @@ export const index = async (req, res) => {
             if (filter.name) {
                 query.where('name', 'ilike', `%${filter.name}%`)
             }
-            if (filter.subtheme_finished) {
+            if (filter.finished) {
                 query.whereExists(
-                    SubthemeFinished.relatedQuery('users')
+                    Subtheme.relatedQuery('finished')
                         .where('user_id', req.user.id)
-                )
+                ).withGraphFetched('[trivia]')
             }
             if (filter.trivia_id) {
                 query.where('trivia_id', filter.trivia_id)
@@ -38,7 +38,7 @@ export const index = async (req, res) => {
         }
 
         return paginatedQueryResponse(query, req, res)
-    } catch(error){
+    } catch(error) {
         console.log(error)
         return res.status(500).json(error)
     }
@@ -54,7 +54,7 @@ export const store = async (req, res) => {
                 .returning('*')
 
             return res.status(201).json(model)
-        } catch(error){
+        } catch(error) {
             console.log(error)
             return res.status(500).json(error)
         }

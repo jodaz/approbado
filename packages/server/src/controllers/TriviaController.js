@@ -62,6 +62,7 @@ export const indexByPlan = async (req, res) => {
             Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
             Trivia.relatedQuery('subthemes')
                 .join('subthemes_finished', 'subthemes.id', 'subthemes_finished.subtheme_id')
+                .where('subthemes_finished.user_id', user.id)
                 .count()
                 .as('subthemesFinishedCount'),
             Trivia.relatedQuery('files').count().as('filesCount')
@@ -331,8 +332,7 @@ export const destroyByUsersId = async (req, res) => {
     try {
         const model = await TriviaGrupal.query()
             .where('link',token)
-            .withGraphFetched('subtheme')
-            .withGraphFetched('participants')
+            .withGraphFetched('[subtheme,participants]')
             .first()
 
         return res.json(model);
