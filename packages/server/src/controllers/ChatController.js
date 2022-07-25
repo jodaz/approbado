@@ -165,6 +165,7 @@ export const storeMessage = async (req, res) => {
             let data = req.body;
 
             if (req.file) {
+                console.log(req.file.filename)
                 data.file = 'uploads/'+req.file.filename;
             }
 
