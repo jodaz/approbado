@@ -27,8 +27,8 @@ export const index = async (req, res) => {
         )
 
         if (filter) {
-            if (filter.name) {
-                query.where('name', 'ilike', `%${filter.name}%`)
+            if (filter.global_search) {
+                query.where('name', 'ilike', `%${filter.global_search}%`)
             }
         }
 
