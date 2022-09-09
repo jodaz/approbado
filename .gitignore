@@ -1,7 +1,5 @@
 node_modules
 .env
 *.sw*
-yarn.lock
-yarn-error.log
-*.zip
+dist
 package-lock.json

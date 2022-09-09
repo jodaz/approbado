@@ -1,8 +1,8 @@
-import { DB } from '@approbado/server/dist/config/env'
+import { DB } from './env'
 import path from 'path';
 
 const knexConfig = {
-  development: {
+    development: {
         client: 'postgresql',
         connection: {
             port: DB.port,
@@ -23,7 +23,6 @@ const knexConfig = {
             directory: path.resolve(__dirname, '../seeds')
         }
     },
-
     staging: {
         client: 'postgresql',
         connection: {
@@ -39,7 +38,6 @@ const knexConfig = {
             tableName: 'knex_migrations'
         }
     },
-
     production: {
         client: 'postgresql',
         connection: {
@@ -55,7 +53,6 @@ const knexConfig = {
             tableName: 'migrations'
         }
     }
-
 };
 
 export default knexConfig

@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { USER } from '@approbado/server/dist/config'
-import { User, ReportReason } from '@approbado/server/dist/models'
+import { USER } from '../config'
+import { User, ReportReason } from '../models'
 import bcrypt from 'bcrypt'
 
 const reasons = [

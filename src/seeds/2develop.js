@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { USER, APP_ENV  } from '@approbado/server/dist/config'
-import { User, Trivia, Category, Level, Plan } from '@approbado/server/dist/models'
+import { USER, APP_ENV  } from '../config'
+import { User, Trivia, Category, Level, Plan } from '../models'
 import bcrypt from 'bcrypt'
 
 export async function seed(knex) {
