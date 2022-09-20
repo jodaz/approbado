@@ -52,4 +52,6 @@ export const TWILIO_CREDS = {
     sid: process.env.TWILIO_ACCOUNT_SID || ''
 }
 
+export const PUPPETEER_BROWSER_PATH = process.env.PUPPETEER_BROWSER_EXECUTABLE_PATH
+
 export const SECRET = process.env.PASSPORT_SECRET || 'SECRET_OR_KEY'
