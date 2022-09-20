@@ -6,9 +6,8 @@ import {
     paginatedQueryResponse,
     getRandomPass
 } from '../utils'
-import pug from 'pug'
+import { PDF } from '../config'
 import path from 'path'
-// import pdf from 'html-pdf'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -85,34 +84,31 @@ export const index = async (req, res) => {
     }
 }
 
-/**
 export const download = async (req, res) => {
     try {
         const query = await User.query()
 
-        const compiledFunction = pug.compileFile(
-            path.resolve(__dirname, '../resources/pdf/reports/users.pug')
-        );
-
-        const compiledContent = compiledFunction({
+        const compilerParams = {
             records: query,
             title: 'Reporte de usuarios'
-        });
+        };
 
-        const pdfFilePath = path.resolve(__dirname, '../../public/reports/users.pdf');
+        const pdfFilePath = path.resolve(__dirname, '../../public/reports/pagos.pdf');
+        const templateFilePath = path.resolve(__dirname, '../resources/pdf/reports/users.pug')
 
-        await pdf.create(compiledContent).toFile(pdfFilePath, async (error, res) => {
-            if (error) return console.log(error)
-        });
+        await PDF(
+            compilerParams,
+            templateFilePath,
+            pdfFilePath
+        );
 
-        res.download(pdfFilePath)
+        return res.download(pdfFilePath)
     } catch (error) {
         console.log(error)
 
         return res.status(500).json({ error: error })
     }
 }
-**/
 
 export const show = async (req, res) => {
     const { id } = req.params
