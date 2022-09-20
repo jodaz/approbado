@@ -2,7 +2,7 @@ import { Payment } from '../models'
 import { paginatedQueryResponse } from '../utils'
 import pug from 'pug'
 import path from 'path'
-import pdf from 'html-pdf'
+// import pdf from 'html-pdf'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -36,7 +36,7 @@ export const index = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
+/**
 export const download = async (req, res) => {
     try {
         const { from, to, payment_method } = req.query.filter;
@@ -69,3 +69,4 @@ export const download = async (req, res) => {
         return res.status(500).json({ error: error })
     }
 }
+**/

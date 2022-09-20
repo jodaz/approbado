@@ -7,7 +7,7 @@ import {
     store,
     update,
     update_mobile,
-    download
+//    download
 } from '../controllers/UserController'
 import { validateUserSchema } from '../validations'
 import multer from 'multer';
@@ -27,7 +27,7 @@ const upload = multer({ storage });
 const usersRouter = Router()
 
 usersRouter.get('/', index)
-usersRouter.get('/download', download)
+// usersRouter.get('/download', download)
 usersRouter.get('/:id', show)
 usersRouter.post('/', checkSchema(validateUserSchema),store)
 usersRouter.put('/:id', update)
