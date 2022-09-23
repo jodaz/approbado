@@ -1,5 +1,8 @@
 import { Router } from "express"
-import { index, download } from '../controllers/PaymentController'
+import {
+	index,
+	download
+} from '../controllers/PaymentController'
 
 const paymentsRouter = Router()
 

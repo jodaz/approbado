@@ -1,8 +1,7 @@
 import { Payment } from '../models'
 import { paginatedQueryResponse } from '../utils'
-import pug from 'pug'
+import { PDF } from '../config'
 import path from 'path'
-import pdf from 'html-pdf'
 
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
@@ -46,23 +45,22 @@ export const download = async (req, res) => {
             .where('created_at', to)
             .where('payment_method', payment_method)
 
-        const compiledFunction = pug.compileFile(
-            path.resolve(__dirname, '../resources/pdf/reports/memberships.pug')
-        );
+        const pdfFilePath = path.resolve(__dirname, '../../public/reports/pagos.pdf');
+        const templateFilePath = path.resolve(__dirname, '../resources/pdf/reports/memberships.pug')
 
-        const compiledContent = compiledFunction({
+        const compilerParams = {
             records: query,
             total: '0.00',
             title: 'Reporte de pagos'
-        });
+        }
 
-        const pdfFilePath = path.resolve(__dirname, '../../public/reports/pagos.pdf');
+        await PDF(
+            compilerParams,
+            templateFilePath,
+            pdfFilePath
+        );
 
-        await pdf.create(compiledContent).toFile(pdfFilePath, async (error, res) => {
-            if (error) return console.log(error)
-        });
-
-        res.download(pdfFilePath)
+        return res.download(pdfFilePath)
     } catch (error) {
         console.log(error)
 
