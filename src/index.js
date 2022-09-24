@@ -1,12 +1,14 @@
 import express from 'express'
-import { APP_PORT, cors, helmet } from './config'
+import { APP_PORT, accessLogStream, helmet } from './config'
 import routes from './routes'
 import path from 'path'
 import { get_schedules } from './controllers/ScheduleController'
 import cors_ from 'cors'
 import cron from 'node-cron'
+import morgan from 'morgan'
 // Set up server
 const app = express()
+app.use(morgan('combined', { stream: accessLogStream }))
 app.use(cors_())
 app.use(helmet)
 app.use(express.urlencoded({extended: false}));
@@ -46,7 +48,7 @@ http.listen(APP_PORT, () => {
     console.log(`Server on http://localhost:${APP_PORT}`);
 })
 
-cron.schedule('* * * * *',async function () {
+cron.schedule('* * * * *', async function () {
     await get_schedules()
 })
 
