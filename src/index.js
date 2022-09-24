@@ -53,3 +53,5 @@ cron.schedule('* * * * *', async function () {
 })
 
 app.locals.io = io;
+
+module.exports = http

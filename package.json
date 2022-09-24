@@ -13,7 +13,8 @@
     "db:migrate": "knex migrate:latest --knexfile src/config/knexfile --esm",
     "seed:run": "knex seed:run --knexfile src/config/knexfile --esm",
     "prod:run": "knex seed:run --knexfile src/config/knexfile --esm --specific=1prod.js",
-    "db:rollback": "knex migrate:rollback --knexfile src/config/knexfile --esm"
+    "db:rollback": "knex migrate:rollback --knexfile src/config/knexfile --esm",
+    "test": "mocha"
   },
   "dependencies": {
     "@babel/cli": "^7.15.4",
@@ -63,5 +64,10 @@
         "@babel/transform-runtime"
       ]
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0"
   }
 }
