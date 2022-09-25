@@ -19,20 +19,17 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - name: Node.js + pm2 ${{ matrix.node-version }}
-      uses: invi5H/ssh-action@v1.0.0
+      uses: appleboy/ssh-action@v0.1.5
       with:
         # Private Key
-        SSH_KEY: ${{ secrets.SSH_KEY }}
+        key: ${{ secrets.SSH_KEY }}
         # Remote host
-        SSH_HOST: ${{ secrets.SSH_HOST }}
+        host: ${{ secrets.SSH_HOST }}
         # Remote user
-        SSH_USER: ${{ secrets.SSH_USERNAME }}
+        username: ${{ secrets.SSH_USERNAME }}
     - run: | 
-        ls
         cd server
-        ls
-        # cd server && 
-        # git pull && 
-        # npm i && 
-        # npm run build && 
-        # pm2 restart all
+        git pull
+        npm i
+        npm run build
+        pm2 restart all
