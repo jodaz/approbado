@@ -27,8 +27,9 @@ jobs:
         REMOTE_HOST: ${{ secrets.SSH_HOST }}
         # Remote user
         REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-    - run: cd server
-    - run: git pull
-    - run: npm i
-    - run: npm run build --if-present
-    - run: pm2 restart all
+    - run: | 
+        cd server && 
+        git pull && 
+        npm i && 
+        npm run build && 
+        pm2 restart all
