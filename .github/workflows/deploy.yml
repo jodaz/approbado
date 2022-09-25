@@ -19,14 +19,14 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - name: Node.js + pm2 ${{ matrix.node-version }}
-      uses: easingthemes/ssh-deploy@v2.2.11
+      uses: invi5H/ssh-action@v1.0.0
       with:
         # Private Key
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+        SSH_KEY: ${{ secrets.SSH_KEY }}
         # Remote host
-        REMOTE_HOST: ${{ secrets.SSH_HOST }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
         # Remote user
-        REMOTE_USER: ${{ secrets.SSH_USERNAME }}
+        SSH_USER: ${{ secrets.SSH_USERNAME }}
     - run: | 
         cd server && 
         git pull && 
