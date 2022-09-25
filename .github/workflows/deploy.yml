@@ -27,11 +27,9 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
-    - name: build
-      uses: actions/checkout@v2
-    - run: | 
-        cd /var/www/html/server
-        git pull
-        npm i
-        npm run build
-        pm2 restart all
+        script: |
+          cd /var/www/html/server
+          git pull
+          npm i
+          npm run build
+          pm2 restart all
