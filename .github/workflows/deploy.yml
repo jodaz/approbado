@@ -28,8 +28,12 @@ jobs:
         # Remote user
         SSH_USER: ${{ secrets.SSH_USERNAME }}
     - run: | 
-        cd server && 
-        git pull && 
-        npm i && 
-        npm run build && 
-        pm2 restart all
+        mkdir test 
+        cd test 
+        git clone git@github.com:Mulubwa17/ci-cd-to-digitalocean-with-github-actions.git 
+        echo 'Deployment successful to digital ocean' 
+        # cd server && 
+        # git pull && 
+        # npm i && 
+        # npm run build && 
+        # pm2 restart all
