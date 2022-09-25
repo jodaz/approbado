@@ -27,6 +27,8 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
+    - name: build
+      uses: actions/checkout@v2
     - run: | 
         cd /var/www/html/server
         git pull
