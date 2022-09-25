@@ -27,6 +27,8 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
+    - name: Build server
+      working-directory: /root/server
     - run: | 
         cd server
         git pull
