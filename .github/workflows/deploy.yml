@@ -28,7 +28,7 @@ jobs:
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
         script: |
-          cd /var/www/html/server
+          cd /root/server
           git pull
           npm i
           npm run build
