@@ -1,5 +1,5 @@
 {
-  "ignore": [".git", "node_modules", "./src/seeds", "./src/migrations", "dist"],
+  "ignore": [".git", "node_modules", "./src/seeds", "./src/migrations", "dist", "test"],
   "watch": ["./src"],
   "exec": "npm run dev",
   "delay": "2500"

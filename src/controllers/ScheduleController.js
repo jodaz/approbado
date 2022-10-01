@@ -14,8 +14,9 @@ import {
 } from '../utils'
 
 export const index = async (req, res) => {
+    const user = req.user;
     const { filter, sort, order } = req.query
-    const query = Schedule.query()
+    const query = Schedule.query().where('created_by', user.id);
 
     try {
         if (filter) {
@@ -40,63 +41,65 @@ export const index = async (req, res) => {
 }
 
 export const byUserId = async (req, res) => {
-    const { user_id, } = req.params
+    const reqErrors = await validateRequest(req, res);
+    const { user_id } = req.params
 
     const { filter } = req.query
+    if (!reqErrors) {
+        try {
+            const user = await User.query().findById(user_id)
+            let otherModels = '[participants,level,subtheme.trivia]'
+            let schedules = null
 
-    try {
-        const user = await  User.query().findById(user_id)
-        let otherModels = '[participants,level,subtheme.trivia]'
-        let schedules = null
-
-        if (filter) {
-            if (filter.before) {
+            if (filter) {
+                if (filter.before) {
+                    schedules = await user.$relatedQuery('schedules')
+                        .where('schedules.starts_at', '>=', new Date())
+                        .withGraphFetched(otherModels)
+                }
+                if (filter.current) {
+                    schedules = await user.$relatedQuery('schedules')
+                        .whereRaw('extract(hour from starts_at) = '+parseInt(new Date().getHours()))
+                        .where('schedules.starts_at', '<=', new Date())
+                        .withGraphFetched(otherModels)
+                }
+            } else {
                 schedules = await user.$relatedQuery('schedules')
-                    .where('schedules.starts_at', '>=', new Date())
                     .withGraphFetched(otherModels)
             }
-            if (filter.current) {
-                schedules = await user.$relatedQuery('schedules')
-                    .whereRaw('extract(hour from starts_at) = '+parseInt(new Date().getHours()))
-                    .where('schedules.starts_at', '<=', new Date())
-                    .withGraphFetched(otherModels)
-            }
-        } else {
-            schedules = await user.$relatedQuery('schedules')
-                .withGraphFetched(otherModels)
-        }
 
-        for (var i = 0; i < schedules.length; i++) {
-            let participants_finished =  await schedules[i].$relatedQuery('participants')
-                .where('participants.finished',false)
-                .count()
-                .first()
+            for (var i = 0; i < schedules.length; i++) {
+                let participants_finished =  await schedules[i].$relatedQuery('participants')
+                    .where('participants.finished',false)
+                    .count()
+                    .first()
 
-            schedules[i].rest = participants_finished.count
+                schedules[i].rest = participants_finished.count
 
-            let participants = await schedules[i].$relatedQuery('participants')
-                .select(
-                    'participants.finished',
-                    'users.*'
-                )
-            if (schedules[i].finished) {
-                schedules[i].winner = await getWinner(participants,schedules[i].level_id,schedules[i].subtheme_id)
+                let participants = await schedules[i].$relatedQuery('participants')
+                    .select(
+                        'participants.finished',
+                        'users.*'
+                    )
+                if (schedules[i].finished) {
+                    schedules[i].winner = await getWinner(participants,schedules[i].level_id,schedules[i].subtheme_id)
+                }
+
+                schedules[i].participants = participants
             }
 
-            schedules[i].participants = participants
+            schedules.forEach(schedule => {
+                schedule.date_string = getDateString(schedule.starts_at)
+                schedule.day_week_string = getDayWeekString(schedule.starts_at,new Date(schedule.starts_at).getDate())
+                schedule.time_string = getTimeString(schedule.starts_at)
+                schedule.color  = '#F6FA00'
+            })
+
+            return res.status(200).json({ data: schedules, total: schedules.length })
+        } catch(error){
+            console.log(error)
+            return res.status(500).json(error)
         }
-
-        schedules.forEach(schedule => {
-            schedule.date_string = getDateString(schedule.starts_at)
-            schedule.day_week_string = getDayWeekString(schedule.starts_at,new Date(schedule.starts_at).getDate())
-            schedule.time_string = getTimeString(schedule.starts_at)
-            schedule.color  = '#F6FA00'
-        })
-
-        return res.status(200).json({ data: schedules, total: schedules.length })
-    } catch(error){
-        console.log(error)
-        return res.status(500).json(error)
     }
 }
 
