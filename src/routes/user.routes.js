@@ -7,9 +7,14 @@ import {
     store,
     update,
     update_mobile,
+    showByUsername,
     download
 } from '../controllers/UserController'
-import { validateUserSchema } from '../validations'
+import {
+    validateUserSchema,
+    validateByID,
+    validateByUsername
+} from '../validations'
 import multer from 'multer';
 import path from 'path';
 
@@ -28,8 +33,9 @@ const usersRouter = Router()
 
 usersRouter.get('/', index)
 usersRouter.get('/download', download)
-usersRouter.get('/:id', show)
-usersRouter.post('/', checkSchema(validateUserSchema),store)
+usersRouter.get('/:id', checkSchema(validateByID), show)
+usersRouter.get('/profile/:username', checkSchema(validateByUsername), showByUsername)
+usersRouter.post('/', checkSchema(validateUserSchema), store)
 usersRouter.put('/:id', update)
 usersRouter.put('/mobile/:id', upload.single('picture'), update_mobile)
 usersRouter.delete('/:id', destroy)
