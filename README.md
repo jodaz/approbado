@@ -1,4 +1,4 @@
-# Approbado Web
+# Approbado Server
 
 ## Requerimientos
 
@@ -28,4 +28,3 @@
 ----- validations
 -- test
 ```
-

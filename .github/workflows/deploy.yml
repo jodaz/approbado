@@ -1,0 +1,26 @@
+name: Node.js + pm2 CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    environment: production
+    steps:
+    - name: Node.js + pm2 ${{ matrix.node-version }}
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        # Private Key
+        key: ${{ secrets.SSH_KEY }}
+        # Remote host
+        host: ${{ secrets.SSH_HOST }}
+        # Remote user
+        username: ${{ secrets.SSH_USERNAME }}
+        script: |
+          cd /var/www/html/server
+          git pull
+          npm i
+          npm run build
+          pm2 restart all
