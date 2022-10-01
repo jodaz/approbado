@@ -1,4 +1,5 @@
 import { checkArray } from '../utils'
+import { User } from '../models'
 
 export const createScheduleSchema = {
     title: {
@@ -33,4 +34,23 @@ export const createScheduleSchema = {
             errorMessage: 'Ingrese la fecha y hora para la trivia'
         }
     }
+};
+
+export const indexSchedulesByUser = {
+    id: {
+        in: ['query'],
+        custom: {
+            options: async (value) => {
+                if (isNaN(value)) {
+                    throw new Error("Invalid ID")
+                } else {
+                    const user = await User.query().findById(value);
+
+                    if (!user) {
+                        throw new Error("User not found");
+                    }
+                }
+            }
+        }
+    },
 };

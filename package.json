@@ -14,7 +14,7 @@
     "seed:run": "knex seed:run --knexfile src/config/knexfile --esm",
     "prod:run": "knex seed:run --knexfile src/config/knexfile --esm --specific=1prod.js",
     "db:rollback": "knex migrate:rollback --knexfile src/config/knexfile --esm",
-    "test": "mocha"
+    "test": "npm run build && mocha"
   },
   "dependencies": {
     "@babel/cli": "^7.15.4",
@@ -53,6 +53,7 @@
     "rimraf": "^3.0.2",
     "rotating-file-stream": "^3.0.4",
     "socket.io": "^4.2.0",
+    "supertest": "^6.2.4",
     "twilio": "^3.67.0"
   },
   "babel": {
