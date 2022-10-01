@@ -110,11 +110,9 @@ export const download = async (req, res) => {
     }
 }
 
-export const show = async (req, res) => {
-    const { id } = req.params
-
+const findOneUser = async (res, query) => {
     try {
-        const user = await User.query().findById(id)
+        const user = await User.query().findOne(query)
 
         const profile = await user.$fetchGraph('profile');
         profile.posts = await user.$relatedQuery('posts');
@@ -127,6 +125,26 @@ export const show = async (req, res) => {
         console.log(error)
 
         return res.status(500).json({ error: error })
+    }
+}
+
+export const show = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        const { id } = req.params
+
+        return await findOneUser(res, { id: id })
+    }
+}
+
+export const showByUsername = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        const { username } = req.params
+
+        return await findOneUser(res, { user_name: username })
     }
 }
 
