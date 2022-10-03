@@ -31,6 +31,12 @@ export const index = async (req, res) => {
                         .where('user_id', filter.user_id)
                 )
             }
+            if (filter.user_name) {
+                query.whereExists(
+                    Award.relatedQuery('users')
+                        .where('user_name', filter.user_name)
+                )
+            }
         }
 
         if (sort && order) {
