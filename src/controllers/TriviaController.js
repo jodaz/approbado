@@ -312,7 +312,7 @@ export const generateLink = async (req, res) => {
             .first()
 
         if (!model) {
-            const link = `${APP_DOMAIN}/${randomToken}`
+            const link = `${randomToken}`
 
             return res.status(201).json({
                 link: link,
