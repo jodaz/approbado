@@ -1,6 +1,12 @@
 name: Node.js + pm2 CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Razón'
+        required: true
+        default: 'warning'
   push:
     branches: [ "main" ]
 
