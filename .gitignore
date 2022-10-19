@@ -2,4 +2,3 @@ node_modules
 .env
 *.sw*
 dist
-package-lock.json
