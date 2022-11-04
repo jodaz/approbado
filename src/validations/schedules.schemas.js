@@ -44,7 +44,6 @@ export const indexSchedulesByUser = {
         },
         custom: {
             options: async (value) => {
-                console.log(value)
                 if (isNaN(value)) {
                     throw new Error("Invalid ID")
                 } else {
