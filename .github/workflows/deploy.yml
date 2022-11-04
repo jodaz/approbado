@@ -27,4 +27,3 @@ jobs:
         script: |
           cd /var/www/html/server
           git pull
-          pm2 restart all
