@@ -27,6 +27,4 @@ jobs:
         script: |
           cd /var/www/html/server
           git pull
-        #   npm i
-          npm run build
           pm2 restart all
