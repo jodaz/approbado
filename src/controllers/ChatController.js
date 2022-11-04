@@ -166,7 +166,7 @@ export const storeMessage = async (req, res) => {
 
             if (req.file) {
                 console.log(req.file.filename)
-                data.file = 'uploads/'+req.file.filename;
+                data.file = 'public/uploads/'+req.file.filename;
             }
 
             data.chat_id = id

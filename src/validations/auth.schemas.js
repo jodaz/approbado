@@ -108,6 +108,10 @@ export const validateSendSMSCode = {
     password: {
         notEmpty: {
             errorMessage: 'Ingrese su contraseña'
+        },
+        isLength: {
+            options: { min: 6 },
+            errorMessage: 'La contraseña debe tener al menos 6 caracteres'
         }
     },
     phone: {

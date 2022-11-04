@@ -252,7 +252,7 @@ export const update_mobile = async (req, res) => {
             filename = req.file.filename;
             data = {
                 ...rest,
-                picture : filename
+                picture : 'public/profiles/'+filename
             }
         }else{
             data = {

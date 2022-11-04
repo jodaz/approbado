@@ -20,7 +20,7 @@ import path from 'path';
 
 let storage = multer.diskStorage({
     destination:(req, file, cb)=>{
-        cb(null, path.join(__dirname, '../../public'))
+        cb(null, path.join(__dirname, '../../public/profiles'))
     },
     filename:(req, file, cb) => {
 	   cb(null, Date.now()+'-'+file.originalname);
