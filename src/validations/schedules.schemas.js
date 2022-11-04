@@ -37,10 +37,14 @@ export const createScheduleSchema = {
 };
 
 export const indexSchedulesByUser = {
-    id: {
-        in: ['query'],
+    user_id: {
+        in: ['params'],
+        notEmpty: {
+            errorMessage: 'Insert an ID'
+        },
         custom: {
             options: async (value) => {
+                console.log(value)
                 if (isNaN(value)) {
                     throw new Error("Invalid ID")
                 } else {
