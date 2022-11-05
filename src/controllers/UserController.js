@@ -241,6 +241,27 @@ export const update = async (req, res) => {
     }
 }
 
+export const delete_picture_profile = async (req, res) => {
+    
+    const { id } = req.params
+    
+    try {
+        
+        const data = {
+            picture : 'public/default/user.png'
+        }
+       
+        const model = await User.query().updateAndFetchById(id, {
+            ...data,
+        })
+
+        return res.status(200).json(model)
+    
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: error })
+    }
+}
 export const update_mobile = async (req, res) => {
     const { id } = req.params
     try {

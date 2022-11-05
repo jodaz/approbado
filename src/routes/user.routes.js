@@ -8,6 +8,7 @@ import {
     update,
     update_mobile,
     showByUsername,
+    delete_picture_profile,
     download
 } from '../controllers/UserController'
 import {
@@ -37,6 +38,7 @@ usersRouter.get('/:id', checkSchema(validateByID), show)
 usersRouter.get('/profile/:username', checkSchema(validateByUsername), showByUsername)
 usersRouter.post('/', checkSchema(validateUserSchema), store)
 usersRouter.put('/:id', update)
+usersRouter.put('/delete_picture/:id',delete_picture_profile)
 usersRouter.put('/mobile/:id', upload.single('picture'), update_mobile)
 usersRouter.delete('/:id', destroy)
 

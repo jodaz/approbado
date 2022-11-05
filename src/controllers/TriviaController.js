@@ -57,6 +57,8 @@ export const indexByPlan = async (req, res) => {
             .where('active',true)
             .first()
 
+        
+
         const query = Trivia.query().select(
             Trivia.ref('*'),
             Trivia.relatedQuery('subthemes').count().as('subthemesCount'),
@@ -71,10 +73,18 @@ export const indexByPlan = async (req, res) => {
 
         if (filter) {
             if (filter.plan_active) {
-               query.where('plan_id', plan.id)
+                if (plan == null) {
+                    return res.status(200).json({data : []});
+                }else{
+                    query.where('plan_id', plan.id)
+                }
             }
             if (filter.plan_not_active) {
-               query.where('plan_id', '!=', plan.id)
+                if (plan == null) {
+                    return res.status(200).json({data : []});
+                }else{
+                    query.where('plan_id', '!=', plan.id)
+                }
             }
             if (filter.name) {
                 query.where('name', 'ilike', `%${filter.name}%`)
