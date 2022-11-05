@@ -25,6 +25,12 @@ export const index = async (req, res) => {
             if (filter.user_id) {
                 query.where('created_by', '=', filter.user_id)
             }
+            if (filter.user_name) {
+                query.whereExists(
+                    Post.relatedQuery('owner')
+                        .where('user_name', filter.user_name)
+                )
+            }
         }
 
         if (sort && order) {
