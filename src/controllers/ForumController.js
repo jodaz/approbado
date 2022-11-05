@@ -89,7 +89,8 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const { categories_ids, ...rest } = req.body;
+            console.log(req.body)
+            const { categories_ids, trivias_ids, ...rest } = req.body;
 
             const model = await Post.query().insert({
                 created_by: req.user.id,
@@ -98,6 +99,7 @@ export const store = async (req, res) => {
             });
 
             await model.$relatedQuery('categories').relate(categories_ids)
+            await model.$relatedQuery('trivias').relate(trivias_ids)
 
             return res.status(201).json(model)
         } catch (error) {
@@ -117,11 +119,7 @@ export const show = async (req, res) => {
                 Post.relatedQuery('comments').count().as('commentsCount')
             )
             .where('type', 'Foro')
-            .withGraphFetched('[owner,categories,trivia]')
-
-        if (model) {
-            model.categories_ids = model.categories.map(item => item.id)
-        }
+            .withGraphFetched('[owner,categories,trivias]')
 
         return res.status(201).json(model)
     } catch (error) {
@@ -137,16 +135,18 @@ export const update = async (req, res) => {
     if (!reqErrors) {
         try {
             const { id } = req.params
-            const { categories_ids, message, summary, trivia_id } = req.body;
+            const { categories_ids, message, summary, trivias_ids } = req.body;
 
             const model = await Post.query().updateAndFetchById(id, {
                 message: message,
-                summary: summary,
-                trivia_id: trivia_id
+                summary: summary
             })
 
             await model.$relatedQuery('categories').unrelate()
             await model.$relatedQuery('categories').relate(categories_ids)
+
+            await model.$relatedQuery('trivias').unrelate()
+            await model.$relatedQuery('trivias').relate(trivias_ids)
 
             return res.status(201).json(model)
         } catch (error) {

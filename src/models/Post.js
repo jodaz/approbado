@@ -14,6 +14,18 @@ export class Post extends BaseClass {
                 to: 'trivias.id'
             }
         },
+        trivias: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'posts.id',
+                through: {
+                    from: 'post_trivia.post_id',
+                    to: 'post_trivia.trivia_id'
+                },
+                to: 'trivias.id'
+            }
+        },
         owner: {
             relation: BaseClass.BelongsToOneRelation,
             modelClass: `${__dirname}/User`,

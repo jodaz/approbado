@@ -62,6 +62,18 @@ export class Trivia extends BaseClass {
                 },
                 to: 'plans.id'
             }
-        }
+        },
+        posts: {
+            relation: BaseClass.ManyToManyRelation,
+            modelClass: `${__dirname}/Post`,
+            join: {
+                from: 'trivias.id',
+                through: {
+                    from: 'post_trivia.trivia_id',
+                    to: 'post_trivia.post_id'
+                },
+                to: 'posts.id'
+            }
+        },
     })
 }
