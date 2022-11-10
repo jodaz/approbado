@@ -14,7 +14,8 @@ import {
 import {
     validateUserSchema,
     validateByID,
-    validateByUsername
+    validateByUsername,
+    updateUserMobileSchema
 } from '../validations'
 import multer from 'multer';
 import path from 'path';
