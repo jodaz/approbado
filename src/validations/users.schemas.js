@@ -68,3 +68,22 @@ export const validateByUsername = {
         }
     },
 };
+
+
+export const updateUserMobileSchema = {
+    names: {
+        notEmpty: {
+            errorMessage: 'Ingrese su nombre'
+        }
+    },
+    last_name: {
+        notEmpty: {
+            errorMessage: 'Ingrese el apellido'
+        }
+    },
+    user_name: {
+        notEmpty: {
+            errorMessage: 'Ingrese el nombre de usuario'
+        }
+    },
+};

@@ -39,7 +39,7 @@ usersRouter.get('/profile/:username', checkSchema(validateByUsername), showByUse
 usersRouter.post('/', checkSchema(validateUserSchema), store)
 usersRouter.put('/:id', update)
 usersRouter.put('/delete_picture/:id',delete_picture_profile)
-usersRouter.put('/mobile/:id', upload.single('picture'), update_mobile)
+usersRouter.put('/mobile/:id', upload.single('picture'),checkSchema(updateUserMobileSchema), update_mobile)
 usersRouter.delete('/:id', destroy)
 
 export default usersRouter;
