@@ -14,6 +14,9 @@ export const createForumSchema = {
                 if (!isValid) {
                     throw new Error("Seleccione al menos una trivia");
                 }
+                if (value.length > 3) {
+                    throw new Error("Máximo tres trivias.");
+                }
             }
         }
     },
@@ -24,6 +27,9 @@ export const createForumSchema = {
 
                 if (!isValid) {
                     throw new Error("Seleccione al menos una categoria");
+                }
+                if (value.length > 3) {
+                    throw new Error("Máximo tres categorías.");
                 }
             }
         }
