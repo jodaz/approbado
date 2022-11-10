@@ -95,7 +95,6 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            console.log(req.body)
             const { categories_ids, trivias_ids, ...rest } = req.body;
 
             const model = await Post.query().insert({
