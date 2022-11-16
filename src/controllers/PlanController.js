@@ -40,6 +40,8 @@ export const store = async (req, res) => {
             const { trivias_ids, ...plan } = req.body;
 
             const model = await Plan.query().insert(plan)
+
+            await model.$relatedQuery('trivias').unrelate()
             await model.$relatedQuery('trivias').relate(trivias_ids)
 
             return res.status(201).json(model)
@@ -60,6 +62,7 @@ export const update = async (req, res) => {
             .updateAndFetchById(id, rest)
             .returning('*')
 
+        await model.$relatedQuery('trivias').unrelate()
         await model.$relatedQuery('trivias').relate(trivias_ids)
 
         return res.status(201).json(model)

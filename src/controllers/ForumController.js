@@ -146,6 +146,7 @@ export const update = async (req, res) => {
                 message: message,
                 summary: summary
             })
+            .returning('*')
 
             await model.$relatedQuery('categories').unrelate()
             await model.$relatedQuery('categories').relate(categories_ids)
