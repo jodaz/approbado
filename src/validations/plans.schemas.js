@@ -1,3 +1,5 @@
+import { checkArray } from '../utils'
+
 export const createPlanSchema = {
     name: {
         isLength: {
@@ -9,5 +11,16 @@ export const createPlanSchema = {
         notEmpty: {
             errorMessage: 'Ingrese un monto para la membresía'
         }
-    }
+    },
+    trivias_ids: {
+        custom: {
+            options: async (value) => {
+                const isValid = await checkArray(value);
+
+                if (!isValid) {
+                    throw new Error("Seleccione al menos una trivia");
+                }
+            }
+        }
+    },
 };
