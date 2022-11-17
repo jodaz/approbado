@@ -37,10 +37,12 @@ export const store = async (req, res) => {
 
     if (!reqErrors) {
         try {
-            const { trivia_ids, ...plan } = req.body;
+            const { trivias_ids, ...plan } = req.body;
 
             const model = await Plan.query().insert(plan)
-            await model.$relatedQuery('trivias').relate(trivia_ids)
+
+            await model.$relatedQuery('trivias').unrelate()
+            await model.$relatedQuery('trivias').relate(trivias_ids)
 
             return res.status(201).json(model)
         } catch (error) {
@@ -55,13 +57,13 @@ export const update = async (req, res) => {
     const { id } = req.params
 
     try {
-        const { trivia_ids, ...rest } = req.body;
-        console.log(trivia_ids);
+        const { trivias_ids, ...rest } = req.body;
         const model = await Plan.query()
             .updateAndFetchById(id, rest)
             .returning('*')
 
-        await model.$relatedQuery('trivias').relate(trivia_ids)
+        await model.$relatedQuery('trivias').unrelate()
+        await model.$relatedQuery('trivias').relate(trivias_ids)
 
         return res.status(201).json(model)
     } catch (error) {
@@ -77,10 +79,6 @@ export const show = async (req, res) => {
     try {
         const model = await Plan.query().findById(id)
             .withGraphFetched('trivias')
-
-        if (model) {
-            model.trivia_ids = model.trivias
-        }
 
         return res.status(201).json(model)
     } catch (error) {
