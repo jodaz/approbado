@@ -124,7 +124,12 @@ export const externalMobileLogin = async (req, res) => {
                 rol: 'USER',
                 email: email,
                 user_name : email.split('@')[0],
-                picture : 'default/user.png'
+                picture : 'public/default/user.png'
+            })
+            
+            await user.$relatedQuery('profile').insert({
+                names: names,
+                user_id: user.id
             })
 
             const payment = await user.$relatedQuery('payments').insert({
