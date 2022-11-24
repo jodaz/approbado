@@ -26,10 +26,16 @@ const userNameRule = {
         },
         custom: {
             options: async (value) => {
-                const user = await User.query().findOne({
+                let user = await User.query().findOne({
                     user_name: value
                 });
 
+                if (!user) {
+                     user = await User.query().findOne({
+                        email: value
+                    });
+                }
+               
                 if (!user) {
                     throw new Error("Usuario no encontrado");
                 }
