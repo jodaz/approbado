@@ -8,12 +8,12 @@ const loginAuthFlow = async (field, email, password) => {
     let user = await User.query().findOne(
         Object.assign({}, { [field]: email })
     )
-    
+     console.log("asdasdasdasdas")
     if (!user) {
         user = await User.query().where('email',email).first();
     }
     
-    console.log(user)
+
 
     if(!user) {
         return {
