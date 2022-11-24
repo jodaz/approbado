@@ -86,4 +86,22 @@ export const updateUserMobileSchema = {
             errorMessage: 'Ingrese el nombre de usuario'
         }
     },
+    email : {
+        custom: {
+            options: async (value, { req }) => {
+                const { user: currUser } = req;
+
+                if (currUser.email == value) return;
+
+                const user = await User.query().findOne({
+                    email: value
+                });
+
+                if (user) {
+                    console.log("ERROR")
+                    throw new Error("Ya existe un usuario con ese correo");
+                }
+            }
+        }
+    }
 };
