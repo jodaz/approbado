@@ -12,6 +12,8 @@ const loginAuthFlow = async (field, email, password) => {
     if (!user) {
         user = await User.query().where('email',email).first();
     }
+    
+    console.log(user)
 
     if(!user) {
         return {
