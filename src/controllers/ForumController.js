@@ -11,8 +11,7 @@ export const index = async (req, res) => {
             Post.relatedQuery('likes').count().as('likesCount'),
         )
         .where('parent_id', null)
-        .withGraphFetched('owner')
-        .withGraphFetched('categories')
+        .withGraphFetched('[owner,categories,trivias]')
 
         if (filter) {
             if (filter.unanswered) {
@@ -146,6 +145,7 @@ export const update = async (req, res) => {
                 message: message,
                 summary: summary
             })
+            .returning('*')
 
             await model.$relatedQuery('categories').unrelate()
             await model.$relatedQuery('categories').relate(categories_ids)
