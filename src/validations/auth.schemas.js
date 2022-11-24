@@ -29,11 +29,9 @@ const userNameRule = {
                 let user = await User.query().findOne({
                     user_name: value
                 });
-
+                
                 if (!user) {
-                     user = await User.query().findOne({
-                        email: value
-                    });
+                    user = await User.query().where('email',value).first();
                 }
                
                 if (!user) {

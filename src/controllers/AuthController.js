@@ -5,9 +5,13 @@ import { validateRequest } from '../utils'
 import { generateAuthToken, sendMail, getAuthenticatedUser } from '../utils';
 
 const loginAuthFlow = async (field, email, password) => {
-    const user = await User.query().findOne(
+    let user = await User.query().findOne(
         Object.assign({}, { [field]: email })
     )
+
+    if (!user) {
+        user = await User.query().where('email',email).first();
+    }
 
     if(!user) {
         return {
