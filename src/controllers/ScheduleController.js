@@ -271,9 +271,12 @@ export const show = async (req, res) => {
     try {
         const model = await Schedule.query()
             .findById(id)
-            .withGraphFetched('[participants,subtheme]')
+            .withGraphFetched('[participants,subtheme,level]')
 
         model.users_ids = model.participants
+        
+        const subtheme = await model.$relatedQuery('subtheme')
+        model.trivia = await subtheme.$relatedQuery('trivia')
 
         return res.status(201).json(model)
     } catch(error){
