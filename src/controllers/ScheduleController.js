@@ -200,7 +200,7 @@ export const update = async (req, res) => {
     if (!reqErrors) {
         try {
             const { users_ids, starts_at, trivia_id, ...schedule } = req.body;
-
+            console.log(starts_at)
             const date = new Date(starts_at).toISOString()
 
             const model = await Schedule.query()
