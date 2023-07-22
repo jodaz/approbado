@@ -47,9 +47,8 @@ export const DB = {
 }
 
 export const TWILIO_CREDS = {
-    auth_token: process.env.TWILIO_AUTH_TOKEN || '',
-    service_id: process.env.TWILIO_SERVICE_ID || '',
-    sid: process.env.TWILIO_ACCOUNT_SID || ''
+    auth_token: process.env.TWILIO_AUTH_TOKEN || '123456',
+    sid: process.env.TWILIO_ACCOUNT_SID || '123456'
 }
 
 export const PUPPETEER_BROWSER_PATH = process.env.PUPPETEER_BROWSER_EXECUTABLE_PATH
