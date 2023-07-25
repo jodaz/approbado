@@ -1,5 +1,5 @@
 import pug from 'pug'
-import puppeteer from 'puppeteer-core'
+ // import puppeteer from 'puppeteer-core'
 import { PUPPETEER_BROWSER_PATH } from './env'
 
 /**
@@ -10,7 +10,7 @@ import { PUPPETEER_BROWSER_PATH } from './env'
  * @returns
  */
 export const PDF = async (compilerParams, templatePath, pdfFilePath) => {
-    const compiledFunction = pug.compileFile(templatePath);
+   /*  const compiledFunction = pug.compileFile(templatePath);
 
     const compiledContent = compiledFunction(compilerParams);
 
@@ -22,6 +22,6 @@ export const PDF = async (compilerParams, templatePath, pdfFilePath) => {
     await page.setContent(compiledContent)
 
     await page.pdf({ path: pdfFilePath, format: 'a4' });
-
+ */
     return true;
 }

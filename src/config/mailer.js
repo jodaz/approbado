@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import { MAIL, APP_ENV } from './env'
 import path from 'path'
-import Email from 'email-templates'
+// import Email from 'email-templates'
 
 const MailTransporter = new nodemailer.createTransport({
     host: MAIL.MAIL_HOST,
@@ -13,7 +13,7 @@ const MailTransporter = new nodemailer.createTransport({
     },
 });
 
-const EmailTemplate = new Email({
+/*const EmailTemplate = new Email({
     message: {
         from: MAIL.MAIL_USERNAME
     },
@@ -25,7 +25,11 @@ const EmailTemplate = new Email({
     },
     transport: MailTransporter,
     send: true
-});
+}); */
+
+const EmailTemplate = {
+    send: async () => { await console.log("send email") }
+}
 
 MailTransporter.verify(function (error, success) {
     if (error) {
