@@ -1,11 +1,11 @@
 //@ts-nocheck
-import { USER, APP_ENV  } from '../config'
+import { APP_ENV  } from '../config'
 import { User, Trivia, Category, Level, Plan } from '../models'
 import bcrypt from 'bcrypt'
 
-export async function seed(knex) {
+export async function seed() {
     if (APP_ENV === 'development') {
-        const encryptedPassword = await bcrypt.hash(USER.password, 10);
+        const encryptedPassword = await bcrypt.hash('123456', 10);
 
         // Create user test
         const user1 = await User.query().insertGraph({
