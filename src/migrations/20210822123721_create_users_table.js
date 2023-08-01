@@ -4,7 +4,7 @@ export async function up(knex) {
         table.increments('id').primary();
         table.string('names');
         table.string('last_name');
-        table.string('user_name');
+        table.string('user_name').nullable();
         table.text('bio');
         table.string('picture').defaultsTo('public/default/user.png')
         table.string('email').unique();
