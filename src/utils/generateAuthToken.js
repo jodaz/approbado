@@ -10,7 +10,9 @@ export const generateAuthToken = async (data) => {
     return await jwt.sign(
         signedData,
         SECRET,
-        {
+    )
+ /*        {
             expiresIn: SESSION_EXPIRE
         });
+ */
 }
