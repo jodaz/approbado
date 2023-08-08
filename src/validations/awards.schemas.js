@@ -10,6 +10,15 @@ export const createAwardSchema = {
             errorMessage: 'Ingrese un numero de puntos'
         }
     },
+    file: {
+        custom: {
+            options: async (value, { req }) => {
+                if(!req.file) {
+                    throw new Error("Enter a file");
+                }
+            }
+        }
+    },
     type: {
         notEmpty: {
             errorMessage: 'Seleccione una tipo'
