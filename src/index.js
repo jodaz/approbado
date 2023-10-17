@@ -11,7 +11,7 @@ const app = express()
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(cors_())
 app.use(helmet)
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false}));
 app.use(express.json())
 
 // Routes
