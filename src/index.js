@@ -16,7 +16,7 @@ app.use(express.json())
 
 // Routes
 app.use('/public', express.static(path.resolve(__dirname, '../public')))
-app.use(routes);
+app.use('/api', routes);
 
 let http = require("http").Server(app);
 
