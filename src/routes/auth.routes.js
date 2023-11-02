@@ -16,7 +16,8 @@ import {
     externalLogin,
     externalMobileLogin,
     deleteAccount,
-    adminLogin
+    adminLogin,
+    getUser
 } from '../controllers/AuthController'
 import { isAuthorizedMiddleware } from '../config'
 
@@ -29,6 +30,7 @@ authRouter.post('/mobile/external', checkSchema(validateExternalMobileLogin), ex
 authRouter.post('/login', checkSchema(validateLoginSchema), login)
 authRouter.post('/admin-login', checkSchema(validateAdminLoginSchema), adminLogin)
 authRouter.get('/logout', isAuthorizedMiddleware, logout)
+authRouter.get('/user', isAuthorizedMiddleware, getUser)
 authRouter.get('/delete-account', isAuthorizedMiddleware, deleteAccount)
 
 export default authRouter;

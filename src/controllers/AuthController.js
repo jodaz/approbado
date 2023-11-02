@@ -59,6 +59,14 @@ export const login = async (req, res) => {
     }
 }
 
+export const getUser = async (req, res) => {
+    const { user } = req
+
+    const userInfo = await getAuthenticatedUser(user)
+
+    return res.status(200).json(userInfo)
+}
+
 /**
  * Login para usuarios admin
  * { email, password }
@@ -130,7 +138,7 @@ export const externalMobileLogin = async (req, res) => {
                 user_name : email.split('@')[0],
                 picture : 'public/default/user.png'
             })
-            
+
             await user.$relatedQuery('profile').insert({
                 names: names,
                 user_id: user.id
