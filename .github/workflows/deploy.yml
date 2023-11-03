@@ -27,6 +27,8 @@ jobs:
         script: |
           cd approbado-server
           git pull
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
           pnpm i
           pnpm run build
           pm2 restart all
