@@ -119,6 +119,7 @@ export const externalLogin = async (req, res) => {
     }
 }
 
+// Revisar e integrar en el nuevo login flow
 export const externalMobileLogin = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
@@ -157,7 +158,6 @@ export const externalMobileLogin = async (req, res) => {
                 payment_id : payment.id,
                 active : true
             })
-
         }
 
         const authProviderKey = await user.$relatedQuery('authProviders')

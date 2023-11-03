@@ -25,7 +25,7 @@ jobs:
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
         script: |
-          cd /var/www/html/server
+          cd /approbado-server
           git pull
           npm i
           npm run build
