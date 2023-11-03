@@ -12,7 +12,7 @@ const emailRule = {
                 });
 
                 if (!user) {
-                    throw new Error("Usuario no encontrado");
+                    throw new Error("notfound");
                 }
             }
         }
@@ -29,13 +29,13 @@ const userNameRule = {
                 let user = await User.query().findOne({
                     user_name: value
                 });
-                
+
                 if (!user) {
                     user = await User.query().where('email',value).first();
                 }
-               
+
                 if (!user) {
-                    throw new Error("Usuario no encontrado");
+                    throw new Error("notfound");
                 }
 
                 const blacklisted = await user.$relatedQuery('blacklisted')

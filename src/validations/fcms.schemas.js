@@ -12,7 +12,7 @@ export const createFcmSchema = {
                 });
 
                 if (!user) {
-                    throw new Error("Usuario no encontrado");
+                    throw new Error("notfound");
                 }
             }
         }

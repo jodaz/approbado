@@ -1,4 +1,3 @@
-import User from '../models/User'
 import bcrypt from 'bcrypt'
 
 export const updatePassword = {
@@ -9,7 +8,7 @@ export const updatePassword = {
                 const match = await bcrypt.compare(value, user.password)
 
                 if (!match) {
-                    throw new Error("Contraseña incorrecta");
+                    throw new Error("invalid");
                 }
             }
         }
@@ -21,7 +20,7 @@ export const updatePassword = {
                 const match = await bcrypt.compare(value, user.password)
 
                 if (match) {
-                    throw new Error("La nueva contraseña no debe ser igual a la anterior.");
+                    throw new Error("different");
                 }
             }
         }

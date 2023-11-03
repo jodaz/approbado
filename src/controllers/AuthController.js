@@ -16,7 +16,7 @@ const loginAuthFlow = async (field, email, password) => {
     if(!user) {
         return {
             'errors': {
-                "user": "Usuario no encontrado"
+                "user": "notfound"
             },
             status: 422
         }
@@ -36,7 +36,7 @@ const loginAuthFlow = async (field, email, password) => {
     } else {
         return {
             'errors': {
-                "password": "Contraseña incorrecta"
+                "password": "invalid"
             },
             status: 422
         }
