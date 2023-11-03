@@ -27,6 +27,6 @@ jobs:
         script: |
           cd approbado-server
           git pull
-          npm i
-          npm run build
+          pnpm i
+          pnpm run build
           pm2 restart all
