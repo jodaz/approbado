@@ -25,7 +25,7 @@ jobs:
         # Remote user
         username: ${{ secrets.SSH_USERNAME }}
         script: |
-          cd /approbado-server
+          cd approbado-server
           git pull
           npm i
           npm run build
