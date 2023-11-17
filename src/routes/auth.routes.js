@@ -6,7 +6,8 @@ import {
     validateRegisterSchema,
     validateExternalMobileLogin,
     validateExternalLogin,
-    validateAdminLoginSchema
+    validateAdminLoginSchema,
+    validateCreateAccountMobileStep1
 } from '../validations'
 import {
     sendSMSCode,
@@ -17,13 +18,19 @@ import {
     externalMobileLogin,
     deleteAccount,
     adminLogin,
-    getUser
+    getUser,
+    validateMobileRequestStep1
 } from '../controllers/AuthController'
 import { isAuthorizedMiddleware } from '../config'
 
 const authRouter = Router()
 
 authRouter.post('/send', checkSchema(validateSendSMSCode), sendSMSCode)
+authRouter.post(
+    '/mobile/create-account-verification',
+    checkSchema(validateCreateAccountMobileStep1),
+    validateMobileRequestStep1
+)
 authRouter.post('/register', checkSchema(validateRegisterSchema), verifySMSCode)
 authRouter.post('/external', checkSchema(validateExternalLogin), externalLogin)
 authRouter.post('/mobile/external', checkSchema(validateExternalMobileLogin), externalMobileLogin)

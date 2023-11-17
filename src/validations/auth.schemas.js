@@ -3,7 +3,7 @@ import { User } from '../models'
 const emailRule = {
     email: {
         notEmpty: {
-            errorMessage: 'Ingrese su correo electrónico'
+            errorMessage: 'required'
         },
         custom: {
             options: async (value) => {
@@ -19,10 +19,48 @@ const emailRule = {
     }
 }
 
+const emailUnique = {
+    email: {
+        notEmpty: {
+            errorMessage: 'required'
+        },
+        custom: {
+            options: async (value) => {
+                const user = await User.query().findOne({
+                    email: value
+                });
+
+                if (user) {
+                    throw new Error("unique");
+                }
+            }
+        }
+    }
+}
+
+const userNameUnique = {
+    user_name: {
+        notEmpty: {
+            errorMessage: 'required'
+        },
+        custom: {
+            options: async (value) => {
+                const user = await User.query().findOne({
+                    user_name: value
+                });
+
+                if (user) {
+                    throw new Error("unique");
+                }
+            }
+        }
+    }
+}
+
 const userNameRule = {
     email: {
         notEmpty: {
-            errorMessage: 'Ingrese su correo electrónico'
+            errorMessage: 'required'
         },
         custom: {
             options: async (value) => {
@@ -42,7 +80,7 @@ const userNameRule = {
                     .where('is_restricted', true);
 
                 if (blacklisted) {
-                    throw new Error("Su acceso ha sido restringido.");
+                    throw new Error("restricted.");
                 }
             }
         }
@@ -52,7 +90,7 @@ const userNameRule = {
 const emailMobileRule = {
     email: {
         notEmpty: {
-            errorMessage: 'Ingrese su correo electrónico'
+            errorMessage: 'required'
         }
     }
 }
@@ -79,6 +117,16 @@ export const validateLoginSchema = {
     }
 };
 
+export const validateCreateAccountMobileStep1 = {
+    ...userNameUnique,
+    ...emailUnique,
+    password: {
+        notEmpty: {
+            errorMessage: 'required'
+        }
+    }
+};
+
 export const validateAdminLoginSchema = {
     ...emailRule,
     password: {
@@ -101,7 +149,7 @@ export const validateExternalMobileLogin = {
 export const validateSendSMSCode = {
     email: {
         notEmpty: {
-            errorMessage: 'Ingrese su correo electrónico'
+            errorMessage: 'required'
         }
     },
     names: {

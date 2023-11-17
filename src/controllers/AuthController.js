@@ -216,6 +216,16 @@ export const sendSMSCode = async (req, res) => {
     }
 }
 
+export const validateMobileRequestStep1 = async (req, res) => {
+    const reqErrors = await validateRequest(req, res);
+
+    if (!reqErrors) {
+        return res.json({
+            success: true
+        })
+    }
+}
+
 export const verifySMSCode = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
