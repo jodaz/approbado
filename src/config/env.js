@@ -48,6 +48,7 @@ export const DB = {
 
 export const TWILIO_CREDS = {
     auth_token: process.env.TWILIO_AUTH_TOKEN || '123456',
+    service_id: process.env.TWILIO_SERVICE_ID || '123456',
     sid: process.env.TWILIO_ACCOUNT_SID || '123456'
 }
 
