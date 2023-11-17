@@ -200,7 +200,7 @@ export const sendSMSCode = async (req, res) => {
         const { phone } = req.body;
 
         try {
-            await sendCode(phone)
+            // await sendCode(phone)
 
             return res.json({
                 success: true,
@@ -244,7 +244,7 @@ export const verifySMSCode = async (req, res) => {
                 external
             } = req.body;
 
-            await verifyCode(phone, code)
+            // await verifyCode(phone, code)
 
             const encryptedPassword = await bcrypt.hash(password, 10);
 
