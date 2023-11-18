@@ -29,7 +29,7 @@ export const validateVerifyToken = {
                 });
 
                 if (!token) {
-                    throw new Error("El vínculo utilizado ha dejado de ser válido.");
+                    throw new Error("invalid");
                 }
             }
         }
@@ -39,12 +39,12 @@ export const validateVerifyToken = {
 export const validateNewPassword = {
     password: {
         notEmpty: {
-            errorMessage: 'Ingrese su nueva contraseña'
+            errorMessage: 'required'
         }
     },
     password_confirmed: {
         notEmpty: {
-            errorMessage: 'Repita su contraseña'
+            errorMessage: 'repeat'
         }
     },
     ...validateVerifyToken

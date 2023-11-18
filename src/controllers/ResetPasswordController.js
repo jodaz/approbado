@@ -102,7 +102,7 @@ export const resetPasswordMobile = async (req, res) => {
     if (!reqErrors) {
         const user  = await User.query().where('email',req.body.email).first()
 
-        const token = await makeToken(10)
+        const token = await makeToken(6)
 
         await PasswordReset.query().insert({user_id : user.id,token : token})
         // Send email
