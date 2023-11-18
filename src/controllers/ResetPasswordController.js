@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { SECRET } from '../config'
-import bcrypt from 'bcrypt'
 import { User, PasswordReset } from '../models'
 import { validateRequest, sendMail, makeToken } from '../utils'
+import bcrypt from 'bcrypt'
 
 export const resetPassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
@@ -123,8 +123,7 @@ export const resetPasswordMobile = async (req, res) => {
         return res.status(200).json({
             data: {
                 id: user.id,
-                success: true,
-                token : token
+                success: true
             }
         })
     }
