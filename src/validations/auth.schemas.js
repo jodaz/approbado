@@ -177,7 +177,7 @@ export const validateSendSMSCode = {
                 });
 
                 if (user) {
-                    throw new Error("El número de teléfono se encuentra registrado");
+                    throw new Error("unique");
                 }
             }
         }
