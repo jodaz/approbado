@@ -59,7 +59,7 @@ export const updatePassword = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
-        const model = await PasswordReset.query().findOne({ token: req.query.token });
+        const model = await PasswordReset.query().findOne({ token: req.body.token });
 
         const { password } = req.body;
         const encryptedPassword = await bcrypt.hash(password, 10);

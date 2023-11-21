@@ -47,5 +47,17 @@ export const validateNewPassword = {
             errorMessage: 'repeat'
         }
     },
-    ...validateVerifyToken
+    token: {
+        custom: {
+            options: async (value) => {
+                const token = await PasswordReset.query().findOne({
+                    token: value
+                });
+
+                if (!token) {
+                    throw new Error("invalid");
+                }
+            }
+        }
+    }
 }
