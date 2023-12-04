@@ -10,6 +10,12 @@ import {
     sendNotification
 } from '../utils'
 
+/**
+ * Return all list of chats
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const index = async (req, res) => {
     try {
         const { filter } = req.query
@@ -21,6 +27,8 @@ export const index = async (req, res) => {
             .join('users', 'chats_users.user_id', 'users.id')
             .where('chats_users.user_id', currUserId)
             .withGraphFetched('[participants,messages,notification]')
+            .modifyGraph('messages', (builder) => builder.orderBy('created_at', 'DESC')
+            .limit(1));
 
         if (filter) {
             if (filter.name) {
@@ -39,6 +47,12 @@ export const index = async (req, res) => {
     }
 }
 
+/**
+ * Return all messages not read by user
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const newMessages = async (req, res) => {
     try {
         const { id: currUserId } = req.user;
@@ -58,6 +72,13 @@ export const newMessages = async (req, res) => {
     }
 }
 
+
+/**
+ * Create a chat and an invitation
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const store = async (req, res) => {
     try {
         const reqErrors = await validateRequest(req, res);
@@ -123,6 +144,13 @@ export const store = async (req, res) => {
     }
 }
 
+
+/**
+ * Return a list of messages from a chat
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const show = async (req, res) => {
     const { id } = req.params
 
@@ -155,6 +183,12 @@ export const show = async (req, res) => {
     }
 }
 
+/**
+ * Store a new message to a chat
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const storeMessage = async (req, res) => {
     try {
         const reqErrors = await validateRequest(req, res);
@@ -281,6 +315,12 @@ export const updateReadAt = async (req, res) => {
     }
 }
 
+/**
+ * Delete a chat for an user
+ * @param {id} req Chat id
+ * @param {*} res
+ * @returns
+ */
 export const destroy = async (req, res) => {
     try {
         let id = parseInt(req.params.id)
