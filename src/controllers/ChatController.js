@@ -277,11 +277,11 @@ export const updateStatus = async (req, res) => {
         const reqErrors = await validateRequest(req, res);
 
         if (!reqErrors) {
-            const { chat_id, user_id } = req.params
+            const { chat_id } = req.params
             const { status } = req.body
 
             const chat_user = await ChatUser.query()
-                .where('user_id', user_id)
+                .where('user_id', req.user.id)
                 .where('chat_id', chat_id)
                 .update({ status: status })
 

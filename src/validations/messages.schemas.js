@@ -16,9 +16,9 @@ export const createMessageSchema = {
             }
         }
     },
-    message: {
-        notEmpty: {
-            errorMensage: 'Ingrese un mensaje'
-        }
-    }
+    // message: {
+    //     notEmpty: {
+    //         errorMensage: 'Ingrese un mensaje'
+    //     }
+    // }
 }
