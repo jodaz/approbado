@@ -88,8 +88,12 @@ export const store = async (req, res) => {
             const { id: currUserId, names } = req.user;
 
             const ids = [currUserId, ...users_ids];
+            const isPrivate = users_ids.length < 2;
 
-            const model = await Chat.query().insert(rest)
+            const model = await Chat.query().insert({
+                ...rest,
+                is_private: isPrivate
+            })
 
             for (var i = 0; i < ids.length; i++) {
                 let status = ids[i] == currUserId ? 'accepted' : 'pending'

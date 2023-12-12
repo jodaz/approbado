@@ -24,6 +24,21 @@ export async function seed() {
             }
         })
 
+        const user2 = await User.query().insertGraph({
+            names: 'Test2',
+            user_name: 'test2',
+            rol: 'user',
+            password: encryptedPassword,
+            is_registered: true,
+            email: 'user@test3.com',
+            bio: 'Hola soy otro usuario',
+            profile: {
+                ocupation: 'Abogado',
+                summary: 'Hola soy test3',
+                linkedin: 'username',
+            }
+        })
+
         const user = await User.query().insertGraph({
             names: 'OtroUsuario',
             user_name: 'otrousuario',
