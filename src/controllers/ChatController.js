@@ -229,7 +229,7 @@ export const storeMessage = async (req, res) => {
 
             io.emit('new_message', {
                 created_by: currUserId,
-                chat_id : data.chat_id,
+                chat_id: data.chat_id,
                 participants
             })
             io.emit('new_notification', notification)

@@ -42,6 +42,12 @@ export const index = async (req, res) => {
                         .as('usersReportsCount')
                 ]);
             }
+            if (filter.notCurrent) {
+                query.where('id', '!=', req.user.id)
+            }
+            if (filter.rol) {
+                query.where('rol', '=', filter.rol)
+            }
             if (filter.by_ids) {
                 query.whereIn('id', filter.by_ids)
             }
@@ -242,21 +248,21 @@ export const update = async (req, res) => {
 }
 
 export const delete_picture_profile = async (req, res) => {
-    
+
     const { id } = req.params
-    
+
     try {
-        
+
         const data = {
             picture : 'public/default/user.png'
         }
-       
+
         const model = await User.query().updateAndFetchById(id, {
             ...data,
         })
 
         return res.status(200).json(model)
-    
+
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error })
