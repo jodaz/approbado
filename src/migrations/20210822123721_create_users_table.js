@@ -9,7 +9,7 @@ export async function up(knex) {
         table.string('picture').defaultsTo('public/default/user.png')
         table.string('email').unique();
         table.string('password');
-        table.string('rol');
+        table.enum('rol',['admin','user']).defaultsTo('user');
         table.boolean('is_registered').defaultsTo(1)
         table.string('phone').nullable();
         table.timestamps();
