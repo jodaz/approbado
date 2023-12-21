@@ -38,6 +38,8 @@ export const store = async (req, res) => {
     const reqErrors = await validateRequest(req, res);
 
     if (!reqErrors) {
+        const io = req.app.locals.io;
+
         try {
             const { ...rest } = req.body;
 
@@ -45,7 +47,12 @@ export const store = async (req, res) => {
                 created_by: req.user.id,
                 type: 'Comentario',
                 ...rest
-            });
+            }).withGraphFetched('owner')
+
+            model.commentsCount = 0;
+            model.likesCount = 0;
+
+            await io.emit('new_comment', model);
 
             return res.status(200).json(model)
         } catch (error) {
