@@ -5,7 +5,10 @@ export const index = async (req, res) => {
     const { filter, sort, order } = req.query
 
     try {
-        const query = Category.query()
+        const query = Category.query().select(
+            Category.ref('*'),
+            Category.relatedQuery('trivias').count().as('triviasCount')
+        )
 
         if (filter) {
             if (filter.name) {
