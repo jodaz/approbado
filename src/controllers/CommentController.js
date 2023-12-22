@@ -109,11 +109,15 @@ export const destroy = async (req, res) => {
     let id = parseInt(req.params.id)
 
     try {
+        const io = req.app.locals.io;
+
         const model = await Post.query()
             .findById(id)
             .delete()
             .returning('*')
             .first();
+
+        await io.emit('delete_comment', model);
 
         return res.json(model);
     } catch (error) {
