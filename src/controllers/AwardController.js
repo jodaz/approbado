@@ -15,7 +15,10 @@ const min_approbado = 75
 export const index = async (req, res) => {
     const { filter, sort, order } = req.query
 
-    let query = Award.query()
+    let query = Award.query().select(
+        Award.ref('*'),
+        Award.relatedQuery('subthemes').count().as('subthemesCount'),
+    )
 
     try {
         if (filter) {
