@@ -16,7 +16,9 @@ import {
 export const index = async (req, res) => {
     const user = req.user;
     const { filter, sort, order } = req.query
-    const query = Schedule.query().where('created_by', user.id);
+    const query = Schedule.query()
+        .where('created_by', user.id)
+        .withGraphFetched('[level]');
 
     try {
         if (filter) {
@@ -274,7 +276,7 @@ export const show = async (req, res) => {
             .withGraphFetched('[participants,subtheme,level]')
 
         model.users_ids = model.participants
-        
+
         const subtheme = await model.$relatedQuery('subtheme')
         model.trivia = await subtheme.$relatedQuery('trivia')
 
