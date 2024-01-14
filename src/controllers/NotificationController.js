@@ -42,6 +42,15 @@ export const showByChat = async (req, res) => {
     return res.status(200).json(notification)
 }
 
+export const show = async (req, res) => {
+    const { id } = req.params
+
+    const notification = await Notification.query().findById(id)
+        .withGraphFetched('[user,chat.chatUser]')
+
+    return res.status(200).json(notification)
+}
+
 export const newNotifications = async (req, res) => {
     const { id: currUserId } = req.user;
 
