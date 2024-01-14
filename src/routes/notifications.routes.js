@@ -5,7 +5,8 @@ import {
     showByUser,
     showByChat,
     newNotifications,
-    updateReadAt
+    updateReadAt,
+    show
 } from '../controllers/NotificationController'
 
 const notificationsRouter = Router()
