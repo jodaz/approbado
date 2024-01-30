@@ -22,6 +22,14 @@ export class Schedule extends BaseClass {
                 to: 'subthemes.id'
             }
         },
+        trivia: {
+            relation: BaseClass.BelongsToOneRelation,
+            modelClass: `${__dirname}/Trivia`,
+            join: {
+                from: 'schedules.trivia_id',
+                to: 'trivias.id'
+            }
+        },
         participants: {
             relation: BaseClass.ManyToManyRelation,
             modelClass: `${__dirname}/User`,

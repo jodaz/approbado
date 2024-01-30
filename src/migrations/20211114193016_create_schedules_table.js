@@ -11,7 +11,9 @@ export async function up(knex) {
         table.integer('level_id').unsigned();
         table.integer('created_by').unsigned();
         table.integer('subtheme_id').unsigned();
+        table.integer('trivia_id').unsigned();
         table.foreign('subtheme_id').references('subthemes.id').onDelete('cascade');
+        table.foreign('trivia_id').references('trivias.id').onDelete('cascade');
         table.foreign('level_id').references('levels.id').onDelete('cascade');
         table.foreign('created_by').references('users.id').onDelete('cascade');
         table.timestamps();

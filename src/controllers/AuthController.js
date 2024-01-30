@@ -267,7 +267,7 @@ export const verifySMSCode = async (req, res) => {
                 last_name: last_name,
                 user_name: user_name,
                 password: encryptedPassword,
-                rol: 'USER',
+                rol: 'user',
                 email: email,
                 phone: phone,
                 picture : 'public/default/user.png'
