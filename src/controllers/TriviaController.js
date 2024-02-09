@@ -57,7 +57,7 @@ export const indexByPlan = async (req, res) => {
             .where('active',true)
             .first()
 
-        
+
 
         const query = Trivia.query().select(
             Trivia.ref('*'),
@@ -184,7 +184,7 @@ export const finishTrivia = async (req, res) => {
 
     try {
         const { user } = req
-        const subtheme = await Subtheme.query().findById(subthemes_ids)
+        const subtheme = await Subtheme.query().whereIn('id', subthemes_ids)
         const results = await showResult(subthemes_ids, level_id, user.id, res)
         let response = {}
 
@@ -197,7 +197,7 @@ export const finishTrivia = async (req, res) => {
 
             await SubthemeFinished.query().insert(subthemesFinishedRaw)
 
-            const award = await Award.query().findById(awards_ids)
+            const award = await Award.query().whereIn('id', awards_ids)
 
             const count_subthemes = await award.$relatedQuery('subthemes')
                 .count()
