@@ -18,7 +18,7 @@ export const index = async (req, res) => {
     const { filter, sort, order } = req.query
     const query = Schedule.query()
         .where('created_by', user.id)
-        .withGraphFetched('[level]');
+        .withGraphFetched('[participants,level,subtheme.trivia]');
 
     try {
         if (filter) {
