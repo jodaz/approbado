@@ -69,6 +69,9 @@ export const indexAwardSubtheme = async (req, res) => {
         const award_subthemes = await Award.query()
             .where('trivia_id', `${trivia_id}`)
             .withGraphFetched('subthemes')
+            .whereExists(
+                Award.relatedQuery('subthemes')
+            )
             .orderBy('min_points', 'ASC')
 
         const results = await getFinishedSubthemes(award_subthemes, currUserId)
