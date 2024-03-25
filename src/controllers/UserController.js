@@ -27,7 +27,7 @@ export const index = async (req, res) => {
             }
             if (filter.is_registered) {
                 query.where('is_registered', filter.is_registered)
-                    .withGraphFetched('posts')
+                    .withGraphFetched('[profile,awards,posts]')
             }
             if (filter.in_blacklist) {
                 query.whereExists(
@@ -66,7 +66,7 @@ export const index = async (req, res) => {
                             User.relatedQuery('profile')
                                 .where(sort, '>', 0)
                                 .orderBy(sort, order)
-                        ).withGraphFetched('[profile,awards]')
+                        )
                     break;
                 case 'contributionsCount':
                     query.select(
