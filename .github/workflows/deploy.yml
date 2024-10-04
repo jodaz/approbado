@@ -22,7 +22,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         script: |
           set -e
-          cd approbado-server
+          cd /var/www/approbado-server
           git pull
           docker build -t approbado-server .
           docker ps -q --filter "name=approbado-server" | grep -q . && docker stop approbado-server
