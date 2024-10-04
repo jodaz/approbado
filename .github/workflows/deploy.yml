@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-22.04
     environment: production
     steps:
-    - name: Node.js + pm2 ${{ matrix.node-version }}
-      uses: appleboy/ssh-action@v0.1.5
+    - name: Build docker image
+      uses: appleboy/ssh-action@v1.0.3
       with:
         # Private Key
         key: ${{ secrets.SSH_KEY }}
