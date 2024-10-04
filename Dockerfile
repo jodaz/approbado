@@ -1,23 +1,28 @@
-# Use the official Node.js 18 image as the base image
-FROM node:18
+# Use the official Node.js image
+FROM node:20
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml (if you have one)
+COPY package.json ./
+# If you have a pnpm-lock.yaml, uncomment the next line
+# COPY pnpm-lock.yaml ./
 
 # Install pnpm globally
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9
 
-# Copy package.json and pnpm-lock.yaml (if available)
-COPY package.json pnpm-lock.yaml ./
-
-# Install the application dependencies
-RUN pnpm install --prod
+# Install dependencies
+RUN pnpm install
 
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
+# Build the application
+RUN pnpm run build
+
+# Expose the application port (change if necessary)
 EXPOSE 3000
 
 # Command to run the application
-CMD ["node", "server.js"]
+CMD ["node", "dist/index.js"]  # Adjusted to point to the built file
