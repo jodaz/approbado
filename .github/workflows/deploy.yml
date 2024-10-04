@@ -1,4 +1,4 @@
-name: Node.js + pm2 CI
+name: Build prod
 
 on:
   workflow_dispatch:
@@ -6,7 +6,6 @@ on:
       logLevel:
         description: 'Reason'
         required: true
-        default: 'warning'
   push:
     branches: [ "main" ]
 
