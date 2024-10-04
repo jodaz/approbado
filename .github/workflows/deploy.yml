@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Razón'
+        description: 'Reason'
         required: true
         default: 'warning'
   push:
@@ -27,8 +27,5 @@ jobs:
         script: |
           cd approbado-server
           git pull
-          export NVM_DIR=~/.nvm
-          source ~/.nvm/nvm.sh
-          pnpm i
-          pnpm run build
-          pm2 restart all
+          docker build -t approbado-server .
+          docker run -p 80:3000 approbado-server

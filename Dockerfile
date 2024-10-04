@@ -25,4 +25,4 @@ RUN pnpm run build
 EXPOSE 3000
 
 # Command to run the application
-CMD ["node", "dist/index.js"]  # Adjusted to point to the built file
+CMD ["node", "dist/index.js"]
