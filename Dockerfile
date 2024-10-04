@@ -19,10 +19,6 @@ RUN pnpm install
 COPY . .
 
 # Build the application
-RUN pnpm run build
+RUN pnpm build
 
-# Expose the application port (change if necessary)
-EXPOSE 3000
-
-# Command to run the application
-CMD ["node", "dist/index.js"]
+RUN pnpm start
