@@ -17,14 +17,14 @@ jobs:
     - name: Build docker image
       uses: appleboy/ssh-action@v1.0.3
       with:
-        # Private Key
         key: ${{ secrets.SSH_KEY }}
-        # Remote host
         host: ${{ secrets.SSH_HOST }}
-        # Remote user
         username: ${{ secrets.SSH_USERNAME }}
         script: |
+          set -e
           cd approbado-server
           git pull
           docker build -t approbado-server .
-          docker run -p 80:4000 approbado-server
+          docker ps -q --filter "name=approbado-server" | grep -q . && docker stop approbado-server
+          docker ps -aq --filter "name=approbado-server" | grep -q . && docker rm approbado-server
+          docker run -d -p 80:4000 approbado-server
