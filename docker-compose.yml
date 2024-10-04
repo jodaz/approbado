@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  approbado-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: approbado-server
+    container_name: approbado-server
+    restart: unless-stopped
