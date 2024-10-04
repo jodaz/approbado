@@ -27,4 +27,4 @@ jobs:
           cd approbado-server
           git pull
           docker build -t approbado-server .
-          docker run -p 80:3000 approbado-server
+          docker run -p 80:4000 approbado-server
