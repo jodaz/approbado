@@ -103,14 +103,20 @@ export const upload = async (req, res) => {
                                 'statement': i[1]
                             }))
 
-                        await Question.query().insertGraphAndFetch({
-                            'description': row.values[1],
-                            'explanation': row.values[2],
-                            'subtheme_id': subtheme_id,
-                            'trivia_id': trivia_id,
-                            'level_id': row.values[3],
-                            options: options
-                        });
+                        try {
+                            await Question.query().insertGraphAndFetch({
+                                'description': row.values[1],
+                                'explanation': row.values[2],
+                                'subtheme_id': subtheme_id,
+                                'trivia_id': trivia_id,
+                                'level_id': row.values[3],
+                                options: options
+                            });
+                        } catch (error) {
+                            console.log(error)
+
+                            return res.status(500).json({ error: error })
+                        }
                     }
                 })
             })

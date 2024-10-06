@@ -26,7 +26,6 @@ export const index = async (req, res) => {
 
         return paginatedQueryResponse(query, req, res)
     } catch(error){
-        console.log(error)
         return res.status(500).json(error)
     }
 }
@@ -50,7 +49,6 @@ export const store = async (req, res) => {
 
             return res.status(201).json(model)
         } catch(error) {
-            console.log(error)
             return res.status(500).json(error)
         }
     }
@@ -95,7 +93,6 @@ export const download = async (req, res) => {
 
         return res.download(pdfFilePath)
     } catch(error){
-        console.log(error)
         return res.status(500).json(error)
     }
 }
@@ -110,7 +107,6 @@ export const show = async (req, res) => {
 
         return res.status(201).json(model)
     } catch(error){
-        console.log(error)
         return res.status(500).json(error)
     }
 }
@@ -127,7 +123,6 @@ export const destroy = async (req, res) => {
 
         return res.json(model);
     } catch(error){
-        console.log(error)
         return res.status(500).json(error)
     }
 }
