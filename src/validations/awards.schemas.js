@@ -30,3 +30,45 @@ export const createAwardSchema = {
         }
     }
 };
+
+export const verifyAwardSchema = {
+    subtheme_ids: {
+        isArray: {
+            errorMessage: 'subtheme_ids must be an array of numbers',
+        },
+        custom: {
+            options: (value) => {
+                if (value.length === 0) {
+                    throw new Error('subtheme_ids must not be empty');
+                }
+                for (const id of value) {
+                    if (typeof id !== 'number') {
+                        throw new Error('Each subtheme_id must be a number');
+                    }
+                }
+                return true; // If all checks pass
+            },
+        },
+    },
+    level_id: {
+        isNumeric: {
+            errorMessage: 'level_id must be a number',
+        },
+        toInt: true, // Convert to integer
+    },
+    award_id: {
+        isNumeric: {
+            errorMessage: 'award_id must be a number',
+        },
+        toInt: true, // Convert to integer
+    },
+    type: {
+        isString: {
+            errorMessage: 'type must be a string',
+        },
+        isIn: {
+            options: [['Reto', 'OtroType']], // Replace 'OtroType' with any other valid types
+            errorMessage: 'type must be either "Reto" or "OtroType"',
+        },
+    },
+}

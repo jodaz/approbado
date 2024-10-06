@@ -84,67 +84,87 @@ export const indexAwardSubtheme = async (req, res) => {
 }
 
 export const verifyAward = async (req, res) => {
-    const { user_id, subtheme_id, level_id, award_id, type } = req.body
+    const { id: currUserId } = req.user; // Get user_id from req.user
+    const { subtheme_ids, level_id, award_id, type } = req.body;
+
+    // Validate the request using the validation schema
+    const reqErrors = await validateRequest(req, res);
+
+    if (reqErrors) return;
 
     try {
-        const subtheme = await Subtheme.query().findById(subtheme_id)
+        const resultsArray = [];
 
-        const results = await showResultAward(subtheme_id, level_id, user_id)
+        // Iterate over each subtheme_id
+        for (const subtheme_id of subtheme_ids) {
+            const subtheme = await Subtheme.query().findById(subtheme_id);
+            if (!subtheme) {
+                return res.status(404).json({ error: `Subtheme with ID ${subtheme_id} not found` });
+            }
 
-        if (type == 'Reto' && results.percenteje >= min_approbado) {
-            await SubthemeFinished.query()
-                .insert({
-                    subtheme_id: subtheme_id,
-                    user_id: user_id,
-                    finished: true
-                })
+            const results = await showResultAward(subtheme_id, level_id, currUserId);
+            resultsArray.push(results);
+
+            if (type === 'Reto' && results.percenteje >= min_approbado) {
+                await SubthemeFinished.query()
+                    .insert({
+                        subtheme_id: subtheme_id,
+                        user_id: currUserId,
+                        finished: true
+                    });
+            }
         }
 
-        const award = await Award.query().findById(award_id)
-
+        const award = await Award.query().findById(award_id);
         const count_subthemes = await award.$relatedQuery('subthemes').count().first();
 
         const count_subthemes_finished = await Subtheme.query()
-                .join('subthemes_finished','subthemes.id','subthemes_finished.subtheme_id')
-                .where('user_id', user_id)
-                .where('award_id', award_id)
-                .where('finished', true)
-                .count()
-                .first()
+            .join('subthemes_finished', 'subthemes.id', 'subthemes_finished.subtheme_id')
+            .where('user_id', currUserId)
+            .where('award_id', award_id)
+            .where('finished', true)
+            .count()
+            .first();
+
+        const allResults = resultsArray.reduce((acc, result) => {
+            acc.percenteje = acc.percenteje ? acc.percenteje + result.percenteje : result.percenteje;
+            acc.points = acc.points ? acc.points + result.points : result.points;
+            return acc;
+        }, {});
 
         const response = (count_subthemes_finished.count == count_subthemes.count
-            && results.percenteje >= min_approbado)
-            ? {win_award : true, award :award}
-            : {win_award : false}
+            && allResults.percenteje >= min_approbado)
+            ? { win_award: true, award: award }
+            : { win_award: false };
 
-        const user = await User.query().findById(user_id)
+        const user = await User.query().findById(currUserId);
 
         if (response.win_award) {
-            await user.$relatedQuery('awards').relate(award.id)
+            await user.$relatedQuery('awards').relate(award.id);
         }
 
         const user_profile = await user.$relatedQuery('profile');
 
-        if (type == 'Reto') {
-            if(user_profile === undefined){
+        if (type === 'Reto') {
+            if (user_profile === undefined) {
                 await user.$relatedQuery('profile')
                     .insert({
-                        points : parseFloat(results.points)
-                    })
+                        points: parseFloat(allResults.points)
+                    });
             } else {
                 await user.$relatedQuery('profile')
                     .update({
-                        points: parseFloat(user_profile.points == null ? 0 : user_profile.points)+parseFloat(results.points)
-                    })
+                        points: parseFloat(user_profile.points == null ? 0 : user_profile.points) + parseFloat(allResults.points)
+                    });
             }
         }
 
-        return res.status(200).json({ ...response, ...results, subtheme })
-    } catch(error){
-        console.log(error)
-        return res.status(500).json(error)
+        return res.status(200).json({ ...response, ...allResults, subtheme_ids });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
     }
-}
+};
 
 export const showResultAward = async (subtheme_id, level_id, user_id) => {
     try {

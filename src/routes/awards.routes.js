@@ -10,7 +10,10 @@ import {
     update,
     show
 } from '../controllers/AwardController'
-import { createAwardSchema } from '../validations'
+import {
+    createAwardSchema,
+    verifyAwardSchema
+} from '../validations'
 import { checkSchema } from 'express-validator';
 import { upload } from '../config'
 
@@ -22,7 +25,7 @@ awardsRoutes.get('/schedule/:schedule_id/:subtheme_id/:level_id', showResultTriv
 awardsRoutes.get('/subthemes/:trivia_id', indexAwardSubtheme)
 awardsRoutes.get('/:id', show)
 awardsRoutes.post('/', upload.single('file'), checkSchema(createAwardSchema), store)
-awardsRoutes.post('/verify', verifyAward)
+awardsRoutes.post('/verify', checkSchema(verifyAwardSchema), verifyAward)
 awardsRoutes.put('/:id', upload.single('file'), checkSchema(createAwardSchema), update)
 awardsRoutes.delete('/:id', destroy)
 
