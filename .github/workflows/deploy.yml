@@ -27,4 +27,4 @@ jobs:
           docker build -t approbado-server .
           docker ps -q --filter "name=approbado-server" | grep -q . && docker stop approbado-server
           docker ps -aq --filter "name=approbado-server" | grep -q . && docker rm approbado-server
-          docker run -d -p 80:4000 approbado-server
+          docker run -d -p 4000:4000 approbado-server
