@@ -20,18 +20,18 @@ export const update = async (req, res) => {
 
     try {
         // Send email
-        const mailerData = {
-            message: {
-                to: user.email,
-            },
-            template: 'accountChange',
-            subject: 'Approbado | Actualización de perfil de usuario',
-            locals: {
-                name: user.names
-            }
-        };
+        // const mailerData = {
+        //     message: {
+        //         to: user.email,
+        //     },
+        //     template: 'accountChange',
+        //     subject: 'Approbado | Actualización de perfil de usuario',
+        //     locals: {
+        //         name: user.names
+        //     }
+        // };
 
-        await sendMail(mailerData, res)
+        // await sendMail(mailerData, res)
 
         let {
             profile,
